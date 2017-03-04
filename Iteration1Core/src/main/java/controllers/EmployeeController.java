@@ -16,15 +16,18 @@ public class EmployeeController{
     return "employee";
   }
 
+/**
   @GetMapping("/allEmployees")
   //I want to make an array of all of the current employees, then iterate through that array and print everything to the view.
   public String getAllEmployees(Model[] models){
     model.addAttribute("employees", new Employee());
     return "employees";
   }
+**/
 
   @PostMapping("/employee")
   public String employeeSubmit(@ModelAttribute Employee employee){
+    System.out.println("" + employee.getId());
     return "result";
   }
 }
