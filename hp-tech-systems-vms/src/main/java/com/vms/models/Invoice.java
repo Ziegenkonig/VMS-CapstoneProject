@@ -32,7 +32,4 @@ public class Invoice {
 	//should this be here or FK to project
 	private BigDecimal rate;
 	
-	
-	
-	
 }
