@@ -15,4 +15,7 @@ import lombok.Data;
 @Entity
 public class Timesheet {
 	
+	@Id @GeneratedValue()
+	private int timesheet_id;
+	
 }
