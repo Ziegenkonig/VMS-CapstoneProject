@@ -7,9 +7,17 @@
 <body>
 	<h1>Form</h1>
     <form action="#" th:action="@{/employee}" th:object="${employee}" method="post">
-    	<p>Id: <input type="text" th:field="*{id}" /></p>
-        <p>Message: <input type="text" th:field="*{content}" /></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    	<p>Id:<input type="text" th:field="*{id}" /></p>
+      <p>Enter Employee Username: <input type="text" th:field="*{username}" /></p>
+      <p>Enter Employee Password: <input type="text" th:field="*{password}" /></p>
+      <p>Enter Employee First Name: <input type="text" th:field="*{firstName}" /></p>
+      <p>Enter Employee Last Name: <input type="text" th:field="*{lastName}" /></p>
+      <p>Enter Employee Email: <input type="text" th:field="*{email}" /></p>
+      <p>Enter Employee Address: <input type="text" th:field="*{address}" /></p>
+      <p>Enter Employee City: <input type="text" th:field="*{city}" /></p>
+      <p>Enter Employee State: <input type="text" th:field="*{state}" /></p>
+      <p>Enter Employee Hire Date: <input type="text" th:field="*{hireDate}" /></p>
+      <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </body>
 </html>
