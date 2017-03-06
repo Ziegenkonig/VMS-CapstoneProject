@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @Controller
 public class EmployeeController{
   //declare global variables
-  ArrayList<Employee> employees = new ArrayList<Employee>();
+  private ArrayList<Employee> employees = new ArrayList<Employee>();
 
   @GetMapping("/employee")
   public String employeeForm(Model model){
@@ -21,21 +21,32 @@ public class EmployeeController{
     return "employee";
   }
 
-/**
+  /**
   @GetMapping("/allEmployees")
   //I want to make an array of all of the current employees, then iterate through that array and print everything to the view.
-  public String getAllEmployees(Model[] models){
-    model.addAttribute("employees", new Employee());
-    return "employees";
+  public String getAllEmployees(){
+    for(int i = 0; i < employees.size(); i ++){
+      System.out.println(employees.get(i));
+    }
+    return "index";
   }
 **/
 
   @PostMapping("/employee")
   public String employeeSubmit(@ModelAttribute Employee employee){
-    //This is where the pipe of data ends. Anything that needs to be persisted needs to happen here.
-    System.out.println("" + employee.getId());
-    System.out.println("" + employee.getUsername());
-    System.out.println("" + employee.getPassword());
+    //THIS IS WHERE THE PIPE OF DATA ENDS.
+    //Anything that needs to be persisted needs to happen IN THIS METHOD.
+
+    //create a new employee
+    Employee test = new Employee();
+    test.setId(employee.getId());
+    test.setUsername(employee.getUsername());
+    //then add it to the array
+    employees.add(test);
+    //then get the employee from the array
+    System.out.println(employees.get(employee.getId()));
+
+    //this returns an html page (result.html) that is populated with data
     return "result";
   }
 }

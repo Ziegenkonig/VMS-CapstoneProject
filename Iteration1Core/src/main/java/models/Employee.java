@@ -14,13 +14,22 @@ public class Employee{
   String hireDate;
   //boolean isActive;
 
+  public Employee(){
+  }
 
+//toString()
+@Override
+public String toString(){
+  String output = "";
+  output += "Employee ID: " + this.id + "\n";
+  output += "Employee Name: " + this.username + "\n";
+  return output;
+}
 
-/**
-Getters and Setters
+  /**
+    Getters and Setters
                    **/
-
-          //getters
+//getters
   public int getId(){
     return id;
   }
