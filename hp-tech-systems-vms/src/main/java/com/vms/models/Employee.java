@@ -22,7 +22,7 @@ public class Employee {
 	@Id @GeneratedValue()
 	private int emp_id;
 	
-	//Regular attributes.  Does not net include length, hashing, or some specialties(i.e. tinyint)
+	//Regular attributes.  Does not yet include length, hashing, or some specialties(i.e. tinyint)
 	private String username;
 	private String password;
 	private String first_name;
