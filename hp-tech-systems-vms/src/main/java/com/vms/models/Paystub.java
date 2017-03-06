@@ -8,71 +8,73 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import lombok.Data; 
+import lombok.Data;
 
 /* can I get the following with some get methods?
-a single vendor object (timesheet.proj-emp.project.vendor)
-the names of the employees working on the project (timesheet.proj-emp.employee)
-the pay rate for the project (timesheet.proj-emp.project)
+a single employee object (timesheet.proj-emp.employee)
+the names of the projects they are working on (timesheet.proj-emp.project)
+the pay rate for each project (timesheet.proj-emp)
 */
 
 @Data //standard getters/setters
 @Entity
-public class Invoice {
-
-	@Id @GeneratedValue
-	private int invoice_id;
+public class Paystub {
 	
-	@Enumerated(EnumType.STRING)
-	private InvoiceStatus status;
+	@Id @GeneratedValue
+	private int paystub_id;
+	
+	//deposit number
+	private int check_no;
 	
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Timestamp created_date;
 	
-//fields to store info from other tables
-	//from project
-	private BigDecimal rate; //timesheet.projemp.project.pay_rate
-	
-	private double total_hours; //sum(timesheet.no_hours) over timesheet list
-	private BigDecimal total_amt; //total_hours * rate
-	
+// calculated or imported fields
 	//pay period start and end (14/7 day interval)
 	private Date period_start;
 	private Date period_end;
 	
-	// one month from period_end
-	private Date payment_due;
+	//advice date (period end + 10?)
+	private Date pay_date;
 	
-	//@alex should this be stored in vendor/project?
-	private String recruiter;
+	//net pay same as amount of check 
+	private BigDecimal net_pay; //total - deductions
+	private BigDecimal ytd_net_pay; //ytd_gross - ytd_deductions
 	
-	//from vendor
-	private String name;
+	//federal taxable wages
+	private BigDecimal total; //sum(timesheet.no_hours * timesheet.projemp.pay_rate) over timesheet list
+	private BigDecimal ytd_gross; //previous paystub ytd_gross + this.total
+	
+	//from employee
+	private String first_name;
+	private String last_name;
 	private String address;
 	private String city;
 	private String state;
-	private String phone;
 	
 	//employer info saved in global variables somewhere
 	
-	@ManyToMany(mappedBy = "invoices")//(cascade = CascadeType.ALL)
-    private List<Timesheet> timesheets; 
+	// may not be implemented default as 0
+	private BigDecimal ytd_deductions;
+	private BigDecimal deductions;
+	
+	
+	@ManyToMany(mappedBy = "paystubs")//(cascade = CascadeType.ALL)
+    private List<Timesheet> timesheets;
 	
 	@PrePersist
 	protected void onCreate() {
 		created_date = new Timestamp(Calendar.getInstance().getTime().getTime());
 	}
+	
 }
