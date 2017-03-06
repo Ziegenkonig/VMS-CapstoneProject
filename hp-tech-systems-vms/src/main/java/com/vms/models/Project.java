@@ -31,7 +31,7 @@ public class Project {
 	@ManyToOne @JoinColumn(name = "vendor_id")
 	private Vendor vendor_id;
 	
-	//Regular ol Attributes
+	//Regular attributes.  Does not yet include length some specialties(i.e. BigDecimal)
 	private String name;
 	private double billing_rate;
 	private String client_name;
