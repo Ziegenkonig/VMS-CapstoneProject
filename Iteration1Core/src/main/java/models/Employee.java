@@ -5,7 +5,6 @@ public class Employee{
   int permissionLevel;
   String username;
   String password;
-  
   String firstName;
   String lastName;
   String email;
@@ -18,12 +17,22 @@ public class Employee{
   public Employee(){
   }
 
-//toString()
+//toString() - this is only useful for debugging
 @Override
 public String toString(){
   String output = "";
   output += "Employee ID: " + this.id + "\n";
-  output += "Employee Name: " + this.username + "\n";
+  output += "Employee permissionLevel: " + this.permissionLevel + "\n";
+  output += "Employee Username: " + this.username + "\n";
+  output += "password: " + this.password + "\n";
+  output += "firstName: " + this.firstName + "\n";
+  output += "lastName: " + this.lastName + "\n";
+  output += "email: " + this.email + "\n";
+  output += "address: " + this.address + "\n";
+  output += "city: " + this.city + "\n";
+  output += "state: " + this.state + "\n";
+  output += "hireDate: " + this.hireDate + "\n";
+
   return output;
 }
 

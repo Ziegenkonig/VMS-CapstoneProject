@@ -54,6 +54,7 @@ public class EmployeeController{
 
     //then add it to the array
     employees.add(persistEmployee);
+    System.out.println(persistEmployee);
     //then get the employee from the array
     System.out.println(employees.get(employee.getId()));
 

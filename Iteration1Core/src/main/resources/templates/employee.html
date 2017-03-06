@@ -8,6 +8,7 @@
 	<h1>Form</h1>
     <form action="#" th:action="@{/employee}" th:object="${employee}" method="post">
     	<p>Id:<input type="text" th:field="*{id}" /></p>
+      <p>Enter Employee Permission Level: <input type="text" th:field="*{permissionLevel}" /></p>
       <p>Enter Employee Username: <input type="text" th:field="*{username}" /></p>
       <p>Enter Employee Password: <input type="text" th:field="*{password}" /></p>
       <p>Enter Employee First Name: <input type="text" th:field="*{firstName}" /></p>
