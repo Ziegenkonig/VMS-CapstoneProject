@@ -21,14 +21,14 @@ public class EmployeeController{
     return "employee";
   }
 
-  /**
-  @GetMapping("/allEmployees")
+/**
+  @GetMapping("/employees")
   //I want to make an array of all of the current employees, then iterate through that array and print everything to the view.
   public String getAllEmployees(){
     for(int i = 0; i < employees.size(); i ++){
       System.out.println(employees.get(i));
     }
-    return "index";
+    return "employees";
   }
 **/
 
@@ -38,11 +38,22 @@ public class EmployeeController{
     //Anything that needs to be persisted needs to happen IN THIS METHOD.
 
     //create a new employee
-    Employee test = new Employee();
-    test.setId(employee.getId());
-    test.setUsername(employee.getUsername());
+    Employee persistEmployee = new Employee();
+    persistEmployee.setId(employee.getId());
+    persistEmployee.setUsername(employee.getUsername());
+    persistEmployee.setPermissionLevel(employee.getPermissionLevel());
+    persistEmployee.setUsername(employee.getUsername());
+    persistEmployee.setPassword(employee.getPassword());
+    persistEmployee.setFirstName(employee.getFirstName());
+    persistEmployee.setLastName(employee.getLastName());
+    persistEmployee.setEmail(employee.getEmail());
+    persistEmployee.setAddress(employee.getAddress());
+    persistEmployee.setCity(employee.getCity());
+    persistEmployee.setState(employee.getState());
+    persistEmployee.setHireDate(employee.getHireDate());
+
     //then add it to the array
-    employees.add(test);
+    employees.add(persistEmployee);
     //then get the employee from the array
     System.out.println(employees.get(employee.getId()));
 

@@ -5,6 +5,7 @@ public class Employee{
   int permissionLevel;
   String username;
   String password;
+  
   String firstName;
   String lastName;
   String email;
