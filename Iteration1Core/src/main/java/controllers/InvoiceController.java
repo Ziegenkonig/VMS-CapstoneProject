@@ -15,7 +15,7 @@ public class InvoiceController(){
   }
 
 
-  @PostMapping
+  @PostMapping("/invoice")
   public String invoiceSubmit(){
 
   }
