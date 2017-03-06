@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.Data;
 
@@ -19,6 +20,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "projects")
 public class Project {
 	
 	//This isn't in the schema, but I had to define this new ID for ProjectEmployee to
