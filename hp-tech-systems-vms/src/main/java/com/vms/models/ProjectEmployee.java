@@ -3,13 +3,13 @@ package com.vms.models;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.Data;
 
@@ -19,6 +19,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "projects-employees")
 public class ProjectEmployee {
 	
 	//This isn't in the schema, but I had to define this new ID for ProjectEmployee to
@@ -34,8 +35,11 @@ public class ProjectEmployee {
 	private Employee employee_id;
 	
 	//Regular ol Attributes
+	@Column()
 	private double pay_rate;
+	@Column()
 	private Date date_started;
+	@Column()
 	private Date date_ended;
 	
 	/*
