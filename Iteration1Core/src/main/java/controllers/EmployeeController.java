@@ -13,6 +13,8 @@ import java.util.ArrayList;
 @Controller
 public class EmployeeController{
   //declare global variables
+
+  //Want a global list of all of the employees that we are dealing with.. pretty much a cache. 
   private ArrayList<Employee> employees = new ArrayList<Employee>();
 
   @GetMapping("/employee")
@@ -55,8 +57,6 @@ public class EmployeeController{
     //then add it to the array
     employees.add(persistEmployee);
     System.out.println(persistEmployee);
-    //then get the employee from the array
-    System.out.println(employees.get(employee.getId()));
 
     //this returns an html page (result.html) that is populated with data
     return "result";
