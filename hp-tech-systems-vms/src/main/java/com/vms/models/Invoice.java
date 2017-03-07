@@ -2,46 +2,79 @@ package com.vms.models;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import lombok.Data;
 
-@Data
+import lombok.Data; 
+
+/* can I get the following with some get methods?
+a single vendor object (timesheet.proj-emp.project.vendor)
+the names of the employees working on the project (timesheet.proj-emp.employee)
+the pay rate for the project (timesheet.proj-emp.project)
+*/
+
+@Data //standard getters/setters
 @Entity
 @Table(name = "invoices")
 public class Invoice {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue
 	private int invoice_id;
 	
-	@Column()
 	@Enumerated(EnumType.STRING)
 	private InvoiceStatus status;
 	
-	@Column()
+
+	@Temporal(TemporalType.TIMESTAMP)
+    @Column(updatable = false)
+    private Timestamp created_date;
+	
+//fields to store info from other tables
+	//from project
+	private BigDecimal rate; //timesheet.projemp.project.pay_rate
+	
+	private double total_hours; //sum(timesheet.no_hours) over timesheet list
+	private BigDecimal total_amt; //total_hours * rate
+	
+	//pay period start and end (14/7 day interval)
 	private Date period_start;
-	@Column()
 	private Date period_end;
-	@Column()
+
+	// one month from period_end
 	private Date payment_due;
-	@Column()
+	
+	//@alex should this be stored in vendor/project?
 	private String recruiter;
 	
-	@Column()
-	private double total_hours;
-	@Column()
-	private BigDecimal total_amt;
+	//from vendor
+	private String name;
+	private String address;
+	private String city;
+	private String state;
+	private String phone;
 	
-	//should this be here or FK to project
-	@Column()
-	private BigDecimal rate;
+	//employer info saved in global variables somewhere
+	
+	@ManyToMany(mappedBy = "invoices")//(cascade = CascadeType.ALL)
+    private List<Timesheet> timesheets; 
+	
+	@PrePersist
+	protected void onCreate() {
+		created_date = new Timestamp(Calendar.getInstance().getTime().getTime());
+	}
 	
 }

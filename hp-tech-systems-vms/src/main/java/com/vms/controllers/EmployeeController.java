@@ -1,4 +1,4 @@
-package controllers;
+package com.vms.controllers;
 //Spring imports
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

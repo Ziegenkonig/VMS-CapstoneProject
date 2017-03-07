@@ -1,6 +1,6 @@
-package models;
+package com.vms.models;
 
-public class Employee{
+public class JoshEmployee{
   int id;
   int permissionLevel;
   String username;
@@ -14,7 +14,7 @@ public class Employee{
   String hireDate;
   //boolean isActive;
 
-  public Employee(){
+  public JoshEmployee(){
   }
 
 //toString() - this is only useful for debugging
