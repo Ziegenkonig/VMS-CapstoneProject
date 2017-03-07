@@ -56,7 +56,7 @@ public class Invoice {
 	// one month from period_end
 	private Date payment_due;
 	
-	//@alex should this be stored in vendor/project?
+	//from vendor.contact_name
 	private String recruiter;
 	
 	//from vendor

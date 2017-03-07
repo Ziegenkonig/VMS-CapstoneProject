@@ -77,4 +77,11 @@ public class Paystub {
 		created_date = new Timestamp(Calendar.getInstance().getTime().getTime());
 	}
 	
+	/*// testing Lombok - should not have any errors
+	private void printSomething() {
+		Invoice myinvoice = new Invoice();
+		myinv.getAddress();
+	}
+	*/
+	
 }
