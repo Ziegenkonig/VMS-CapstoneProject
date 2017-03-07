@@ -12,8 +12,8 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data
-@Entity
+@Data //This annotation automatically generated getters/setters for this entity
+@Entity //Tells Hibernate that this class is to be treated as an entity
 @Table(name = "vendors")
 public class Vendor {
 	
@@ -39,78 +39,17 @@ public class Vendor {
 	@Column()
 	private String phone;
 	
-	/*
-	 * Getters and Setters
-	 */
-	
-	//vendor_id
-	public int getVendor_id() {
-		return vendor_id;
-	}
-	public void setVendor_id(int vendor_id) {
-		this.vendor_id = vendor_id;
-	}
-	//name
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	//primary_email
-	public String getPrimary_email() {
-		return primary_email;
-	}
-	public void setPrimary_email(String primary_email) {
-		this.primary_email = primary_email;
-	}
-	//contact_email
-	public String getContact_name() {
-		return contact_name;
-	}
-	public void setContact_name(String contact_name) {
-		this.contact_name = contact_name;
-	}
-	//address
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	//city
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	//state
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
-	//phone
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	
 	//ToString, for testing
 	public String toString()
 	{
-		return ("Vendor => id::" + this.getVendor_id() +
-				", name::" + this.getName() +
-				", primary_email::" + this.getPrimary_email() +
-				", contact_name::" + this.getContact_name() +
-				", address::" + this.getAddress() +
-				", city::" + this.getCity() +
-				", state::" + this.getState() +
-				", phone::" + this.getPhone());	
+		return ("Vendor => id::" + vendor_id +
+				", name::" + name +
+				", primary_email::" + primary_email +
+				", contact_name::" + contact_name +
+				", address::" + address +
+				", city::" + city +
+				", state::" + state +
+				", phone::" + phone);	
 	}
 	
 }
