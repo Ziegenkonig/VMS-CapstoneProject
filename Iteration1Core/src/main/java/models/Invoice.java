@@ -1,6 +1,6 @@
 package models;
 
-public abstract class Invoice {
+public class Invoice {
 	int invoiceID;
 	int timesheetID; //Foreign Key
 	//Date structures in mySQL
