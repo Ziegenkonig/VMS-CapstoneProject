@@ -54,7 +54,7 @@ tmp/**/*
 *.bak
 *.swp
 *~.nib
-local.properties
+local.recommenders.properties
 .classpath
 .settings/
 .loadpath
