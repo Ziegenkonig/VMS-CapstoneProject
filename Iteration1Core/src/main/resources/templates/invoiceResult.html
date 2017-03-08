@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invoice Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Result</h1>
+    <!--<p th:text="': ' + ${invoice.}"-->
+    <p th:text="'id: ' + ${invoice.invoice_id}" />
+    <p th:text="'permissionLevel: ' + ${employee.permissionLevel}" />
+    <p th:text="'status: ' + ${invoice.status}" />
+    <p th:text="'created_date: ' + ${invoice.created_date}" />
+    <p th:text="'rate: ' + ${invoice.rate}" />
+    <p th:text="'total_hours: ' + ${invoice.total_hours}" />
+    <p th:text="'total_amt: ' + ${invoice.total_amt}" />
+    <p th:text="'period_start: ' + ${invoice.period_start}" />
+    <p th:text="'period_end: ' + ${invoice.period_end}" />
+    <p th:text="'payment_due: ' + ${invoice.payment_due}" />
+    <p th:text="'recruiter: ' + ${invoice.recruiter}"
+    <p th:text="'name: ' + ${invoice.name}"
+    <p th:text="'address: ' + ${invoice.address}"
+    <p th:text="'city: ' + ${invoice.city}"
+    <p th:text="'state: ' + ${invoice.state}"
+    <p th:text="'phone: ' + ${invoice.phone}"
+
+
+    <a href="/employee">Submit another message</a>
+</body>
+</html>
