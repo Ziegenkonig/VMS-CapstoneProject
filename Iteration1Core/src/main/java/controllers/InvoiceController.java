@@ -20,6 +20,6 @@ public class InvoiceController{
   public String invoiceSubmit(@ModelAttribute Invoice invoice){
     //store in the service
     invoiceService.create(invoice);
-    return "invoiceResult"
+    return "invoiceResult";
   }
 }

@@ -20,6 +20,6 @@ public class PaystubController{
   public String paystubSubmit(@ModelAttribute Paystub paystub){
     //store in the service
     paystubService.create(paystub);
-    return "paystubResult"
+    return "paystubResult";
   }
 }
