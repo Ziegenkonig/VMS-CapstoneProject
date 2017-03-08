@@ -14,8 +14,8 @@ public class VendorController {
   public String vendorForm(Model model) {
 	  return null;
   }
-
-
+  
+  
   @PostMapping("/vendor")
   public String vendorSubmit() {
 	  return null;

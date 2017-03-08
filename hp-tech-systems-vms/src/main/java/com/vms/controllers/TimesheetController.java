@@ -1,4 +1,4 @@
-package controllers;
+package com.vms.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,16 +7,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
-public class TimesheetController(){
+public class TimesheetController {
 
   @GetMapping("/timesheet")
-  public String timesheetForm(Model model){
-
+  public String timesheetForm(Model model) {
+	  return null;
   }
 
 
   @PostMapping("/timesheet")
-  public String timesheetSubmit(){
-
+  public String timesheetSubmit() {
+	  return null;
   }
+  
 }

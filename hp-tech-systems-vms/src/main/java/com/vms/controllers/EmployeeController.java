@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import models.Employee;
+import com.vms.models.Employee;
 //arraylist imports
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,18 +41,18 @@ public class EmployeeController{
 
     //create a new employee
     Employee persistEmployee = new Employee();
-    persistEmployee.setId(employee.getId());
-    persistEmployee.setUsername(employee.getUsername());
-    persistEmployee.setPermissionLevel(employee.getPermissionLevel());
-    persistEmployee.setUsername(employee.getUsername());
-    persistEmployee.setPassword(employee.getPassword());
-    persistEmployee.setFirstName(employee.getFirstName());
-    persistEmployee.setLastName(employee.getLastName());
-    persistEmployee.setEmail(employee.getEmail());
-    persistEmployee.setAddress(employee.getAddress());
-    persistEmployee.setCity(employee.getCity());
-    persistEmployee.setState(employee.getState());
-    persistEmployee.setHireDate(employee.getHireDate());
+//    persistEmployee.setId(employee.getId());
+//    persistEmployee.setUsername(employee.getUsername());
+//    persistEmployee.setPermissionLevel(employee.getPermissionLevel());
+//    persistEmployee.setUsername(employee.getUsername());
+//    persistEmployee.setPassword(employee.getPassword());
+//    persistEmployee.setFirstName(employee.getFirstName());
+//    persistEmployee.setLastName(employee.getLastName());
+//    persistEmployee.setEmail(employee.getEmail());
+//    persistEmployee.setAddress(employee.getAddress());
+//    persistEmployee.setCity(employee.getCity());
+//    persistEmployee.setState(employee.getState());
+//    persistEmployee.setHireDate(employee.getHireDate());
 
     //then add it to the array
     employees.add(persistEmployee);
