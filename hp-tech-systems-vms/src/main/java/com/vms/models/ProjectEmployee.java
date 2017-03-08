@@ -2,6 +2,7 @@ package com.vms.models;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "projects-employees")
+@Table(name = "projectsEmployees")
 public class ProjectEmployee {
 	
 	//This isn't in the schema, but I had to define this new ID for ProjectEmployee to
@@ -31,7 +32,7 @@ public class ProjectEmployee {
 	//Note the way you have to reference the Entity you are pulling the FK from
 	@ManyToOne @JoinColumn(name = "project_id")
 	private Project project_id;
-	@ManyToOne @JoinColumn(name = "employee_id")
+    @ManyToOne @JoinColumn(name = "emp_id")
 	private Employee employee_id;
 	
 	//Regular ol Attributes
@@ -41,52 +42,5 @@ public class ProjectEmployee {
 	private Date date_started;
 	@Column()
 	private Date date_ended;
-	
-	/*
-	 * Getters and Setters
-	 */
-
-	//ProjectEmployeeID
-	public int getProject_employee_id() {
-		return project_employee_id;
-	}
-	public void setProject_employee_id(int project_employee_id) {
-		this.project_employee_id = project_employee_id;
-	}
-	//ProjectID
-	public Project getProject_id() {
-		return project_id;
-	}
-	public void setProject_id(Project project_id) {
-		this.project_id = project_id;
-	}
-	//EmployeeID
-	public Employee getEmployee_id() {
-		return employee_id;
-	}
-	public void setEmployee_id(Employee employee_id) {
-		this.employee_id = employee_id;
-	}
-	//PayRate
-	public double getPay_rate() {
-		return pay_rate;
-	}
-	public void setPay_rate(double pay_rate) {
-		this.pay_rate = pay_rate;
-	}
-	//DateStarted
-	public Date getDate_started() {
-		return date_started;
-	}
-	public void setDate_started(Date date_started) {
-		this.date_started = date_started;
-	}
-	//DateEnded
-	public Date getDate_ended() {
-		return date_ended;
-	}
-	public void setDate_ended(Date date_ended) {
-		this.date_ended = date_ended;
-	}
 	
 }

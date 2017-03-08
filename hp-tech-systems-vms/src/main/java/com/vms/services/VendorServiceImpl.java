@@ -20,6 +20,11 @@ public class VendorServiceImpl implements VendorService{
 	}
 	
 	@Override
+	public void edit(Vendor vendor) {
+		
+	}
+	
+	@Override
     public Vendor findByName(String name) {
         return vendorRepo.findByName(name);
 }

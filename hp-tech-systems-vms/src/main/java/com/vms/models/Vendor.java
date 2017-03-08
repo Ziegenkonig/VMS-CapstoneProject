@@ -38,18 +38,5 @@ public class Vendor {
 	private String state;
 	@Column()
 	private String phone;
-	
-	//ToString, for testing
-	public String toString()
-	{
-		return ("Vendor => id::" + vendor_id +
-				", name::" + name +
-				", primary_email::" + primary_email +
-				", contact_name::" + contact_name +
-				", address::" + address +
-				", city::" + city +
-				", state::" + state +
-				", phone::" + phone);	
-	}
-	
+
 }

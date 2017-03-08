@@ -48,19 +48,4 @@ public class TimesheetRow {
 	@Column()
 	private int hours_7;
 	
-	
-	//ToString, for testing
-		public String toString()
-		{
-			return ("TimesheetRow => id::" + timesheet_row_id +
-					", timesheet_id::" + timesheet_id +
-					", week_no::" + week_no +
-					", hours_1::" + hours_1 +
-					", hours_2::" + hours_2 +
-					", hours_3::" + hours_3 +
-					", hours_4::" + hours_4 +
-					", hours_5::" + hours_5 +
-					", hours_6::" + hours_6 +
-					", hours_7::" + hours_7);
-		}
 }	
