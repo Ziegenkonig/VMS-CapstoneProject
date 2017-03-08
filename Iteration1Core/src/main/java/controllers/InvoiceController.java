@@ -18,6 +18,8 @@ public class InvoiceController{
 
   @PostMapping("/invoice")
   public String invoiceSubmit(@ModelAttribute Invoice invoice){
-    
+    //store in the service
+    invoiceService.create(invoice);
+    return "invoiceResult"
   }
 }

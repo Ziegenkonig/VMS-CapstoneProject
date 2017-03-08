@@ -11,12 +11,15 @@ public class ProjectController{
 
   @GetMapping("/project")
   public String projectForm(Model model){
-
+    model.addAttribute("project", new Project());
+    return "project";
   }
 
 
   @PostMapping("/project")
-  public String projectSubmit(){
-
+  public String projectSubmit(@ModelAttribute Project project){
+    //store in the service
+    projectService.create(project);
+    return "projectResult";
   }
 }

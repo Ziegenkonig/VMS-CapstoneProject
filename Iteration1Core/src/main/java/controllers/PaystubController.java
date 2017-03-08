@@ -11,12 +11,15 @@ public class PaystubController{
 
   @GetMapping("/paystub")
   public String paystubForm(Model model){
-
+    model.addAttribute("paystub", new Paystub());
+    return "paystub";
   }
 
 
   @PostMapping("/paystub")
-  public String paystubSubmit(){
-
+  public String paystubSubmit(@ModelAttribute Paystub paystub){
+    //store in the service
+    paystubService.create(paystub);
+    return "paystubResult"
   }
 }

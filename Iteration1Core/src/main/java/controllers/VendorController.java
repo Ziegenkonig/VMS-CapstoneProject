@@ -11,12 +11,15 @@ public class VendorController{
 
   @GetMapping("/vendor")
   public String vendorForm(Model model){
-
+    model.addAttribute("vendor", new Vendor());
+    return "vendor";
   }
 
 
   @PostMapping("/vendor")
-  public String vendorSubmit(){
-
+  public String vendorSubmit(@ModelAttribute Vendor vendor){
+    //store in the service
+    vendorService.create(vendor);
+    return "vendorResult";
   }
 }

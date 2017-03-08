@@ -11,12 +11,15 @@ public class TimesheetController{
 
   @GetMapping("/timesheet")
   public String timesheetForm(Model model){
-
+    model.addAttribute("timesheet", new Timesheet());
+    return "timesheet";
   }
 
 
   @PostMapping("/timesheet")
-  public String timesheetSubmit(){
-
+  public String timesheetSubmit(@ModelAttribute Timesheet timesheet){
+    //store in the service
+    timesheetService.create(timesheet);
+    return "timesheetResult";
   }
 }
