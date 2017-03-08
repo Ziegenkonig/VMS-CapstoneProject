@@ -1,8 +1,7 @@
 package com.vms.models;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -12,11 +11,9 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -30,6 +27,7 @@ the pay rate for the project (timesheet.proj-emp.project)
 
 @Data //standard getters/setters
 @Entity
+@Table(name="invoices")
 public class Invoice {
 
 	@Id @GeneratedValue
@@ -40,7 +38,7 @@ public class Invoice {
 	
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
-    private Timestamp created_date;
+    private Date created_date;
 	
 //fields to store info from other tables
 	//from project
@@ -73,6 +71,6 @@ public class Invoice {
 	
 	@PrePersist
 	protected void onCreate() {
-		created_date = new Timestamp(Calendar.getInstance().getTime().getTime());
+		created_date = new Date(Calendar.getInstance().getTime().getTime());
 	}
 }

@@ -1,8 +1,5 @@
 package com.vms.models;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +24,7 @@ public class TimesheetRow {
 	
 	//Foreign Key timesheet_id - relates to the timesheet object each row belongs to
 	@ManyToOne @JoinColumn(name = "timesheet_id")
-	private Timesheet timesheet_id;
+	private Timesheet timesheet;
 	
 	//Regular ol attributes
 	@Column()

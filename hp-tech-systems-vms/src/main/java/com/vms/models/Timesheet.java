@@ -1,6 +1,5 @@
 package com.vms.models;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -14,11 +13,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data //standard getters/setters
 @Entity
+@Table(name="timesheets")
 public class Timesheet {
 	
 	@Id @GeneratedValue
@@ -37,11 +38,11 @@ public class Timesheet {
 	
 //fks
 	@ManyToMany//(cascade = CascadeType.ALL)
-	@JoinTable(joinColumns = @JoinColumn(name = "timesheet_id", referencedColumnName = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id"))
+	@JoinTable(name="TIMESHEET_INVOICE", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
     private List<Invoice> invoices; 
 	
 	@ManyToMany//(cascade = CascadeType.ALL)
-	@JoinTable(joinColumns = @JoinColumn(name = "timesheet_id", referencedColumnName = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "paystub_id", referencedColumnName = "paystub_id"))
+	@JoinTable(name="TIMESHEET_PAYSTUB", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "paystub_id"))
     private List<Invoice> paystubs; 
 	
 	@ManyToOne

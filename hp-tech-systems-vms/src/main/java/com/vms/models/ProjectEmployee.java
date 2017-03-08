@@ -1,8 +1,6 @@
 package com.vms.models;
 
-import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
