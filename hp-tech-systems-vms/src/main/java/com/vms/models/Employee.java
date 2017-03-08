@@ -1,10 +1,12 @@
 package com.vms.models;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -31,5 +33,10 @@ public class Employee {
 	private String state;
 	private Date hire_date;
 	private boolean active;
+	
+	//The parameter mappedBy is necessary for OneToMany relationships
+	//It references the foreign key name inside of the associated entity
+	@OneToMany(mappedBy="employee")
+	private List<ProjectEmployee> projemps;
 }
 

@@ -1,10 +1,13 @@
 package com.vms.models;
 
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,22 +26,19 @@ public class ProjectEmployee {
 	
 	//This isn't in the schema, but I had to define this new ID for ProjectEmployee to
 	//simplify the relationships
-	@Id @GeneratedValue()
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int project_employee_id;
 	
 	//Foreign Keys
-	//Note the way you have to reference the Entity you are pulling the FK from
+	//@JoinColumn is necessary for a ManyToOne relationship
 	@ManyToOne @JoinColumn(name = "project_id")
-	private Project project_id;
+	private Project project;
     @ManyToOne @JoinColumn(name = "emp_id")
-	private Employee employee_id;
+	private Employee employee;
 	
 	//Regular ol Attributes
-	@Column()
-	private double pay_rate;
-	@Column()
+	private BigDecimal pay_rate;
 	private Date date_started;
-	@Column()
 	private Date date_ended;
 	
 }

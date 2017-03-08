@@ -9,31 +9,35 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data //This annotation automatically generated getters/setters for this entity
+@Data //This annotation automatically generates getters/setters for this entity
 @Entity //Tells Hibernate that this class is to be treated as an entity
-@Table(name = "vendors")
+@Table(name = "vendors") //Specifies what the table name is
 public class Vendor {
-	
-	//Attributes//
-	
+
 	//Primary Key
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int vendor_id;
 	
 	//Regular ol Attributes
-	@Column()
+	@Column(length = 32)
 	private String name;
-	@Column()
+	
+	@Column(length = 50)
 	private String primary_email;
-	@Column()
+	
+	@Column(length = 64)
 	private String contact_name;
-	@Column()
+	
+	@Column(length = 50)
 	private String address;
-	@Column()
+	
+	@Column(length = 16)
 	private String city;
-	@Column()
-	private String state;
-	@Column()
-	private String phone;
-
+	
+	@Column(length = 2)
+	private String state; //Should be two capital letters
+	
+	@Column(length = 10)
+	private String phone; //not including non-numerical characters
+	
 }

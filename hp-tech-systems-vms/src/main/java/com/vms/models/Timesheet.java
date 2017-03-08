@@ -36,7 +36,7 @@ public class Timesheet {
 	private String image_url;
 	private int no_hours;
 	
-//fks
+	//fks
 	@ManyToMany//(cascade = CascadeType.ALL)
 	@JoinTable(name="TIMESHEET_INVOICE", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
     private List<Invoice> invoices; 
