@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
-public class PaystubController(){
+public class PaystubController{
 
   @GetMapping("/paystub")
   public String paystubForm(Model model){

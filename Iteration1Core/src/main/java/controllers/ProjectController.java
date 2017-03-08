@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
-public class ProjectController(){
+public class ProjectController{
 
   @GetMapping("/project")
   public String projectForm(Model model){

@@ -1,13 +1,16 @@
 package com.vms.models;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -18,27 +21,24 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "projects")
-public class Project {
+@Table(name = "projectsEmployees")
+public class ProjectEmployee {
 	
 	//This isn't in the schema, but I had to define this new ID for ProjectEmployee to
 	//simplify the relationships
-	@Id @GeneratedValue()
-	private int project_id;
-
-	//Regular attributes.  Does not yet include length some specialties(i.e. BigDecimal)
-	private String name;
-	private double billing_rate;
-	private String client_name;
-	private String client_location;
-	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int project_employee_id;
 	
 	//Foreign Keys
-	//Note the way you have to reference the Entity you are pulling the FK from
-	@ManyToOne @JoinColumn(name = "vendor_id")
-	private Vendor vendor_id;
+	//@JoinColumn is necessary for a ManyToOne relationship
+	@ManyToOne @JoinColumn(name = "project_id")
+	private Project project;
+    @ManyToOne @JoinColumn(name = "emp_id")
+	private Employee employee;
 	
-	@OneToMany(mappedBy = "project")
-	private List<ProjectEmployee> projemps;
+	//Regular ol Attributes
+	private BigDecimal pay_rate;
+	private Date date_started;
+	private Date date_ended;
+	
 }
-

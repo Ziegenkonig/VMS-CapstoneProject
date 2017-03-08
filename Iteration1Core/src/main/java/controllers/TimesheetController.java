@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
-public class TimesheetController(){
+public class TimesheetController{
 
   @GetMapping("/timesheet")
   public String timesheetForm(Model model){
