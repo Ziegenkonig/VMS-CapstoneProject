@@ -1,8 +1,7 @@
 package com.vms.models;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -18,7 +17,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 import lombok.Data; 
 
 /* can I get the following with some get methods?
@@ -29,7 +27,7 @@ the pay rate for the project (timesheet.proj-emp.project)
 
 @Data //standard getters/setters
 @Entity
-@Table(name = "invoices")
+@Table(name="invoices")
 public class Invoice {
 
 	@Id @GeneratedValue
@@ -38,10 +36,9 @@ public class Invoice {
 	@Enumerated(EnumType.STRING)
 	private InvoiceStatus status;
 	
-
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
-    private Timestamp created_date;
+    private Date created_date;
 	
 //fields to store info from other tables
 	//from project
@@ -57,7 +54,7 @@ public class Invoice {
 	// one month from period_end
 	private Date payment_due;
 	
-	//@alex should this be stored in vendor/project?
+	//from vendor.contact_name
 	private String recruiter;
 	
 	//from vendor
@@ -74,7 +71,7 @@ public class Invoice {
 	
 	@PrePersist
 	protected void onCreate() {
-		created_date = new Timestamp(Calendar.getInstance().getTime().getTime());
+		created_date = new Date(Calendar.getInstance().getTime().getTime());
 	}
-	
+
 }

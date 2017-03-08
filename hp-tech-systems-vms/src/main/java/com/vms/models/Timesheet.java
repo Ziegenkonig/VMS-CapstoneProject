@@ -36,13 +36,13 @@ public class Timesheet {
 	private String image_url;
 	private int no_hours;
 	
-//fks
+	//fks
 	@ManyToMany//(cascade = CascadeType.ALL)
-	@JoinTable(joinColumns = @JoinColumn(name = "timesheet_id", referencedColumnName = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id"))
+	@JoinTable(name="TIMESHEET_INVOICE", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
     private List<Invoice> invoices; 
 	
 	@ManyToMany//(cascade = CascadeType.ALL)
-	@JoinTable(joinColumns = @JoinColumn(name = "timesheet_id", referencedColumnName = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "paystub_id", referencedColumnName = "paystub_id"))
+	@JoinTable(name="TIMESHEET_PAYSTUB", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "paystub_id"))
     private List<Invoice> paystubs; 
 	
 	@ManyToOne

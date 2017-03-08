@@ -24,40 +24,31 @@ public class TimesheetRow {
 	
 	//Foreign Key timesheet_id - relates to the timesheet object each row belongs to
 	@ManyToOne @JoinColumn(name = "timesheet_id")
-	private Timesheet timesheet_id;
+	private Timesheet timesheet;
 	
 	//Regular ol attributes
-	@Column()
-	private int week_no;
+	@Column(length = 1) 
+	private int week_no; // weekly = 1, biweekly = 1 or 2
 	
-	@Column()
+	@Column(length = 1)
 	private int hours_1;
-	@Column()
+	
+	@Column(length = 1)
 	private int hours_2;
-	@Column()
+	
+	@Column(length = 1)
 	private int hours_3;
-	@Column()
+	
+	@Column(length = 1)
 	private int hours_4;
-	@Column()
+	
+	@Column(length = 1)
 	private int hours_5;
-	@Column()
+	
+	@Column(length = 1)
 	private int hours_6;
-	@Column()
+	
+	@Column(length = 1)
 	private int hours_7;
 	
-	
-	//ToString, for testing
-		public String toString()
-		{
-			return ("TimesheetRow => id::" + timesheet_row_id +
-					", timesheet_id::" + timesheet_id +
-					", week_no::" + week_no +
-					", hours_1::" + hours_1 +
-					", hours_2::" + hours_2 +
-					", hours_3::" + hours_3 +
-					", hours_4::" + hours_4 +
-					", hours_5::" + hours_5 +
-					", hours_6::" + hours_6 +
-					", hours_7::" + hours_7);
-		}
 }	

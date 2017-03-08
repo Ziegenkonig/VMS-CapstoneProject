@@ -1,8 +1,7 @@
 package com.vms.models;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class Paystub {
 	
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
-    private Timestamp created_date;
+    private Date created_date;
 	
 // calculated or imported fields
 	//pay period start and end (14/7 day interval)
@@ -74,7 +73,14 @@ public class Paystub {
 	
 	@PrePersist
 	protected void onCreate() {
-		created_date = new Timestamp(Calendar.getInstance().getTime().getTime());
+		created_date = new Date(Calendar.getInstance().getTime().getTime());
 	}
+	
+	/*// testing Lombok - should not have any errors
+	private void printSomething() {
+		Invoice myinvoice = new Invoice();
+		myinv.getAddress();
+	}
+	*/
 	
 }

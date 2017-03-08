@@ -7,5 +7,5 @@ import com.vms.models.ProjectEmployee;
 
 @Repository
 public interface ProjectEmployeeRepository extends JpaRepository<ProjectEmployee, Long> {
- 
+	
 }
