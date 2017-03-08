@@ -9,5 +9,5 @@ import com.vms.services.VendorServiceImpl;
 public class VendorController {
 	@Autowired
 	private VendorServiceImpl vendorService = new VendorServiceImpl();
-	
+
 }
