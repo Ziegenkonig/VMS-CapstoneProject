@@ -1,4 +1,4 @@
-package com.vms.controllers;
+package controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,18 +7,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
-public class InvoiceController {
+public class InvoiceController{
 
   @GetMapping("/invoice")
-  public String invoiceForm(Model model) {
-	
-	  return null;
+  public String invoiceForm(Model model){
+    model.addAttribute("invoice", new Invoice());
+    return "invoice";
   }
 
 
   @PostMapping("/invoice")
-  public String invoiceSubmit() {
-
-	  return null;
+  public String invoiceSubmit(@ModelAttribute Invoice invoice){
+    //store in the service
+    invoiceService.create(invoice);
+    return "invoiceResult";
   }
 }

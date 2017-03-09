@@ -15,35 +15,37 @@ import lombok.Data;
 @Table(name = "vendors") //Specifies what the table name is
 public class Vendor {
 
+//could we just have a superclass, then have vendor extend it?
+
 	//Primary Key
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int vendor_id;
-	
+
 	//Regular ol Attributes
 	@Column(length = 32)
 	private String name;
-	
+
 	@Column(length = 50)
 	private String primary_email;
-	
+
 	@Column(length = 64)
 	private String contact_name;
-	
+
 	@Column(length = 50)
 	private String address;
-	
+
 	@Column(length = 16)
 	private String city;
-	
+
 	@Column(length = 2)
 	private String state; //Should be two capital letters
-	
+
 	@Column(length = 10)
 	private String phone; //not including non-numerical characters
-	
+
 	@PrePersist //called before actual insertion into database
 	protected void onCreate() {
-		
+
 	}
-	
+
 }

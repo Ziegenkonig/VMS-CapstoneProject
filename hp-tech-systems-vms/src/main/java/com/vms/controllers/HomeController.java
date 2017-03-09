@@ -5,13 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vms.models.Vendor;
-import com.vms.services.VendorService;
+import com.vms.services.VendorServiceImpl;
 
 @Controller
 public class HomeController {
 	//Just throwing this in for testing
 	@Autowired
-	private VendorService vendorService = new VendorService();
+	private VendorServiceImpl vendorService = new VendorServiceImpl();
 
 	
 	@RequestMapping("/")

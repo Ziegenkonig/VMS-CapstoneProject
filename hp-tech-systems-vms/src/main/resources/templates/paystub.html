@@ -2,14 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title>Create a paystub</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
-    <h1>Paystub</h1>
+    <h1>Form</h1>
     <form action="#" th:action="@{/paystub}" th:object="${paystub}" method="post">
         <p>Id:<input type="text" th:field="*{id}" /></p>
+        <p>paystub_id: <input type="text" th:field="*{paystub_id}" /></p>
+        <p>check_no: <input type="text" th:field="*{check_no}" /></p>
+        <p>created_date: <input type="text" th:field="*{created_date}" /></p>
+        <p>period_start: <input type="text" th:field="*{period_start}" /></p>
+        <p>period_end: <input type="text" th:field="*{period_end}" /></p>
+        <p>pay_date: <input type="text" th:field="*{pay_date}" /></p>
+        <p>net_pay: <input type="text" th:field="*{net_pay}" /></p>
+        <p>ytd_net_pay: <input type="text" th:field="*{ytd_net_pay}" /></p>
+        <p>total: <input type="text" th:field="*{total}" /></p>
+        <p>ytd_gross: <input type="text" th:field="*{ytd_gross}" /></p>
+
+        <p>first_name: <input type="text" th:field="*{first_name}" /></p>
+        <p>last_name: <input type="text" th:field="*{last_name}" /></p>
+        <p>address: <input type="text" th:field="*{address}" /></p>
+        <p>city: <input type="text" th:field="*{city}" /></p>
+        <p>state: <input type="text" th:field="*{state}" /></p>
+        <p>phone: <input type="text" th:field="*{phone}" /></p>
+
+        <p>ytd_deductions: <input type="text" th:field="*{ytd_deductions}" /></p>
+        <p>deductions: <input type="text" th:field="*{deductions}" /></p>
+
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </body>

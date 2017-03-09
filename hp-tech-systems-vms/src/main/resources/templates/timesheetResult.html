@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invoice Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Result</h1>
+    <!--<p th:text="': ' + ${timesheet.}/>"-->
+    <p th:text="'id: ' + ${timesheet.timesheet_id}" />
+    <p th:text="'week_starting: ' + ${timesheet.week_starting}" />
+    <p th:text="'period: ' + ${timesheet.period}" />
+    <p th:text="'status: ' + ${timesheet.status}" />
+    <p th:text="'image_url: ' + ${timesheet.image_url}" />
+    <p th:text="'no_hours: ' + ${timesheet.no_hours}" />
+
+    <a href="/paystub">Submit another message</a>
+</body>
+</html>

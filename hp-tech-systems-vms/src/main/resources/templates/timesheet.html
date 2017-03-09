@@ -2,14 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title>Create an Employee</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
-    <h1>Timesheet</h1>
-    <form action="#" th:action="@{/timesheet}" th:object="${timesheet}" method="post">
-        <p>Id:<input type="text" th:field="*{id}" /></p>
+    <h1>Form</h1>
+    <form action="#" th:action="@{/employee}" th:object="${employee}" method="post">
+        <p>timesheet_id:<input type="text" th:field="*{timesheet_id}" /></p>
+        <p>week_starting:<input type="text" th:field="*{week_starting}" /></p>
+        <p>period:<input type="text" th:field="*{period}" /></p>
+        <p>status:<input type="text" th:field="*{status}" /></p>
+        <p>image_url:<input type="text" th:field="*{image_url}" /></p>
+        <p>no_hours:<input type="text" th:field="*{no_hours}" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </body>

@@ -2,14 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title>Create an Employee</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
-    <h1>Invoice</h1>
+    <h1>Form</h1>
     <form action="#" th:action="@{/invoice}" th:object="${invoice}" method="post">
-        <p>Id:<input type="text" th:field="*{id}" /></p>
+        <p>invoice_id: <input type="text" th:field="*{invoice_id}" /></p>
+        <p>status: <input type="text" th:field="*{status}" /></p>
+        <p>created_date: <input type="text" th:field="*{created_date}" /></p>
+        <p>rate: <input type="text" th:field="*{rate}" /></p>
+        <p>total_hours: <input type="text" th:field="*{total_hours}" /></p>
+        <p>total_amt: <input type="text" th:field="*{total_amt}" /></p>
+        <p>period_start: <input type="text" th:field="*{period_start}" /></p>
+        <p>period_end: <input type="text" th:field="*{period_end}" /></p>
+        <p>payment_due: <input type="text" th:field="*{payment_due}" /></p>
+        <p>name: <input type="text" th:field="*{name}" /></p>
+        <p>address: <input type="text" th:field="*{address}" /></p>
+        <p>city: <input type="text" th:field="*{city}" /></p>
+        <p>state: <input type="text" th:field="*{state}" /></p>
+        <p>phone: <input type="text" th:field="*{phone}" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </body>

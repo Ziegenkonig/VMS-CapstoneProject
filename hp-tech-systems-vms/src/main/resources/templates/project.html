@@ -2,15 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title>Create an Employee</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
-    <h1>Project</h1>
-    <form action="#" th:action="@{/project}" th:object="${project}" method="post">
-        <p>Id:<input type="text" th:field="*{id}" /></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    <h1>Form</h1>
+    <form action="#" th:action="@{/employee}" th:object="${employee}" method="post">
+        <p>project_id:<input type="text" th:field="*{project_id}" /></p>
+        <p>name: <input type="text" th:field="*{name}" /></p>
+        <p>billing_rate: <input type="text" th:field="*{billing_rate}" /></p>
+        <p>client_name: <input type="text" th:field="*{client_name}" /></p>
+        <p>client_location: <input type="text" th:field="*{client_location}" /></p>
     </form>
 </body>
 
