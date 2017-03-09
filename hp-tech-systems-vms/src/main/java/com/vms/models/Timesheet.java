@@ -38,14 +38,22 @@ public class Timesheet {
 	private String image_url;
 	private int no_hours;
 	
-	public Timesheet(ProjectEmployee proj_emp) {
-		TimesheetRow week1 = new TimesheetRow();
-		week1.setTimesheet(this);
+	//methods
+	public Timesheet(ProjectEmployee proj_emp, Date period_start) {
+		this.week_starting = period_start;
+		TimesheetRow week1 = new TimesheetRow(this, 1);
 		weeks.add(week1);
 		if(proj_emp.getEmployee().getPay_period() == 2) {
-			TimesheetRow week2 = new TimesheetRow();
-			week2.setTimesheet(this);
+			TimesheetRow week2 = new TimesheetRow(this, 2);
 			weeks.add(week2);
+		}
+		status = com.vms.models.TimesheetStatus.NOT_SUBMITTED;
+	}
+	
+	public void calcNo_Hours() {
+		no_hours = 0;
+		for(TimesheetRow tr:weeks) {
+			no_hours += tr.calculateTotalHours();
 		}
 	}
 	

@@ -51,4 +51,23 @@ public class TimesheetRow {
 	@Column(length = 1)
 	private int hours_7;
 	
+	//methods
+	public TimesheetRow() {
+		this.hours_1 = 0;
+		this.hours_2 = 0;
+		this.hours_3 = 0;
+		this.hours_4 = 0;
+		this.hours_5 = 0;
+		this.hours_6 = 0;
+		this.hours_7 = 0;
+	}
+	
+	public TimesheetRow(Timesheet t, int week_no) {
+		this();
+		this.timesheet = t;
+	}
+	
+	public int calculateTotalHours() {
+		return hours_1 + hours_2 + hours_3 + hours_4 + hours_5 + hours_6 + hours_7;
+	}
 }	

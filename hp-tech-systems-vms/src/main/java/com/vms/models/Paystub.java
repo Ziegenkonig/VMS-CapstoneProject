@@ -68,6 +68,7 @@ public class Paystub {
 	private BigDecimal ytd_deductions;
 	private BigDecimal deductions;
 	
+	//constructor	
 	
 	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "paystubs")
     private List<Timesheet> timesheets;
