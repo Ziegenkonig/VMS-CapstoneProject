@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.vms.models.Vendor;
 
 @Repository
-public interface VendorRepository extends JpaRepository<Vendor, Long> {
-	Vendor findByName(String name);
+public interface VendorRepository extends JpaRepository<Vendor, Integer> {
+	
 }

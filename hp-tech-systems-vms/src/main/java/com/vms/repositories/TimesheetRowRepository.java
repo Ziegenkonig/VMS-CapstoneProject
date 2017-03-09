@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.vms.models.TimesheetRow;
 
 @Repository
-public interface TimesheetRowRepository extends JpaRepository<TimesheetRow, Long> {
+public interface TimesheetRowRepository extends JpaRepository<TimesheetRow, Integer> {
 	
 }
