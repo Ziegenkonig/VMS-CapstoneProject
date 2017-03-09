@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invoice Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Result</h1>
+    <!--<p th:text="': ' + ${timesheet.}/>"-->
+    <p th:text="'id: ' + ${vendor.vendor_id}" />
+    <p th:text="'name: ' + ${vendor.name}" />
+    <p th:text="'primary_email: ' + ${vendor.primary_email}" />
+    <p th:text="'contact_name: ' + ${vendor.contact_name}" />
+    <p th:text="'address: ' + ${vendor.address}" />
+    <p th:text="'city: ' + ${vendor.city}" />
+    <p th:text="'state: ' + ${vendor.state}" />
+    <p th:text="'phone: ' + ${vendor.phone}" />
+
+    <a href="/paystub">Submit another message</a>
+</body>
+</html>
+vendor_id
