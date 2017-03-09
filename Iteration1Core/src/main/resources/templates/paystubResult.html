@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invoice Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Result</h1>
+    <!--<p th:text="': ' + ${paystub.}/>"-->
+    <p th:text="'id: ' + ${paystub.paystub_id}" />
+    <p th:text="'check_no: ' + ${paystub.check_no}" />
+    <p th:text="'created_date: ' + ${paystub.created_date}" />
+    <p th:text="'rate: ' + ${paystub.rate}" />
+    <p th:text="'period_start: ' + ${paystub.period_start}" />
+    <p th:text="'period_end: ' + ${paystub.period_end}" />
+    <p th:text="'total_hours: ' + ${paystub.total_hours}" />
+    <p th:text="'pay_date: ' + ${paystub.pay_date}" />
+    <p th:text="'net_pay: ' + ${paystub.net_pay}" />
+    <p th:text="'ytd_net_pay: ' + ${paystub.ytd_net_pay}" />
+    <p th:text="'total: ' + ${paystub.total}" />
+    <p th:text="'ytd_gross: ' + ${paystub.ytd_gross}" />
+    <!--This section needs to be replaced with an employee object-->
+    <p th:text="'firstname: ' + ${paystub.firstname}" />
+    <p th:text="'lastname: ' + ${paystub.lastname}" />
+    <p th:text="'city: ' + ${paystub.city}" />
+    <p th:text="'state: ' + ${paystub.state}" />
+    <p th:text="'phone: ' + ${paystub.phone}" />
+                        <!---->
+    <p th:text="'ytd_deductions: ' + ${paystub.ytd_deductions}"/>
+    <p th:text="'deductions: ' + ${paystub.deductions}/>
+
+
+    <a href="/employee">Submit another message</a>
+</body>
+</html>

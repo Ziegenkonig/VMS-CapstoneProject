@@ -27,60 +27,60 @@ the pay rate for each project (timesheet.proj-emp)
 @Entity
 @Table(name = "paystubs")
 public class Paystub {
-	
+
 	@Id @GeneratedValue
 	private int paystub_id;
-	
+
 	//deposit number
 	private int check_no;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Date created_date;
-	
+
 // calculated or imported fields
 	//pay period start and end (14/7 day interval)
 	private Date period_start;
 	private Date period_end;
-	
+
 	//advice date (period end + 10?)
 	private Date pay_date;
-	
-	//net pay same as amount of check 
+
+	//net pay same as amount of check
 	private BigDecimal net_pay; //total - deductions
 	private BigDecimal ytd_net_pay; //ytd_gross - ytd_deductions
-	
+
 	//federal taxable wages
 	private BigDecimal total; //sum(timesheet.no_hours * timesheet.projemp.pay_rate) over timesheet list
 	private BigDecimal ytd_gross; //previous paystub ytd_gross + this.total
-	
-	//from employee
+
+	//This needs to be an employee object instead of putting it all over the place
 	private String first_name;
 	private String last_name;
 	private String address;
 	private String city;
 	private String state;
-	
+
 	//employer info saved in global variables somewhere
-	
+
 	// may not be implemented default as 0
 	private BigDecimal ytd_deductions;
 	private BigDecimal deductions;
-	
-	
+
+
 	@ManyToMany(mappedBy = "paystubs")//(cascade = CascadeType.ALL)
     private List<Timesheet> timesheets;
-	
+
 	@PrePersist
 	protected void onCreate() {
 		created_date = new Date(Calendar.getInstance().getTime().getTime());
 	}
-	
+
 	/*// testing Lombok - should not have any errors
 	private void printSomething() {
 		Invoice myinvoice = new Invoice();
 		myinv.getAddress();
 	}
 	*/
-	
+
 }
