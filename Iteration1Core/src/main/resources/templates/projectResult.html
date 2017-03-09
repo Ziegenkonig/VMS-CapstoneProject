@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invoice Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Result</h1>
+    <!--<p th:text="': ' + ${project.}/>"-->
+    <p th:text="'name: ' + ${project.name}" />
+    <p th:text="'billing_rate: ' + ${project.billing_rate}" />
+    <p th:text="'client_name: ' + ${project.client_name}" />
+    <p th:text="'client_location: ' + ${project.client_location}" />
+
+
+    <a href="/paystub">Submit another message</a>
+</body>
+</html>
