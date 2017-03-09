@@ -20,11 +20,11 @@ public class TimesheetService {
 		return timesheetRepo.findOne(id);
 	}
 
-	public Timesheet create(Timesheet Timesheet) {
-		return timesheetRepo.save(Timesheet);
+	public Timesheet create(Timesheet timesheet) {
+		return timesheetRepo.save(timesheet);
 	}
 	
-	public Timesheet edit(Timesheet Timesheet) {
-		return timesheetRepo.save(Timesheet);
+	public Timesheet edit(Timesheet timesheet) {
+		return timesheetRepo.save(timesheet);
 	}
 }

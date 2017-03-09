@@ -20,11 +20,11 @@ public class PaystubService {
 		return paystubRepo.findOne(id);
 	}
 
-	public Paystub create(Paystub Paystub) {
-		return paystubRepo.save(Paystub);
+	public Paystub create(Paystub paystub) {
+		return paystubRepo.save(paystub);
 	}
 	
-	public Paystub edit(Paystub Paystub) {
-		return paystubRepo.save(Paystub);
+	public Paystub edit(Paystub paystub) {
+		return paystubRepo.save(paystub);
 	}
 }
