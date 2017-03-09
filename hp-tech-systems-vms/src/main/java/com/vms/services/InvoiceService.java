@@ -12,6 +12,7 @@ public class InvoiceService {
 	@Autowired
 	private InvoiceRepository invRepo;
 	
+	//repo methods
 	public List<Invoice> findAll() {
 		return invRepo.findAll();
 	}

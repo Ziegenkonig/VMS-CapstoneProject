@@ -12,6 +12,7 @@ public class PaystubService {
 	@Autowired
 	private PaystubRepository paystubRepo;
 	
+	//repo methods
 	public List<Paystub> findAll() {
 		return paystubRepo.findAll();
 	}

@@ -38,6 +38,17 @@ public class Timesheet {
 	private String image_url;
 	private int no_hours;
 	
+	public Timesheet(ProjectEmployee proj_emp) {
+		TimesheetRow week1 = new TimesheetRow();
+		week1.setTimesheet(this);
+		weeks.add(week1);
+		if(proj_emp.getEmployee().getPay_period() == 2) {
+			TimesheetRow week2 = new TimesheetRow();
+			week2.setTimesheet(this);
+			weeks.add(week2);
+		}
+	}
+	
 	//fks
 	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name="TIMESHEET_INVOICE", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
