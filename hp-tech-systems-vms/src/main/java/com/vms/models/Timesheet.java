@@ -1,6 +1,7 @@
 package com.vms.models;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -40,6 +41,7 @@ public class Timesheet {
 	
 	//methods
 	public Timesheet(ProjectEmployee proj_emp, Date period_start) {
+		weeks = new ArrayList<TimesheetRow>();
 		this.week_starting = period_start;
 		this.projemp = proj_emp;
 		TimesheetRow week1 = new TimesheetRow(this, 1);
