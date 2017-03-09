@@ -39,4 +39,9 @@ public class ProjectEmployee {
 	private Date date_started;
 	private Date date_ended;
 	
+	public ProjectEmployee(Employee e, Project p) {
+		this.employee = e;
+		this.project = p;
+	}
+	
 }

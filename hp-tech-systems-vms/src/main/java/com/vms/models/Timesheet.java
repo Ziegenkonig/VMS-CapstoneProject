@@ -41,6 +41,7 @@ public class Timesheet {
 	//methods
 	public Timesheet(ProjectEmployee proj_emp, Date period_start) {
 		this.week_starting = period_start;
+		this.projemp = proj_emp;
 		TimesheetRow week1 = new TimesheetRow(this, 1);
 		weeks.add(week1);
 		if(proj_emp.getEmployee().getPay_period() == 2) {

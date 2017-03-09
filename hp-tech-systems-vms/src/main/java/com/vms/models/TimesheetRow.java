@@ -65,6 +65,7 @@ public class TimesheetRow {
 	public TimesheetRow(Timesheet t, int week_no) {
 		this();
 		this.timesheet = t;
+		this.week_no = week_no;
 	}
 	
 	public int calculateTotalHours() {
