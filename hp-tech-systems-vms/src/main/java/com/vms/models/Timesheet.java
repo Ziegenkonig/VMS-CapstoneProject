@@ -51,4 +51,10 @@ public class Timesheet {
 	
 	@OneToMany(mappedBy="timesheet")
 	private List<TimesheetRow> weeks;
+	
+	public String toString() {
+		return ("Employee: " + projemp.getEmployee() + 
+				" Project: " + projemp.getProject() +
+				" Dates: " + projemp.getDate_started() + " - " + projemp.getDate_ended());
+	}
 }

@@ -74,4 +74,9 @@ public class Invoice {
 		created_date = new Date(Calendar.getInstance().getTime().getTime());
 	}
 
+	public String toString() {
+		return ("Vendor: " + name + 
+				" Dates: " + period_start + " - " + period_end);
+	}
+	
 }

@@ -3,10 +3,12 @@ package com.vms.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vms.models.ProjectEmployee;
 import com.vms.repositories.ProjectEmployeeRepository;
 
+@Service
 public class ProjectEmployeeService {
 
 	//pulling in repository

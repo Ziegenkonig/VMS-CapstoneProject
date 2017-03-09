@@ -83,4 +83,9 @@ public class Paystub {
 	}
 	*/
 	
+	public String toString() {
+		return ("Employee: " + first_name + " " + last_name +
+				"Dates: " + period_start + " - " + period_end);
+	}
+	
 }

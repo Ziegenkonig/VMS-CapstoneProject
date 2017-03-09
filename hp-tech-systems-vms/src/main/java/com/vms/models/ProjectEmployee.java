@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -36,9 +37,17 @@ public class ProjectEmployee {
     @ManyToOne @JoinColumn(name = "emp_id")
 	private Employee employee;
 	
+    @OneToMany(mappedBy = "projemp")
+    private List<Timesheet> timesheets;
+    
 	//Regular ol Attributes
 	private BigDecimal pay_rate;
 	private Date date_started;
 	private Date date_ended;
+	
+	public String toString() {
+		return ("Employee: " + employee + 
+				"Project: " + project);
+	}
 	
 }

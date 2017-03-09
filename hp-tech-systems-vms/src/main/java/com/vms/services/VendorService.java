@@ -3,11 +3,13 @@ package com.vms.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vms.models.Vendor;
 import com.vms.repositories.VendorRepository;
 
 //This interface is implemented by VendorServiceImpl
+@Service
 public class VendorService {
 	
 	//pulling in repository

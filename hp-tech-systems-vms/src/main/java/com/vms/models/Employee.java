@@ -38,4 +38,8 @@ public class Employee {
 	//It references the foreign key name inside of the associated entity
 	@OneToMany(mappedBy="employee")
 	private List<ProjectEmployee> projemps;
+	
+	public String toString() {
+		return (first_name + " " + last_name);
+	}
 }

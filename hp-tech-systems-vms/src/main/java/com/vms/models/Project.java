@@ -40,5 +40,9 @@ public class Project {
 	
 	@OneToMany(mappedBy = "project")
 	private List<ProjectEmployee> projemps;
+	
+	public String toString() {
+		return name;
+	}
 }
 

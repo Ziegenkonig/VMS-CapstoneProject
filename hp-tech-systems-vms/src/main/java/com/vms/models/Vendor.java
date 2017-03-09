@@ -41,9 +41,8 @@ public class Vendor {
 	@Column(length = 10)
 	private String phone; //not including non-numerical characters
 	
-	@PrePersist //called before actual insertion into database
-	protected void onCreate() {
-		
+	public String toString() {
+		return name;
 	}
 	
 }

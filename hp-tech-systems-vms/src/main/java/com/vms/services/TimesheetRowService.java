@@ -3,10 +3,12 @@ package com.vms.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vms.models.TimesheetRow;
 import com.vms.repositories.TimesheetRowRepository;
 
+@Service
 public class TimesheetRowService {
 
 	//pulling in repository
