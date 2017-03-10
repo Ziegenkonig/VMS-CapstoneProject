@@ -1,6 +1,7 @@
 package com.vms.models;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -36,15 +37,15 @@ public class Paystub {
 	
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
-    private Date created_date;
+    private LocalDate created_date;
 	
 // calculated or imported fields
 	//pay period start and end (14/7 day interval)
-	private Date period_start;
-	private Date period_end;
+	private LocalDate period_start;
+	private LocalDate period_end;
 	
 	//advice date (period end + 10?)
-	private Date pay_date;
+	private LocalDate pay_date;
 	
 	//net pay same as amount of check 
 	private BigDecimal net_pay; //total - deductions
@@ -73,7 +74,7 @@ public class Paystub {
 	
 	@PrePersist
 	protected void onCreate() {
-		created_date = new Date(Calendar.getInstance().getTime().getTime());
+		created_date = LocalDate.now();
 	}
 	
 	/*// testing Lombok - should not have any errors

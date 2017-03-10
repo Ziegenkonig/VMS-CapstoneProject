@@ -18,24 +18,24 @@ public class ProjectEmployeeService {
 	//General methods
 	
 	//creates a new object in table
-	void create(ProjectEmployee projEmp) {
+	public void create(ProjectEmployee projEmp) {
 		projEmpRepo.save(projEmp);
 	}
 	
 	//update a new object in table
-	void update(ProjectEmployee projEmp) {
+	public void update(ProjectEmployee projEmp) {
 		projEmpRepo.save(projEmp);
 	}
 	
 	//Search methods
 	
 	//returns one object with specified id
-	ProjectEmployee findOne(Integer id) {
+	public ProjectEmployee findOne(Integer id) {
 		return projEmpRepo.findOne(id);
 	}
 	
 	//returns all objects
-	List<ProjectEmployee> findAll() {
+	public List<ProjectEmployee> findAll() {
 		return projEmpRepo.findAll();
 	}
 		

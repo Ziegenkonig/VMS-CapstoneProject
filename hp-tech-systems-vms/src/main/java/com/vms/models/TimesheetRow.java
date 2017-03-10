@@ -27,28 +27,49 @@ public class TimesheetRow {
 	private Timesheet timesheet;
 	
 	//Regular ol attributes
-	@Column(length = 1) 
+	@Column(length = 2) 
 	private int week_no; // weekly = 1, biweekly = 1 or 2
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_1;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_2;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_3;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_4;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_5;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_6;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_7;
+	
+	//methods
+	public TimesheetRow() {
+		this.hours_1 = 0;
+		this.hours_2 = 0;
+		this.hours_3 = 0;
+		this.hours_4 = 0;
+		this.hours_5 = 0;
+		this.hours_6 = 0;
+		this.hours_7 = 0;
+	}
+	
+	public TimesheetRow(Timesheet t, int week_no) {
+		this();
+		this.timesheet = t;
+		this.week_no = week_no;
+	}
+	
+	public int calculateTotalHours() {
+		return hours_1 + hours_2 + hours_3 + hours_4 + hours_5 + hours_6 + hours_7;
+	}
 	
 }	

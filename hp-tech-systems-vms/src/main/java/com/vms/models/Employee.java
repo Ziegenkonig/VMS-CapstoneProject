@@ -33,6 +33,7 @@ public class Employee {
 	private String state;
 	private Date hire_date;
 	private boolean active;
+	private int pay_period; //weekly, biweekly
 	
 	//The parameter mappedBy is necessary for OneToMany relationships
 	//It references the foreign key name inside of the associated entity

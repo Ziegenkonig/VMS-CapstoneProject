@@ -1,11 +1,15 @@
 package com.vms.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,7 +29,7 @@ public class Timesheet {
 	@Id @GeneratedValue
 	private int timesheet_id;
 	
-	private Date week_starting;
+	private LocalDate week_starting;
 	
 	//might change to enum weekly/biweekly
 	private int period;
@@ -49,12 +53,39 @@ public class Timesheet {
 	@JoinColumn(name = "project_employee_id")
 	private ProjectEmployee projemp;
 	
-	@OneToMany(mappedBy="timesheet")
+	@OneToMany(mappedBy="timesheet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<TimesheetRow> weeks;
 	
+	
+	//Methods
+	
+	//Constructor
+	public Timesheet(ProjectEmployee proj_emp, LocalDate period_start) {
+		weeks = new ArrayList<TimesheetRow>();
+		this.projemp = proj_emp;
+		this.week_starting = period_start;
+		this.period = proj_emp.getEmployee().getPay_period();
+		TimesheetRow week1 = new TimesheetRow(this, 1);
+		weeks.add(week1);
+		if(proj_emp.getEmployee().getPay_period() == 2) {
+			TimesheetRow week2 = new TimesheetRow(this, 2);
+			weeks.add(week2);
+		}
+		status = com.vms.models.TimesheetStatus.NOT_SUBMITTED;
+	}
+	
+	//calculates total number of hours
+	public void calcNo_Hours() {
+		no_hours = 0;
+		for(TimesheetRow tr:weeks) {
+			no_hours += tr.calculateTotalHours();
+		}
+	}
+	//toString
 	public String toString() {
 		return ("Employee: " + projemp.getEmployee() + 
 				" Project: " + projemp.getProject() +
 				" Dates: " + projemp.getDate_started() + " - " + projemp.getDate_ended());
 	}
+	
 }

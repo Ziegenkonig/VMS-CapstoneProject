@@ -1,7 +1,9 @@
 package com.vms.models;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class Invoice {
 	
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
-    private Date created_date;
+    private LocalDate created_date;
 	
 //fields to store info from other tables
 	//from project
@@ -48,11 +50,11 @@ public class Invoice {
 	private BigDecimal total_amt; //total_hours * rate
 	
 	//pay period start and end (14/7 day interval)
-	private Date period_start;
-	private Date period_end;
+	private LocalDate period_start;
+	private LocalDate period_end;
 
 	// one month from period_end
-	private Date payment_due;
+	private LocalDate payment_due;
 	
 	//from vendor.contact_name
 	private String recruiter;
@@ -69,11 +71,52 @@ public class Invoice {
 	@ManyToMany(mappedBy = "invoices")//(cascade = CascadeType.ALL)
     private List<Timesheet> timesheets; 
 	
+	//Methods
+	
+	//Constructor
+	public Invoice(List<Timesheet> timesheets) {
+		//Setting timesheets
+		this.timesheets = timesheets;
+		Timesheet ts = timesheets.get(0); //grabbing the first timesheet in the list
+		
+		//Setting period_start/period_end based on info from timesheet
+		this.period_start = ts.getWeek_starting();
+		if (ts.getPeriod() == 2)
+			this.period_end = this.period_start.plusDays(14);
+		else
+			this.period_end = this.period_start.plusDays(7);
+		
+		//Setting payment_due
+		this.payment_due = this.payment_due.plusMonths(1);
+		
+		//Grabbing the vendor out of the timesheet object and using it to set all kinds of info
+		Vendor vendor = ts.getProjemp().getProject().getVendor();
+		this.name = vendor.getName();
+		this.address = vendor.getAddress();
+		this.city = vendor.getCity();
+		this.state = vendor.getState();
+		this.phone = vendor.getPhone();
+		this.recruiter = vendor.getContact_name();
+		
+		//Setting rate
+		this.rate = ts.getProjemp().getProject().getBilling_rate();
+		
+		//Setting total_hours
+		this.total_hours = 0;
+		for(Timesheet i : timesheets)
+			this.total_hours += i.getNo_hours();
+		
+		//Setting total_amount
+		this.total_amt = this.rate.multiply(BigDecimal.valueOf(total_hours));
+	}
+	
+	//Called before .save
 	@PrePersist
 	protected void onCreate() {
-		created_date = new Date(Calendar.getInstance().getTime().getTime());
+		created_date = LocalDate.now();
 	}
-
+	
+	//toString
 	public String toString() {
 		return ("Vendor: " + name + 
 				" Dates: " + period_start + " - " + period_end);

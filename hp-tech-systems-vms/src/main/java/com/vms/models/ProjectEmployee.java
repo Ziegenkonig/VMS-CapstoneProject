@@ -2,6 +2,7 @@ package com.vms.models;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -42,12 +43,23 @@ public class ProjectEmployee {
     
 	//Regular ol Attributes
 	private BigDecimal pay_rate;
-	private Date date_started;
-	private Date date_ended;
+	private LocalDate date_started;
+	private LocalDate date_ended;
 	
+	//Methods
+	//toString
 	public String toString() {
 		return ("Employee: " + employee + 
 				"Project: " + project);
+	}
+	//Default constructor
+	public ProjectEmployee() {
+		
+	}
+	//Nondefault constructor
+	public ProjectEmployee(Employee employee, Project project) {
+		this.employee = employee;
+		this.project = project;
 	}
 	
 }
