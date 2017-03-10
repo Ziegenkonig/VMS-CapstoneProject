@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -43,6 +45,10 @@ public class ProjectTimesheet {
 	
 	@OneToMany(mappedBy="projTimesheet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<TimesheetRow> weeks;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name="PROJECTTIMESHEET_INVOICE", joinColumns = @JoinColumn(name = "projectTimesheetId"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
+    private List<Invoice> invoices; 
 	
 	
 	//Methods
