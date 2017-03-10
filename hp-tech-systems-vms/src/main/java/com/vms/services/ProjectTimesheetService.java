@@ -16,7 +16,8 @@ public class ProjectTimesheetService {
 	@Autowired
 	private ProjectTimesheetRepository projTSRepo;
 	
-	public List<ProjectTimesheet> timsheetsForInvoice(Project p, LocalDate weekStarting) {
+	//return all ProjectTimesheets for a period - used to make an invoice
+	public List<ProjectTimesheet> timesheetsForInvoice(Project p, LocalDate weekStarting) {
 		return projTSRepo.findByProjectIdAndWeekStarting(p.getProjectId(), weekStarting);
 	}
 	
