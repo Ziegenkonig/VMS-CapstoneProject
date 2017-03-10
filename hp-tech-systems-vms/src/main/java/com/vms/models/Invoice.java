@@ -38,6 +38,7 @@ public class Invoice {
 	@Enumerated(EnumType.STRING)
 	private InvoiceStatus status;
 	
+	//columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private LocalDate created_date;

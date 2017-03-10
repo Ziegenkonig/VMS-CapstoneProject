@@ -3,12 +3,12 @@ package com.vms.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import com.vms.models.Timesheet;
 import com.vms.repositories.TimesheetRepository;
 
-@Controller
+@Service
 public class TimesheetService {
 	
 	@Autowired
@@ -22,11 +22,12 @@ public class TimesheetService {
 		return timesheetRepo.findOne(id);
 	}
 
-	public Timesheet create(Timesheet timesheet) {
-		return timesheetRepo.save(timesheet);
+	public Timesheet create(Timesheet Timesheet) {
+		return timesheetRepo.save(Timesheet);
 	}
 	
-	public Timesheet edit(Timesheet timesheet) {
-		return timesheetRepo.save(timesheet);
+	public Timesheet edit(Timesheet Timesheet) {
+		return timesheetRepo.save(Timesheet);
 	}
 }
+
