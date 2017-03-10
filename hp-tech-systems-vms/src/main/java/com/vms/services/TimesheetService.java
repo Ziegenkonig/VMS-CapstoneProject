@@ -1,7 +1,5 @@
 package com.vms.services;
 
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,22 +31,19 @@ public class TimesheetService {
 		return timesheetRepo.save(timesheet);
 	}
 	
-	//Returns timesheets from most recent period for specified employee
-	public List<Timesheet> currentTimesheets(Employee employee) {
-		List<LocalDate> uniquePeriods = timesheetRepo.uniqueWeekStarting(employee.getEmpId());
-		
-		return timesheetRepo.timesheetsMatchToPeriod(uniquePeriods.get(0), employee.getEmpId());
+	//Returns open timesheets for specified employee - current timesheet would be thisList.get(0)
+	public List<Timesheet> openTimesheets(Employee e) {
+		return timesheetRepo.findByEmployeeAndStatusOrderByWeekStartingDesc(e, com.vms.models.TimesheetStatus.NOT_SUBMITTED);
 	}
 	
-	//returns a list of all timesheets organized by weekStarted
-	public HashMap<LocalDate, List<Timesheet>> timesheetHistory(Employee employee) {
-		List<LocalDate> uniquePeriods = timesheetRepo.uniqueWeekStarting(employee.getEmpId());
-		
-		HashMap<LocalDate, List<Timesheet>> timesheetMap = new HashMap<LocalDate, List<Timesheet>>();
-		for(LocalDate date : uniquePeriods) 
-			timesheetMap.put(date, timesheetRepo.timesheetsMatchToPeriod(date, employee.getEmpId()));
-
-		return timesheetMap;
+	//returns a list of all timesheets for an employee organized by weekStarted
+	public List<Timesheet> timesheetHistory(Employee e) {
+		return timesheetRepo.findByEmployeeOrderByWeekStartingDesc(e);
+	}
+	
+	//find pending timesheets for admin review
+	public List<Timesheet> pendingTimesheets() {
+		return timesheetRepo.findByStatus(com.vms.models.TimesheetStatus.PENDING);
 	}
 }
 

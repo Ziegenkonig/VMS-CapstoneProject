@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.vms.models.Employee;
 import com.vms.models.Timesheet;
+import com.vms.models.TimesheetStatus;
 
 public interface TimesheetRepository extends JpaRepository<Timesheet, Integer>{
 	
@@ -19,6 +21,15 @@ public interface TimesheetRepository extends JpaRepository<Timesheet, Integer>{
 			nativeQuery = true)
 	public List<Timesheet> timesheetsMatchToPeriod(@Param(":period") LocalDate period, @Param("empId") Integer empId); 
 	
-	List<Timesheet> findByEmpIdOrderByWeekStartingDesc(Integer empId);
+	//timesheetHistory
+	public List<Timesheet> findByEmployeeOrderByWeekStartingDesc(Employee e);
+	
+	//openTimesheets
+	public List<Timesheet> findByEmployeeAndStatusOrderByWeekStartingDesc(Employee e, TimesheetStatus status);
+	
+	//pendingTimesheets
+	public List<Timesheet> findByStatus(TimesheetStatus status);
+
+	//List<Timesheet> findByEmpIdOrderByWeekStartingDesc(Integer empId);
 	
 }

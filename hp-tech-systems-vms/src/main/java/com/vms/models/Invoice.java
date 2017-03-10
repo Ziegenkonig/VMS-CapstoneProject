@@ -62,14 +62,14 @@ public class Invoice {
 	//employer info saved in global variables somewhere
 	
 	//constructor
-	public Invoice(List<Timesheet> timesheets) {
+	public Invoice(List<ProjectTimesheet> projTimesheets) { 
 		//Setting timesheets
-		this.timesheets = timesheets;
-		Timesheet ts = timesheets.get(0); //grabbing the first timesheet in the list
+		this.projTimesheets = projTimesheets;
+		ProjectTimesheet pt = projTimesheets.get(0); //grabbing the first timesheet in the list
 		
 		//Setting period_start/period_end based on info from timesheet
-		this.periodStart = ts.getWeekStarting();
-		ProjectEmployee proj_emp = ts.getProjemp();
+		this.periodStart = pt.getWeekStarting();
+		ProjectEmployee proj_emp = pt.getProjemp();
 		if (proj_emp.getEmployee().getPayPeriod() == 2)
 			this.periodEnd = this.periodStart.plusDays(14);
 		else
@@ -78,7 +78,7 @@ public class Invoice {
 		//Setting payment_due
 		this.paymentDue = this.paymentDue.plusMonths(1);
 		
-		//Grabbing the vendor out of the timesheet object and using it to set all kinds of info
+		//Grabbing the project/vendor out of the timesheet object and using it to set all kinds of info
 		Project proj = proj_emp.getProject();
 		this.projectId = proj.getProjectId();
 		Vendor vendor = proj.getVendor();
@@ -95,15 +95,15 @@ public class Invoice {
 		
 		//Setting total_hours
 		this.totalHours = 0;
-		for(Timesheet i : timesheets)
-			this.totalHours += i.getNoHours();
+		for(ProjectTimesheet i : projTimesheets)
+			this.totalHours += i.calcTotalHoursOfPT();
 		
 		//Setting total_amount
 		this.totalAmt = this.rate.multiply(BigDecimal.valueOf(totalHours));
 	}
 	
 	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "invoices", cascade = CascadeType.ALL)
-    private List<Timesheet> timesheets; 
+    private List<ProjectTimesheet> projTimesheets; 
 	
 	//Called before .save
 	@PrePersist

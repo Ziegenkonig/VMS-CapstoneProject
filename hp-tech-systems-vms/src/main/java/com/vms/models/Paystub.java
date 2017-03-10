@@ -2,15 +2,13 @@ package com.vms.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
@@ -25,7 +23,7 @@ public class Paystub {
 	private int paystubId;
 	//reference
 	private int empId;
-	private int projectId;
+	//private int projectId;
 	
 	//deposit number
 	private int checkNo;
@@ -75,12 +73,12 @@ public class Paystub {
 	private BigDecimal ytd401k;
 	
 	//constructor
-	public Paystub(List<Timesheet> timesheets, Paystub previous) { //the input here is the list of timesheets from query that it should be generated from, and the previous paystub also from query
-		this.timesheets = timesheets;
+	public Paystub(Timesheet ts, Paystub previous) { //the input here is the list of timesheets from query that it should be generated from, and the previous paystub also from query
+		this.timesheet = ts;
 		//info should be same from all timesheets
-		Timesheet ts = timesheets.get(0);
+		//Timesheet ts = timesheets.get(0);
 		this.periodStart = ts.getWeekStarting();
-		Employee emp = ts.getProjemp().getEmployee();
+		Employee emp = ts.getEmployee();
 		this.empId = emp.getEmpId();
 		if(emp.getPayPeriod() == 2) {
 			this.periodEnd = this.periodStart.plusDays(14);
@@ -91,16 +89,10 @@ public class Paystub {
 		this.address = emp.getAddress();
 		this.city = emp.getCity();
 		this.state = emp.getState();
-		this.projectId = ts.getProjemp().getProject().getProjectId();
+		//this.projectId = ts.getProjemp().getProject().getProjectId();
 		
 		//math
-		BigDecimal total = BigDecimal.valueOf(0);
-		for(Timesheet t: timesheets) {
-			t.calcNoHours();
-			double hours = t.getNoHours();
-			total.add(new BigDecimal(hours).multiply(t.getProjemp().getPayRate())); 
-		}
-		this.total = total;
+		this.total = ts.calcEarned();
 		//deduction math - 0 for now
 		this.federalTax = BigDecimal.ZERO;
 		this.stateTax = BigDecimal.ZERO;
@@ -124,8 +116,9 @@ public class Paystub {
 		this.ytd401k = previous.getA401k().subtract(this.a401k);
 	}
 	
-	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "paystubs", cascade = CascadeType.ALL)
-    private List<Timesheet> timesheets;
+	@ManyToOne//(cascade = CascadeType.ALL)
+	@JoinColumn(name = "timesheet_id")
+    private Timesheet timesheet;
 	
 	@PrePersist
 	protected void onCreate() {

@@ -23,11 +23,11 @@ public class TimesheetRow {
 	private int timesheetRowId; 
 	
 	//Foreign Key timesheet_id - relates to the timesheet object each row belongs to
-	@ManyToOne @JoinColumn(name = "timesheet_id")
-	private Timesheet timesheet;
+	@ManyToOne @JoinColumn(name = "project_timesheet_id")
+	private ProjectTimesheet projTimesheet;
 	
 	//Regular ol attributes
-	@Column(length = 2) 
+	@Column(length = 1) 
 	private int weekNo; // weekly = 1, biweekly = 1 or 2
 	
 	@Column(length = 2)
@@ -62,13 +62,13 @@ public class TimesheetRow {
 		this.hours7 = 0;
 	}
 	
-	public TimesheetRow(Timesheet t, int week_no) {
+	public TimesheetRow(ProjectTimesheet pt, int week_no) {
 		this();
-		this.timesheet = t;
+		this.projTimesheet = pt;
 		this.weekNo = week_no;
 	}
 	
-	public int calculateTotalHours() {
+	public int calculateTotalHoursOfTR() {
 		return hours1 + hours2 + hours3 + hours4 + hours5 + hours6 + hours7;
 	}
 
