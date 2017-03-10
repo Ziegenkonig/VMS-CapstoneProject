@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vms.models.Employee;
 import com.vms.models.Invoice;
-import com.vms.models.Paystub;
 import com.vms.models.Project;
 import com.vms.models.Vendor;
 import com.vms.repositories.InvoiceRepository;
@@ -19,13 +17,13 @@ public class InvoiceService {
 	private InvoiceRepository invRepo;
 	
 	//return all invoices for an project starting with most recent
-	public List<Paystub> findInvoiceByProject(Project p) {
-		invRepo.findByProjIdOrderByPeriodStartDesc(p.getProjectId());
+	public List<Invoice> findInvoiceByProject(Project p) {
+		return invRepo.findByProjectIdOrderByPeriodStartDesc(p.getProjectId());
 	}
 	
 	//return all invoices for an vendor starting with most recent
-	public List<Paystub> findInvoiceByVendor(Vendor v) {
-		invRepo.findByVendorIdOrderByPeriodStartDesc(v.getVendorId());
+	public List<Invoice> findInvoiceByVendor(Vendor v) {
+		return invRepo.findByVendorIdOrderByPeriodStartDesc(v.getVendorId());
 	}
 	
 	//basic repo methods
