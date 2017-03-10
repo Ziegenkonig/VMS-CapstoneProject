@@ -17,9 +17,11 @@ public interface TimesheetRepository extends JpaRepository<Timesheet, Integer>{
 			nativeQuery = true)
 	public List<LocalDate> uniqueWeekStarting(@Param("empId") Integer empId);
 	
+	/*
 	@Query( value = "SELECT * FROM timesheets WHERE weekStarting = :period AND employeeId = :empId",
 			nativeQuery = true)
 	public List<Timesheet> timesheetsMatchToPeriod(@Param(":period") LocalDate period, @Param("empId") Integer empId); 
+	*/
 	
 	//timesheetHistory
 	public List<Timesheet> findByEmployeeOrderByWeekStartingDesc(Employee e);

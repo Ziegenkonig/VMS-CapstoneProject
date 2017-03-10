@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vms.models.Project;
+import com.vms.models.Vendor;
 import com.vms.repositories.ProjectRepository;
 
 @Service
@@ -14,7 +15,10 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository projRepo;
 	
-	//public List<Project> find
+	//
+	public List<Project> findByVendor(Vendor v) {
+		return projRepo.findByVendor(v);
+	}
 	
 	//basic repo methods
 	public List<Project> findAll() {

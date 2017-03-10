@@ -14,8 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -51,13 +49,15 @@ public class Timesheet { //new summary timesheet
 	private List<ProjectTimesheet> projTimesheets;
 	//fks
 	
+	/*
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name="TIMESHEET_INVOICE", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
     private List<Invoice> invoices; 
+    */
 	
 	@OneToMany(mappedBy="timesheet", cascade = CascadeType.ALL)
 	//@JoinTable(name="TIMESHEET_PAYSTUB", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "paystub_id"))
-    private List<Invoice> paystubs; 
+    private List<Paystub> paystubs; 
 	
 	//Methods
 	
