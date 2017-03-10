@@ -19,6 +19,7 @@ jar {
 
 repositories {
     mavenCentral()
+    maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
 }
 
 sourceCompatibility = 1.8
@@ -28,6 +29,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
     testCompile("junit:junit")
-    compileOnly "org.projectlombok:lombok:1.16.14"
+
 
 }
