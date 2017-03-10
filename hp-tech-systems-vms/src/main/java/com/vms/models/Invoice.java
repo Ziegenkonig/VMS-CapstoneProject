@@ -32,6 +32,9 @@ public class Invoice {
 	@Enumerated(EnumType.STRING)
 	private InvoiceStatus status;
 	
+	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "invoices", cascade = CascadeType.ALL)
+    private List<ProjectTimesheet> projTimesheets; 
+	
     @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate createdDate;
 	
@@ -50,7 +53,7 @@ public class Invoice {
 	private LocalDate periodStart;
 	@Column(nullable = false)
 	private LocalDate periodEnd;
-
+	
 	// one month from period_end
 	@Column(nullable = false)
 	private LocalDate paymentDue;
@@ -113,9 +116,6 @@ public class Invoice {
 		//Setting total_amount
 		this.totalAmt = this.rate.multiply(BigDecimal.valueOf(totalHours));
 	}
-	
-	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "invoices", cascade = CascadeType.ALL)
-    private List<ProjectTimesheet> projTimesheets; 
 	
 	//Called before .save
 	@PrePersist
