@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,9 +32,13 @@ public class Project {
 	private int projectId;
 
 	//Regular attributes.  Does not yet include length some specialties(i.e. BigDecimal)
-	private String name;
+	@Column(nullable = false)
 	private BigDecimal billingRate;
+	@Column(length = 64, nullable = false)
+	private String name;
+	@Column(length = 64, nullable = false)
 	private String clientName;
+	@Column(length = 64, nullable = false)
 	private String clientLocation;
 	
 	

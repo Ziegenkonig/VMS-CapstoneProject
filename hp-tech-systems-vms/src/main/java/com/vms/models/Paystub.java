@@ -33,25 +33,37 @@ public class Paystub {
 	
 // calculated or imported fields
 	//pay period start and end (14/7 day interval)
+    @Column(nullable = false)
 	private LocalDate periodStart;
+    @Column(nullable = false)
 	private LocalDate periodEnd;
 	
 	//advice date (period end + 10?)
+	@Column(nullable = false)
 	private LocalDate payDate;
 	
 	//net pay same as amount of check 
+	@Column(nullable = false)
 	private BigDecimal netPay; //total - deductions
+	@Column(nullable = false)
 	private BigDecimal ytdNetPay; //ytd_gross - ytd_deductions
 	
 	//federal taxable wages
+	@Column(nullable = false)
 	private BigDecimal total; //sum(timesheet.no_hours * timesheet.projemp.pay_rate) over timesheet list
+	@Column(nullable = false)
 	private BigDecimal ytdGross; //previous paystub ytd_gross + this.total
 	
 	//from employee
+	@Column(length = 32, nullable = false)
 	private String firstname;
+	@Column(length = 32, nullable = false)
 	private String lastname;
+	@Column(length = 120, nullable = false)
 	private String address;
+	@Column(length = 64, nullable = false)
 	private String city;
+	@Column(length = 32, nullable = false)
 	private String state;
 	
 	//employer info saved in global variables somewhere

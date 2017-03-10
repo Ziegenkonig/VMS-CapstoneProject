@@ -37,26 +37,38 @@ public class Invoice {
 	
 //fields to store info from other tables
 	//from project
+    @Column(nullable = false)
 	private BigDecimal rate; //timesheet.projemp.project.pay_rate
 	
+    @Column(nullable = false)
 	private double totalHours; //sum(timesheet.no_hours) over timesheet list
+    @Column(nullable = false)
 	private BigDecimal totalAmt; //total_hours * rate
 	
 	//pay period start and end (14/7 day interval)
+	@Column(nullable = false)
 	private LocalDate periodStart;
+	@Column(nullable = false)
 	private LocalDate periodEnd;
 
 	// one month from period_end
+	@Column(nullable = false)
 	private LocalDate paymentDue;
 	
 	//from vendor.contact_name
+	@Column(length = 64)
 	private String recruiter;
 	
 	//from vendor
+	@Column(length = 64, nullable = false)
 	private String name;
+	@Column(length = 120, nullable = false)
 	private String address;
+	@Column(length = 64, nullable = false)
 	private String city;
+	@Column(length = 64, nullable = false)
 	private String state;
+	@Column(length = 64, nullable = false)
 	private String phone;
 	
 	//employer info saved in global variables somewhere

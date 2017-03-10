@@ -19,25 +19,25 @@ public class Vendor {
 	private int vendorId;
 	
 	//Regular ol Attributes
-	@Column(length = 32)
+	@Column(length = 32, nullable = false)
 	private String name;
 	
-	@Column(length = 50)
+	@Column(length = 50, nullable = false)
 	private String primaryEmail;
 	
-	@Column(length = 64)
+	@Column(length = 64, nullable = false)
 	private String contactName;
 	
-	@Column(length = 50)
+	@Column(length = 50, nullable = false)
 	private String address;
 	
-	@Column(length = 16)
+	@Column(length = 16, nullable = false)
 	private String city;
 	
-	@Column(length = 2)
+	@Column(length = 2, nullable = false)
 	private String state; //Should be two capital letters
 	
-	@Column(length = 10)
+	@Column(length = 10, nullable = false)
 	private String phone; //not including non-numerical characters
 	
 	public String toString() {

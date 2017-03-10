@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -34,7 +35,7 @@ public class Timesheet { //new summary timesheet
 	private Employee employee;
 	//private int empId;
 	//private int projectId;
-	
+	@Column(nullable = false)
 	private LocalDate weekStarting;
 	
 	//might change to enum weekly/biweekly

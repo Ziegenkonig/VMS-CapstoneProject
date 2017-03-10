@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,10 +25,12 @@ public class ProjectTimesheet {
 	@Id @GeneratedValue
 	private int projectTimesheetId;
 	//references
+	@Column(nullable = false)
 	private int projectId;
 	
+	@Column(length = 164)
 	private String imageUrl;
-	
+	@Column(nullable = false)
 	private LocalDate weekStarting;
 	
 	@ManyToOne

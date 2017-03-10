@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,8 +41,11 @@ public class ProjectEmployee {
     private List<Timesheet> timesheets;
     
 	//Regular ol Attributes
+	@Column(nullable = false)
 	private BigDecimal payRate;
+	@Column(nullable = false)
 	private LocalDate dateStarted;
+	@Column(nullable = false)
 	private LocalDate dateEnded;
 	
 	//Methods
