@@ -20,12 +20,12 @@ public class InvoiceService {
 	
 	//return all invoices for an project starting with most recent
 	public List<Paystub> findInvoiceByProject(Project p) {
-		invRepo.findByProjIdOrderByPeriodStartDesc(p.getProjectId());
+		invRepo.findByProjectIdOrderByPeriodStartDesc(p.getProjectId());
 	}
 	
 	//return all invoices for an vendor starting with most recent
 	public List<Paystub> findInvoiceByVendor(Vendor v) {
-		invRepo.findByVendorIdOrderByPeriodStartDesc(v.getVendorId());
+		invRepo.findByProjectIdOrderByPeriodStartDesc(v.getVendorId());
 	}
 	
 	//basic repo methods
