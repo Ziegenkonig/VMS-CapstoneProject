@@ -65,10 +65,10 @@ public class Timesheet {
 		weeks = new ArrayList<TimesheetRow>();
 		this.projemp = proj_emp;
 		this.week_starting = period_start;
-		this.period = proj_emp.getEmployee().getPay_period();
+		this.period = proj_emp.getEmployee().getPayPeriod();
 		TimesheetRow week1 = new TimesheetRow(this, 1);
 		weeks.add(week1);
-		if(proj_emp.getEmployee().getPay_period() == 2) {
+		if(proj_emp.getEmployee().getPayPeriod() == 2) {
 			TimesheetRow week2 = new TimesheetRow(this, 2);
 			weeks.add(week2);
 		}

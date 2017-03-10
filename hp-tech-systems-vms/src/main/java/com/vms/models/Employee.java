@@ -21,20 +21,20 @@ public class Employee {
 	
 	//Primary Key
 	@Id @GeneratedValue()
-	private int emp_id;
+	private int empId;
 	
 	//Regular attributes.  Does not yet include length, hashing, or some specialties(i.e. tinyint)
 	private String username;
 	private String password;
-	private String first_name;
-	private String last_name;
-	private int permission_level;
+	private String firstname;
+	private String lastname;
+	private int permissionLevel;
 	private String address;
 	private String city;
 	private String state;
-	private LocalDate hire_date;
+	private LocalDate hireDate;
 	private boolean active;
-	private int pay_period; //weekly, biweekly
+	private int payPeriod; //weekly, biweekly
 	
 	//The parameter mappedBy is necessary for OneToMany relationships
 	//It references the foreign key name inside of the associated entity
@@ -42,7 +42,7 @@ public class Employee {
 	private List<ProjectEmployee> projemps;
 	
 	public String toString() {
-		return (first_name + " " + last_name);
+		return (firstname + " " + lastname);
 	}
 }
 

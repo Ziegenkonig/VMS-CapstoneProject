@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.vms.models.Invoice;
 import com.vms.models.InvoiceStatus;
+import com.vms.models.Paystub;
 
 public interface InvoiceRepository extends JpaRepository<Invoice, Integer>{
 	//find all invoices by vendor name
@@ -27,4 +28,6 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer>{
 	//find all invoices by status
 	@Query
 	public List<Invoice> findByStatus(InvoiceStatus status);
+	
+	public List<Invoice> findByProjIdOrderByPeriodStartDesc(int proj_id);
 }
