@@ -27,22 +27,22 @@ public class ProjectEmployee {
 	//This isn't in the schema, but I had to define this new ID for ProjectEmployee to
 	//simplify the relationships
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int project_employee_id;
+	private int projectEmployeeId;
 	
 	//Foreign Keys
 	//@JoinColumn is necessary for a ManyToOne relationship
-	@ManyToOne @JoinColumn(name = "project_id")
+	@ManyToOne @JoinColumn(name = "projectId")
 	private Project project;
-    @ManyToOne @JoinColumn(name = "emp_id")
+    @ManyToOne @JoinColumn(name = "empId")
 	private Employee employee;
 	
     @OneToMany(mappedBy = "projemp")
     private List<Timesheet> timesheets;
     
 	//Regular ol Attributes
-	private BigDecimal pay_rate;
-	private LocalDate date_started;
-	private LocalDate date_ended;
+	private BigDecimal payRate;
+	private LocalDate dateStarted;
+	private LocalDate dateEnded;
 	
 	//Methods
 	//toString

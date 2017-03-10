@@ -17,17 +17,17 @@ public class Vendor {
 
 	//Primary Key
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int vendor_id;
+	private int vendorId;
 	
 	//Regular ol Attributes
 	@Column(length = 32)
 	private String name;
 	
 	@Column(length = 50)
-	private String primary_email;
+	private String primaryEmail;
 	
 	@Column(length = 64)
-	private String contact_name;
+	private String contactName;
 	
 	@Column(length = 50)
 	private String address;
