@@ -1,5 +1,6 @@
 package com.vms.models;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class Project {
 
 	//Regular attributes.  Does not yet include length some specialties(i.e. BigDecimal)
 	private String name;
-	private double billing_rate;
+	private BigDecimal billing_rate;
 	private String client_name;
 	private String client_location;
 	
@@ -36,7 +37,7 @@ public class Project {
 	//Foreign Keys
 	//Note the way you have to reference the Entity you are pulling the FK from
 	@ManyToOne @JoinColumn(name = "vendor_id")
-	private Vendor vendor_id;
+	private Vendor vendor;
 	
 	@OneToMany(mappedBy = "project")
 	private List<ProjectEmployee> projemps;

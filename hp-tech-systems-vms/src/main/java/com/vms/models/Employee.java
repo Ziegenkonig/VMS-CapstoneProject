@@ -40,5 +40,6 @@ public class Employee {
 	//It references the foreign key name inside of the associated entity
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="employee")
 	private List<ProjectEmployee> projemps;
+	
 }
 

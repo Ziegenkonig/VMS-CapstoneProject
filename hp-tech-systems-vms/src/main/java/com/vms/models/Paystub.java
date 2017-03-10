@@ -23,6 +23,8 @@ public class Paystub {
 	
 	@Id @GeneratedValue
 	private int paystub_id;
+	//reference
+	private int emp_id;
 	
 	//deposit number
 	private int check_no;
@@ -78,6 +80,7 @@ public class Paystub {
 		Timesheet ts = timesheets.get(0);
 		this.period_start = ts.getWeek_starting();
 		Employee emp = ts.getProjemp().getEmployee();
+		this.emp_id = emp.getEmp_id();
 		if(emp.getPay_period() == 2) {
 			this.period_end = this.period_start.plusDays(14);
 		} else { this.period_end = this.period_start.plusDays(7); }
