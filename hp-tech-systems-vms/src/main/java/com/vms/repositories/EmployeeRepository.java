@@ -7,7 +7,7 @@ import com.vms.models.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
-	
-	Employee findByUsername(String username);
-	
+
+	List<Employee> findByUsername(@param("username")String username);
+
 }
