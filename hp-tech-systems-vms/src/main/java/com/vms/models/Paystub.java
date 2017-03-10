@@ -25,6 +25,7 @@ public class Paystub {
 	private int paystubId;
 	//reference
 	private int empId;
+	private int projectId;
 	
 	//deposit number
 	private int checkNo;
@@ -90,6 +91,7 @@ public class Paystub {
 		this.address = emp.getAddress();
 		this.city = emp.getCity();
 		this.state = emp.getState();
+		this.projectId = ts.getProjemp().getProject().getProjectId();
 		
 		//math
 		BigDecimal total = BigDecimal.valueOf(0);

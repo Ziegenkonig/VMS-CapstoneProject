@@ -29,5 +29,5 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer>{
 	@Query
 	public List<Invoice> findByStatus(InvoiceStatus status);
 	
-	public List<Invoice> findByProjIdOrderByPeriodStartDesc(int proj_id);
+	public List<Invoice> findByProjectIdOrderByPeriodStartDesc(int proj_id);
 }

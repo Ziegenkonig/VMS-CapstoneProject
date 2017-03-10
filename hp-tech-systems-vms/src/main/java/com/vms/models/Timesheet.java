@@ -38,6 +38,8 @@ public class Timesheet {
 	
 	private String imageUrl;
 	private int noHours;
+	private int empId;
+	private int projectId;
 	
 	//fks
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -72,6 +74,9 @@ public class Timesheet {
 			weeks.add(week2);
 		}
 		status = com.vms.models.TimesheetStatus.NOT_SUBMITTED;
+		
+		this.empId = projEmp.getEmployee().getEmpId();
+		this.projectId = projEmp.getProject().getProjectId();
 	}
 	
 	//calculates total number of hours
