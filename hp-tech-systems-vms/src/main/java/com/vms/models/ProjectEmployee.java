@@ -38,7 +38,7 @@ public class ProjectEmployee {
 	private Employee employee;
 	
     @OneToMany(mappedBy = "projemp")
-    private List<Timesheet> timesheets;
+    private List<ProjectTimesheet> projTimesheets;
     
 	//Regular ol Attributes
 	@Column(nullable = false)
