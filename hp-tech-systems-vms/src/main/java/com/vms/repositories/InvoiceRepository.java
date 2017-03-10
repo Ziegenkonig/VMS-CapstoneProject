@@ -31,4 +31,5 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer>{
 	public List<Invoice> findByProjectIdOrderByPeriodStartDesc(int proj_id);
 	
 	public List<Invoice> findByVendorIdOrderByPeriodStartDesc(int vendor_id);
+
 }
