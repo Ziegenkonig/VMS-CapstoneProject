@@ -15,8 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.Data; 
 
@@ -31,9 +29,7 @@ public class Invoice {
 	@Enumerated(EnumType.STRING)
 	private InvoiceStatus status;
 	
-	//columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
-	@Temporal(TemporalType.TIMESTAMP)
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate created_date;
 	
 //fields to store info from other tables

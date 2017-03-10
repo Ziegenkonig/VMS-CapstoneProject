@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.Data;
 
@@ -29,8 +27,7 @@ public class Paystub {
 	//deposit number
 	private int check_no;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-    @Column(updatable = false)
+	@Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate created_date;
 	
 // calculated or imported fields
@@ -61,10 +58,23 @@ public class Paystub {
 	// may not be implemented default as 0
 	private BigDecimal ytd_deductions;
 	private BigDecimal deductions;
+	private BigDecimal federal_tax;
+	private BigDecimal state_tax;
+	private BigDecimal ss_tax;
+	private BigDecimal medicare_tax;
+	private BigDecimal med_insurance;
+	private BigDecimal _401k;
+	private BigDecimal ytd_federal_tax;
+	private BigDecimal ytd_state_tax;
+	private BigDecimal ytd_ss_tax;
+	private BigDecimal ytd_medicare_tax;
+	private BigDecimal ytd_med_insurance;
+	private BigDecimal ytd_401k;
 	
 	//constructor
 	public Paystub(List<Timesheet> timesheets, Paystub previous) { //the input here is the list of timesheets from query that it should be generated from, and the previous paystub also from query
 		this.timesheets = timesheets;
+		//info should be same from all timesheets
 		Timesheet ts = timesheets.get(0);
 		this.period_start = ts.getWeek_starting();
 		Employee emp = ts.getProjemp().getEmployee();
@@ -77,6 +87,8 @@ public class Paystub {
 		this.address = emp.getAddress();
 		this.city = emp.getCity();
 		this.state = emp.getState();
+		
+		//math
 		BigDecimal total = BigDecimal.valueOf(0);
 		for(Timesheet t: timesheets) {
 			t.calcNo_Hours();
@@ -84,11 +96,27 @@ public class Paystub {
 			total.add(new BigDecimal(hours).multiply(t.getProjemp().getPay_rate())); 
 		}
 		this.total = total;
+		//deduction math - 0 for now
+		this.federal_tax = BigDecimal.ZERO;
+		this.state_tax = BigDecimal.ZERO;
+		this.ss_tax = BigDecimal.ZERO;
+		this.medicare_tax = BigDecimal.ZERO;
+		this.med_insurance = BigDecimal.ZERO;
+		this._401k = BigDecimal.ZERO;
+		//totals
+		//this.deductions = this.federal_tax.add(this.state_tax).add(this.ss_tax).add(this.medicare_tax).add(this.med_insurance).add(this._401k);
 		this.deductions = BigDecimal.ZERO;
 		this.net_pay = this.total.subtract(this.deductions);
+		//ytd
 		this.ytd_gross = previous.getYtd_gross().add(this.total);
-		this.ytd_deductions = previous.ytd_deductions.add(this.deductions);
-		this.ytd_net_pay = previous.ytd_net_pay.add(this.net_pay);
+		this.ytd_deductions = previous.getYtd_deductions().add(this.deductions);
+		this.ytd_net_pay = previous.getYtd_net_pay().add(this.net_pay);
+		this.ytd_federal_tax = previous.getFederal_tax().subtract(this.federal_tax);
+		this.ytd_state_tax = previous.getState_tax().subtract(this.state_tax);
+		this.ytd_ss_tax = previous.getSs_tax().subtract(this.ss_tax);
+		this.ytd_medicare_tax = previous.getMedicare_tax().subtract(this.medicare_tax);
+		this.ytd_med_insurance = previous.getMed_insurance().subtract(this.med_insurance);
+		this.ytd_401k = previous.get_401k().subtract(this._401k);
 	}
 	
 	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "paystubs", cascade = CascadeType.ALL)
