@@ -20,6 +20,11 @@ public class PaystubService {
 		return paystubRepo.findByEmpIdOrderByPeriodStartDesc(e.getEmpId());
 	}
 	
+	//find previous paystub
+	public Paystub findPreviousPaystubForYtd(Employee e) {
+		return paystubRepo.findByEmpIdOrderByPeriodStartDesc(e.getEmpId()).get(0);
+	}
+	
 	//basic repo methods
 	public List<Paystub> findAll() {
 		return paystubRepo.findAll();
