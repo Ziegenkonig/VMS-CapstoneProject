@@ -24,30 +24,30 @@ import lombok.Data;
 public class Invoice {
 
 	@Id @GeneratedValue
-	private int invoice_id;
+	private int invoiceId;
 	// reference
-	private int project_id;
-	private int vendor_id;
+	private int projectId;
+	private int vendorId;
 	
 	@Enumerated(EnumType.STRING)
 	private InvoiceStatus status;
 	
     @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDate created_date;
+    private LocalDate createdDate;
 	
 //fields to store info from other tables
 	//from project
 	private BigDecimal rate; //timesheet.projemp.project.pay_rate
 	
-	private double total_hours; //sum(timesheet.no_hours) over timesheet list
-	private BigDecimal total_amt; //total_hours * rate
+	private double totalHours; //sum(timesheet.no_hours) over timesheet list
+	private BigDecimal totalAmt; //total_hours * rate
 	
 	//pay period start and end (14/7 day interval)
-	private LocalDate period_start;
-	private LocalDate period_end;
+	private LocalDate periodStart;
+	private LocalDate periodEnd;
 
 	// one month from period_end
-	private LocalDate payment_due;
+	private LocalDate paymentDue;
 	
 	//from vendor.contact_name
 	private String recruiter;
@@ -68,38 +68,38 @@ public class Invoice {
 		Timesheet ts = timesheets.get(0); //grabbing the first timesheet in the list
 		
 		//Setting period_start/period_end based on info from timesheet
-		this.period_start = ts.getWeek_starting();
+		this.periodStart = ts.getWeekStarting();
 		ProjectEmployee proj_emp = ts.getProjemp();
-		if (proj_emp.getEmployee().getPay_period() == 2)
-			this.period_end = this.period_start.plusDays(14);
+		if (proj_emp.getEmployee().getPayPeriod() == 2)
+			this.periodEnd = this.periodStart.plusDays(14);
 		else
-			this.period_end = this.period_start.plusDays(7);
+			this.periodEnd = this.periodStart.plusDays(7);
 		
 		//Setting payment_due
-		this.payment_due = this.payment_due.plusMonths(1);
+		this.paymentDue = this.paymentDue.plusMonths(1);
 		
 		//Grabbing the vendor out of the timesheet object and using it to set all kinds of info
 		Project proj = proj_emp.getProject();
-		this.project_id = proj.getProject_id();
+		this.projectId = proj.getProjectId();
 		Vendor vendor = proj.getVendor();
-		this.vendor_id = vendor.getVendor_id();
+		this.vendorId = vendor.getVendorId();
 		this.name = vendor.getName();
 		this.address = vendor.getAddress();
 		this.city = vendor.getCity();
 		this.state = vendor.getState();
 		this.phone = vendor.getPhone();
-		this.recruiter = vendor.getContact_name();
+		this.recruiter = vendor.getContactName();
 		
 		//Setting rate
-		this.rate = proj_emp.getProject().getBilling_rate();
+		this.rate = proj_emp.getProject().getBillingRate();
 		
 		//Setting total_hours
-		this.total_hours = 0;
+		this.totalHours = 0;
 		for(Timesheet i : timesheets)
-			this.total_hours += i.getNo_hours();
+			this.totalHours += i.getNoHours();
 		
 		//Setting total_amount
-		this.total_amt = this.rate.multiply(BigDecimal.valueOf(total_hours));
+		this.totalAmt = this.rate.multiply(BigDecimal.valueOf(totalHours));
 	}
 	
 	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "invoices", cascade = CascadeType.ALL)
@@ -108,13 +108,13 @@ public class Invoice {
 	//Called before .save
 	@PrePersist
 	protected void onCreate() {
-		created_date = LocalDate.now();
+		createdDate = LocalDate.now();
 	}
 	
 	//toString
 	public String toString() {
 		return ("Vendor: " + name + 
-				" Dates: " + period_start + " - " + period_end);
+				" Dates: " + periodStart + " - " + periodEnd);
 	}
 	
 }

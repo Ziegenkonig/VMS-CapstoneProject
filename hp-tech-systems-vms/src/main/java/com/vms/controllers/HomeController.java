@@ -43,10 +43,10 @@ public class HomeController {
 		Vendor test = new Vendor();
 		test.setAddress("address");
 		test.setCity("city");
-		test.setContact_name("contact_name");
+		test.setContactName("contact_name");
 		test.setName("name");
 		test.setPhone("phone");
-		test.setPrimary_email("email");
+		test.setPrimaryEmail("email");
 		test.setState("tn");
 		vendorService.create(test);
 		
