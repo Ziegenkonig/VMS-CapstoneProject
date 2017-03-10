@@ -6,17 +6,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class VendorController {
+public class PaystubController {
 
-  @GetMapping("/vendor")
-  public String vendorForm(Model model) {
+  @GetMapping("/paystub")
+  public String paystubForm(Model model) {
+	  return null;
+  }
+
+
+  @PostMapping("/paystub")
+  public String paystubSubmit() {
 	  return null;
   }
   
-  
-  @PostMapping("/vendor")
-  public String vendorSubmit() {
-	  return null;
-  }
 }
-

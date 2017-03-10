@@ -18,7 +18,7 @@ import lombok.Data;
 
 @Data //standard getters/setters
 @Entity
-@Table(name="paystubs")
+@Table(name = "paystubs")
 public class Paystub {
 	
 	@Id @GeneratedValue
@@ -29,7 +29,7 @@ public class Paystub {
 	//deposit number
 	private int check_no;
 	
-	@Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate created_date;
 	
 // calculated or imported fields
@@ -136,5 +136,10 @@ public class Paystub {
 		myinv.getAddress();
 	}
 	*/
+	
+	public String toString() {
+		return ("Employee: " + first_name + " " + last_name +
+				"Dates: " + period_start + " - " + period_end);
+	}
 	
 }

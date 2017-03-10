@@ -22,7 +22,7 @@ import lombok.Data;
 
 @Data //standard getters/setters
 @Entity
-@Table(name="timesheets")
+@Table(name = "timesheets")
 public class Timesheet {
 	
 	@Id @GeneratedValue
@@ -32,34 +32,13 @@ public class Timesheet {
 	private LocalDate week_starting;
 	
 	//might change to enum weekly/biweekly
-	//private int period;
+	private int period;
 	
 	@Enumerated(EnumType.STRING)
 	private TimesheetStatus status; 
 	
 	private String image_url;
 	private int no_hours;
-	
-	//methods
-	public Timesheet(ProjectEmployee proj_emp, LocalDate period_start) {
-		weeks = new ArrayList<TimesheetRow>();
-		this.week_starting = period_start;
-		this.projemp = proj_emp;
-		TimesheetRow week1 = new TimesheetRow(this, 1);
-		weeks.add(week1);
-		if(proj_emp.getEmployee().getPay_period() == 2) {
-			TimesheetRow week2 = new TimesheetRow(this, 2);
-			weeks.add(week2);
-		}
-		status = com.vms.models.TimesheetStatus.NOT_SUBMITTED;
-	}
-	
-	public void calcNo_Hours() {
-		no_hours = 0;
-		for(TimesheetRow tr:weeks) {
-			no_hours += tr.calculateTotalHours();
-		}
-	}
 	
 	//fks
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -74,7 +53,42 @@ public class Timesheet {
 	@JoinColumn(name = "project_employee_id")
 	private ProjectEmployee projemp;
 	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="timesheet", cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy="timesheet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<TimesheetRow> weeks;
+	
+	
+	//Methods
+	
+	//Constructor
+	public Timesheet(ProjectEmployee proj_emp, LocalDate period_start) {
+		weeks = new ArrayList<TimesheetRow>();
+		this.projemp = proj_emp;
+		this.week_starting = period_start;
+		this.period = proj_emp.getEmployee().getPay_period();
+		TimesheetRow week1 = new TimesheetRow(this, 1);
+		weeks.add(week1);
+		if(proj_emp.getEmployee().getPay_period() == 2) {
+			TimesheetRow week2 = new TimesheetRow(this, 2);
+			weeks.add(week2);
+		}
+		status = com.vms.models.TimesheetStatus.NOT_SUBMITTED;
+	}
+	
+	//calculates total number of hours
+	public void calcNo_Hours() {
+		no_hours = 0;
+		for(TimesheetRow tr:weeks) {
+			no_hours += tr.calculateTotalHours();
+		}
+	}
+	//toString
+	public String toString() {
+		return ("Employee: " + projemp.getEmployee() + 
+				" Project: " + projemp.getProject() +
+				" Dates: " + projemp.getDate_started() + " - " + projemp.getDate_ended());
+	}
+	
 		
 }
+

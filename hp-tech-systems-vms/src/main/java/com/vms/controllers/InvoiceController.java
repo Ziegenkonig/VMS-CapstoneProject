@@ -6,17 +6,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class VendorController {
+public class InvoiceController {
 
-  @GetMapping("/vendor")
-  public String vendorForm(Model model) {
+  @GetMapping("/invoice")
+  public String invoiceForm(Model model) {
+	
 	  return null;
   }
-  
-  
-  @PostMapping("/vendor")
-  public String vendorSubmit() {
+
+
+  @PostMapping("/invoice")
+  public String invoiceSubmit() {
+
 	  return null;
   }
 }
-

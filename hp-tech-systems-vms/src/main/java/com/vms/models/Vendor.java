@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -41,9 +40,8 @@ public class Vendor {
 	@Column(length = 10)
 	private String phone; //not including non-numerical characters
 	
-	@PrePersist //called before actual insertion into database
-	protected void onCreate() {
-		
+	public String toString() {
+		return name;
 	}
 	
 }

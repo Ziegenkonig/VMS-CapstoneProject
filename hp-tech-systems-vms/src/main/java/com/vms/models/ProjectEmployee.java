@@ -38,15 +38,23 @@ public class ProjectEmployee {
     
     @OneToMany(mappedBy = "projemp")
 	private List<Timesheet> timesheets;
-	
+    
 	//Regular ol Attributes
 	private BigDecimal pay_rate;
 	private LocalDate date_started;
 	private LocalDate date_ended;
 	
-	public ProjectEmployee(Employee e, Project p) {
-		this.employee = e;
-		this.project = p;
+	//Methods
+	//toString
+	public String toString() {
+		return ("Employee: " + employee + 
+				"Project: " + project);
+	}
+	
+	//Nondefault constructor
+	public ProjectEmployee(Employee employee, Project project) {
+		this.employee = employee;
+		this.project = project;
 	}
 	
 }

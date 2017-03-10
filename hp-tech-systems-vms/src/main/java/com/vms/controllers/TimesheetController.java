@@ -6,17 +6,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class VendorController {
+public class TimesheetController {
 
-  @GetMapping("/vendor")
-  public String vendorForm(Model model) {
+  @GetMapping("/timesheet")
+  public String timesheetForm(Model model) {
+	  return null;
+  }
+
+
+  @PostMapping("/timesheet")
+  public String timesheetSubmit() {
 	  return null;
   }
   
-  
-  @PostMapping("/vendor")
-  public String vendorSubmit() {
-	  return null;
-  }
 }
-

@@ -45,7 +45,7 @@ public class Invoice {
 	//pay period start and end (14/7 day interval)
 	private LocalDate period_start;
 	private LocalDate period_end;
-	
+
 	// one month from period_end
 	private LocalDate payment_due;
 	
@@ -105,8 +105,16 @@ public class Invoice {
 	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "invoices", cascade = CascadeType.ALL)
     private List<Timesheet> timesheets; 
 	
+	//Called before .save
 	@PrePersist
 	protected void onCreate() {
 		created_date = LocalDate.now();
 	}
+	
+	//toString
+	public String toString() {
+		return ("Vendor: " + name + 
+				" Dates: " + period_start + " - " + period_end);
+	}
+	
 }

@@ -41,5 +41,8 @@ public class Employee {
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="employee")
 	private List<ProjectEmployee> projemps;
 	
+	public String toString() {
+		return (first_name + " " + last_name);
+	}
 }
 

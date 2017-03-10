@@ -3,10 +3,12 @@ package com.vms.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vms.models.Timesheet;
 import com.vms.repositories.TimesheetRepository;
 
+@Service
 public class TimesheetService {
 	
 	@Autowired
@@ -28,3 +30,4 @@ public class TimesheetService {
 		return timesheetRepo.save(timesheet);
 	}
 }
+

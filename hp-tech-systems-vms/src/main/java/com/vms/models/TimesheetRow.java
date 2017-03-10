@@ -27,28 +27,28 @@ public class TimesheetRow {
 	private Timesheet timesheet;
 	
 	//Regular ol attributes
-	@Column(length = 1) 
+	@Column(length = 2) 
 	private int week_no; // weekly = 1, biweekly = 1 or 2
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_1;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_2;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_3;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_4;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_5;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_6;
 	
-	@Column(length = 1)
+	@Column(length = 2)
 	private int hours_7;
 	
 	//methods
@@ -71,4 +71,5 @@ public class TimesheetRow {
 	public int calculateTotalHours() {
 		return hours_1 + hours_2 + hours_3 + hours_4 + hours_5 + hours_6 + hours_7;
 	}
+
 }	
