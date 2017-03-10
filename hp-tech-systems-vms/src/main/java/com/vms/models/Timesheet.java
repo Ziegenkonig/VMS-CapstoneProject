@@ -1,6 +1,6 @@
 package com.vms.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +28,10 @@ public class Timesheet {
 	@Id @GeneratedValue
 	private int timesheet_id;
 	
-	private Date week_starting;
+	private LocalDate week_starting;
 	
 	//might change to enum weekly/biweekly
-	private int period;
+	//private int period;
 	
 	@Enumerated(EnumType.STRING)
 	private TimesheetStatus status; 
@@ -40,7 +40,7 @@ public class Timesheet {
 	private int no_hours;
 	
 	//methods
-	public Timesheet(ProjectEmployee proj_emp, Date period_start) {
+	public Timesheet(ProjectEmployee proj_emp, LocalDate period_start) {
 		weeks = new ArrayList<TimesheetRow>();
 		this.week_starting = period_start;
 		this.projemp = proj_emp;

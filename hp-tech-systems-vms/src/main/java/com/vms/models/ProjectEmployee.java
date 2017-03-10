@@ -1,7 +1,7 @@
 package com.vms.models;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,8 +36,8 @@ public class ProjectEmployee {
 	
 	//Regular ol Attributes
 	private BigDecimal pay_rate;
-	private Date date_started;
-	private Date date_ended;
+	private LocalDate date_started;
+	private LocalDate date_ended;
 	
 	public ProjectEmployee(Employee e, Project p) {
 		this.employee = e;

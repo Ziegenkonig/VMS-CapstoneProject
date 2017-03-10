@@ -1,6 +1,6 @@
 package com.vms.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ public class Employee {
 	private String address;
 	private String city;
 	private String state;
-	private Date hire_date;
+	private LocalDate hire_date;
 	private boolean active;
 	private int pay_period; //weekly, biweekly
 	

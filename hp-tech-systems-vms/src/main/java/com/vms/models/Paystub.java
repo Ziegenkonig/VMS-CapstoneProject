@@ -1,10 +1,10 @@
 package com.vms.models;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,12 +17,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import lombok.Data;
-
-/* can I get the following with some get methods?
-a single employee object (timesheet.proj-emp.employee)
-the names of the projects they are working on (timesheet.proj-emp.project)
-the pay rate for each project (timesheet.proj-emp)
-*/
 
 @Data //standard getters/setters
 @Entity
@@ -37,15 +31,15 @@ public class Paystub {
 	
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
-    private Date created_date;
+    private LocalDate created_date;
 	
 // calculated or imported fields
 	//pay period start and end (14/7 day interval)
-	private Date period_start;
-	private Date period_end;
+	private LocalDate period_start;
+	private LocalDate period_end;
 	
 	//advice date (period end + 10?)
-	private Date pay_date;
+	private LocalDate pay_date;
 	
 	//net pay same as amount of check 
 	private BigDecimal net_pay; //total - deductions
@@ -69,13 +63,40 @@ public class Paystub {
 	private BigDecimal deductions;
 	
 	//constructor
-		
-	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "paystubs")
+	public Paystub(List<Timesheet> timesheets, Paystub previous) { //the input here is the list of timesheets from query that it should be generated from, and the previous paystub also from query
+		this.timesheets = timesheets;
+		Timesheet ts = timesheets.get(0);
+		this.period_start = ts.getWeek_starting();
+		Employee emp = ts.getProjemp().getEmployee();
+		if(emp.getPay_period() == 2) {
+			this.period_end = this.period_start.plusDays(14);
+		} else { this.period_end = this.period_start.plusDays(7); }
+		this.pay_date = this.period_end.plusDays(10);
+		this.first_name = emp.getFirst_name();
+		this.last_name = emp.getLast_name();
+		this.address = emp.getAddress();
+		this.city = emp.getCity();
+		this.state = emp.getState();
+		BigDecimal total = BigDecimal.valueOf(0);
+		for(Timesheet t: timesheets) {
+			t.calcNo_Hours();
+			double hours = t.getNo_hours();
+			total.add(new BigDecimal(hours).multiply(t.getProjemp().getPay_rate())); 
+		}
+		this.total = total;
+		this.deductions = BigDecimal.ZERO;
+		this.net_pay = this.total.subtract(this.deductions);
+		this.ytd_gross = previous.getYtd_gross().add(this.total);
+		this.ytd_deductions = previous.ytd_deductions.add(this.deductions);
+		this.ytd_net_pay = previous.ytd_net_pay.add(this.net_pay);
+	}
+	
+	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "paystubs", cascade = CascadeType.ALL)
     private List<Timesheet> timesheets;
 	
 	@PrePersist
 	protected void onCreate() {
-		created_date = new Date(Calendar.getInstance().getTime().getTime());
+		created_date = LocalDate.now();
 	}
 	
 	/*// testing Lombok - should not have any errors
