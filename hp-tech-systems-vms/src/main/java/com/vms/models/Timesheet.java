@@ -26,10 +26,9 @@ import lombok.Data;
 public class Timesheet {
 	
 	@Id @GeneratedValue
-	private int timesheet_id;
-	//reference
+	private int timesheetId;
 	
-	private LocalDate week_starting;
+	private LocalDate weekStarting;
 	
 	//might change to enum weekly/biweekly
 	private int period;
@@ -37,8 +36,8 @@ public class Timesheet {
 	@Enumerated(EnumType.STRING)
 	private TimesheetStatus status; 
 	
-	private String image_url;
-	private int no_hours;
+	private String imageUrl;
+	private int noHours;
 	
 	//fks
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -47,7 +46,7 @@ public class Timesheet {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name="TIMESHEET_PAYSTUB", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "paystub_id"))
-    private List<Paystub> paystubs; 
+    private List<Invoice> paystubs; 
 	
 	@ManyToOne
 	@JoinColumn(name = "project_employee_id")
@@ -61,14 +60,14 @@ public class Timesheet {
 	//Methods
 	
 	//Constructor
-	public Timesheet(ProjectEmployee proj_emp, LocalDate period_start) {
+	public Timesheet(ProjectEmployee projEmp, LocalDate periodStart) {
 		weeks = new ArrayList<TimesheetRow>();
-		this.projemp = proj_emp;
-		this.week_starting = period_start;
-		this.period = proj_emp.getEmployee().getPay_period();
+		this.projemp = projEmp;
+		this.weekStarting = periodStart;
+		this.period = projEmp.getEmployee().getPay_period();
 		TimesheetRow week1 = new TimesheetRow(this, 1);
 		weeks.add(week1);
-		if(proj_emp.getEmployee().getPay_period() == 2) {
+		if(projEmp.getEmployee().getPay_period() == 2) {
 			TimesheetRow week2 = new TimesheetRow(this, 2);
 			weeks.add(week2);
 		}
@@ -76,19 +75,17 @@ public class Timesheet {
 	}
 	
 	//calculates total number of hours
-	public void calcNo_Hours() {
-		no_hours = 0;
+	public void calcNoHours() {
+		noHours = 0;
 		for(TimesheetRow tr:weeks) {
-			no_hours += tr.calculateTotalHours();
+			noHours += tr.calculateTotalHours();
 		}
 	}
 	//toString
 	public String toString() {
 		return ("Employee: " + projemp.getEmployee() + 
 				" Project: " + projemp.getProject() +
-				" Dates: " + projemp.getDate_started() + " - " + projemp.getDate_ended());
+				" Dates: " + projemp.getDateStarted() + " - " + projemp.getDateEnded());
 	}
 	
-		
 }
-

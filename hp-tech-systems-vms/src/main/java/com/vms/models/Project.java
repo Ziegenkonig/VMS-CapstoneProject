@@ -1,6 +1,7 @@
 package com.vms.models;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,13 +28,13 @@ public class Project {
 	//This isn't in the schema, but I had to define this new ID for ProjectEmployee to
 	//simplify the relationships
 	@Id @GeneratedValue()
-	private int project_id;
+	private int projectId;
 
 	//Regular attributes.  Does not yet include length some specialties(i.e. BigDecimal)
 	private String name;
-	private BigDecimal billing_rate;
-	private String client_name;
-	private String client_location;
+	private BigDecimal billingRate;
+	private String clientName;
+	private String clientLocation;
 	
 	
 	//Foreign Keys
@@ -53,6 +54,7 @@ public class Project {
 	
 	//Constructor
 	public Project(Vendor vendor) {
+		this.projemps = new ArrayList<ProjectEmployee>();
 		this.vendor = vendor;
 	}
 	
