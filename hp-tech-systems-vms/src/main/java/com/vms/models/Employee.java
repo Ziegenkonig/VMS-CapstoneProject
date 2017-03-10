@@ -1,9 +1,10 @@
 package com.vms.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -31,13 +32,13 @@ public class Employee {
 	private String address;
 	private String city;
 	private String state;
-	private Date hire_date;
+	private LocalDate hire_date;
 	private boolean active;
 	private int pay_period; //weekly, biweekly
 	
 	//The parameter mappedBy is necessary for OneToMany relationships
 	//It references the foreign key name inside of the associated entity
-	@OneToMany(mappedBy="employee")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="employee")
 	private List<ProjectEmployee> projemps;
 	
 	public String toString() {

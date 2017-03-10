@@ -12,6 +12,7 @@ public class InvoiceService {
 	@Autowired
 	private InvoiceRepository invRepo;
 	
+	//repo methods
 	public List<Invoice> findAll() {
 		return invRepo.findAll();
 	}
@@ -20,12 +21,12 @@ public class InvoiceService {
 		return invRepo.findOne(id);
 	}
 
-	public Invoice create(Invoice Invoice) {
-		return invRepo.save(Invoice);
+	public Invoice create(Invoice invoice) {
+		return invRepo.save(invoice);
 	}
 	
-	public Invoice edit(Invoice Invoice) {
-		return invRepo.save(Invoice);
+	public Invoice edit(Invoice invoice) {
+		return invRepo.save(invoice);
 	}
 	
 }

@@ -2,7 +2,6 @@ package com.vms.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -41,11 +40,11 @@ public class Timesheet {
 	private int no_hours;
 	
 	//fks
-	@ManyToMany//(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name="TIMESHEET_INVOICE", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
     private List<Invoice> invoices; 
 	
-	@ManyToMany//(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name="TIMESHEET_PAYSTUB", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "paystub_id"))
     private List<Invoice> paystubs; 
 	
@@ -53,6 +52,7 @@ public class Timesheet {
 	@JoinColumn(name = "project_employee_id")
 	private ProjectEmployee projemp;
 	
+
 	@OneToMany(mappedBy="timesheet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<TimesheetRow> weeks;
 	

@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -20,12 +22,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import lombok.Data; 
-
-/* can I get the following with some get methods?
-a single vendor object (timesheet.proj-emp.project.vendor)
-the names of the employees working on the project (timesheet.proj-emp.employee)
-the pay rate for the project (timesheet.proj-emp.project)
-*/
 
 @Data //standard getters/setters
 @Entity
@@ -39,8 +35,7 @@ public class Invoice {
 	private InvoiceStatus status;
 	
 	//columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
-	@Temporal(TemporalType.TIMESTAMP)
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate created_date;
 	
 //fields to store info from other tables
@@ -69,7 +64,7 @@ public class Invoice {
 	
 	//employer info saved in global variables somewhere
 	
-	@ManyToMany(mappedBy = "invoices")//(cascade = CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "invoices", cascade = CascadeType.ALL)
     private List<Timesheet> timesheets; 
 	
 	//Methods

@@ -71,5 +71,5 @@ public class TimesheetRow {
 	public int calculateTotalHours() {
 		return hours_1 + hours_2 + hours_3 + hours_4 + hours_5 + hours_6 + hours_7;
 	}
-	
+
 }	
