@@ -8,16 +8,9 @@ import org.springframework.data.repository.query.Param;
 
 import com.vms.models.Invoice;
 import com.vms.models.InvoiceStatus;
-import com.vms.models.Paystub;
 
 public interface InvoiceRepository extends JpaRepository<Invoice, Integer>{
-	//find all invoices by vendor name
-	@Query(
-		value = "SELECT * FROM invoices i WHERE i.name = :vendor_name", 
-		nativeQuery=true
-	)
-	public List<Invoice> findByVendor(@Param("vendor_name") String vendor_name);
-	
+		
 	//find all invoices by vendor name for ytd 
 	@Query(
 		value = "SELECT * FROM invoices i WHERE i.name = :vendor_name AND i.status = com.vms.InvoiceStatus.PENDING OR i.status = com.vms.InvoiceStatus.PAID", 
@@ -29,5 +22,12 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer>{
 	@Query
 	public List<Invoice> findByStatus(InvoiceStatus status);
 	
+	//find all invoices by project
+	@Query
 	public List<Invoice> findByProjectIdOrderByPeriodStartDesc(int proj_id);
+	
+	//find all invoices by vendor
+	@Query
+	public List<Invoice> findByVendorIdOrderByPeriodStartDesc(int vendor_id);
+
 }
