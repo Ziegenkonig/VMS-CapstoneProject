@@ -45,6 +45,12 @@ public class EmployeeService {
 		return employeeRepo.findAll();
 	}
 	
+	//deactivates the specified employee, rendering account locked
+	public void deactivate(Employee employee) {
+		Employee emp = employeeRepo.findOne(employee.getEmpId());
+		emp.setActive(false);
+	}
+	
 	//login() checks to see if an employee exists in the database with the given username
 	//if an employee is found, the password is checked against the given password
 	//returns true if employee exists and password is correct
