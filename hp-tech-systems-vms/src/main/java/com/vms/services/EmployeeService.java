@@ -24,24 +24,24 @@ public class EmployeeService {
 	//General methods
 	
 	//creates a new object in table
-	void create(Employee employee) {
+	public void create(Employee employee) {
 		employeeRepo.save(employee);
 	}
 	
 	//update a new object in table
-	void update(Employee employee) {
+	public void update(Employee employee) {
 		employeeRepo.save(employee);
 	}
 	
 	//Search methods
 	
 	//returns one object with specified id
-	Employee findOne(Integer id) {
+	public Employee findOne(Integer id) {
 		return employeeRepo.findOne(id);
 	}
 	
 	//returns all objects
-	List<Employee> findAll() {
+	public List<Employee> findAll() {
 		return employeeRepo.findAll();
 	}
 	

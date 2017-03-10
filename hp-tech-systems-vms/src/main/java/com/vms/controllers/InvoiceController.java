@@ -10,7 +10,6 @@ public class InvoiceController {
 
   @GetMapping("/invoice")
   public String invoiceForm(Model model) {
-	
 	  return null;
   }
 
