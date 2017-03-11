@@ -29,10 +29,10 @@ public class HomeController {
 		
 		//Testing for Cascade
 		//Testing for weekly cascade
-		Timesheet timesheet1 = new Timesheet(employeeService.findOne(123), LocalDate.now());
+		Timesheet timesheet1 = new Timesheet(employeeService.findOne(1), LocalDate.now());
 		timesheetService.create(timesheet1);
 		//Testing for biweekly cascade
-		Timesheet timesheet2 = new Timesheet(employeeService.findOne(1231), LocalDate.now());
+		Timesheet timesheet2 = new Timesheet(employeeService.findOne(2), LocalDate.now());
 		timesheetService.create(timesheet2);
 		
 		//Testing if this controller can add an entry into the DB
