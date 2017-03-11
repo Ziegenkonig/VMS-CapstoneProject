@@ -67,13 +67,26 @@ public class HomeController {
         return "index";
     }
 	
-	//Renders login page
 	//This Model object in the argument list is from the spring library, and is basically a hashmap containing
 	//all of the values you can reference inside the html the string inside the quotes is the key, 
 	//the value is whatever comes after
+	//Renders login page
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		model.addAttribute("employee", employeeService.findOne(1));
 		return "login";
 	}
+	
+	//Renders register page
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String register(Model model) {
+		return "register";
+	}
+	
+	//Renders employeeDashboard page
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public String employeeDashboard(Model model) {
+		return "employeeDashboard";
+	}
+	
 }

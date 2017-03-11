@@ -8,21 +8,26 @@
 	</head>
 	
 	<body>
-	
 		<div class = "alignFormCenter" align = "center">
 			<form>
+			
 				<!-- Form for Login Page -->
 				<h1 align = "center"> Login </h1>
 				<h4 align = "center"> Username </h4>
 				<input type = "text" name="usernameField" autofocus = "autofocus" style="text-align:center;"></input>
 				<h4 align = "center"> Password </h4>
 				<input type = "password" name="passwordField" style="text-align:center;"></input>
-				<h4></h4><input type = "submit" value = "Submit"></input>
-				<h4></h4><input type = "submit" value = "Register"></input>
 				
 			</form>
+			<!-- form for submit button -->
+			<form action = "http://localhost:8080/register">
+				<h4></h4>
+				<input type = "submit" value = "Submit"></input>
+			</form>
+			<!--  form for submit button -->
+			<form action = "http://localhost:8080/dashboard">
+				<h4></h4><input type = "submit" value = "Register"></input>
+			</form>
 		</div>	
-		
 	</body>
-
 </html>
