@@ -76,14 +76,14 @@ public class HomeController {
 	//linksto: admin(this)
 	@RequestMapping(value = "/paystub/newPaystub", method = RequestMethod.GET)
 	public String newPaystub(Model model) {
-		return "paystub/history";
+		return "paystub/new";
 	}
 	
-	//renders paystub/edit
-	//linksto: admin(this)
-	@RequestMapping(value = "/paystub/editPaystub", method = RequestMethod.GET)
-	public String editPaystub(Model model) {
-		return "paystub/history";
+	//renders paystub/view
+	//linksto: ???
+	@RequestMapping(value = "/paystub/viewPaystub", method = RequestMethod.GET)
+	public String viewPaystub(Model model) {
+		return "paystub/view";
 	}
 	
 	//renders timesheet/history
@@ -105,6 +105,20 @@ public class HomeController {
 	@RequestMapping(value = "/timesheet/editTimesheet", method = RequestMethod.GET)
 	public String editTimesheet(Model model) {
 		return "timesheet/edit";
+	}
+	
+	//renders timesheet/view
+	//linksto: ??
+	@RequestMapping(value = "/timesheet/viewTimesheet", method = RequestMethod.GET)
+	public String viewTimesheet(Model model) {
+		return "timesheet/view";
+	}
+	
+	//renders timesheet/approve
+	//linksto: ??
+	@RequestMapping(value = "/timesheet/approveTimesheet", method = RequestMethod.GET)
+	public String approveTimesheet(Model model) {
+		return "timesheet/approve";
 	}
 	
 	//renders project/history
@@ -163,11 +177,11 @@ public class HomeController {
 		return "invoice/new";
 	}
 	
-	//renders invoice/edit
-	//linksto: admin(this)
-	@RequestMapping(value = "/invoice/editInvoice", method = RequestMethod.GET)
-	public String editInvoice(Model model) {
-		return "invoice/edit";
+	//renders invoice/view
+	//linksto: ???
+	@RequestMapping(value = "/invoice/viewInvoice", method = RequestMethod.GET)
+	public String viewInvoice(Model model) {
+		return "invoice/view";
 	}
 	
 	//renders admin

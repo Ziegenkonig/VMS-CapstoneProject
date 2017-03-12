@@ -1,26 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace= "base :: site-head">
-	  <title id="pageTitle">VMS | New Timesheet</title>
-	</head>
+<head>
+	<link rel = "stylesheet" th:href = "@{/css/style.css}" />
+</head>
 
-<body>
-
-	<nav th:replace="base :: site-nav">
-	</nav>
+	<body>
 	
-		<div class="formAlignCenter" align = "center">
-		
-		    <h1>New Timesheet</h1>
+		<!-- Fragment that displays 3 columns with text and text fields underneath them -->
+		<div align = "center" th:fragment = "newTimesheetForm">
 		    
 		    <form action="#" th:action="@{/submitTimesheet}" th:object="${timesheet}" method="post">
 				<h4>Upload Timesheet</h4>
 				<input type="file" name="pic" accept="image/*"/>
 				<h4>Starting Week</h4>
-		        <input type="date"/>
+		        <input type="date" 	th:field="*{week_starting}" 		value = ""/>
 		        <h4>Number of Hours</h4>
-		        <input type="number"/>
+		        <input type="number" 	th:field="*{no_hours}" 	value = ""/>
 		        <h4>Period</h4>
 		        <select>
  					<option value="1">Weekly</option>
@@ -29,7 +25,13 @@
 		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 		    </form>
 		</div>
-	<footer th:replace="base :: site-footer"></footer>
-		
+	
+		<div align = "center" th:fragment = "viewTimesheet">
+			<img src="" alt="" height="70" width="70"/>
+			<h4>Starting Week - # hours _ Period</h4>
+		</div>
+	
+	
 	</body>
+
 </html>
