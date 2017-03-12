@@ -2,16 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace= "base :: site-head">
-    <meta charset="UTF-8" />
-    <title>My Shittastic App</title>
+	<title>Links Page</title>
 </head>
 
 <body>
 	<nav th:replace="base :: site-nav">
 	</nav>
 
-<h1>Welcome to our Capstone Project Website!</h1>
-    Now is: <b th:text="${execInfo.now.time}"></b>
+	<h1>Welcome to our Capstone Project Website!</h1>
+	<p>Now is: <b th:text="${execInfo.now.time}"></b></p>
+	
+    <ul>
+	    <li><a th:href="@{/login}">Login</a></li>
+	    <li><a th:href="@{/register}">Register</a></li>
+	    <li><a th:href="@{/dashboard}">Employee Dashboard</a></li>
+	    <li><a th:href="@{/admin}">Admin</a></li>
+	    <li><a th:href="@{/project/newProject}">New Project</a></li>
+	    <li><a th:href="@{/project/editProject}">Edit Project</a></li>
+	    <li><a th:href="@{/project/view}">View Project</a></li>
+	    <li><a th:href="@{/projects}">View All Projects</a></li>
+	    <li><a th:href="@{/vendor/view}">View Vendor</a></li>
+	    <!-- 
+	    <li><a th:href="../employee/new.html">Employee New</a></li>
+	    <li><a th:href="../employee/edit.html">Employee Edit</a></li>
+	    <li><a th:href="../paystub/history.html">Paystub History</a></li>
+	    <li><a th:href="../paystub/view.html">Paystub View</a></li>
+	    <li><a th:href="../timesheet/history.html">Timesheet History</a></li>
+	    <li><a th:href="../timesheet/view.html">Timesheet New/Edit</a></li>
+	    
+	 
+	    <li><a th:href="../project/view.html">Project View</a></li>
+	    <li><a th:href="../vendor/new.html">Vendor New</a></li>
+	    <li><a th:href="../vendor/edit.html">Vendor Edit</a></li>
+	    <li><a th:href="../vendor/view.html">Vendor View</a></li>
+	    
+	     -->
+    </ul>
 </body>
 
 </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace= "base :: site-head">
+  <title>Project Details</title>
+</head>
+
+<body>
+	<nav th:replace="base :: site-nav">
+	</nav>
+	
+	<!-- View Specific Project Details -->
+	<main th:if="${project}">
+		<p th:text="'Name: ' + ${project?.getName()}">Project Name</p>
+	    <p th:text="'Billing Rate: $' + ${project?.getBillingRate()}">$ 21.00</p>
+	    <p th:text="'Client Name: ' + ${project?.getClientName()}">Bob Jones</p>
+	    <p th:text="'Client Location: ' + ${project?.getClientLocation()}">on site</p>
+	    <p th:text="'Vendor: ' + ${project?.getVendor().getName()}">Some Company Name</p>
+	    <a th:href="@{/project/editProject}">Edit Project</a>
+	</main>
+	
+	<footer th:replace="base :: site-footer"></footer>
+</body>
+
+</html>

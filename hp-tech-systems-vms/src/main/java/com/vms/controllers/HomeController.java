@@ -1,24 +1,22 @@
 package com.vms.controllers;
 
-import java.time.LocalDate;
-
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.vms.models.Employee;
-import com.vms.models.Timesheet;
-import com.vms.models.Vendor;
-import com.vms.services.EmployeeService;
-import com.vms.services.InvoiceService;
-import com.vms.services.PaystubService;
-import com.vms.services.ProjectEmployeeService;
-import com.vms.services.ProjectTimesheetService;
-import com.vms.services.TimesheetRowService;
-import com.vms.services.TimesheetService;
-import com.vms.services.VendorService;
+//import com.vms.models.Employee;
+//import com.vms.models.Timesheet;
+//import com.vms.models.Vendor;
+//import com.vms.services.EmployeeService;
+//import com.vms.services.InvoiceService;
+//import com.vms.services.PaystubService;
+//import com.vms.services.ProjectEmployeeService;
+//import com.vms.services.ProjectTimesheetService;
+//import com.vms.services.TimesheetRowService;
+//import com.vms.services.TimesheetService;
+//import com.vms.services.VendorService;
 
 @Controller
 public class HomeController {
@@ -123,9 +121,9 @@ public class HomeController {
 	
 	//renders project/history
 	//linksto: employee/dashboard(this)
-	@RequestMapping(value = "/project/projectHistory", method = RequestMethod.GET)
-	public String historyProject(Model model) {
-		return "project/history";
+	@RequestMapping(value = "/projects", method = RequestMethod.GET)
+	public String viewProjects(Model model) {
+		return "project/index";
 	}
 	
 	//renders project/new
@@ -140,6 +138,13 @@ public class HomeController {
 	@RequestMapping(value = "/project/editProject", method = RequestMethod.GET)
 	public String editProject(Model model) {
 		return "project/edit";
+	}
+	
+	//renders project/view - details of the project like rails show
+	//linksto: admin(this)
+	@RequestMapping(value = "/project/view", method = RequestMethod.GET)
+	public String viewProject(Model model) {
+		return "project/view";
 	}
 	
 	//renders vendor/history
@@ -161,6 +166,13 @@ public class HomeController {
 	@RequestMapping(value = "/vendor/editVendor", method = RequestMethod.GET)
 	public String editVendor(Model model) {
 		return "vendor/edit";
+	}
+	
+	//renders vendor/view - details of the project like rails show
+	//linksto: admin(this)
+	@RequestMapping(value = "/vendor/view", method = RequestMethod.GET)
+	public String viewVendor(Model model) {
+		return "vendor/view";
 	}
 	
 	//renders invoice/history
