@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-  <title> Timesheet History </title>
-</head>
+<head th:replace= "base :: site-head">
+	  <title id="pageTitle">VMS | New Timesheet</title>
+	</head>
 
-	<body>
+<body>
+
+	<nav th:replace="base :: site-nav">
+	</nav>
 	
-	
-	
+		<div class="formAlignCenter" align = "center">
+		
+		    <h1>New Timesheet</h1>
+		    
+		    <form action="#" th:action="@{/submit	Timesheet}" th:object="${timesheet}" method="post">
+				<h4>Upload Timesheet</h4>
+				<input type="file" name="pic" accept="image/*">
+				<h4>Starting Week</h4>
+		        <input type="date" 	th:field="*{week_starting}" 		value = ""/>
+		        <h4>Number of Hours</h4>
+		        <input type="number" 	th:field="*{no_hours}" 	value = ""/>
+		        <h4>Period</h4>
+		        <select>
+ 					<option value="1">Weekly</option>
+					<option value="2">Biweekly</option>
+				</select>
+		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+		    </form>
+		    
+		</div>
+	<footer th:replace="base :: site-footer"></footer>
+		
 	</body>
-
 </html>
