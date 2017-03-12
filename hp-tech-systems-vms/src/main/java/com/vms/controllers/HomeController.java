@@ -23,70 +23,74 @@ import com.vms.services.VendorService;
 @Controller
 public class HomeController {
 	//Hooking up this controller to all services
-	@Autowired
-	private VendorService vendorService = new VendorService();
-	@Autowired
-	private TimesheetService timesheetService = new TimesheetService();
-	@Autowired
-	private EmployeeService employeeService = new EmployeeService();
-	@Autowired
-	private InvoiceService invoiceService = new InvoiceService();
-	@Autowired
-	private PaystubService paystubService = new PaystubService();
-	@Autowired
-	private ProjectEmployeeService projEmpService = new ProjectEmployeeService();
-	@Autowired
-	private ProjectTimesheetService projTimesheetService = new ProjectTimesheetService();
-	@Autowired
-	private TimesheetRowService timesheetRowService = new TimesheetRowService();
+//	@Autowired
+//	private VendorService vendorService = new VendorService();
+//	@Autowired
+//	private TimesheetService timesheetService = new TimesheetService();
+//	@Autowired
+//	private EmployeeService employeeService = new EmployeeService();
+//	@Autowired
+//	private InvoiceService invoiceService = new InvoiceService();
+//	@Autowired
+//	private PaystubService paystubService = new PaystubService();
+//	@Autowired
+//	private ProjectEmployeeService projEmpService = new ProjectEmployeeService();
+//	@Autowired
+//	private ProjectTimesheetService projTimesheetService = new ProjectTimesheetService();
+//	@Autowired
+//	private TimesheetRowService timesheetRowService = new TimesheetRowService();
 	
-	//Renders index page
-	@RequestMapping("/") // resources/templates/index.html
-    public String index() {
-		
-//		//Commenting out testing so we dont clutter database
-//		//Testing for Cascade
-//		//Testing for weekly cascade
-//		Timesheet timesheet1 = new Timesheet(employeeService.findOne(1), LocalDate.now());
-//		timesheetService.create(timesheet1);
-//		//Testing for biweekly cascade
-//		Timesheet timesheet2 = new Timesheet(employeeService.findOne(2), LocalDate.now());
-//		timesheetService.create(timesheet2);
-//		
-//		//Testing if this controller can add an entry into the DB
-//		Vendor test = new Vendor();
-//		test.setAddress("address");
-//		test.setCity("city");
-//		test.setContactName("contact_name");
-//		test.setName("name");
-//		test.setPhone("phone");
-//		test.setPrimaryEmail("email");
-//		test.setState("tn");
-//		vendorService.create(test);
-		
+	//Renders index
+	@RequestMapping(value = "/")
+    public String index() {	
         return "index";
     }
 	
 	//This Model object in the argument list is from the spring library, and is basically a hashmap containing
-	//all of the values you can reference inside the html the string inside the quotes is the key, 
-	//the value is whatever comes after
-	//Renders login page
+	//all of the values you can reference inside the html; the string inside the quotes is the key, 
+	//the associated value is whatever comes after
+	
+	//Renders employee/login
+	//linksto: employee/register(EmployeeController) | employee/dashboard(this)
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
-		model.addAttribute("employee", employeeService.findOne(1));
-		return "login";
+		//model.addAttribute("employee", employeeService.findOne(1));
+		return "employee/login";
 	}
 	
-	//Renders register page
-//	@RequestMapping(value = "/register", method = RequestMethod.GET)
-//	public String register(Model model) {
-//		return "register";
-//	}
-	
-	//Renders employeeDashboard page
+	//Renders employee/dashboard 
+	//linksto: timesheet/history(this) | timesheet/new(this) | paystub/history(this) | employee/edit(this)
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String employeeDashboard(Model model) {
-		return "employeeDashboard";
+		return "employee/dashboard";
+	}
+	
+	//renders employee/edit
+	//linksto:
+	@RequestMapping(value = "/editUserProfile", method = RequestMethod.GET)
+	public String employeeEdit(Model model) {
+		return "employee/edit";
+	}
+	
+	//renders paystub/history
+	//linksto: 
+	@RequestMapping(value = "/dashboard/paystubHistory", method = RequestMethod.GET)
+	public String paystubHistory(Model model) {
+		return "paystub/history";
+	}
+	
+	//renders timesheet/history
+	//linksto:
+	@RequestMapping(value = "/dashboard/timesheetHistory", method = RequestMethod.GET)
+	public String timesheetHistory(Model model) {
+		return "timesheet/history";
+	}
+	
+	//renders timesheet/new
+	//linksto:
+	@RequestMapping(value = "/dashboard/submitTimesheet", method = RequestMethod.GET)
+	public String newTimesheet(Model model) {
+		return "timesheet/new";
 	}
 	
 }
