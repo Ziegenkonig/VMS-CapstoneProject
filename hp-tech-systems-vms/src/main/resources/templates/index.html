@@ -4,6 +4,7 @@
 <head th:replace= "base :: site-head">
     <meta charset="UTF-8" />
     <title>VMS Project</title>
+	<title>Links Page</title>
 </head>
 
 <body>
@@ -20,15 +21,17 @@
 </h4>
 
 <h2>Project</h2>
-<h4><a href="http://localhost:8080/project/newProject">New Project</a><br/>
-<a href="http://localhost:8080/project/editProject">Edit Project</a><br/>
-<a href="http://localhost:8080/project/projectHistory">Project History</a>	
+<h4><a href="http://localhost:8080/project/new">New Project</a><br/>
+<a href="http://localhost:8080/project/edit">Edit Project</a><br/>
+<a href="http://localhost:8080/project/view">View Project</a><br/>
+<a href="http://localhost:8080/projects">Project History</a>	
 </h4>
 
 <h2>Vendor</h2>
-<h4><a href="http://localhost:8080/vendor/newVendor">New Vendor</a><br/>
-<a href="http://localhost:8080/vendor/editVendor">Edit Vendor</a><br/>
-<a href="http://localhost:8080/vendor/vendorHistory">Vendor History</a>	
+<h4><a href="http://localhost:8080/vendor/new">New Vendor</a><br/>
+<a href="http://localhost:8080/vendor/edit">Edit Vendor</a><br/>
+<a href="http://localhost:8080/vendor/view">View Vendor</a><br/>
+<a href="http://localhost:8080/vendors">Vendor History</a>	
 </h4>
 
 <h2>Paystub</h2>
@@ -49,6 +52,7 @@
 </h4>    
     
 Now is: <b th:text="${execInfo.now.time}"></b>
+
 </body>
 
 <footer th:replace="base :: site-footer"></footer>
