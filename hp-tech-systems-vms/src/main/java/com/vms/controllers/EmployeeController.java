@@ -23,7 +23,7 @@ public class EmployeeController{
   @GetMapping("/register")
   public String employeeForm(Model model){
     model.addAttribute("employee", new Employee());
-    return "employee/new";
+    return "employee/newE";
   }
 
 /**
