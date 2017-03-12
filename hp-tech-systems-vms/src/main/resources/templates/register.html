@@ -1,12 +1,15 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title> Registration </title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+	<head th:replace= "base :: site-head">
+	  <title id="pageTitle">VMS | Register</title>
+	</head>
 
 <body>
+
+	<nav th:replace="base :: site-nav">
+	</nav>
+	
 	<div class="formAlignCenter" align = "center">
 	    <h1>Registration</h1>
 	    <form action="#" th:action="@{/employee}" th:object="${employee}" method="post">
@@ -31,6 +34,8 @@
 	        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 	    </form>
 	</div>
+	
+	<footer th:replace="base :: site-footer"></footer>
 </body>
 
 </html>
