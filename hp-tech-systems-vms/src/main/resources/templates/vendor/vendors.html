@@ -2,15 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace= "base :: site-head">
-  <title> Vendor History </title>
+  <title> Projects </title>
 </head>
 
 	<body>
 		<nav th:replace="base :: site-nav">
 		</nav>
-		<h2> Vendor Name </h2>
-		<p> Contact Name - Phone - Primary Email - Address - City - State </p>
-	
+		<h1>Vendors</h1>
+		<a th:href="@{/vendor/new}">Create New Vendor</a>
+		<table id="vendorTable"
+		       class="table table-bordered"
+		       th:if="${vendors != null}"> <!--  and not #list.isEmpty(vendors) -->
+        <thead>
+            <tr class="center middle">
+                <th>Name</th>
+                <th>Primary Email</th>
+                <th>Contact Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Phone</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vendor : ${vendors}">
+                <td th:text="${vendor.getName()}"></td>
+                <td th:text="${vendor.getPrimaryEmail()}"></td>
+                <td th:text="${vendor.getContactName()}"></td>
+                <td th:text="${vendor.getAddress()}"></td>
+                <td th:text="${vendor.getCity()}"></td>
+                <td th:text="${vendor.getState()}"></td>
+                <td th:text="${vendor.getPhone()}"></td>
+                <td><a th:href="@{/vendor/view/{path}(path=${vendor.getName()})}">View</a></td>
+                <td><a th:href="@{/vendor/edit/{path}(path=${vendor.getName()})}">Edit</a></td>
+            </tr>
+        </tbody>
+    </table>
+    
 	</body>
 
 </html>

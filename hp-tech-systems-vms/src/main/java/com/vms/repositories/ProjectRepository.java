@@ -12,4 +12,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer>{
 
 	@Query
 	public List<Project> findByVendor(Vendor v);
+	
+	@Query
+	public Project findByName(String name);
 }

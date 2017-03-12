@@ -118,7 +118,7 @@ public class HomeController {
 	public String approveTimesheet(Model model) {
 		return "timesheet/approve";
 	}
-	
+	/*
 	//renders project/history
 	//linksto: employee/dashboard(this)
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
@@ -146,7 +146,7 @@ public class HomeController {
 	public String viewProject(Model model) {
 		return "project/viewP";
 	}
-	
+	/*
 	//renders vendor/history
 	//linksto: admin(this)
 	@RequestMapping(value = "/vendors", method = RequestMethod.GET)
@@ -174,6 +174,7 @@ public class HomeController {
 	public String viewVendor(Model model) {
 		return "vendor/viewV";
 	}
+	*/
 	
 	//renders invoice/history
 	//linksto: admin(this)

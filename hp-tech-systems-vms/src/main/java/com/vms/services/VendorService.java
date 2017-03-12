@@ -40,4 +40,9 @@ public class VendorService {
 		return vendorRepo.findAll();
 	}
 	
+	public Vendor findByName(String name) {
+		return vendorRepo.findByName(name);
+	}
+	
+	
 }

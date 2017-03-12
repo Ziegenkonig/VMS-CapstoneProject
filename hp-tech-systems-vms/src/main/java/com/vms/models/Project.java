@@ -1,7 +1,6 @@
 package com.vms.models;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -58,8 +57,10 @@ public class Project {
 	}
 	
 	//Constructor
+	public Project() {}
+	
 	public Project(Vendor vendor) {
-		this.projemps = new ArrayList<ProjectEmployee>();
+		//this.projemps = new ArrayList<ProjectEmployee>();
 		this.vendor = vendor;
 	}
 	

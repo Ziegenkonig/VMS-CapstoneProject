@@ -20,6 +20,10 @@ public class ProjectService {
 		return projRepo.findByVendor(v);
 	}
 	
+	public Project findByName(String name) {
+		return projRepo.findByName(name);
+	}
+	
 	//basic repo methods
 	public List<Project> findAll() {
 		return projRepo.findAll();

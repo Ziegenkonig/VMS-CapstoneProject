@@ -16,7 +16,7 @@
 	    <p th:text="'Client Name: ' + ${project?.getClientName()}">Bob Jones</p>
 	    <p th:text="'Client Location: ' + ${project?.getClientLocation()}">on site</p>
 	    <p th:text="'Vendor: ' + ${project?.getVendor().getName()}">Some Company Name</p>
-	    <a th:href="@{/project/editProject}">Edit Project</a>
+	    <a th:href="@{/project/edit/{path}(path=${project.getName()})}">Edit Project</a>
 	</main>
 	
 	<footer th:replace="base :: site-footer"></footer>
