@@ -61,6 +61,37 @@ public class EmployeeController{
     employeeService.create(newEmployee);
     
     //this returns an html page (result.html) that is populated with data
-    return "result";
+    return "employee/dashboard";
+  }
+  
+  //employeeService.findOne(1) here just populates the editProfile page with the correct information
+  @GetMapping("/editUserProfile")
+  public String employeeEditForm(Model model) {
+	  model.addAttribute("employee", employeeService.findOne(1));
+	  return "employee/edit";
+  }
+  
+ 
+  @PostMapping("/editUserProfile")
+  public String employeeEdit(@ModelAttribute Employee employee){
+
+    //We need to set the employee we are editing to the correct employee, so that all of her hidden values
+	//are already defined, such as ID.
+    Employee editEmployee = employeeService.findOne(1);
+    editEmployee.setUsername(employee.getUsername());
+    editEmployee.setPermissionLevel(employee.getPermissionLevel());
+    editEmployee.setUsername(employee.getUsername());
+    editEmployee.setPassword(employee.getPassword());
+    editEmployee.setFirstname(employee.getFirstname());
+    editEmployee.setLastname(employee.getLastname());
+    editEmployee.setEmail(employee.getEmail());
+    editEmployee.setAddress(employee.getAddress());
+    editEmployee.setCity(employee.getCity());
+    editEmployee.setState(employee.getState());
+    
+    //update this employee in the database
+    employeeService.update(editEmployee);
+    
+    return "employee/dashboard";
   }
 }

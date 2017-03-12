@@ -67,10 +67,10 @@ public class HomeController {
 	
 	//renders employee/edit
 	//linksto:
-	@RequestMapping(value = "/editUserProfile", method = RequestMethod.GET)
-	public String employeeEdit(Model model) {
-		return "employee/edit";
-	}
+//	@RequestMapping(value = "/editUserProfile", method = RequestMethod.GET)
+//	public String employeeEdit(Model model) {
+//		return "employee/edit";
+//	}
 	
 	//renders paystub/history
 	//linksto: 
