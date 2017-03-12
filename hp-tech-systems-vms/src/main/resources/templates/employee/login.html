@@ -3,11 +3,13 @@
 
 <!-- This is the basic login page -->
 
-	<head>
-	  <title>Login</title>
+	<head th:replace= "base :: site-head">
+	  <title id="pageTitle">VMS | Login</title>
 	</head>
 	
 	<body>
+		<nav th:replace="base :: site-nav">
+		</nav>
 		<div class = "alignFormCenter" align = "center">
 			<form>
 			
@@ -25,9 +27,11 @@
 				<input type = "submit" value = "Submit"></input>
 			</form>
 			<!--  form for submit button -->
-			<form action = "http://localhost:8080/register">
+			<form action = "http://localhost:8080/editUserProfile">
 				<h4></h4><input type = "submit" value = "Register"></input>
 			</form>
 		</div>	
+		
+		<footer th:replace="base :: site-footer"></footer>
 	</body>
 </html>
