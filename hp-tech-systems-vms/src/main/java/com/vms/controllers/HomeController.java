@@ -78,10 +78,10 @@ public class HomeController {
 	}
 	
 	//Renders register page
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String register(Model model) {
-		return "register";
-	}
+//	@RequestMapping(value = "/register", method = RequestMethod.GET)
+//	public String register(Model model) {
+//		return "register";
+//	}
 	
 	//Renders employeeDashboard page
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)

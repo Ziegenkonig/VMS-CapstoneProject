@@ -28,6 +28,8 @@ public class Employee {
 	private String username;
 	@Column(length = 32, nullable = false)
 	private String password;
+	@Column(length = 64, nullable = false)
+	private String email;
 	@Column(length = 32, nullable = false)
 	private String firstname;
 	@Column(length = 32, nullable = false)

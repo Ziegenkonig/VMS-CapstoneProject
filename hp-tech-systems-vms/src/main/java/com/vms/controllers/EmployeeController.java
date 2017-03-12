@@ -1,6 +1,8 @@
 package com.vms.controllers;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 //Spring imports
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,18 +11,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.vms.models.Employee;
+import com.vms.services.EmployeeService;
 
 @Controller
 public class EmployeeController{
   //declare global variables
-
-  //Want a global list of all of the employees that we are dealing with.. pretty much a cache. 
-  private ArrayList<Employee> employees = new ArrayList<Employee>();
-
-  @GetMapping("/employee")
+	
+  //Hooking up the EmployeeService to the EmployeeController
+  @Autowired
+  EmployeeService employeeService = new EmployeeService();
+	
+  @GetMapping("/register")
   public String employeeForm(Model model){
     model.addAttribute("employee", new Employee());
-    return "employee";
+    return "register";
   }
 
 /**
@@ -34,30 +38,28 @@ public class EmployeeController{
   }
 **/
 
-  @PostMapping("/employee")
+  @PostMapping("/register")
   public String employeeSubmit(@ModelAttribute Employee employee){
     //THIS IS WHERE THE PIPE OF DATA ENDS.
     //Anything that needs to be persisted needs to happen IN THIS METHOD.
 
     //create a new employee
-    Employee persistEmployee = new Employee();
-//    persistEmployee.setId(employee.getId());
-//    persistEmployee.setUsername(employee.getUsername());
-//    persistEmployee.setPermissionLevel(employee.getPermissionLevel());
-//    persistEmployee.setUsername(employee.getUsername());
-//    persistEmployee.setPassword(employee.getPassword());
-//    persistEmployee.setFirstName(employee.getFirstName());
-//    persistEmployee.setLastName(employee.getLastName());
-//    persistEmployee.setEmail(employee.getEmail());
-//    persistEmployee.setAddress(employee.getAddress());
-//    persistEmployee.setCity(employee.getCity());
-//    persistEmployee.setState(employee.getState());
-//    persistEmployee.setHireDate(employee.getHireDate());
-
-    //then add it to the array
-    employees.add(persistEmployee);
-    System.out.println(persistEmployee);
-
+    Employee newEmployee = new Employee();
+    newEmployee.setUsername(employee.getUsername());
+    newEmployee.setPermissionLevel(employee.getPermissionLevel());
+    newEmployee.setUsername(employee.getUsername());
+    newEmployee.setPassword(employee.getPassword());
+    newEmployee.setFirstname(employee.getFirstname());
+    newEmployee.setLastname(employee.getLastname());
+    newEmployee.setEmail(employee.getEmail());
+    newEmployee.setAddress(employee.getAddress());
+    newEmployee.setCity(employee.getCity());
+    newEmployee.setState(employee.getState());
+    newEmployee.setHireDate(LocalDate.now());
+    
+    //throw this new employee into the database
+    employeeService.create(newEmployee);
+    
     //this returns an html page (result.html) that is populated with data
     return "result";
   }
