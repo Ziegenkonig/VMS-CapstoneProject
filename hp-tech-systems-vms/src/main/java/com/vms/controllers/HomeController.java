@@ -65,32 +65,108 @@ public class HomeController {
 		return "employee/dashboard";
 	}
 	
-	//renders employee/edit
-	//linksto:
-//	@RequestMapping(value = "/editUserProfile", method = RequestMethod.GET)
-//	public String employeeEdit(Model model) {
-//		return "employee/edit";
-//	}
-	
 	//renders paystub/history
-	//linksto: 
-	@RequestMapping(value = "/dashboard/paystubHistory", method = RequestMethod.GET)
-	public String paystubHistory(Model model) {
+	//linksto: employee/dashboard(this)
+	@RequestMapping(value = "/paystub/paystubHistory", method = RequestMethod.GET)
+	public String historyPaystub(Model model) {
+		return "paystub/history";
+	}
+	
+	//renders paystub/new
+	//linksto: admin(this)
+	@RequestMapping(value = "/paystub/newPaystub", method = RequestMethod.GET)
+	public String newPaystub(Model model) {
+		return "paystub/history";
+	}
+	
+	//renders paystub/edit
+	//linksto: admin(this)
+	@RequestMapping(value = "/paystub/editPaystub", method = RequestMethod.GET)
+	public String editPaystub(Model model) {
 		return "paystub/history";
 	}
 	
 	//renders timesheet/history
-	//linksto:
-	@RequestMapping(value = "/dashboard/timesheetHistory", method = RequestMethod.GET)
-	public String timesheetHistory(Model model) {
+	//linksto: employee/dashboard(this)
+	@RequestMapping(value = "/timesheet/timesheetHistory", method = RequestMethod.GET)
+	public String historyTimesheet(Model model) {
 		return "timesheet/history";
 	}
 	
 	//renders timesheet/new
-	//linksto:
-	@RequestMapping(value = "/dashboard/submitTimesheet", method = RequestMethod.GET)
+	//linksto: admin(this)
+	@RequestMapping(value = "/timesheet/submitTimesheet", method = RequestMethod.GET)
 	public String newTimesheet(Model model) {
 		return "timesheet/new";
 	}
 	
+	//renders timesheet/edit
+	//linksto: admin(this)
+	@RequestMapping(value = "/timesheet/editTimesheet", method = RequestMethod.GET)
+	public String editTimesheet(Model model) {
+		return "timesheet/edit";
+	}
+	
+	//renders project/history
+	//linksto: employee/dashboard(this)
+	@RequestMapping(value = "/project/projectHistory", method = RequestMethod.GET)
+	public String historyProject(Model model) {
+		return "project/history";
+	}
+	
+	//renders project/new
+	//linksto: admin(this)
+	@RequestMapping(value = "/project/newProject", method = RequestMethod.GET)
+	public String newProject(Model model) {
+		return "project/new";
+	}
+	
+	//renders project/edit
+	//linksto: admin(this)
+	@RequestMapping(value = "/project/editProject", method = RequestMethod.GET)
+	public String editProject(Model model) {
+		return "project/edit";
+	}
+	
+	//renders vendor/history
+	//linksto: admin(this)
+	@RequestMapping(value = "/vendor/vendorHistory", method = RequestMethod.GET)
+	public String historyVendor(Model model) {
+		return "vendor/history";
+	}
+	
+	//renders vendor/new
+	//linksto: admin(this)
+	@RequestMapping(value = "/vendor/newVendor", method = RequestMethod.GET)
+	public String newVendor(Model model) {
+		return "vendor/new";
+	}
+	
+	//renders vendor/edit
+	//linksto: admin(this)
+	@RequestMapping(value = "/vendor/editVendor", method = RequestMethod.GET)
+	public String editVendor(Model model) {
+		return "vendor/edit";
+	}
+	
+	//renders invoice/history
+	//linksto: admin(this)
+	@RequestMapping(value = "/invoice/invoiceHistory", method = RequestMethod.GET)
+	public String historyInvoice(Model model) {
+		return "invoice/history";
+	}
+	
+	//renders invoice/new
+	//linksto: admin(this)
+	@RequestMapping(value = "/invoice/newInvoice", method = RequestMethod.GET)
+	public String newInvoice(Model model) {
+		return "invoice/new";
+	}
+	
+	//renders invoice/edit
+	//linksto: admin(this)
+	@RequestMapping(value = "/invoice/editInvoice", method = RequestMethod.GET)
+	public String editInvoice(Model model) {
+		return "invoice/edit";
+	}
 }
