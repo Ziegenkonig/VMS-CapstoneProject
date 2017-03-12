@@ -3,7 +3,7 @@
 
 <head th:replace= "base :: site-head">
     <meta charset="UTF-8" />
-    <title>My Shittastic App</title>
+    <title>VMS Project</title>
 </head>
 
 <body>
@@ -11,7 +11,46 @@
 	</nav>
 
 <h1>Welcome to our Capstone Project Website!</h1>
-    Now is: <b th:text="${execInfo.now.time}"></b>
+<h2>Timesheet</h2>
+<h4><a href="http://localhost:8080/timesheet/submitTimesheet">New Timesheet</a><br/>
+<a href="http://localhost:8080/timesheet/editTimesheet">Edit Timesheet</a><br/>
+<a href="http://localhost:8080/timesheet/timesheetHistory">Timesheet History</a><br/>	
+<a href="http://localhost:8080/timesheet/viewTimesheet">View Timesheet</a><br/>
+<a href="http://localhost:8080/timesheet/approveTimesheet">Approve Timesheet</a>	
+</h4>
+
+<h2>Project</h2>
+<h4><a href="http://localhost:8080/project/newProject">New Project</a><br/>
+<a href="http://localhost:8080/project/editProject">Edit Project</a><br/>
+<a href="http://localhost:8080/project/projectHistory">Project History</a>	
+</h4>
+
+<h2>Vendor</h2>
+<h4><a href="http://localhost:8080/vendor/newVendor">New Vendor</a><br/>
+<a href="http://localhost:8080/vendor/editVendor">Edit Vendor</a><br/>
+<a href="http://localhost:8080/vendor/vendorHistory">Vendor History</a>	
+</h4>
+
+<h2>Paystub</h2>
+<h4><a href="http://localhost:8080/paystub/newPaystub">New Paystub</a><br/>
+<a href="http://localhost:8080/paystub/viewPaystub">View Paystub</a><br/>
+<a href="http://localhost:8080/paystub/paystubHistory">Paystub History</a>	
+</h4>
+
+<h2>Invoices</h2>
+<h4><a href="http://localhost:8080/invoice/newInvoice">New Invoice</a><br/>
+<a href="http://localhost:8080/invoice/viewInvoice">View Invoice</a><br/>
+<a href="http://localhost:8080/invoice/invoiceHistory">Invoice History</a>
+</h4>
+
+<h2>Registration</h2>
+<h4><a href="http://localhost:8080/login">Login</a><br/>
+<a href="http://localhost:8080/register">Register</a>
+</h4>    
+    
+Now is: <b th:text="${execInfo.now.time}"></b>
 </body>
+
+<footer th:replace="base :: site-footer"></footer>
 
 </html>
