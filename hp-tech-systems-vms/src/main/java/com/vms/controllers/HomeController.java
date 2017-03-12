@@ -169,4 +169,11 @@ public class HomeController {
 	public String editInvoice(Model model) {
 		return "invoice/edit";
 	}
+	
+	//renders admin
+	//linksto: a lot and i dont wanna write them out right now
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public String adminDashboard(Model model) {
+		return "admin";
+	}
 }
