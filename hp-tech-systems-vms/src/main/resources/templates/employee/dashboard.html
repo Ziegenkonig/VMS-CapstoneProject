@@ -2,10 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace= "base :: site-head">
-  <title> Dashboard </title>
+  <title id="pageTitle">VMS | Login</title>
 </head>
 
 <body>
+	<nav th:replace="base :: site-nav">
+	</nav>
 	<div class = "employeeDashboardDiv" align = "left">
 		
 		<!-- Current Timesheets -->
