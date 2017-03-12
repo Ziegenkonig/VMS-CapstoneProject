@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace= "base :: site-head">
+  <title> New Project </title>
+</head>
+	<body>
+		<nav th:replace="base :: site-nav">
+		</nav>
+		
+		<div class="formAlignCenter" align = "center">
+		
+		    <h1>New Project</h1>
+		    <form th:fragment="proj-form" action="@{/admin}">
+		    	<div class="form-group">
+					<label for="name">Project Name:</label>
+				    <!-- <input type="email" class="form-control" id="name">  -->
+				    <input type="text" name="name" value="" th:value="${project?.getName()}" />
+				</div>
+		    	<div class="form-group">
+					<label for="billingRate">Billing Rate:</label>
+					<input type="text" name="billingRate" value="" th:value="${project?.getBillingRate()}" />
+		        </div>
+		        <div class="form-group">
+			        <label for="clientCompany">Client Company:</label>
+			        <input type="text" name="clientCompany" value="" th:value="${project?.getClientName()}" />
+			    </div>
+		        <div class="form-group">
+			        <label for="clientLocation">Client Location:</label>
+			        <input type="text" name="clientLocation" value="" th:value="${project?.getClientLocation()}" />
+		        </div>
+		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+		    </form>
+		    
+		</div>		
+		
+		<footer th:replace="base :: site-footer"></footer>
+	</body>
+</html>

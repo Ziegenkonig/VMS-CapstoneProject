@@ -123,56 +123,56 @@ public class HomeController {
 	//linksto: employee/dashboard(this)
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String viewProjects(Model model) {
-		return "project/index";
+		return "project/projects";
 	}
 	
 	//renders project/new
 	//linksto: admin(this)
-	@RequestMapping(value = "/project/newProject", method = RequestMethod.GET)
+	@RequestMapping(value = "/project/new", method = RequestMethod.GET)
 	public String newProject(Model model) {
-		return "project/new";
+		return "project/newP";
 	}
 	
 	//renders project/edit
 	//linksto: admin(this)
-	@RequestMapping(value = "/project/editProject", method = RequestMethod.GET)
+	@RequestMapping(value = "/project/edit", method = RequestMethod.GET)
 	public String editProject(Model model) {
-		return "project/edit";
+		return "project/editP";
 	}
 	
 	//renders project/view - details of the project like rails show
 	//linksto: admin(this)
 	@RequestMapping(value = "/project/view", method = RequestMethod.GET)
 	public String viewProject(Model model) {
-		return "project/view";
+		return "project/viewP";
 	}
 	
 	//renders vendor/history
 	//linksto: admin(this)
-	@RequestMapping(value = "/vendor/vendorHistory", method = RequestMethod.GET)
+	@RequestMapping(value = "/vendors", method = RequestMethod.GET)
 	public String historyVendor(Model model) {
-		return "vendor/history";
+		return "vendor/vendors";
 	}
 	
 	//renders vendor/new
 	//linksto: admin(this)
-	@RequestMapping(value = "/vendor/newVendor", method = RequestMethod.GET)
+	@RequestMapping(value = "/vendor/new", method = RequestMethod.GET)
 	public String newVendor(Model model) {
-		return "vendor/new";
+		return "vendor/newV";
 	}
 	
 	//renders vendor/edit
 	//linksto: admin(this)
-	@RequestMapping(value = "/vendor/editVendor", method = RequestMethod.GET)
+	@RequestMapping(value = "/vendor/edit", method = RequestMethod.GET)
 	public String editVendor(Model model) {
-		return "vendor/edit";
+		return "vendor/editV";
 	}
 	
 	//renders vendor/view - details of the project like rails show
 	//linksto: admin(this)
 	@RequestMapping(value = "/vendor/view", method = RequestMethod.GET)
 	public String viewVendor(Model model) {
-		return "vendor/view";
+		return "vendor/viewV";
 	}
 	
 	//renders invoice/history
