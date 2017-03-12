@@ -41,7 +41,7 @@ public class EmployeeController{
   public String employeeSubmit(@ModelAttribute Employee employee){
     //THIS IS WHERE THE PIPE OF DATA ENDS.
     //Anything that needs to be persisted needs to happen IN THIS METHOD.
-
+	System.out.println("runs");
     //create a new employee
     Employee newEmployee = new Employee();
     newEmployee.setUsername(employee.getUsername());
