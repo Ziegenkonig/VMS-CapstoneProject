@@ -65,56 +65,49 @@ public class HomeController {
 	
 	//renders paystub/history
 	//linksto: employee/dashboard(this)
-	@RequestMapping(value = "/paystub/paystubHistory", method = RequestMethod.GET)
+	@RequestMapping(value = "/paystubs", method = RequestMethod.GET)
 	public String historyPaystub(Model model) {
-		return "paystub/history";
-	}
-	
-	//renders paystub/new
-	//linksto: admin(this)
-	@RequestMapping(value = "/paystub/newPaystub", method = RequestMethod.GET)
-	public String newPaystub(Model model) {
-		return "paystub/new";
+		return "paystub/paystubs";
 	}
 	
 	//renders paystub/view
 	//linksto: ???
-	@RequestMapping(value = "/paystub/viewPaystub", method = RequestMethod.GET)
+	@RequestMapping(value = "/paystub/view", method = RequestMethod.GET)
 	public String viewPaystub(Model model) {
-		return "paystub/view";
+		return "paystub/viewPs";
 	}
 	
 	//renders timesheet/history
 	//linksto: employee/dashboard(this)
-	@RequestMapping(value = "/timesheet/timesheetHistory", method = RequestMethod.GET)
+	@RequestMapping(value = "/timesheets", method = RequestMethod.GET)
 	public String historyTimesheet(Model model) {
-		return "timesheet/history";
+		return "timesheet/timesheets";
 	}
 	
 	//renders timesheet/new
 	//linksto: admin(this)
-	@RequestMapping(value = "/timesheet/submitTimesheet", method = RequestMethod.GET)
+	@RequestMapping(value = "/timesheet/new", method = RequestMethod.GET)
 	public String newTimesheet(Model model) {
-		return "timesheet/new";
+		return "timesheet/newT";
 	}
 	
 	//renders timesheet/edit
 	//linksto: admin(this)
-	@RequestMapping(value = "/timesheet/editTimesheet", method = RequestMethod.GET)
+	@RequestMapping(value = "/timesheet/edit", method = RequestMethod.GET)
 	public String editTimesheet(Model model) {
-		return "timesheet/edit";
+		return "timesheet/editT";
 	}
 	
 	//renders timesheet/view
 	//linksto: ??
-	@RequestMapping(value = "/timesheet/viewTimesheet", method = RequestMethod.GET)
+	@RequestMapping(value = "/timesheet/view", method = RequestMethod.GET)
 	public String viewTimesheet(Model model) {
-		return "timesheet/view";
+		return "timesheet/viewT";
 	}
 	
 	//renders timesheet/approve
 	//linksto: ??
-	@RequestMapping(value = "/timesheet/approveTimesheet", method = RequestMethod.GET)
+	@RequestMapping(value = "/timesheet/approve", method = RequestMethod.GET)
 	public String approveTimesheet(Model model) {
 		return "timesheet/approve";
 	}
@@ -178,23 +171,23 @@ public class HomeController {
 	
 	//renders invoice/history
 	//linksto: admin(this)
-	@RequestMapping(value = "/invoice/invoiceHistory", method = RequestMethod.GET)
+	@RequestMapping(value = "/invoices", method = RequestMethod.GET)
 	public String historyInvoice(Model model) {
-		return "invoice/history";
+		return "invoice/invoices";
 	}
 	
 	//renders invoice/new
 	//linksto: admin(this)
-	@RequestMapping(value = "/invoice/newInvoice", method = RequestMethod.GET)
+	@RequestMapping(value = "/invoice/new", method = RequestMethod.GET)
 	public String newInvoice(Model model) {
-		return "invoice/new";
+		return "invoice/newI";
 	}
 	
 	//renders invoice/view
 	//linksto: ???
-	@RequestMapping(value = "/invoice/viewInvoice", method = RequestMethod.GET)
+	@RequestMapping(value = "/invoice/view", method = RequestMethod.GET)
 	public String viewInvoice(Model model) {
-		return "invoice/view";
+		return "invoice/viewI";
 	}
 	
 	//renders admin

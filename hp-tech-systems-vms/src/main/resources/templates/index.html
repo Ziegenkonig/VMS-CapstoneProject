@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace= "base :: site-head">
+    <meta charset="UTF-8" />
+    <title>VMS Project</title>
 	<title>Links Page</title>
 </head>
 
@@ -9,36 +11,49 @@
 	<nav th:replace="base :: site-nav">
 	</nav>
 
-	<h1>Welcome to our Capstone Project Website!</h1>
-	<p>Now is: <b th:text="${execInfo.now.time}"></b></p>
-	
-    <ul>
-	    <li><a th:href="@{/login}">Login</a></li>
-	    <li><a th:href="@{/register}">Register</a></li>
-	    <li><a th:href="@{/dashboard}">Employee Dashboard</a></li>
-	    <li><a th:href="@{/admin}">Admin</a></li>
-	    <li><a th:href="@{/project/newProject}">New Project</a></li>
-	    <li><a th:href="@{/project/editProject}">Edit Project</a></li>
-	    <li><a th:href="@{/project/view}">View Project</a></li>
-	    <li><a th:href="@{/projects}">View All Projects</a></li>
-	    <li><a th:href="@{/vendor/view}">View Vendor</a></li>
-	    <li><a th:href="@{/vendors}">View All Vendors</a></li>
-	    <!-- 
-	    <li><a th:href="../employee/new.html">Employee New</a></li>
-	    <li><a th:href="../employee/edit.html">Employee Edit</a></li>
-	    <li><a th:href="../paystub/history.html">Paystub History</a></li>
-	    <li><a th:href="../paystub/view.html">Paystub View</a></li>
-	    <li><a th:href="../timesheet/history.html">Timesheet History</a></li>
-	    <li><a th:href="../timesheet/view.html">Timesheet New/Edit</a></li>
-	    
-	 
-	    <li><a th:href="../project/view.html">Project View</a></li>
-	    <li><a th:href="../vendor/new.html">Vendor New</a></li>
-	    <li><a th:href="../vendor/edit.html">Vendor Edit</a></li>
-	    <li><a th:href="../vendor/view.html">Vendor View</a></li>
-	    
-	     -->
-    </ul>
+<h1>Welcome to our Capstone Project Website!</h1>
+<h2>Timesheet</h2>
+<h4><a href="http://localhost:8080/timesheet/new">New Timesheet</a><br/>
+<a href="http://localhost:8080/timesheet/edit">Edit Timesheet</a><br/>
+<a href="http://localhost:8080/timesheets">Timesheet History</a><br/>	
+<a href="http://localhost:8080/timesheet/view">View Timesheet</a><br/>
+<a href="http://localhost:8080/timesheet/approve">Approve Timesheet</a>	
+</h4>
+
+<h2>Project</h2>
+<h4><a href="http://localhost:8080/project/new">New Project</a><br/>
+<a href="http://localhost:8080/project/edit">Edit Project</a><br/>
+<a href="http://localhost:8080/project/view">View Project</a><br/>
+<a href="http://localhost:8080/projects">Project History</a>	
+</h4>
+
+<h2>Vendor</h2>
+<h4><a href="http://localhost:8080/vendor/new">New Vendor</a><br/>
+<a href="http://localhost:8080/vendor/edit">Edit Vendor</a><br/>
+<a href="http://localhost:8080/vendor/view">View Vendor</a><br/>
+<a href="http://localhost:8080/vendors">Vendor History</a>	
+</h4>
+
+<h2>Paystub</h2>
+<h4><a href="http://localhost:8080/paystub/view">View Paystub</a><br/>
+<a href="http://localhost:8080/paystubs">Paystub History</a>	
+</h4>
+
+<h2>Invoices</h2>
+<h4><a href="http://localhost:8080/invoice/new">New Invoice</a><br/>
+<a href="http://localhost:8080/invoice/view">View Invoice</a><br/>
+<a href="http://localhost:8080/invoices">Invoice History</a>
+</h4>
+
+<h2>Registration</h2>
+<h4><a href="http://localhost:8080/login">Login</a><br/>
+<a href="http://localhost:8080/register">Register</a>
+</h4>    
+    
+Now is: <b th:text="${execInfo.now.time}"></b>
+
 </body>
+
+<footer th:replace="base :: site-footer"></footer>
 
 </html>
