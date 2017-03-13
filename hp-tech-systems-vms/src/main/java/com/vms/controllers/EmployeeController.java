@@ -67,7 +67,7 @@ public class EmployeeController{
   @GetMapping("/editUserProfile")
   public String employeeEditForm(Model model) {
 	  model.addAttribute("employee", employeeService.findOne(1));
-	  return "employee/edit";
+	  return "employee/editE";
   }
   
  

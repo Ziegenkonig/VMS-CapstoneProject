@@ -40,6 +40,10 @@ public class EmployeeService {
 		return employeeRepo.findOne(id);
 	}
 	
+	public Employee findByUserame(String name) {
+		return employeeRepo.findByUsername(name);
+	}
+	
 	//returns all objects
 	public List<Employee> findAll() {
 		return employeeRepo.findAll();
