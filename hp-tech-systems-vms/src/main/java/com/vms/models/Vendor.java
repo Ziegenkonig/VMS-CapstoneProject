@@ -37,7 +37,7 @@ public class Vendor {
 	@Column(length = 2, nullable = false)
 	private String state; //Should be two capital letters
 	
-	@Column(length = 10, nullable = false)
+	@Column(length = 20, nullable = false)
 	private String phone; //not including non-numerical characters
 	
 	public String toString() {

@@ -46,7 +46,7 @@ public class VendorController {
 	public String createVendor(@ModelAttribute Vendor v) {
 		vendorService.create(v);
 		//some validation crap needs to go here bc it should show error on same page or continue on
-		return "vendor/view";
+		return "vendor/viewV";
 	}
 	
 	//get an vendor object and populate form fields -working
@@ -62,7 +62,7 @@ public class VendorController {
 	public String updateVendor(@ModelAttribute Vendor v, Model model) {
 		vendorService.update(v);
 		//some validation crap needs to go here bc it should show error on same page or continue on
-		return "vendor/view";
+		return "vendor/viewV";
 	}
 	
 	
