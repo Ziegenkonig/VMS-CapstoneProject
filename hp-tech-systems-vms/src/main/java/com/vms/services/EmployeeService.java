@@ -40,7 +40,7 @@ public class EmployeeService {
 		return employeeRepo.findOne(id);
 	}
 	
-	public Employee findByUserame(String name) {
+	public Employee findByUsername(String name) {
 		return employeeRepo.findByUsername(name);
 	}
 	

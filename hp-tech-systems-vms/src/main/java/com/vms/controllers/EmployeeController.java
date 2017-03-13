@@ -26,47 +26,22 @@ public class EmployeeController{
     return "employee/newE";
   }
 
-/**
-  @GetMapping("/employees")
-  //I want to make an array of all of the current employees, then iterate through that array and print everything to the view.
-  public String getAllEmployees(){
-    for(int i = 0; i < employees.size(); i ++){
-      System.out.println(employees.get(i));
-    }
-    return "employees";
-  }
-**/
-
   @PostMapping("/register")
   public String employeeSubmit(@ModelAttribute Employee employee){
-    //THIS IS WHERE THE PIPE OF DATA ENDS.
-    //Anything that needs to be persisted needs to happen IN THIS METHOD.
-	System.out.println("runs");
-    //create a new employee
-    Employee newEmployee = new Employee();
-    newEmployee.setUsername(employee.getUsername());
-    newEmployee.setPermissionLevel(employee.getPermissionLevel());
-    newEmployee.setUsername(employee.getUsername());
-    newEmployee.setPassword(employee.getPassword());
-    newEmployee.setFirstname(employee.getFirstname());
-    newEmployee.setLastname(employee.getLastname());
-    newEmployee.setEmail(employee.getEmail());
-    newEmployee.setAddress(employee.getAddress());
-    newEmployee.setCity(employee.getCity());
-    newEmployee.setState(employee.getState());
-    newEmployee.setHireDate(LocalDate.now());
+    //setting hiredate to present time
+    employee.setHireDate(LocalDate.now());
     
     //throw this new employee into the database
-    employeeService.create(newEmployee);
+    employeeService.create(employee);
     
-    //this returns an html page (result.html) that is populated with data
+    //takes us straight to user profile page (not implemented yet)
     return "employee/dashboard";
   }
   
   //employeeService.findOne(1) here just populates the editProfile page with the correct information
   @GetMapping("/editUserProfile")
   public String employeeEditForm(Model model) {
-	  model.addAttribute("employee", employeeService.findOne(1));
+	  model.addAttribute("employee", new Employee());
 	  return "employee/editE";
   }
   
@@ -74,23 +49,19 @@ public class EmployeeController{
   @PostMapping("/editUserProfile")
   public String employeeEdit(@ModelAttribute Employee employee){
 
-    //We need to set the employee we are editing to the correct employee, so that all of her hidden values
-	//are already defined, such as ID.
-    Employee editEmployee = employeeService.findOne(1);
-    editEmployee.setUsername(employee.getUsername());
-    editEmployee.setPermissionLevel(employee.getPermissionLevel());
-    editEmployee.setUsername(employee.getUsername());
-    editEmployee.setPassword(employee.getPassword());
-    editEmployee.setFirstname(employee.getFirstname());
-    editEmployee.setLastname(employee.getLastname());
-    editEmployee.setEmail(employee.getEmail());
-    editEmployee.setAddress(employee.getAddress());
-    editEmployee.setCity(employee.getCity());
-    editEmployee.setState(employee.getState());
+    //We need to set uneditable values of the employee we are editing manually
+	Employee editEmployee = employeeService.findByUsername(employee.getUsername());
+    employee.setEmpId(editEmployee.getEmpId());
+    employee.setHireDate(editEmployee.getHireDate());
+    employee.setPermissionLevel(editEmployee.getPermissionLevel());
+    employee.setProjemps(editEmployee.getProjemps());
+    employee.setActive(editEmployee.isActive());
+    employee.setTimesheets(editEmployee.getTimesheets());
+    employee.setPayPeriod(employee.getPayPeriod());
     
     //update this employee in the database
-    employeeService.update(editEmployee);
+    employeeService.update(employee);
     
-    return "employee/dashboard";
+    return "dashboard";
   }
 }
