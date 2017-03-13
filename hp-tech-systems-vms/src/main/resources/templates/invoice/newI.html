@@ -14,19 +14,17 @@
 		
 		    <h1>New Invoice</h1>
 		    
-		    <form action="#" th:action="@{/newInvoice}" th:object="${invoice}" method="post">
+		    <form action="#" th:action="@{/newInvoice}" th:object="${selectedVendor}" method="post">
 				<h4>Select Vendor</h4>
-				<select>
- 					<option value="1">Vendor 1</option>
-					<option value="2">Vendor 2</option>
-					<option value="3">...</option>
-					<option value="4">...</option>
-					<option value="5">Vendor n</option>
+				<!-- Cycyles through every vendor and includes their names into the list -->
+				<select th:each = "vendor : ${vendors}" th:value = "${selectedVendor.setName()}">
+ 					<option th:text = "${vendor.getName()}" />
 				</select>
+				<!-- Cycyles through every project-timesheet and adds their dates to the list -->
 				<h4>Period Start</h4>
-		        <input type="date"/>
-		        <h4>Period End</h4>
-		        <input type="number"/>
+		        <select th:each = "projTim : ${projectTimesheets}" th:value = "${date}">
+ 					<option th:text = "${projTim.getWeekStarting()}"/>
+				</select>
 		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 		    </form>
 		</div>
