@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace= "base :: site-head">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Index Page</title>
+
+    <!-- Bootstrap -->
+    <link href="../public/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="../public/main.css" rel="stylesheet">-->
+    <!--End Cut and paste code-->
+</head>
+
+<body>
+	<nav th:replace="base :: site-nav">
+	</nav>
+
+<h1>Welcome to our Capstone Project Website!</h1>
+
+<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Timesheet
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+      <li><a href="http://localhost:8080/timesheet/new">New Timesheet</a></li>
+    <li><a href="http://localhost:8080/timesheet/edit">Edit Timesheet</a></li>
+      <li><a href="http://localhost:8080/timesheets">Timesheet History</a></li>
+      <li><a href="http://localhost:8080/timesheet/view">View Timesheet</a></li>
+      <li><a href="http://localhost:8080/timesheet/approve">Approve Timesheet</a></li>
+  </ul>
+</div>
+
+
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Project
+  <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+    <li><a href="http://localhost:8080/project/new">New Project</a></li>
+    <li><a href="http://localhost:8080/project/edit">Edit Project</a></li>
+        <li><a href="http://localhost:8080/project/view">View Project</a></li>
+        <li><a href="http://localhost:8080/projects">Project History</a>	</li>
+    </ul>
+</div>
+
+    <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Vendor
+<span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li><a href="http://localhost:8080/vendor/new">New Vendor</a></li>
+        <li><a href="http://localhost:8080/vendor/edit">Edit Vendor</a></li>
+        <li><a href="http://localhost:8080/vendor/view">View Vendor</a></li>
+        <li><a href="http://localhost:8080/vendors">Vendor History</a></li>
+    </ul>
+</div>
+
+
+    <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Paystub
+<span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li><a href="http://localhost:8080/paystub/view">View Paystub</a></li>
+        <li><a href="http://localhost:8080/paystubs">Paystub History</a></li>
+</ul>
+</div>
+
+<div class="dropdown">
+<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Paystub
+<span class="caret"></span></button>
+<ul class="dropdown-menu">
+    <li><a href="http://localhost:8080/invoice/new">New Invoice</a></li>
+    <li><a href="http://localhost:8080/invoice/view">View Invoice</a></li>
+    <li><a href="http://localhost:8080/invoices">Invoice History</a></li>
+</ul>
+</div>
+<div class="dropdown">
+<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Paystub
+<span class="caret"></span></button>
+<ul class="dropdown-menu">
+    <li><a href="http://localhost:8080/login">Login</a></li>
+    <li><a href="http://localhost:8080/register">Register</a></li>
+</ul>
+</div>
+
+
+Now is: <b th:text="${execInfo.now.time}"></b>
+
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../public/js/bootstrap.min.js"></script>
+
+</body>
+
+<footer th:replace="base :: site-footer"></footer>
+
+</html>
