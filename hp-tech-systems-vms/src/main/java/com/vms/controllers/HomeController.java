@@ -178,10 +178,10 @@ public class HomeController {
 	
 	//renders invoice/new
 	//linksto: admin(this)
-	@RequestMapping(value = "/invoice/new", method = RequestMethod.GET)
-	public String newInvoice(Model model) {
-		return "invoice/newI";
-	}
+//	@RequestMapping(value = "/invoice/new", method = RequestMethod.GET)
+//	public String newInvoice(Model model) {
+//		return "invoice/newI";
+//	}
 	
 	//renders invoice/view
 	//linksto: ???

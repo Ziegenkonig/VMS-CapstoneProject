@@ -44,5 +44,9 @@ public class VendorService {
 		return vendorRepo.findByName(name);
 	}
 	
+	public List<Vendor> findAllSorted() {
+		return vendorRepo.findAllByOrderByNameAsc();
+	}
+	
 	
 }

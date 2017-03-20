@@ -14,17 +14,23 @@
 		
 		    <h1>New Invoice</h1>
 		    
-		    <form action="#" th:action="@{/newInvoice}" th:object="${selectedVendor}" method="post">
+		    <form action="#" th:action="@{/invoice/view}" method="post">
 				<h4>Select Vendor</h4>
-				<!-- Cycyles through every vendor and includes their names into the list -->
-				<select th:each = "vendor : ${vendors}" th:value = "${selectedVendor.setName()}">
- 					<option th:text = "${vendor.getName()}" />
+				<!-- Cycles through every vendor and includes their names into the list -->
+				<select th:field = "${selectedVendor.name}" id = "vendorDropList">
+ 					<option value = "0" >Select Vendor</option> <!-- Default text for when page first renders -->
+ 					<option th:each = "vendor : ${vendors}" th:value = "${selectedVendor.name}" th:text = "${vendor.getName()}"></option>
 				</select>
-				<!-- Cycyles through every project-timesheet and adds their dates to the list -->
+				<!-- Cycles through every project-timesheet and adds their dates to the list with no repeating dates -->
 				<h4>Period Start</h4>
-		        <select th:each = "projTim : ${projectTimesheets}" th:value = "${date}">
- 					<option th:text = "${projTim.getWeekStarting()}"/>
+		        <select id = "periodDropList">
+ 					<option value = "0" >Select Period</option> <!-- Default text for when page first renders -->
+ 					<option th:each = "localDate : ${allDates}" 
+ 							th:field = "${selectedProjectTimesheet.weekStarting}" 
+ 							th:value = "${selectedProjectTimesheet.getProjectTimesheetId()}"
+ 							th:text = "${localDate}"></option>
 				</select>
+				<h4></h4>
 		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 		    </form>
 		</div>

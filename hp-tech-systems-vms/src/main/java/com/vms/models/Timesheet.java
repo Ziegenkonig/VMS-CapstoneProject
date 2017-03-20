@@ -19,7 +19,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data //standard getters/setters
 @Entity
 @Table(name = "timesheets")
