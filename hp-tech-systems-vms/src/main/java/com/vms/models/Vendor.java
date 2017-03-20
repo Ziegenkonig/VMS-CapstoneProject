@@ -8,8 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data //This annotation automatically generates getters/setters for this entity
+@NoArgsConstructor
 @Entity //Tells Hibernate that this class is to be treated as an entity
 @Table(name = "vendors") //Specifies what the table name is
 public class Vendor {
