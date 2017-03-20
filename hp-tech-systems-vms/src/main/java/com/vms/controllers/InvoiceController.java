@@ -41,6 +41,8 @@ public class InvoiceController {
 	//Create a new invoice
 	@GetMapping("/invoice/new")
 	public String invoiceForm(Model model) {
+		//Defining a placeholder LocalDate to use to tell if the user has chosen a date
+		LocalDate noDate = LocalDate.ofYearDay(1900, 1);
 		//Filtering out duplicate periods so dropdown box isn't cluttered, and putting them in desc order
 		List<ProjectTimesheet> projectTimesheets = projTimeService.findAll();
 		List<LocalDate> allDates = new ArrayList<LocalDate>();
@@ -52,6 +54,7 @@ public class InvoiceController {
 		
 		System.out.println(allDates.get(0) + " " + allDates.get(1));
 		
+		model.addAttribute("noDate", noDate);
 		model.addAttribute("selectedProjectTimesheet", new ProjectTimesheet()); //Pass this to @PostMapping
 		model.addAttribute("allDates", allDates); //All pay periods
 		model.addAttribute("selectedVendor", new Vendor()); //Pass this to @PostMapping
@@ -62,7 +65,7 @@ public class InvoiceController {
 
 	
 	@PostMapping("/invoice/new")
-	public String invoiceSubmit(@ModelAttribute Vendor selectedVendor, ProjectTimesheet selectedProjectTimesheet) {
+	public String invoiceSubmit(@ModelAttribute Vendor selectedVendor, @ModelAttribute ProjectTimesheet selectedProjectTimesheet) {
 		//Grabbing vendor object associated with the name selected by user
 		selectedVendor = vendorService.findByName(selectedVendor.getName());
 		System.out.println("runs");
