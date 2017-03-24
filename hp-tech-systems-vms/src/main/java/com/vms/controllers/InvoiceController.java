@@ -31,36 +31,51 @@ public class InvoiceController {
 	ProjectService projectService = new ProjectService();
 	@Autowired
 	ProjectTimesheetService projTimeService = new ProjectTimesheetService();
+	//Created this so I can just pass the string object over to the post method
 	
 	//Create a new invoice
-	@GetMapping()
+	@GetMapping("/invoice/new")
 	public String invoiceForm(Model model) {
-		//Have to instantiate the LocalDate
-		LocalDate date = null;
 		
-		model.addAttribute("dateSelected", date); //Pass this to @PostMapping
-		model.addAttribute("projectTimesheets", projTimeService.findAll()); //All pay periods (need to shorten eventually)
+		//Need a string to keep track of selected date since Thymeleaf and LocalDate dont play well together
+		//I had to create a new object that specifically holds a string as an attribute to pass it correctly
+		StringHolder stringHolder = new StringHolder();
+		//Here we have to transfer all of the LocalDates inside of uniqueDates into Strings because LocalDates are dumb
+		//Or maybe I am and I just dont know what im doing
+		List<LocalDate> uniqueDates = projTimeService.uniqueDates();
+		List<String> allDates = new ArrayList<String>();
+		for (LocalDate date : uniqueDates) 
+			allDates.add(date.toString());
+		
+		//Setting all of the model attributes that are used in the corresponding html
+		model.addAttribute("stringHolder", stringHolder); //contains the user selected date in string format
+		model.addAttribute("allDates", allDates); //All unique pay periods
 		model.addAttribute("selectedVendor", new Vendor()); //Pass this to @PostMapping
-		model.addAttribute("vendors", vendorService.findAll()); //All Vendors
+		model.addAttribute("vendors", vendorService.findAllNames()); //All Vendors
 		
 		return "invoice/newI";
 	}
 
-	
-	@PostMapping()
-	public String invoiceSubmit(@ModelAttribute Vendor selectedVendor, @ModelAttribute LocalDate date) {
+	//Everything in here happens after the user presses the submit button, and is executes in-between pages
+	@PostMapping("/invoice/new")
+	public String invoiceSubmit(@ModelAttribute("selectedVendor") Vendor selectedVendor,
+								@ModelAttribute("stringHolder") StringHolder stringHolder) {
+		
 		//Grabbing vendor object associated with the name selected by user
 		selectedVendor = vendorService.findByName(selectedVendor.getName());
 		//Putting all projects associated with the vendor into a list
 		List<Project> projects = projectService.findByVendor(selectedVendor);
+
 		//Cycling through projects list and appending all of the associated ProjectTimesheets into one list
 		//(within pay period)
 		List<ProjectTimesheet> projectTimesheets = new ArrayList<ProjectTimesheet>();
 		for (Project project : projects)
-			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project, date));
+			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project, LocalDate.parse(stringHolder.string)));
+		
 		//Creating new invoice
-		invoiceService.create(new Invoice(projectTimesheets));
+		Invoice newInvoice = new Invoice(projectTimesheets);
+		invoiceService.create(newInvoice);
 		//Displaying new invoice (not implemented yet)
-		return "admin";
+		return "invoice/viewI";
 	}
 }

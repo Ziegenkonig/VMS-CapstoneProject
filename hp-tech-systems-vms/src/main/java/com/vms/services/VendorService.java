@@ -44,5 +44,14 @@ public class VendorService {
 		return vendorRepo.findByName(name);
 	}
 	
+	public List<Vendor> findAllSorted() {
+		return vendorRepo.findAllByOrderByNameAsc();
+	}
+	
+	//returns every name associated with the vendors
+	public List<String> findAllNames() {
+		return vendorRepo.findAllVendorNames();
+	}
+	
 	
 }

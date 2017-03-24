@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -34,7 +33,7 @@ public class Invoice {
 	@Enumerated(EnumType.STRING)
 	private InvoiceStatus status;
 	
-	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "invoices", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "invoices", cascade = CascadeType.ALL)
     private List<ProjectTimesheet> projTimesheets; 
 	
     @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -93,7 +92,7 @@ public class Invoice {
 			this.periodEnd = this.periodStart.plusDays(7);
 		
 		//Setting payment_due
-		this.paymentDue = this.paymentDue.plusMonths(1);
+		this.paymentDue = this.periodEnd.plusMonths(1);
 		
 		//Grabbing the project/vendor out of the timesheet object and using it to set all kinds of info
 		Project proj = proj_emp.getProject();
