@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace= "base :: site-head">
+  <title id="pageTitle">VMS | All Vendors</title>
+</head>
+
+	<body>
+		<nav th:replace="base :: site-nav">
+		</nav>
+		<h1>Vendors</h1>
+		<a th:href="@{/employee/new}">Add New Employee</a>
+		<table id="empTable"
+		       class="table table-bordered"
+		       th:if="${employees != null}"> <!--  and not #list.isEmpty(vendors) -->
+        <thead>
+            <tr class="center middle">
+                <th>Name</th>
+                <th>Hire Date</th>
+                <th>Active</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="e : ${employees}">
+                <td th:text="${e.firstname} + ' ' + ${e.lastname}"></td>
+                <td th:text="${e.hireDate}"></td>
+                <td th:if="${e.status} == true" th:text="Yes"></td>
+                <td th:if="${e.status} == false" th:text="No"></td>
+                <td><a th:href="@{/editUserProfile}">View</a></td>
+                <td><a th:href="@{/vendor/edit/{path}(path=${vendor.name})}">Edit</a></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <footer th:replace="base :: site-footer"></footer>
+
+	</body>
+</html>

@@ -8,18 +8,31 @@
 	<body>
 		<nav th:replace="base :: site-nav">
 		</nav>
-			<h4>Timesheet 1</h4>
-			<img src="https://images.sampletemplates.com/wp-content/uploads/2015/06/weekly-timesheet-printable.jpg" alt="" height="400" width="400"/>
-			<h4>Starting Week - # hours - Period | <a href="http://localhost:8080/timesheet/view">View</a></h4>
-			
-			<h4>Timesheet 2</h4>
-			<img src="https://images.sampletemplates.com/wp-content/uploads/2015/06/weekly-timesheet-printable.jpg" alt="" height="400" width="400"/>
-			<h4>Starting Week - # hours - Period | <a href="http://localhost:8080/timesheet/view">View</a></h4>
-
-			<h4>Timesheet 3</h4>
-			<img src="https://images.sampletemplates.com/wp-content/uploads/2015/06/weekly-timesheet-printable.jpg" alt="" height="400" width="400"/>
-			<h4>Starting Week - # hours - Period | <a href="http://localhost:8080/timesheet/view">View</a></h4>
+		<h1>Timesheets</h1>
+		
+		<table id="tsTable"
+		       class="table table-bordered"
+		       th:if="${timesheets != null}"> <!--  and not #list.isEmpty(vendors) -->
+        <thead>
+            <tr class="center middle">
+                <th>Employee Name</th>
+                <th>Week Starting</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ts : ${timesheets}">
+                <td th:text="${ts.employee.firstname} + ' ' + ${ts.employee.lastname}"></td>
+                <td th:text="${ts.weekStarting}"></td>
+                <td th:text="${ts.status}"></td>
+                <td><a th:href="@{/timesheet/{path}(path=${ts.timesheetId})}">View</a></td>
+                <td><a th:href="@{/paystub/new/{path}(path=${ts.timesheetId})}">Generate Paystub</a></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <footer th:replace="base :: site-footer"></footer>
 
 	</body>
-
 </html>

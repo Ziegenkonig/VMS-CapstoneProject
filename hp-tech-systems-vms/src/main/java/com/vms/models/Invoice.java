@@ -16,9 +16,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-import lombok.Data; 
+import lombok.Data;
+import lombok.NoArgsConstructor; 
 
 @Data //standard getters/setters
+@NoArgsConstructor
 @Entity
 @Table(name="invoices")
 public class Invoice {
