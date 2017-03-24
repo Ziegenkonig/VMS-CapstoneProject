@@ -2,7 +2,9 @@ package com.vms.controllers;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,47 +40,50 @@ public class InvoiceController {
 	ProjectService projectService = new ProjectService();
 	@Autowired
 	ProjectTimesheetService projTimeService = new ProjectTimesheetService();
+	//Created this so I can just pass the string object over to the post method
 	
 	//Create a new invoice
 	@GetMapping("/invoice/new")
 	public String invoiceForm(Model model) {
-		//Defining a placeholder LocalDate to use to tell if the user has chosen a date
-		LocalDate noDate = LocalDate.ofYearDay(1900, 1);
-		//Filtering out duplicate periods so dropdown box isn't cluttered, and putting them in desc order
-		List<ProjectTimesheet> projectTimesheets = projTimeService.findAll();
-		List<LocalDate> allDates = new ArrayList<LocalDate>();
-		for (ProjectTimesheet projTime : projectTimesheets) {
-			if ( !allDates.contains(projTime.getWeekStarting()) )
-				allDates.add(projTime.getWeekStarting());
-		}
-		Collections.reverse(allDates);
 		
-		System.out.println(allDates.get(0) + " " + allDates.get(1));
+		//Need a string to keep track of selected date since Thymeleaf and LocalDate dont play well together
+		//I had to create a new object that specifically holds a string as an attribute to pass it correctly
+		StringHolder stringHolder = new StringHolder();
+		//Here we have to transfer all of the LocalDates inside of uniqueDates into Strings because LocalDates are dumb
+		//Or maybe I am and I just dont know what im doing
+		List<LocalDate> uniqueDates = projTimeService.uniqueDates();
+		List<String> allDates = new ArrayList<String>();
+		for (LocalDate date : uniqueDates) 
+			allDates.add(date.toString());
 		
-		model.addAttribute("noDate", noDate);
-		model.addAttribute("selectedProjectTimesheet", new ProjectTimesheet()); //Pass this to @PostMapping
-		model.addAttribute("allDates", allDates); //All pay periods
+		//Setting all of the model attributes that are used in the corresponding html
+		model.addAttribute("stringHolder", stringHolder); //contains the user selected date in string format
+		model.addAttribute("allDates", allDates); //All unique pay periods
 		model.addAttribute("selectedVendor", new Vendor()); //Pass this to @PostMapping
-		model.addAttribute("vendors", vendorService.findAllSorted()); //All Vendors
+		model.addAttribute("vendors", vendorService.findAllNames()); //All Vendors
 		
 		return "invoice/newI";
 	}
 
-	
+	//Everything in here happens after the user presses the submit button, and is executes in-between pages
 	@PostMapping("/invoice/new")
-	public String invoiceSubmit(@ModelAttribute Vendor selectedVendor, @ModelAttribute ProjectTimesheet selectedProjectTimesheet) {
+	public String invoiceSubmit(@ModelAttribute("selectedVendor") Vendor selectedVendor,
+								@ModelAttribute("stringHolder") StringHolder stringHolder) {
+		
 		//Grabbing vendor object associated with the name selected by user
 		selectedVendor = vendorService.findByName(selectedVendor.getName());
-		System.out.println("runs");
 		//Putting all projects associated with the vendor into a list
 		List<Project> projects = projectService.findByVendor(selectedVendor);
+
 		//Cycling through projects list and appending all of the associated ProjectTimesheets into one list
 		//(within pay period)
 		List<ProjectTimesheet> projectTimesheets = new ArrayList<ProjectTimesheet>();
 		for (Project project : projects)
-			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project, selectedProjectTimesheet.getWeekStarting()));
+			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project, LocalDate.parse(stringHolder.string)));
+		
 		//Creating new invoice
-		invoiceService.create(new Invoice(projectTimesheets));
+		Invoice newInvoice = new Invoice(projectTimesheets);
+		invoiceService.create(newInvoice);
 		//Displaying new invoice (not implemented yet)
 		return "invoice/viewI";
 	}

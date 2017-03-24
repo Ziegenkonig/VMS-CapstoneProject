@@ -17,4 +17,9 @@ public interface VendorRepository extends JpaRepository<Vendor, Integer> {
 	@Query
 	public List<Vendor> findAllByOrderByNameAsc();
 	
+	@Query (
+		value = "SELECT name FROM vendors ORDER BY name ASC",
+		nativeQuery = true
+	)
+	public List<String> findAllVendorNames();
 }

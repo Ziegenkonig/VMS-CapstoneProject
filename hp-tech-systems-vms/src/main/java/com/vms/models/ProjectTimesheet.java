@@ -45,7 +45,7 @@ public class ProjectTimesheet {
 	@JoinColumn(name = "project_employee_id")
 	private ProjectEmployee projemp;
 	
-	@OneToMany(mappedBy="projTimesheet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="projTimesheet", cascade = CascadeType.ALL)
 	private List<TimesheetRow> weeks;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
