@@ -1,6 +1,6 @@
 package com.vms.repositories;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,5 +18,8 @@ public interface ProjectTimesheetRepository extends JpaRepository<ProjectTimeshe
 		value = "SELECT DISTINCT week_starting FROM project_timesheets ORDER BY week_starting DESC",
 		nativeQuery = true
 	)
-	public List<Timestamp> findUniqueWeekStarting();
+	
+
+	public List<Date> findUniqueWeekStarting();
+	//public List<Timestamp> findUniqueWeekStarting();
 }

@@ -47,7 +47,7 @@ public class ProjectTimesheet {
 	@OneToMany(mappedBy="projTimesheet", cascade = CascadeType.ALL)
 	private List<TimesheetRow> weeks;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany//(cascade = CascadeType.ALL)
 	@JoinTable(name="PROJECTTIMESHEET_INVOICE", joinColumns = @JoinColumn(name = "projectTimesheetId"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
     private List<Invoice> invoices; 
 	

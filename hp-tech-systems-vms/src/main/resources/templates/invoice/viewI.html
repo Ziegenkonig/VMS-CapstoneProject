@@ -8,6 +8,7 @@
 	<body>
 		<nav th:replace="base :: site-nav">
 		</nav>
+		<p th:if="${newInvoice == null}" th:text="'No invoice'"></p>
 			<h4>Invoice X</h4>
 			<img src="https://d3mg6n5cijb75m.cloudfront.net/assets/invoice_templates/en/invoice/165-3753b1f066d38f6401ec5b18f95bcb10e8a7a01aee0a087b2ed9bded8e4885c6.png" alt="" height="400" width="400"/>
 			<h4>Vendor</h4>

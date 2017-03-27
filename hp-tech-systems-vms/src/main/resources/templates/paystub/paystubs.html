@@ -11,7 +11,7 @@
 		<!-- admin version -->
 		<h1>Paystub History</h1>
 		
-		<p th:if="${paystubs != null}" th:text="'No paystubs found'"></p>;
+		<p th:if="${paystubs == null OR paystubs.isEmpty()}" th:text="'No paystubs found'"></p>
 		<table id="tsTable"
 		       class="table table-bordered"
 		       th:if="${paystubs != null}"> <!--  and not #list.isEmpty(vendors) -->
@@ -21,6 +21,7 @@
                 <th>Dates</th>
                 <th>Check No</th>
                 <th>Amount</th>
+                <th>Date Created</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -31,7 +32,7 @@
                 <td th:text="${#temporals.format(ps.periodStart,'MM/dd/yyyy')} + ' - ' + ${#temporals.format(ps.periodEnd,'MM/dd/yyyy')}"></td>
                 <td th:text="${ps.checkNo}"></td>
                 <td th:text="${ps.netPay}"></td>
-                <td th:text="${ps.createdDate}"></td>
+                <td th:text="${#temporals.format(ps.createdDate,'MM/dd/yyyy')}"></td>
                 <td><a th:href="@{/paystub/{path}(path=${ps.paystubId})}">View</a></td>
             </tr>
         </tbody>

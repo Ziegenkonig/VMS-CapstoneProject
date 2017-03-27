@@ -60,8 +60,9 @@
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Paystub
 <span class="caret"></span></button>
     <ul class="dropdown-menu">
-        <li><a href="@{/paystub/1}">Sample Paystub</a></li>
-        <li><a href="@{/paystubs/all}">Paystub History</a></li>
+    	<li><a th:href="@{/paystub/{id}(id=1)}">Sample Paystub</a></li>
+        <li><a th:href="@{/paystubs/{mode}(mode='byEmployee',empId=1)}">List of Paystubs for Specific Employee</a></li>
+        <li><a th:href="@{/paystubs/{mode}(mode='all')}">Paystub History</a></li>
 </ul>
 </div>
 
