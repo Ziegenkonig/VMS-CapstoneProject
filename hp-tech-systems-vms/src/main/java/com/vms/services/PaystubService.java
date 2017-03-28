@@ -44,6 +44,10 @@ public class PaystubService {
 		return paystubRepo.save(paystub);
 	}
 	
+	public Paystub update(Paystub paystub) {
+		return paystubRepo.save(paystub);
+	}
+	
 	public Paystub edit(Paystub paystub) {
 		return paystubRepo.save(paystub);
 	}

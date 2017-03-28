@@ -2,6 +2,7 @@ package com.vms.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +33,20 @@ public class Paystub {
 	//deposit number
 	private int checkNo;
 	
-    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDate createdDate;
+	@Type(type = "org.hibernate.type.ZonedDateTimeType")
+    @Column(nullable = false, updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private ZonedDateTime createdDate;
+	
+	@Type(type = "org.hibernate.type.ZonedDateTimeType")
+    @Column//(updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private ZonedDateTime dateVoided;
+	
+	@Type(type = "org.hibernate.type.ZonedDateTimeType")
+    @Column//(updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private ZonedDateTime checkDate;
+	
+	@Column(nullable = false)
+	private PaystubStatus status;
 	
 // calculated or imported fields
 	//pay period start and end (14/7 day interval)
@@ -184,11 +199,11 @@ public class Paystub {
 		this.ytdMedInsurance = previous.getMedInsurance().add(this.medInsurance);
 		this.ytd401k = previous.getA401k().add(this.a401k);
 	}
-	
-	
+		
 	@PrePersist
 	protected void onCreate() {
-		createdDate = LocalDate.now();
+		createdDate = ZonedDateTime.now();
+		status = PaystubStatus.REQUIRES_CHECK;
 	}
 	
 	/*// testing Lombok - should not have any errors

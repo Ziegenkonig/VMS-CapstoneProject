@@ -13,10 +13,13 @@
 	<main>
 		<p th:text="'Employee Name: ' + ${paystub.firstname} + ' ' + ${paystub.lastname}">Company Name</p>
 	    <p th:text="'Employee Address: ' + ${paystub.address} + ' ' + ${paystub.city} + ', ' + ${paystub.state}">bjones@companyname.com</p>
+	    <p th:text="'Date Generated: ' + ${#temporals.format(paystub.createdDate,'MM/dd/yyyy HH:mm')}">1562 SomeRoad Ave.</p>
+	    <p th:text="'Status: ' + ${paystub.status}">Bob Jones</p>
+	    <p th:text="${paystub.dateVoided} ? 'Date Voided: ' + ${#temporals.format(paystub.dateVoided,'MM/dd/yyyy HH:mm')}">1562 SomeRoad Ave.</p>
 	    <p th:text="'Check No: ' + ${paystub.checkNo}">Bob Jones</p>
-	    <p th:text="'Date Generated: ' + ${paystub.createdDate}">1562 SomeRoad Ave.</p>
-	    <p th:text="'Period Start: ' + ${paystub.periodStart}">Memphis</p>
-	    <p th:text="'Period End: ' + ${paystub.periodEnd}">TN</p>
+	    <p th:text="${paystub.checkDate} ? 'Check Date: ' + ${#temporals.format(paystub.checkDate,'MM/dd/yyyy HH:mm')}">1562 SomeRoad Ave.</p>
+	    <p th:text="'Period Start: ' + ${#temporals.format(paystub.periodStart,'MM/dd/yyyy')}">Memphis</p>
+	    <p th:text="'Period End: ' + ${#temporals.format(paystub.periodEnd,'MM/dd/yyyy')}">TN</p>
 	    <p th:text="'Net Pay: ' + ${paystub.netPay}">901-567-9345</p>
 	    <p th:text="'YTD Net Pay: ' + ${paystub.ytdNetPay}">901-567-9345</p>
 	    <p th:text="'Total: ' + ${paystub.total}">901-567-9345</p>

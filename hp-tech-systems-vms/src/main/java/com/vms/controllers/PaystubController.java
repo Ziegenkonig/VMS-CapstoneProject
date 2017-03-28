@@ -1,22 +1,29 @@
 package com.vms.controllers;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.vms.models.Employee;
 import com.vms.models.Paystub;
+import com.vms.models.PaystubStatus;
 import com.vms.models.Timesheet;
 import com.vms.services.EmployeeService;
 import com.vms.services.PaystubService;
 import com.vms.services.TimesheetService;
 
 @Controller
+@SessionAttributes("paystub")
 public class PaystubController {
 
 	@Autowired
@@ -72,15 +79,22 @@ public class PaystubController {
 		model.addAttribute("paystub", ps);
 		return "paystub/viewPs";
 	}
-	/*
-	@GetMapping("/paystub")
-	public String paystubForm(Model model) {
-		return null;
+	
+	//adding a check number and updating status
+	@GetMapping("/paystub/addCheck")
+	public String addCheckToPaystub(@RequestParam Integer pId, Model model) {
+		Paystub ps = pSService.findById(pId);
+		model.addAttribute("paystub", ps);
+		return "paystub/checkNoForm";
+	}
+	
+	@PostMapping("/paystub/addCheck")
+	public String saveCheckToPaystub(@ModelAttribute("paystub") Paystub ps, SessionStatus status) {
+		ps.setStatus(PaystubStatus.ISSUED);
+		ps.setCheckDate(ZonedDateTime.now());
+		pSService.update(ps);
+		status.setComplete();
+		return "redirect:/paystubs/all";
 	}
 
-	@PostMapping("/paystub")
-	public String paystubSubmit() {
-		return null;
-	}
-	*/
 }

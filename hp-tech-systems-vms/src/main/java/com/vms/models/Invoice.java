@@ -2,6 +2,7 @@ package com.vms.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 import lombok.Data;
 import lombok.NoArgsConstructor; 
@@ -37,8 +40,9 @@ public class Invoice {
 	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "invoices", cascade = CascadeType.ALL)
     private List<ProjectTimesheet> projTimesheets; 
 	
-    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDate createdDate;
+	@Type(type = "org.hibernate.type.ZonedDateTimeType")
+    @Column(updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private ZonedDateTime createdDate;
 	
 //fields to store info from other tables
 	//from project
@@ -122,7 +126,7 @@ public class Invoice {
 	//Called before .save
 	@PrePersist
 	protected void onCreate() {
-		createdDate = LocalDate.now();
+		createdDate = ZonedDateTime.now();
 	}
 	
 	//toString

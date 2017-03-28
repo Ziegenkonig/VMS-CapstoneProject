@@ -11,7 +11,7 @@
 		<!-- admin version -->
 		<h1>Paystub History</h1>
 		
-		<p th:if="${paystubs != null}" th:text="'No paystubs found'"></p>;
+		<p th:if="${paystubs == null OR paystubs.isEmpty()}" th:text="'No paystubs found'"></p>
 		<table id="tsTable"
 		       class="table table-bordered"
 		       th:if="${paystubs != null}"> <!--  and not #list.isEmpty(vendors) -->
@@ -19,8 +19,12 @@
             <tr class="center middle">
                 <th>Employee Name</th>
                 <th>Dates</th>
-                <th>Check No</th>
                 <th>Amount</th>
+                <th>Date Created</th>
+                <th>Status</th>
+                <th>Date Voided</th>
+                <th>Check No</th>
+                <th>Check Date</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -29,10 +33,14 @@
             <tr th:each="ps : ${paystubs}">
                 <td th:text="${ps.firstname} + ' ' + ${ps.lastname}"></td>
                 <td th:text="${#temporals.format(ps.periodStart,'MM/dd/yyyy')} + ' - ' + ${#temporals.format(ps.periodEnd,'MM/dd/yyyy')}"></td>
-                <td th:text="${ps.checkNo}"></td>
                 <td th:text="${ps.netPay}"></td>
-                <td th:text="${ps.createdDate}"></td>
+                <td th:text="${#temporals.format(ps.createdDate,'MM/dd/yyyy HH:mm')}"></td>
+                <td th:text="${ps.status}"></td>
+               	<td th:text="${ps.dateVoided} ? ${#temporals.format(ps.dateVoided,'MM/dd/yyyy HH:mm')}"></td>
+                <td th:text="${ps.checkNo}"></td>
+                <td th:text="${ps.checkDate} ? ${#temporals.format(ps.checkDate,'MM/dd/yyyy HH:mm')}"></td>
                 <td><a th:href="@{/paystub/{path}(path=${ps.paystubId})}">View</a></td>
+                <td><a th:href="@{/paystub/addCheck(pId=${ps.paystubId})}">Issue Check</a></td>
             </tr>
         </tbody>
     </table>
