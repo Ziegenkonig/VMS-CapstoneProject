@@ -27,6 +27,7 @@
                 <th>Check Date</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -37,10 +38,11 @@
                 <td th:text="${#temporals.format(ps.createdDate,'MM/dd/yyyy HH:mm')}"></td>
                 <td th:text="${ps.status}"></td>
                	<td th:text="${ps.dateVoided} ? ${#temporals.format(ps.dateVoided,'MM/dd/yyyy HH:mm')}"></td>
-                <td th:text="${ps.checkNo}"></td>
+                <td th:text="${ps.checkNo != 0} ? ${ps.checkNo}"></td>
                 <td th:text="${ps.checkDate} ? ${#temporals.format(ps.checkDate,'MM/dd/yyyy HH:mm')}"></td>
                 <td><a th:href="@{/paystub/{path}(path=${ps.paystubId})}">View</a></td>
-                <td><a th:href="@{/paystub/addCheck(pId=${ps.paystubId})}">Issue Check</a></td>
+                <td><a th:if="${ps.status.toString() != 'VOIDED'}" th:href="@{/paystub/addCheck(pId=${ps.paystubId})}">Issue Check</a></td>
+                <td><a th:href="@{/paystub/regenerate(pId=${ps.paystubId})}">Regenerate</a></td>
             </tr>
         </tbody>
     </table>

@@ -28,24 +28,30 @@ public class PaystubController {
 
 	@Autowired
 	TimesheetService tSService = new TimesheetService();
-	
 	@Autowired
 	PaystubService pSService = new PaystubService();
-	
 	@Autowired
 	EmployeeService	empService = new EmployeeService();
 	
 	//reads all vendors from the db and displays in table form -working
 	@GetMapping(value = "/paystubs/{mode}")
-	public String viewPaystubs(@PathVariable String mode, @RequestParam(required = false) Integer empId, Model model) {
+	public String viewPaystubs(@PathVariable String mode, 
+							   @RequestParam(required = false) Integer empId,
+							   @RequestParam(required = false) PaystubStatus status,
+							   Model model) {
 		List<Paystub> paystubs;
 		switch(mode) {
 			case "all":
 				paystubs = pSService.findAll();
 				break;
+			//not yet implemented
 			case "byEmployee":
 				Employee e = empService.findOne(empId);
 				paystubs = pSService.findPaystubByEmployee(e);
+				break;
+			//not yet implemented
+			case "byStatus":
+				paystubs = pSService.findByStatus(status);
 				break;
 			default:
 				paystubs = null;
@@ -94,6 +100,22 @@ public class PaystubController {
 		ps.setCheckDate(ZonedDateTime.now());
 		pSService.update(ps);
 		status.setComplete();
+		return "redirect:/paystubs/all";
+	}
+	
+	@GetMapping("/paystub/regenerate")
+	public String reGeneratePaystub(@RequestParam Integer pId) {
+		Paystub ps = pSService.findById(pId);
+		Paystub copy;
+		if(ps.getPrevPaystubId() != null) {
+			copy = new Paystub(ps.getTimesheet(), pSService.findById(ps.getPrevPaystubId()));
+		} else {
+			copy = new Paystub(ps.getTimesheet());
+		}
+		ps.setStatus(PaystubStatus.VOIDED);
+		ps.setDateVoided(ZonedDateTime.now());
+		pSService.update(ps);
+		pSService.create(copy);
 		return "redirect:/paystubs/all";
 	}
 
