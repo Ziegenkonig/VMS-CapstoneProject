@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace= "base :: site-head">
+  <title id="pageTitle">VMS | View Vendor</title>
+</head>
+
+<body>
+	<nav th:replace="base :: site-nav">
+	</nav>
+	
+	<!-- View Specific Vendor Details --> 
+	<main>
+		<p th:text="'Name: ' + ${vendor?.getName()}">Company Name</p>
+	    <p th:text="'Primary Email: ' + ${vendor?.getPrimaryEmail()}">bjones@companyname.com</p>
+	    <p th:text="'Contact Name: ' + ${vendor?.getContactName()}">Bob Jones</p>
+	    <p th:text="'Address: ' + ${vendor?.getAddress()}">1562 SomeRoad Ave.</p>
+	    <p th:text="'City: ' + ${vendor?.getCity()}">Memphis</p>
+	    <p th:text="'State: ' + ${vendor?.getState()}">TN</p>
+	    <p th:text="'Phone: ' + ${vendor?.getPhone()}">901-567-9345</p>
+	    <a th:href="@{/vendor/edit/{path}(path=${vendor.getName()})}">Edit Vendor</a>
+	</main>
+	
+	<footer th:replace="base :: site-footer"></footer>
+</body>
+
+</html>
