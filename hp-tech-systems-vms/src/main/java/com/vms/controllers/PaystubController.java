@@ -103,6 +103,7 @@ public class PaystubController {
 		return "redirect:/paystubs/all";
 	}
 	
+	//recreating a paystub from an existing paystub
 	@GetMapping("/paystub/regenerate")
 	public String reGeneratePaystub(@RequestParam Integer pId) {
 		Paystub ps = pSService.findById(pId);
