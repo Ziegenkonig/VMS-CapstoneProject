@@ -61,7 +61,10 @@ public class Mail {
 	private static String generateTextMessage(Employee employee){
 		//get an employee as input to the method, along with some othe rkind of necessary details, then 
 		//convert it into a string that can be sent as a text message in the email. 
-		String greeting = "Hello " + employee.getFirstname() + ", this is your name!";
+		String greeting = "Hello " + employee.getFirstname() + ", this is your name!\n";
+		
+		// -- Want to generate a URL that links to the invoices left to fill out, or the invoices that need to be viewed or whatever --
+		String url = "";
 		
 		return "" + greeting;
 	}
