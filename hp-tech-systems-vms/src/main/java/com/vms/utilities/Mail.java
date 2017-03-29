@@ -2,17 +2,17 @@ package com.vms.utilities;
 
 import java.util.Date;
 import java.util.Properties;
+
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.vms.models.*;
+import com.vms.models.Employee;
 
 public class Mail {
 	public static void sendEmail() {
@@ -29,9 +29,9 @@ public class Mail {
 		props.put("mail.store.protocol", "pop3");
 		props.put("mail.transport.protocol", "smtp");
 		final String username = "uofmcapstonebanana@gmail.com";//
-		final String password = "";
+		final String password = "alwaysmoneyinthebananastand123";
 		try {
-			Session session = Session.getDefaultInstance(props, new Authenticator() {
+			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(username, password);
 				}
@@ -42,7 +42,7 @@ public class Mail {
 
 			// -- Set the FROM and TO fields --
 			msg.setFrom(new InternetAddress("uofmcapstonebanana@gmail.com"));
-			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("", false));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("jbhtcher@memphis.edu", false));
 			// -- Set the Subject message -- 
 			msg.setSubject("Invoice Notice");
 			// -- Set the text message --
@@ -64,7 +64,7 @@ public class Mail {
 		String greeting = "Hello " + employee.getFirstname() + ", this is your name!\n";
 		
 		// -- Want to generate a URL that links to the invoices left to fill out, or the invoices that need to be viewed or whatever --
-		String url = "";
+		//String url = "";
 		
 		return "" + greeting;
 	}

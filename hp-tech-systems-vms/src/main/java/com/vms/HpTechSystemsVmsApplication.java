@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
-import com.vms.utilities.Mail;
-
 @EnableJpaRepositories("com.vms.repositories")
 @SpringBootApplication
 public class HpTechSystemsVmsApplication {
@@ -19,6 +17,6 @@ public class HpTechSystemsVmsApplication {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(HpTechSystemsVmsApplication.class, args);
-		Mail.sendEmail();
+		//Mail.sendEmail();
 	}
 }
