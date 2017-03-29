@@ -12,6 +12,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.vms.models.*;
+
 public class Mail {
 	public static void sendEmail() {
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
@@ -27,7 +29,7 @@ public class Mail {
 		props.put("mail.store.protocol", "pop3");
 		props.put("mail.transport.protocol", "smtp");
 		final String username = "uofmcapstonebanana@gmail.com";//
-		final String password = "bananastand123";
+		final String password = "";
 		try {
 			Session session = Session.getDefaultInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
@@ -40,14 +42,27 @@ public class Mail {
 
 			// -- Set the FROM and TO fields --
 			msg.setFrom(new InternetAddress("uofmcapstonebanana@gmail.com"));
-			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("jbhtcher@memphis.edu", false));
-			msg.setSubject("Hello");
-			msg.setText("How are you");
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("", false));
+			// -- Set the Subject message -- 
+			msg.setSubject("Invoice Notice");
+			// -- Set the text message --
+			Employee testEmployee = new Employee();
+			testEmployee.setFirstname("Josh");
+			msg.setText(generateTextMessage(testEmployee));
+			
+			// -- set the date --
 			msg.setSentDate(new Date());
 			Transport.send(msg);
 			System.out.println("Message sent.");
 		} catch (MessagingException e) {
 			System.out.println("Erreur d'envoi, cause: " + e);
 		}
+	}
+	private static String generateTextMessage(Employee employee){
+		//get an employee as input to the method, along with some othe rkind of necessary details, then 
+		//convert it into a string that can be sent as a text message in the email. 
+		String greeting = "Hello " + employee.getFirstname() + ", this is your name!";
+		
+		return "" + greeting;
 	}
 }
