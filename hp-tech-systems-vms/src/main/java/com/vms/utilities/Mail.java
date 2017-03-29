@@ -68,4 +68,10 @@ public class Mail {
 		
 		return "" + greeting;
 	}
-}
+	private String timesheetSubmittedNotification(Employee employee){
+		//employee has submitted their timesheet, so the employer needs to know
+		String output = "" + employee.getFirstname() + " " + employee.getLastname() + " has submitted a timesheet";
+		return output;
+	}
+	}
+
