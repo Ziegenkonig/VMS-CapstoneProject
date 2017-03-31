@@ -171,10 +171,10 @@ public class HomeController {
 	
 	//renders invoice/history
 	//linksto: admin(this)
-	@RequestMapping(value = "/invoices", method = RequestMethod.GET)
-	public String historyInvoice(Model model) {
-		return "invoice/invoices";
-	}
+//	@RequestMapping(value = "/invoices", method = RequestMethod.GET)
+//	public String historyInvoice(Model model) {
+//		return "invoice/invoices";
+//	}
 	
 	//renders invoice/new
 	//linksto: admin(this)
@@ -185,10 +185,10 @@ public class HomeController {
 	
 	//renders invoice/view
 	//linksto: ???
-	@RequestMapping(value = "/invoice/view", method = RequestMethod.GET)
-	public String viewInvoice(Model model) {
-		return "invoice/viewI";
-	}
+//	@RequestMapping(value = "/invoice/view", method = RequestMethod.GET)
+//	public String viewInvoice(Model model) {
+//		return "invoice/viewI";
+//	}
 	
 	//renders admin
 	//linksto: a lot and i dont wanna write them out right now

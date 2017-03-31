@@ -2,23 +2,18 @@ package com.vms.controllers;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vms.models.Invoice;
 import com.vms.models.Project;
@@ -40,9 +35,8 @@ public class InvoiceController {
 	ProjectService projectService = new ProjectService();
 	@Autowired
 	ProjectTimesheetService projTimeService = new ProjectTimesheetService();
-	//Created this so I can just pass the string object over to the post method
 	
-	//Create a new invoice
+	//CREATING NEW INVOICE
 	@GetMapping("/invoice/new")
 	public String invoiceForm(Model model) {
 		
@@ -85,6 +79,31 @@ public class InvoiceController {
 		Invoice newInvoice = new Invoice(projectTimesheets);
 		invoiceService.create(newInvoice);
 		//Displaying new invoice (not implemented yet)
+		return "redirect:" + "http://localhost:8080/invoice/view/" + newInvoice.getInvoiceId();
+	}
+	
+	//VIEWING ALL INVOICES
+	@GetMapping("/invoices")
+	public String viewInvoices(Model model) {
+		//Getting all invoices
+		List<Invoice> invoices = invoiceService.findAll();
+
+		//Adding all invoices to the model
+		model.addAttribute("invoices", invoices);
+		//specifying which html file rendering
+		return "invoice/invoices";
+	}
+	
+	//VIEWING ONE INVOICE
+	@GetMapping(value = "/invoice/view/{id}")
+	public String viewInvoice(@PathVariable("id") Integer invoiceId, Model model) {
+		
+		Invoice invoice = invoiceService.findById(invoiceId);
+		Project project = projectService.findById(invoice.getProjectId());
+
+		model.addAttribute("invoice", invoice);
+		model.addAttribute("project", project);
+		
 		return "invoice/viewI";
 	}
 }

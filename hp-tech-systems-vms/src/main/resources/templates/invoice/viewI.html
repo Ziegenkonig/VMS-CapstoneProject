@@ -8,11 +8,128 @@
 	<body>
 		<nav th:replace="base :: site-nav">
 		</nav>
-			<h4>Invoice X</h4>
-			<img src="https://d3mg6n5cijb75m.cloudfront.net/assets/invoice_templates/en/invoice/165-3753b1f066d38f6401ec5b18f95bcb10e8a7a01aee0a087b2ed9bded8e4885c6.png" alt="" height="400" width="400"/>
-			<h4>Vendor</h4>
-			<br/>
-			<a href="http://localhost:8080/invoices">Return to Invoices</a>	
+			<!-- Header for invoice, includes invoice ID -->
+			<h3 th:text = "INVOICE + ' ' + '#' + ${invoice.getInvoiceId()} + 'for Project: ' + ${project.getName()}"> </h3>
+			<!-- The outer table for the invoice  -->
+			<table id = "invoiceOutterTable"
+				   class = "table table-bordered"
+				   style = "white-space:nowrap; max-width:70%; border-color: #6699ff">
+			
+				<thead>
+					<tr>
+						<th bgcolor = "#cce6ff" style = "border-color: #6699ff"> Bill To </th>
+						<th bgcolor = "#cce6ff" style = "border-color: #6699ff"> Ship To </th>
+					</tr>
+				</thead>	
+			
+				<tbody>
+					<!-- First row in outer table -->
+					<tr>
+						<!-- Information: Vendor Name, Vendor Address, Vendor Phone Number -->
+						<td style = "border-color: #6699ff">
+							<!-- Inner table 1 for information in the invoice -->
+							<table id = "invoiceInnerTable1"
+								   class = "table"
+								   style = "border-collapse: separate; border-spacing: 5px;">
+								<tbody>
+									<tr>
+										<td> <p><b> Customer: </b></p> </td>
+										<td> <p th:text = " ${project.getVendor().getName()} "></p> </td>
+									</tr>
+									<tr>
+										<td> <p><b> Address: </b></p> </td>
+										<td> <p th:text = "${invoice.getAddress()}"></p> </td>
+									</tr>
+									<tr>
+										<td> <p><b> Phone: </b></p> </td>
+										<td> <p th:text = "${invoice.getPhone()}"></p> </td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						<!-- Information: HP Tech Systems, HP Tech Address, HP Tech Phone, HP Tech Contact Name -->
+						<td style = "border-color: #6699ff">
+							<!-- Inner table 2 for information in the invoice -->
+							<table id = "invoiceInnerTable2"
+								   class = "table"
+								   style = "border-collapse: separate; border-spacing: 5px;">
+								<tbody>
+									<tr>
+										<td> <p><b> Recipient: </b></p> </td>
+										<td> <p th:text = " 'HP Tech Systems LLC' "></p> </td>
+									</tr>
+									<tr>
+										<td> <p><b> Address: </b></p> </td>
+										<td> <p th:text = " 'HP Tech Systems Address' "></p> </td>
+									</tr>
+									<tr>
+										<td> <p><b> Phone: </b></p> </td>
+										<td> <p th:text = " 'HP Tech Phone Number' "></p> </td>
+									</tr>
+									<tr>
+										<td> <p><b> Contact Name: </b></p> </td>
+										<td> <p th:text = " 'HP Tech Contact Name' "></p> </td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<!-- Second row in outer table -->
+					<tr>
+						<!-- Information: Date Pyament is Due, Recruiter Name -->
+						<td style = "border-color: #6699ff">
+							<!-- Inner table 3 for information in the invoice -->
+							<table id = "invoiceInnerTable3"
+								   class = "table"
+								   style = "border-collapse: separate; border-spacing: 5px;">
+								<tbody>
+									<tr>
+										<td> <p><b> Payment Due: </b></p> </td>
+										<td> <p th:text = "${invoice.getName()}"></p> </td>
+									</tr>
+									<tr>
+										<td> <p><b> Recruiter: </b></p> </td>
+										<td> <p th:text = "${invoice.getAddress()}"></p> </td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						<!-- Information: Vendor Name, Vendor Address, Vendor Phone Number -->
+						<td style = "border-color: #6699ff">
+							<!-- Inner table 1 for information in the invoice -->
+							<table id = "invoiceInnerTable1"
+								   class = "table"
+								   style = "border-collapse: separate; border-spacing: 5px;">
+								<tbody>
+									<tr>
+										<td> <p><b> Consultant Name: </b></p> </td>
+										<td> <p th:text = "${invoice.getName()}"></p> </td>
+									</tr>
+									<tr>
+										<td> <p><b> Rate: </b></p> </td>
+										<td> <p th:text = "${invoice.getRate()}"></p> </td>
+									</tr>
+									<tr>
+										<td> <p><b> Total Hours: </b></p> </td>
+										<td> <p th:text = "${invoice.getTotalHours()}"></p> </td>
+									</tr>
+									<tr>
+										<td> <p><b> Total Amount: </b></p> </td>
+										<td> <p th:text = "${invoice.getTotalAmt()}"></p> </td>
+									</tr>
+									<tr>
+										<td> <p><b> Billing Dates: </b></p> </td>
+										<td> <p th:text = "${invoice.getPeriodStart()} + '-' + ${invoice.getPeriodEnd()}"></p> </td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			
+			</table>
+			
+		<h5> <b>Status:</b> <b th:text = "${invoice.getStatus()}"></b> </h5>
 	</body>
 
 </html>

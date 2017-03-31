@@ -16,13 +16,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.vms.services.ProjectService;
+import com.vms.services.VendorService;
+
 import lombok.Data; 
 
 @Data //standard getters/setters
 @Entity
 @Table(name="invoices")
 public class Invoice {
-
+	
 	@Id @GeneratedValue
 	private int invoiceId;
 	// reference
@@ -75,6 +80,11 @@ public class Invoice {
 	private String phone;
 	
 	//employer info saved in global variables somewhere
+	
+	//default constructor
+	public Invoice() {
+		
+	}
 	
 	//constructor
 	public Invoice(List<ProjectTimesheet> projTimesheets) { 
