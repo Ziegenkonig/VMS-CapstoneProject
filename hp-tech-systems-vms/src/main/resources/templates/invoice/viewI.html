@@ -9,7 +9,7 @@
 		<nav th:replace="base :: site-nav">
 		</nav>
 			<!-- Header for invoice, includes invoice ID -->
-			<h3 th:text = "INVOICE + ' ' + '#' + ${invoice.getInvoiceId()} + 'for Project: ' + ${project.getName()}"> </h3>
+			<h3 th:text = "INVOICE + ' ' + '#' + ${invoice.getInvoiceId()} + ' for Project(s): ' + ${project.getName()}"> </h3>
 			<!-- The outer table for the invoice  -->
 			<table id = "invoiceOutterTable"
 				   class = "table table-bordered"
@@ -89,7 +89,7 @@
 									</tr>
 									<tr>
 										<td> <p><b> Recruiter: </b></p> </td>
-										<td> <p th:text = "${invoice.getAddress()}"></p> </td>
+										<td> <p th:text = "${invoice.getRecruiter()}"></p> </td>
 									</tr>
 								</tbody>
 							</table>
@@ -107,7 +107,7 @@
 									</tr>
 									<tr>
 										<td> <p><b> Rate: </b></p> </td>
-										<td> <p th:text = "${invoice.getRate()}"></p> </td>
+										<td> <p th:text = "'$' + ${invoice.getRate()}"></p> </td>
 									</tr>
 									<tr>
 										<td> <p><b> Total Hours: </b></p> </td>
@@ -115,11 +115,11 @@
 									</tr>
 									<tr>
 										<td> <p><b> Total Amount: </b></p> </td>
-										<td> <p th:text = "${invoice.getTotalAmt()}"></p> </td>
+										<td> <p th:text = "'$' + ${invoice.getTotalAmt()}"></p> </td>
 									</tr>
 									<tr>
 										<td> <p><b> Billing Dates: </b></p> </td>
-										<td> <p th:text = "${invoice.getPeriodStart()} + '-' + ${invoice.getPeriodEnd()}"></p> </td>
+										<td> <p th:text = "${invoice.getPeriodStart()} + ' through ' + ${invoice.getPeriodEnd()}"></p> </td>
 									</tr>
 								</tbody>
 							</table>
