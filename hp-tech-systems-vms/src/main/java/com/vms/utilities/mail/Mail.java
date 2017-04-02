@@ -1,4 +1,4 @@
-package com.vms.utilities;
+package com.vms.utilities.mail;
 
 import java.util.Date;
 import java.util.Properties;
