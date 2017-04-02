@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace= "base :: site-head">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Index Page</title>
 
     <!-- Bootstrap -->
-    <link href="../public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../public/css/bootstrap.min.css" rel="stylesheet"/>
     <!--<link href="../public/main.css" rel="stylesheet">-->
     <!--End Cut and paste code-->
 </head>
@@ -60,13 +60,14 @@
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Paystub
 <span class="caret"></span></button>
     <ul class="dropdown-menu">
-        <li><a href="http://localhost:8080/paystub/view">View Paystub</a></li>
-        <li><a href="http://localhost:8080/paystubs">Paystub History</a></li>
+    	<li><a th:href="@{/paystub/{id}(id=1)}">Sample Paystub</a></li>
+        <li><a th:href="@{/paystubs/{mode}(mode='byEmployee',empId=1)}">List of Paystubs for Specific Employee</a></li>
+        <li><a th:href="@{/paystubs/{mode}(mode='all')}">Paystub History</a></li>
 </ul>
 </div>
 
 <div class="dropdown">
-<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Paystub
+<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Invoice
 <span class="caret"></span></button>
 <ul class="dropdown-menu">
     <li><a href="http://localhost:8080/invoice/new">New Invoice</a></li>
@@ -75,7 +76,7 @@
 </ul>
 </div>
 <div class="dropdown">
-<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Paystub
+<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Employee Forms
 <span class="caret"></span></button>
 <ul class="dropdown-menu">
     <li><a href="http://localhost:8080/login">Login</a></li>

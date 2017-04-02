@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -18,8 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data //standard getters/setters
+@NoArgsConstructor
 @Entity
 @Table(name = "project_timesheets")
 public class ProjectTimesheet {
@@ -43,10 +44,10 @@ public class ProjectTimesheet {
 	@JoinColumn(name = "project_employee_id")
 	private ProjectEmployee projemp;
 	
-	@OneToMany(mappedBy="projTimesheet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="projTimesheet", cascade = CascadeType.ALL)
 	private List<TimesheetRow> weeks;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany//(cascade = CascadeType.ALL)
 	@JoinTable(name="PROJECTTIMESHEET_INVOICE", joinColumns = @JoinColumn(name = "projectTimesheetId"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
     private List<Invoice> invoices; 
 	

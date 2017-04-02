@@ -2,23 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace= "base :: site-head">
-  <title id="pageTitle">VMS | All Paystubs</title>
+  <title id="pageTitle">VMS | Paystubs</title>
 </head>
 
 	<body>
 		<nav th:replace="base :: site-nav">
 		</nav>
-			<h4>Paystub 1</h4>
-			<img src="http://www.pay-stubs.com/wp-content/uploads/2015/11/sample-pay-stub.png" alt="" height="400" width="400"/>
-			<h4><a href="http://localhost:8080/paystub/view">View</a></h4>
-			
-			<h4>Paystub 2</h4>
-			<img src="http://www.pay-stubs.com/wp-content/uploads/2015/11/sample-pay-stub.png" alt="" height="400" width="400"/>
-			<h4><a href="http://localhost:8080/paystub/view">View</a></h4>
-			
-			<h4>Paystub 3</h4>
-			<img src="http://www.pay-stubs.com/wp-content/uploads/2015/11/sample-pay-stub.png" alt="" height="400" width="400"/>
-			<h4><a href="http://localhost:8080/paystub/view">View</a></h4>
-	</body>
+		<!-- admin version -->
+		<h1>Paystub History</h1>
+		
+		<p th:if="${paystubs == null OR paystubs.isEmpty()}" th:text="'No paystubs found'"></p>
+		<table id="tsTable"
+		       class="table table-bordered"
+		       th:if="${paystubs != null}"> <!--  and not #list.isEmpty(vendors) -->
+        <thead>
+            <tr class="center middle">
+                <th>Employee Name</th>
+                <th>Dates</th>
+                <th>Check No</th>
+                <th>Amount</th>
+                <th>Date Created</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ps : ${paystubs}">
+                <td th:text="${ps.firstname} + ' ' + ${ps.lastname}"></td>
+                <td th:text="${#temporals.format(ps.periodStart,'MM/dd/yyyy')} + ' - ' + ${#temporals.format(ps.periodEnd,'MM/dd/yyyy')}"></td>
+                <td th:text="${ps.checkNo}"></td>
+                <td th:text="${ps.netPay}"></td>
+                <td th:text="${#temporals.format(ps.createdDate,'MM/dd/yyyy')}"></td>
+                <td><a th:href="@{/paystub/{path}(path=${ps.paystubId})}">View</a></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <footer th:replace="base :: site-footer"></footer>
 
+	</body>
 </html>

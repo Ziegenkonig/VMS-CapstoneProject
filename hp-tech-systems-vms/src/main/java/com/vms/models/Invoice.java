@@ -2,23 +2,26 @@ package com.vms.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-import lombok.Data; 
+import org.hibernate.annotations.Type;
+
+import lombok.Data;
+import lombok.NoArgsConstructor; 
 
 @Data //standard getters/setters
+@NoArgsConstructor
 @Entity
 @Table(name="invoices")
 public class Invoice {
@@ -32,11 +35,12 @@ public class Invoice {
 	@Enumerated(EnumType.STRING)
 	private InvoiceStatus status;
 	
-	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "invoices", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "invoices")//, cascade = CascadeType.ALL)
     private List<ProjectTimesheet> projTimesheets; 
 	
-    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDate createdDate;
+	@Type(type = "org.hibernate.type.ZonedDateTimeType")
+    @Column(updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private ZonedDateTime createdDate;
 	
 //fields to store info from other tables
 	//from project
@@ -91,7 +95,7 @@ public class Invoice {
 			this.periodEnd = this.periodStart.plusDays(7);
 		
 		//Setting payment_due
-		this.paymentDue = this.paymentDue.plusMonths(1);
+		this.paymentDue = this.periodEnd.plusMonths(1);
 		
 		//Grabbing the project/vendor out of the timesheet object and using it to set all kinds of info
 		Project proj = proj_emp.getProject();
@@ -107,20 +111,23 @@ public class Invoice {
 		
 		//Setting rate
 		this.rate = proj_emp.getProject().getBillingRate();
+		System.out.println(rate.toString());
 		
 		//Setting total_hours
 		this.totalHours = 0;
-		for(ProjectTimesheet i : projTimesheets)
+		for(ProjectTimesheet i : projTimesheets) {
 			this.totalHours += i.calcTotalHoursOfPT();
-		
+			System.out.println(totalHours);
+		}
 		//Setting total_amount
 		this.totalAmt = this.rate.multiply(BigDecimal.valueOf(totalHours));
+		
 	}
 	
 	//Called before .save
 	@PrePersist
 	protected void onCreate() {
-		createdDate = LocalDate.now();
+		createdDate = ZonedDateTime.now();
 	}
 	
 	//toString

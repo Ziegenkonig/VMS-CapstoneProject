@@ -14,17 +14,34 @@
 		
 		    <h1>New Invoice</h1>
 		    
-		    <form action="#" th:action="@{/newInvoice}" th:object="${selectedVendor}" method="post">
+		    <form action="#" th:action="@{/invoice/new}" method="post">
+				
+				<!-- Cycles through every vendor and includes their names into the list -->
+				
 				<h4>Select Vendor</h4>
-				<!-- Cycyles through every vendor and includes their names into the list -->
-				<select th:each = "vendor : ${vendors}" th:value = "${selectedVendor.setName()}">
- 					<option th:text = "${vendor.getName()}" />
+				<select name="vendorName">
+ 					<option th:value = "'null'" th:text="'Select Vendor'" disabled="disabled" selected="selected">Select Vendor</option>
+ 					<option th:each = "name : ${vendorNames}" 
+ 							th:value = "${name}" 
+ 							th:selected="${vendorNames.contains(name)}"  
+ 							th:text = "${name}"></option>
 				</select>
-				<!-- Cycyles through every project-timesheet and adds their dates to the list -->
-				<h4>Period Start</h4>
-		        <select th:each = "projTim : ${projectTimesheets}" th:value = "${date}">
- 					<option th:text = "${projTim.getWeekStarting()}"/>
-				</select>
+				
+				<!-- Cycles through every project-timesheet and adds their dates to the list with no repeating dates -->
+				
+				
+				<h4>Starting Date</h4>
+		        <select name="date">
+ 					<option th:value = "${#temporals.create(1900,01,01)}" th:text="'Select Date'" disabled="disabled" selected="selected"> Select Date </option>
+ 					<option th:each = "localDate : ${allDates}" 
+ 							th:value = "${localDate}"
+ 							th:selected = "${allDates.contains(localDate)}"  
+ 							th:text = "${localDate}"></option>
+				</select> 
+				
+				
+				
+				<h4></h4>
 		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 		    </form>
 		</div>

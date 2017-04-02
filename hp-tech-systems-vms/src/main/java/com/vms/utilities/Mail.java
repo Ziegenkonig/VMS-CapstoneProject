@@ -2,17 +2,17 @@ package com.vms.utilities;
 
 import java.util.Date;
 import java.util.Properties;
+
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.vms.models.*;
+import com.vms.models.Employee;
 
 public class Mail {
 	public static void sendEmail() {
@@ -31,7 +31,7 @@ public class Mail {
 		final String username = "uofmcapstonebanana@gmail.com";//
 		final String password = "alwaysmoneyinthebananastand123";
 		try {
-			Session session = Session.getDefaultInstance(props, new Authenticator() {
+			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(username, password);
 				}
@@ -57,6 +57,21 @@ public class Mail {
 		} catch (MessagingException e) {
 			System.out.println("Erreur d'envoi, cause: " + e);
 		}
+	}
+	private static String generateTextMessage(Employee employee){
+		//get an employee as input to the method, along with some othe rkind of necessary details, then 
+		//convert it into a string that can be sent as a text message in the email. 
+		String greeting = "Hello " + employee.getFirstname() + ", this is your name!\n";
+		
+		// -- Want to generate a URL that links to the invoices left to fill out, or the invoices that need to be viewed or whatever --
+		//String url = "";
+		
+		return "" + greeting;
+	}
+	private String timesheetSubmittedNotification(Employee employee){
+		//employee has submitted their timesheet, so the employer needs to know
+		String output = "" + employee.getFirstname() + " " + employee.getLastname() + " has submitted a timesheet";
+		return output;
 	}
 
 	}
