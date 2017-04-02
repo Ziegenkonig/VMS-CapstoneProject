@@ -20,6 +20,5 @@ public class HpTechSystemsVmsApplication {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(HpTechSystemsVmsApplication.class, args);
-		Mail.sendEmail();
 	}
 }

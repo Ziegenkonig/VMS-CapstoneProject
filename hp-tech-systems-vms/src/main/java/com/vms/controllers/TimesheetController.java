@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.vms.models.Timesheet;
 import com.vms.services.TimesheetService;
+import com.vms.utilities.mail.Mail;
 
 @Controller
 public class TimesheetController {
@@ -30,16 +32,16 @@ public class TimesheetController {
 		model.addAttribute("timesheet", t);
 		return "timesheet/timesheets";
 	}
-	/*
-  @GetMapping("/timesheet")
-  public String timesheetForm(Model model) {
-	  return null;
-  }
+	
+//  @GetMapping("/timesheets")
+//  public String timesheetForm(Model model) {
+//	  return null;
+//  }
 
-
-  @PostMapping("/timesheet")
+  @PostMapping("/submitTimesheet")
   public String timesheetSubmit() {
+	  Mail.sendEmail();
 	  return null;
   }
-  */
+  
 }
