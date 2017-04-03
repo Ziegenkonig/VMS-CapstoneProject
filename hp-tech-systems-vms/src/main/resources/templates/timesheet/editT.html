@@ -10,6 +10,8 @@
 	<nav th:replace="base :: site-nav">
 	</nav>
 	
+	<form action="#" th:action="@{/timesheet/edit}" method="post">
+	
 		<h2> Timesheet </h2>
 		<h4 th:text = "'Status: ' + ${timesheet.getStatus()}"> </h4>
 		
@@ -21,6 +23,8 @@
 				<option th:value = "${statuses[3]}" th:text = "${statuses[3].toString()}"></option>
 			</select>
 		
+	</form>
+	<p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 	<footer th:replace="base :: site-footer"></footer>
 		
 	</body>
