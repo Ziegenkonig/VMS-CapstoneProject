@@ -22,4 +22,7 @@ public interface PaystubRepository extends JpaRepository<Paystub, Integer>{
 	@Query
 	public List<Paystub> findByStatusOrderByCreatedDateDesc(PaystubStatus s);
 	
+	@Query
+	public Long countByTimesheet(Timesheet t);
+	
 }

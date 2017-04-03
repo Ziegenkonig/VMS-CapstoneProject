@@ -113,11 +113,18 @@ public class PaystubController {
 		} else {
 			copy = new Paystub(ps.getTimesheet());
 		}
-		ps.setStatus(PaystubStatus.VOIDED);
-		ps.setDateVoided(ZonedDateTime.now());
-		pSService.update(ps);
+		pSService.voidPaystub(ps);
 		pSService.create(copy);
 		return "redirect:/paystubs/all";
 	}
-
+	
+	//return associated timesheet and void paystub
+	@GetMapping("/paystub/returnTimesheet")
+	public String returnAssociatedTimesheet(@RequestParam Integer psId) {
+		Paystub ps = pSService.findById(psId);
+		Timesheet ts = ps.getTimesheet();
+		tSService.returnTimesheet(ts);
+		pSService.voidPaystub(ps);
+		return "redirect:/paystubs/all";
+	}
 }

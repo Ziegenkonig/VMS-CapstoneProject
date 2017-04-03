@@ -17,6 +17,7 @@
             <tr class="center middle">
                 <th>Employee Name</th>
                 <th>Week Starting</th>
+                <th>Status</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -26,8 +27,9 @@
                 <td th:text="${ts.employee.firstname} + ' ' + ${ts.employee.lastname}"></td>
                 <td th:text="${ts.weekStarting}"></td>
                 <td th:text="${ts.status}"></td>
-                <td><a th:href="@{/timesheet/{path}(path=${ts.timesheetId})}">View</a></td>
-                <td><a th:href="@{/paystub/new/{path}(path=${ts.timesheetId})}">Generate Paystub</a></td>
+                <td><a th:href="@{/timesheet/{id}(id=${ts.timesheetId})}">View</a></td>
+                <td><a th:if="${ts.status.toString() == 'VERIFIED' AND ts.paystubs.isEmpty()}" th:href="@{/paystub/new/{path}(path=${ts.timesheetId})}">Generate Paystub</a>
+                	<a th:if="${ts.status.toString() == 'VERIFIED' AND !ts.paystubs.isEmpty()}" th:href="@{/paystub/regenerate(pId=${ts.paystubs.get(0).paystubId})}">Regenerate Paystub</a></td>
             </tr>
         </tbody>
     </table>

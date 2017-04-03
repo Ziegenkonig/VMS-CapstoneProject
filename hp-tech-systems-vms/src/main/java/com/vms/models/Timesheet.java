@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -57,6 +58,7 @@ public class Timesheet { //new summary timesheet
     */
 	
 	@OneToMany(mappedBy="timesheet", cascade = CascadeType.ALL)
+	@OrderBy("createdDate DESC")
 	//@JoinTable(name="TIMESHEET_PAYSTUB", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "paystub_id"))
     private List<Paystub> paystubs; 
 	
