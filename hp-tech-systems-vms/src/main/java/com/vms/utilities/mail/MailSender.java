@@ -18,7 +18,6 @@ public class MailSender {
 	String username;
 	String password;
 	Properties props;
-	
 
 	public MailSender() {
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
@@ -60,5 +59,5 @@ public class MailSender {
 	public void setProps(Properties props) {
 		this.props = props;
 	}
-	
+
 }

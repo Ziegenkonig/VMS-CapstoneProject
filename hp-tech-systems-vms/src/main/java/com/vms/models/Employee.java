@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.vms.utilities.mail.Mail;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -61,6 +63,12 @@ public class Employee {
 	
 	public String toString() {
 		return (firstname + " " + lastname);
+	}
+	
+	//If we want to notify the employee that their paystub is complete, use this method.. Should be called once paystub has been persisted to database 
+	public void notifyPaystubCompletion(){
+		//this.email = the current instance of employee that has a paystub ready
+		Mail.sendEmail(this.email);
 	}
 }
 

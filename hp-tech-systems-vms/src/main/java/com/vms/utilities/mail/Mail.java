@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 import com.vms.models.Employee;
 
 public class Mail {
-	public static void sendEmail() {
+	public static void sendEmail(String toAddress) {
 		MailSender sender = new MailSender();
 		try {
 			Session session = Session.getInstance(sender.getProps(), new Authenticator() {
@@ -29,13 +29,13 @@ public class Mail {
 			// -- Set the FROM and TO fields --
 			msg.setFrom(new InternetAddress("uofmcapstonebanana@gmail.com"));
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("jbhtcher@memphis.edu", false));
-			// -- Set the Subject message -- 
+			// -- Set the Subject message --
 			msg.setSubject("InvoiceNotice");
 			// -- Set the text message --
 			Employee testEmployee = new Employee();
 			testEmployee.setFirstname("Josh");
 			msg.setText("pls");
-			
+
 			// -- set the date --
 			msg.setSentDate(new Date());
 			Transport.send(msg);
@@ -44,5 +44,4 @@ public class Mail {
 			System.out.println("Erreur d'envoi, cause: " + e);
 		}
 	}
-	}
-
+}
