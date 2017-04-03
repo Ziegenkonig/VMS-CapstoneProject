@@ -37,6 +37,7 @@ public class InvoiceController {
 	ProjectTimesheetService projTimeService = new ProjectTimesheetService();
 	
 	//CREATING NEW INVOICE
+	//Needs countermeasures to make sure only authorized people can view
 	@GetMapping("/invoice/new")
 	public String invoiceForm(Model model) {
 		
@@ -78,29 +79,35 @@ public class InvoiceController {
 		//Creating new invoice
 		Invoice newInvoice = new Invoice(projectTimesheets);
 		invoiceService.create(newInvoice);
-		//Displaying new invoice (not implemented yet)
+		
+		//Displaying new invoice
 		return "redirect:" + "http://localhost:8080/invoice/view/" + newInvoice.getInvoiceId();
 	}
 	
 	//VIEWING ALL INVOICES
+	//Needs countermeasures to make sure only authorized people can view
 	@GetMapping("/invoices")
 	public String viewInvoices(Model model) {
+		
 		//Getting all invoices
 		List<Invoice> invoices = invoiceService.findAll();
 
 		//Adding all invoices to the model
 		model.addAttribute("invoices", invoices);
+		
 		//specifying which html file rendering
 		return "invoice/invoices";
 	}
 	
 	//VIEWING ONE INVOICE
+	//Needs countermeasures to make sure only authorized people can view
 	@GetMapping(value = "/invoice/view/{id}")
 	public String viewInvoice(@PathVariable("id") Integer invoiceId, Model model) {
-		
+		//Takes invoiceId, which is stored inside of the url, and finds the associated invoice
 		Invoice invoice = invoiceService.findById(invoiceId);
+		//Finds the associated project from the given invoice
 		Project project = projectService.findById(invoice.getProjectId());
-
+		
 		model.addAttribute("invoice", invoice);
 		model.addAttribute("project", project);
 		

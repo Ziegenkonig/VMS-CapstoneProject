@@ -79,31 +79,31 @@ public class HomeController {
 	
 	//renders timesheet/history
 	//linksto: employee/dashboard(this)
-	@RequestMapping(value = "/timesheets", method = RequestMethod.GET)
-	public String historyTimesheet(Model model) {
-		return "timesheet/timesheets";
-	}
+//	@RequestMapping(value = "/timesheets", method = RequestMethod.GET)
+//	public String historyTimesheet(Model model) {
+//		return "timesheet/timesheets";
+//	}
 	
 	//renders timesheet/new
 	//linksto: admin(this)
-	@RequestMapping(value = "/timesheet/new", method = RequestMethod.GET)
-	public String newTimesheet(Model model) {
-		return "timesheet/newT";
-	}
+//	@RequestMapping(value = "/timesheet/new", method = RequestMethod.GET)
+//	public String newTimesheet(Model model) {
+//		return "timesheet/newT";
+//	}
 	
 	//renders timesheet/edit
 	//linksto: admin(this)
-	@RequestMapping(value = "/timesheet/edit", method = RequestMethod.GET)
-	public String editTimesheet(Model model) {
-		return "timesheet/editT";
-	}
+//	@RequestMapping(value = "/timesheet/edit", method = RequestMethod.GET)
+//	public String editTimesheet(Model model) {
+//		return "timesheet/editT";
+//	}
 	
 	//renders timesheet/view
 	//linksto: ??
-	@RequestMapping(value = "/timesheet/view", method = RequestMethod.GET)
-	public String viewTimesheet(Model model) {
-		return "timesheet/viewT";
-	}
+//	@RequestMapping(value = "/timesheet/view", method = RequestMethod.GET)
+//	public String viewTimesheet(Model model) {
+//		return "timesheet/viewT";
+//	}
 	
 	//renders timesheet/approve
 	//linksto: ??

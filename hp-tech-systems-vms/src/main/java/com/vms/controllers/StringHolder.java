@@ -6,8 +6,9 @@ package com.vms.controllers;
 //use a string and parse it back to LocalDate form whenever we were done manipulating it
 
 public class StringHolder {
-	public String string; 
-	public StringHolder(){this.string = "";} 
+	public String string;
+	public String[] stringArray;
+	public StringHolder(){this.string = ""; this.stringArray = new String[2];} 
 	public String getString() {return this.string;}
 	public void setString(String string) {this.string = string;}
 }

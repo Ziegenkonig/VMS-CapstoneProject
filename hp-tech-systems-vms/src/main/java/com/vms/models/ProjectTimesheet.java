@@ -86,5 +86,4 @@ public class ProjectTimesheet {
 				" Starting: " + timesheet.getWeekStarting());
 	}
 	
-
 }
