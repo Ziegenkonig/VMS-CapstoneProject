@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.vms.models.Employee;
@@ -98,9 +99,37 @@ public class TimesheetController {
 	
 	//VIEWING ONE TIMESHEET
 	@GetMapping("/timesheet/view/{id}")
-	public String viewTimesheet(Model model) {
+	public String viewTimesheet(@PathVariable("id") Integer id, Model model) {
+		
+		Timesheet timesheet = timesheetService.findById(id);
+		
+		model.addAttribute("timesheet", timesheet);
 		
 		return "timesheet/viewT";
+	}
+	
+	@GetMapping("/timesheet/edit/{id}")
+	public String editTimesheetForm(@PathVariable("id") Integer id, Model model) {
+		//Setting an array for the drop-down box to display the list of possible enumerable statues
+		TimesheetStatus[] statuses = new TimesheetStatus[4];
+		statuses[0] = TimesheetStatus.ARCHIVED; statuses[1] = TimesheetStatus.NOT_SUBMITTED;
+		statuses[2] = TimesheetStatus.PENDING; statuses[3] = TimesheetStatus.VERIFIED;
+		//Setting timesheet to edit
+		Timesheet timesheet = timesheetService.findById(id);
+
+		model.addAttribute("timesheet", timesheet);
+		model.addAttribute("statuses", statuses);
+		
+		return "timesheet/editT";
+	}
+	
+	@PostMapping("/timesheet/edit/{id}")
+	public String editTimesheetPost(@PathVariable("id") Integer id,
+									@ModelAttribute("timesheet") Timesheet timesheet) {
+		
+		timesheetService.create(timesheet);
+		
+		return "redirect:" + "http://localhost:8080/timesheet/view/" + timesheet.getTimesheetId();
 	}
 	
 }
