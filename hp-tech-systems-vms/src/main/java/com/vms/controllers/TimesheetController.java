@@ -40,7 +40,7 @@ public class TimesheetController {
 
   @PostMapping("/submitTimesheet")
   public String timesheetSubmit() {
-	  Mail.sendEmail("jbhtcher@memphis.edu");
+	  
 	  return null;
   }
   

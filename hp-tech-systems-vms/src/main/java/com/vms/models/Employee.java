@@ -68,7 +68,9 @@ public class Employee {
 	//If we want to notify the employee that their paystub is complete, use this method.. Should be called once paystub has been persisted to database 
 	public void notifyPaystubCompletion(){
 		//this.email = the current instance of employee that has a paystub ready
-		Mail.sendEmail(this.email);
+		String message = "Your paystub is complete. Go here to check it: http://localhost:8080/paystub";
+		String subject = "Paystub is ready";
+		Mail.sendEmail(this.email, message, subject);
 	}
 }
 
