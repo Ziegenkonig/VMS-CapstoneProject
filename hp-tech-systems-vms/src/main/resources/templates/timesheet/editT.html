@@ -17,10 +17,9 @@
 		
 		<h4>Update Status</h4>
 			<select th:field = "${timesheet.status}">
-				<option th:value = "${statuses[0]}" th:text = "${statuses[0].toString()}"></option>
-				<option th:value = "${statuses[1]}" th:text = "${statuses[1].toString()}"></option>
-				<option th:value = "${statuses[2]}" th:text = "${statuses[2].toString()}"></option>
-				<option th:value = "${statuses[3]}" th:text = "${statuses[3].toString()}"></option>
+				<option th:each = "status : ${statuses}" 
+						th:value = "${status}" 
+						th:text = "${status}"></option>
 			</select>
 		
 	</form>

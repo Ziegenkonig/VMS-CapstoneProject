@@ -110,15 +110,11 @@ public class TimesheetController {
 	
 	@GetMapping("/timesheet/edit/{id}")
 	public String editTimesheetForm(@PathVariable("id") Integer id, Model model) {
-		//Setting an array for the drop-down box to display the list of possible enumerable statues
-		TimesheetStatus[] statuses = new TimesheetStatus[4];
-		statuses[0] = TimesheetStatus.ARCHIVED; statuses[1] = TimesheetStatus.NOT_SUBMITTED;
-		statuses[2] = TimesheetStatus.PENDING; statuses[3] = TimesheetStatus.VERIFIED;
 		//Setting timesheet to edit
 		Timesheet timesheet = timesheetService.findById(id);
 
 		model.addAttribute("timesheet", timesheet);
-		model.addAttribute("statuses", statuses);
+		model.addAttribute("statuses", TimesheetStatus.values());
 		
 		return "timesheet/editT";
 	}
