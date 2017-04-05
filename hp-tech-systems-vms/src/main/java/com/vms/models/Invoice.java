@@ -17,7 +17,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
-import lombok.Data; 
+import lombok.Data;
+import lombok.NoArgsConstructor; 
 
 @Data //standard getters/setters
 @Entity

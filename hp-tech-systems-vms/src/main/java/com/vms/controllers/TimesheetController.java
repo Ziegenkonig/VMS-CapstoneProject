@@ -27,7 +27,7 @@ import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
 
 @Controller
-@SessionAttributes(value = {"editTS"})
+@SessionAttributes(value = {"editTS", "timesheet"})
 public class TimesheetController {
 	
 	@Autowired
@@ -107,10 +107,12 @@ public class TimesheetController {
 	
 	//VIEWING ONE TIMESHEET
 	@GetMapping("/timesheet/view/{id}")
-	public String viewTimesheet(@PathVariable("id") Integer id, Model model) {
+	public String viewTimesheet(@PathVariable("id") Integer id,
+								Model model) {
 		
 		Timesheet timesheet = timesheetService.findById(id);
 		
+		//model.addAttribute("admin", admin);
 		model.addAttribute("timesheet", timesheet);
 		
 		return "timesheet/viewT";
@@ -118,7 +120,8 @@ public class TimesheetController {
 	
 	//EDITING A TIMESHEET
 	@GetMapping("/timesheet/edit/{id}")
-	public String editTimesheetForm(@PathVariable("id") Integer id, Model model) {
+	public String editTimesheetForm(@PathVariable("id") Integer id,
+									Model model) {
 		//Setting timesheet to edit
 		Timesheet timesheet = timesheetService.findById(id);
 		
@@ -155,15 +158,29 @@ public class TimesheetController {
 		return "timesheet/editT";
 	}
 	
-	@PostMapping("/timesheet/edit/{id}")
-	public String editTimesheetPost(@ModelAttribute("editTS") Timesheet timesheet, 
-									SessionStatus status) {
+	//handles submitting the timesheet, rendering it uneditable to the employee
+	@PostMapping(value = "/timesheet/edit/{id}", params = {"saveTimesheet", "!submit"})
+	public String saveTimesheet(@ModelAttribute("editTS") Timesheet timesheet, 
+								SessionStatus status) {
 		
+		timesheetService.edit(timesheet);
+		
+		status.setComplete();
+		
+		return "redirect:/timesheet/view/" + timesheet.getTimesheetId() + "/admin=" + false;
+	}
+	
+	//handles saving the current timesheet
+	@PostMapping(value = "/timesheet/edit/{id}", params = {"submit", "!saveTimesheet"})
+	public String submitTimesheet(@ModelAttribute("editTS") Timesheet timesheet, 
+								  SessionStatus status) {
+		
+		timesheet.setStatus(TimesheetStatus.PENDING);
 		timesheetService.create(timesheet);
 		
 		status.setComplete();
 		
-		return "redirect:" + "http://localhost:8080/timesheet/view/" + timesheet.getTimesheetId();
+		return "redirect:/dashboard";
 	}
 	
 	
@@ -210,6 +227,26 @@ public class TimesheetController {
 		timesheetService.edit(t);
 		status.setComplete();
 		return "redirect:/timesheet/" + t.getTimesheetId();
+	}
+	
+	@GetMapping("/timesheet/approve/{id}")
+	public String approveTimesheet(@PathVariable Integer id, Model model) {
+		
+		Timesheet timesheet = timesheetService.findById(id);
+		
+		//model.addAttribute("admin", admin);
+		model.addAttribute("timesheet", timesheet);
+		
+		return "timesheet/approve";
+	}
+	
+	@PostMapping("/timesheet/approve/{id}")
+	public String approveTimesheetPost(@ModelAttribute("timesheet") Timesheet timesheet) {
+		
+		timesheet.setStatus(TimesheetStatus.VERIFIED);
+		timesheetService.create(timesheet);
+		
+		return "redirect:/admin";
 	}
 	
 }

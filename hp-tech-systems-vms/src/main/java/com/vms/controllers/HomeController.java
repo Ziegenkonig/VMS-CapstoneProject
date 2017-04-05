@@ -1,5 +1,7 @@
 package com.vms.controllers;
 
+import java.security.Principal;
+
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +24,11 @@ public class HomeController {
 	//Renders employee/login
 	//linksto: employee/register(EmployeeController) | employee/dashboard(this)
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String login(Principal principal, Model model) {
 		//model.addAttribute("employee", employeeService.findOne(1));
 		return "employee/login";
 	}
-
+	
 	//renders timesheet/approve
 	//linksto: ??
 	@RequestMapping(value = "/timesheet/approve", method = RequestMethod.GET)
