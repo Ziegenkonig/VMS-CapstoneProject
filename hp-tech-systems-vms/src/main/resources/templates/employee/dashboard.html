@@ -29,7 +29,7 @@
 			<li>
 				<b> <span  th:text = "'Pay Period: ' + ${paystub.periodStart}"></span> </b>
 				<span th:text = "'(Issued)'"></span>
-				<a th:href="@{/paystub/view/{path}(path=${paystub.paystubId})}"> View </a>
+				<a th:href="@{/paystub/{path}(path = ${paystub.paystubId})}"> View </a>
 			</li> 
 		</ul>
 		<a th:href="@{/paystubs/byEmployee(empId=${eId})}"> View Past Paystubs </a>

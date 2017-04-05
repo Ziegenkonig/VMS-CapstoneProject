@@ -25,9 +25,9 @@
 				</thead>
 				
 				<tbody>
-					<tr th:each = "invoice : ${invoices}"> 
+					<tr th:each = "invoice, iter : ${invoices}"> 
 						<td th:text = "${invoice.getInvoiceId()}">  </td>
-						<td th:text = "${invoice.getName()}">  </td>
+						<td th:text = "${projectService.findById(__${invoice.projectId}__).clientName}">  </td>
 						<td th:text = "${invoice.getPeriodStart()}">  </td>
 						<td th:text = "${invoice.getPhone()}">  </td>
 						<td th:text = "${invoice.getStatus()}">  </td>

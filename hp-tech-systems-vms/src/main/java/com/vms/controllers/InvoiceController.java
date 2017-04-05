@@ -95,10 +95,10 @@ public class InvoiceController {
 		
 		//Getting all invoices
 		List<Invoice> invoices = invoiceService.findAll();
-
+		
 		//Adding all invoices to the model
 		model.addAttribute("invoices", invoices);
-		
+		model.addAttribute("projectService", projectService);
 		//specifying which html file rendering
 		return "invoice/invoices";
 	}
