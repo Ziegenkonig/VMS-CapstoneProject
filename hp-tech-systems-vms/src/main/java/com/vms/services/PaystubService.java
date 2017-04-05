@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.vms.models.Employee;
 import com.vms.models.Paystub;
 import com.vms.models.PaystubStatus;
+import com.vms.models.Timesheet;
 import com.vms.repositories.PaystubRepository;
 
 @Service
@@ -21,9 +22,14 @@ public class PaystubService {
 		return paystubRepo.findByEmpIdOrderByPeriodStartDesc(e.getEmpId());
 	}
 	
-	//find previous paystub
-	public Paystub findPreviousPaystubForYtd(Employee e) {
-		return paystubRepo.findByEmpIdOrderByPeriodStartDesc(e.getEmpId()).get(0);
+	//find latest paystub from last pay period
+	public Paystub findPreviousPaystubForYtd(Employee e, Timesheet t) {
+		List<Paystub> paystubs = paystubRepo.findByEmpIdAndTimesheetNotOrderByPaystubIdDesc(e.getEmpId(), t);
+		if(paystubs.isEmpty()) {
+			return null;
+		} else {
+			return paystubs.get(0);
+		}
 	}
 	
 	//basic repo methods

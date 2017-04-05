@@ -25,6 +25,10 @@ import com.vms.services.ProjectService;
 import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
 
+import com.vms.models.Timesheet;
+import com.vms.services.TimesheetService;
+import com.vms.utilities.mail.Mail;
+
 @Controller
 @SessionAttributes(value = {"editTS"})
 public class TimesheetController {
@@ -41,7 +45,6 @@ public class TimesheetController {
 	//VIEWING ALL TIMESHEETS
 	@GetMapping("/timesheets")
 	public String allTimesheets(Model model) {
-
 		//Getting all timesheets
 		List<Timesheet> timesheets = timesheetService.findAll();
 		TimesheetStatus editCheck = TimesheetStatus.NOT_SUBMITTED;

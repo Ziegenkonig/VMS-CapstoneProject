@@ -42,6 +42,10 @@ public class LocalDateAttributeConverter implements AttributeConverter<LocalDate
         Instant instant = Instant.ofEpochMilli(sqlDate.getTime());
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZONE_AMERICA_CENTRAL);
         LocalDate localDate = localDateTime.toLocalDate();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 23d765e63d376df8ec1e9c2726082e3b390ecc12
         return localDate;
         */
     	//return (sqlDate == null ? null : sqlDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());

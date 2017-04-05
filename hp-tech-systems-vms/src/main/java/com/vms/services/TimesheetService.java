@@ -46,7 +46,11 @@ public class TimesheetService {
 	
 	//find pending timesheets for admin review
 	public List<Timesheet> pendingTimesheets() {
-		return timesheetRepo.findByStatus(com.vms.models.TimesheetStatus.PENDING);
+		return timesheetRepo.findByStatusOrderByWeekStartingDesc(com.vms.models.TimesheetStatus.PENDING);
+	}
+	
+	public List<Timesheet> approvedTimesheets() {
+		return timesheetRepo.findByStatusOrderByWeekStartingDesc(com.vms.models.TimesheetStatus.VERIFIED);
 	}
 }
 

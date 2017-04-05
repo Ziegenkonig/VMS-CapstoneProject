@@ -3,7 +3,6 @@ package com.vms.services;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,7 @@ public class ProjectTimesheetService {
 	@Autowired
 	private ProjectTimesheetRepository projTSRepo;
 	
+
 	//create/edit methods
 	
 	public ProjectTimesheet create(ProjectTimesheet pt) {
@@ -28,6 +28,11 @@ public class ProjectTimesheetService {
 	
 	public ProjectTimesheet edit(ProjectTimesheet pt) {
 		return projTSRepo.save(pt);
+	}
+
+	//return all ProjectTimesheets for a period - used to make an invoice
+	public List<ProjectTimesheet> timesheetsForInvoice(Integer pId, LocalDate weekStarting) {
+		return projTSRepo.findByProjectIdAndWeekStarting(pId, weekStarting);
 	}
 	
 	//Search methods

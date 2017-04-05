@@ -20,5 +20,7 @@ public interface ProjectTimesheetRepository extends JpaRepository<ProjectTimeshe
 		value = "SELECT DISTINCT week_starting FROM project_timesheets ORDER BY week_starting DESC",
 		nativeQuery = true
 	)
+
 	public List<Date> findUniqueWeekStarting();
 }
+

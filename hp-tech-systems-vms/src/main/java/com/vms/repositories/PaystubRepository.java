@@ -20,4 +20,8 @@ public interface PaystubRepository extends JpaRepository<Paystub, Integer>{
 	@Query
 	public List<Paystub> findByEmpIdOrderByPeriodStartDesc(int emp_id);
 	
+	//previous paystub
+	@Query
+	public List<Paystub> findByEmpIdAndTimesheetNotOrderByPaystubIdDesc(int emp_id, Timesheet t);
+	
 }

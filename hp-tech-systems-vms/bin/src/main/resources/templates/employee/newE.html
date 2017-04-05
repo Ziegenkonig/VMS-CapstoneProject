@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace= "base :: site-head">
+	  <title id="pageTitle">VMS | Register</title>
+	</head>
+
+<body>
+
+	<nav th:replace="base :: site-nav">
+	</nav>
+	
+	<div class="formAlignCenter" align = "center">
+	    <h1>Registration</h1>
+	        <div th:replace = "employee/fragments :: newEmployeeForm"></div>
+	</div>
+	
+	<footer th:replace="base :: site-footer"></footer>
+</body>
+</html>
