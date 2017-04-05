@@ -31,6 +31,9 @@ public class Paystub {
     @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate createdDate;
 	
+    @Column(nullable = false)
+    private PaystubStatus status;
+    
 // calculated or imported fields
 	//pay period start and end (14/7 day interval)
     @Column(nullable = false)
@@ -83,6 +86,11 @@ public class Paystub {
 	private BigDecimal ytdMedicaretax;
 	private BigDecimal ytdMedInsurance;
 	private BigDecimal ytd401k;
+	
+	//default constructor
+	public Paystub() {
+		
+	}
 	
 	//constructor
 	public Paystub(Timesheet ts, Paystub previous) { //the input here is the list of timesheets from query that it should be generated from, and the previous paystub also from query

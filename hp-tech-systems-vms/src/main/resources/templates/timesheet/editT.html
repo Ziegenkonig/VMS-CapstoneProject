@@ -10,20 +10,21 @@
 	<nav th:replace="base :: site-nav">
 	</nav>
 	
-	<form action="#" th:action="@{/timesheet/edit}" method="post">
+	<form action="#" th:action="@{'/timesheet/edit/' + ${id}}" method="post">
 	
 		<h2> Timesheet </h2>
-		<h4 th:text = "'Status: ' + ${timesheet.getStatus()}"> </h4>
+		<h4 th:text = "'Status: ' + ${editTS.getStatus()}"> </h4>
+		
+		<div th:replace = "timesheet/fragments :: editTimesheetHours"></div>
 		
 		<h4>Update Status</h4>
-			<select th:field = "${timesheet.status}">
+			<select th:field = "${editTS.status}">
 				<option th:each = "status : ${statuses}" 
 						th:value = "${status}" 
 						th:text = "${status}"></option>
 			</select>
-		
+		<p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 	</form>
-	<p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 	<footer th:replace="base :: site-footer"></footer>
 		
 	</body>

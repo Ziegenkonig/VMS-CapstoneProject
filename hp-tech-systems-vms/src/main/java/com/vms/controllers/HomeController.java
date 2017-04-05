@@ -58,10 +58,10 @@ public class HomeController {
 	
 	//Renders employee/dashboard 
 	//linksto: timesheet/history(this) | timesheet/new(this) | paystub/history(this) | employee/edit(this)
-	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-	public String employeeDashboard(Model model) {
-		return "employee/dashboard";
-	}
+//	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+//	public String employeeDashboard(Model model) {
+//		return "employee/dashboard";
+//	}
 	
 	//renders paystub/history
 	//linksto: employee/dashboard(this)

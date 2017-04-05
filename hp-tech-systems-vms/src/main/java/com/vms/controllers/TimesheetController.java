@@ -1,6 +1,5 @@
 package com.vms.controllers;
 
-import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,22 +12,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.vms.models.Employee;
-import com.vms.models.Invoice;
+import com.vms.models.Project;
+import com.vms.models.ProjectTimesheet;
 import com.vms.models.Timesheet;
 import com.vms.models.TimesheetStatus;
-import com.vms.models.Vendor;
 import com.vms.services.EmployeeService;
+import com.vms.services.ProjectService;
 import com.vms.services.TimesheetService;
+import com.vms.services.VendorService;
 
 @Controller
+@SessionAttributes(value = {"editTS"})
 public class TimesheetController {
-
+	
+	@Autowired
+	VendorService vendorService = new VendorService();
 	@Autowired
 	TimesheetService timesheetService = new TimesheetService();
 	@Autowired
 	EmployeeService employeeService = new EmployeeService();
+	@Autowired
+	ProjectService projectService = new ProjectService();
 	
 	//VIEWING ALL TIMESHEETS
 	@GetMapping("/timesheets")
@@ -108,22 +116,52 @@ public class TimesheetController {
 		return "timesheet/viewT";
 	}
 	
+	//EDITING A TIMESHEET
 	@GetMapping("/timesheet/edit/{id}")
 	public String editTimesheetForm(@PathVariable("id") Integer id, Model model) {
 		//Setting timesheet to edit
 		Timesheet timesheet = timesheetService.findById(id);
-
-		model.addAttribute("timesheet", timesheet);
-		model.addAttribute("statuses", TimesheetStatus.values());
+		
+		//Getting all of the projects associated with this timesheet
+		List<ProjectTimesheet> projTimesheets = timesheet.getProjTimesheets();
+		List<Project> projects = new ArrayList<Project>();
+		for (ProjectTimesheet projTS : projTimesheets)
+			projects.add( projectService.findById(projTS.getProjectId()) );
+		
+		//Checking pay period of associated employee
+		int payPeriod = timesheet.getEmployee().getPayPeriod();
+		//Getting list of dates in string form for the pay period (now with weekly/biweekly support)
+		List<String> datesList = new ArrayList<String>();
+		LocalDate maxDate = timesheet.getWeekStarting().plusDays(7); //this is here cause i was getting weird errors
+		//Checking for weekly/biweekly pay periods
+		if (payPeriod == 1) {
+			for (LocalDate date = timesheet.getWeekStarting(); (date.isBefore(maxDate)) ; date = date.plusDays(1))
+				datesList.add(date.toString());
+		} else if (payPeriod == 2) {
+			maxDate = maxDate.plusDays(7);
+			for (LocalDate date = timesheet.getWeekStarting(); (date.isBefore(maxDate)) ; date = date.plusDays(1))
+				datesList.add(date.toString());
+		}
+		ArrayHolder dates = new ArrayHolder();
+		dates.setList(datesList);
+		
+		model.addAttribute("id", id);
+		model.addAttribute("editTS", timesheet);
+		model.addAttribute("statuses", TimesheetStatus.values()); //all timesheet status values for dropdown box
+		model.addAttribute("projects", projects);
+		model.addAttribute("dates", dates);
+		model.addAttribute("projTimesheets", projTimesheets);
 		
 		return "timesheet/editT";
 	}
 	
 	@PostMapping("/timesheet/edit/{id}")
-	public String editTimesheetPost(@PathVariable("id") Integer id,
-									@ModelAttribute("timesheet") Timesheet timesheet) {
+	public String editTimesheetPost(@ModelAttribute("editTS") Timesheet timesheet, 
+									SessionStatus status) {
 		
 		timesheetService.create(timesheet);
+		
+		status.setComplete();
 		
 		return "redirect:" + "http://localhost:8080/timesheet/view/" + timesheet.getTimesheetId();
 	}
