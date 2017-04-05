@@ -26,6 +26,9 @@ public interface TimesheetRepository extends JpaRepository<Timesheet, Integer>{
 	//timesheetHistory
 	public List<Timesheet> findByEmployeeOrderByWeekStartingDesc(Employee e);
 	
+	//for the employee dashboard
+	public List<Timesheet> findByEmployeeAndStatusInOrderByWeekStartingDesc(Employee e, List<TimesheetStatus> statuses);
+	
 	//openTimesheets
 	public List<Timesheet> findByEmployeeAndStatusOrderByWeekStartingDesc(Employee e, TimesheetStatus status);
 	

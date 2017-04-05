@@ -40,7 +40,7 @@ public class PaystubController {
 							   @RequestParam(required = false) PaystubStatus status,
 							   Model model) {
 		List<Paystub> paystubs;
-		Employee e;
+		//Employee e;
 		switch(mode) {
 			case "all":
 				paystubs = pSService.findAll();
@@ -55,11 +55,11 @@ public class PaystubController {
 				paystubs = pSService.findByStatus(status);
 				break;
 			default:
-				e = null;
+			//	e = null;
 				paystubs = null;
 		}
-		e = empService.findOne(empId);
-		model.addAttribute("employee", e);
+		//e = empService.findOne(empId);
+		//model.addAttribute("employee", e);
 		model.addAttribute("paystubs", paystubs);
 		return "paystub/paystubs";
 	}
