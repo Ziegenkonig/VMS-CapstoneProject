@@ -79,7 +79,7 @@ public class EmployeeController{
 		  int empIdPlaceholder = 1;
 		  
 		  List<Paystub> issuedPaystubs = paystubService.findIssued(empIdPlaceholder);
-		  List<Timesheet> openTimesheets = timesheetService.openTimesheets(employeeService.findOne(empIdPlaceholder));
+		  List<Timesheet> openTimesheets = timesheetService.dashboardTimesheets(employeeService.findOne(empIdPlaceholder));
 		  Employee e = employeeService.findOne(empIdPlaceholder);
 		  
 		  model.addAttribute("e", e);

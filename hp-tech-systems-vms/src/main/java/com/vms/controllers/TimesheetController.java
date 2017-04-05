@@ -163,24 +163,25 @@ public class TimesheetController {
 	}
 	
 	//handles submitting the timesheet, rendering it uneditable to the employee
-	@PostMapping(value = "/timesheet/edit/{id}", params = {"save"})//, "!submit"})
+	@PostMapping(value = "/timesheet/edit/{id}", params = "save")
 	public String saveTimesheet(@ModelAttribute("editTS") Timesheet timesheet, 
 								SessionStatus status) {
-		
+		//System.out.println("Save action called");
 		timesheetService.edit(timesheet);
-		
+		//System.out.println("Saved to db");
 		status.setComplete();
+		//System.out.println("Update status");
 		
-		return "redirect:/timesheet/view/" + timesheet.getTimesheetId() + "/admin=" + false;
+		return "redirect:/timesheet/view/" + timesheet.getTimesheetId();// + "/admin=" + false;
 	}
 	
 	//handles saving the current timesheet
-	@PostMapping(value = "/timesheet/edit/{id}", params = {"submit"})//, "!save"})
+	@PostMapping(value = "/timesheet/edit/{id}", params = "submit")
 	public String submitTimesheet(@ModelAttribute("editTS") Timesheet timesheet, 
 								  SessionStatus status) {
-		
+		//System.out.println("Submit action called");
 		timesheet.setStatus(TimesheetStatus.PENDING);
-		timesheetService.create(timesheet);
+		timesheetService.edit(timesheet);
 		
 		status.setComplete();
 		

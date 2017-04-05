@@ -55,11 +55,12 @@ public class PaystubController {
 				paystubs = pSService.findByStatus(status);
 				break;
 			default:
-				e = null;
+			//	e = null;
 				paystubs = null;
 		}
 		e = empService.findOne(6);
 		model.addAttribute("employee", e);
+
 		model.addAttribute("paystubs", paystubs);
 		return "paystub/paystubs";
 	}
