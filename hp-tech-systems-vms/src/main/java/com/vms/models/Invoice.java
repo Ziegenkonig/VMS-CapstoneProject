@@ -17,8 +17,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
-import lombok.Data;
-import lombok.NoArgsConstructor; 
+import lombok.Data; 
 
 @Data //standard getters/setters
 @Entity
@@ -132,6 +131,7 @@ public class Invoice {
 	@PrePersist
 	protected void onCreate() {
 		createdDate = ZonedDateTime.now();
+		status = InvoiceStatus.DRAFT;
 	}
 	
 	//toString

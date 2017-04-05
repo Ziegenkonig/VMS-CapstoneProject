@@ -76,11 +76,13 @@ public class EmployeeController{
 	@GetMapping("/dashboard")
 	public String dashboard(Model model) {
 		  
-		  int empIdPlaceholder = 1;
+		  int empIdPlaceholder = 2;
 		  
 		  List<Paystub> issuedPaystubs = paystubService.findIssued(empIdPlaceholder);
 		  List<Timesheet> openTimesheets = timesheetService.openTimesheets(employeeService.findOne(empIdPlaceholder));
+		  Employee e = employeeService.findOne(empIdPlaceholder);
 		  
+		  model.addAttribute("e", e);
 		  model.addAttribute("eId", empIdPlaceholder);
 		  model.addAttribute("openTimesheets", openTimesheets);
 		  model.addAttribute("issuedPaystubs", issuedPaystubs);

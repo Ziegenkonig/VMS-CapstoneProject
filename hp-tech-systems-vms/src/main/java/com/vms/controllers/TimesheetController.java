@@ -159,7 +159,7 @@ public class TimesheetController {
 	}
 	
 	//handles submitting the timesheet, rendering it uneditable to the employee
-	@PostMapping(value = "/timesheet/edit/{id}", params = {"saveTimesheet", "!submit"})
+	@PostMapping(value = "/timesheet/edit/{id}", params = {"save"})//, "!submit"})
 	public String saveTimesheet(@ModelAttribute("editTS") Timesheet timesheet, 
 								SessionStatus status) {
 		
@@ -171,7 +171,7 @@ public class TimesheetController {
 	}
 	
 	//handles saving the current timesheet
-	@PostMapping(value = "/timesheet/edit/{id}", params = {"submit", "!saveTimesheet"})
+	@PostMapping(value = "/timesheet/edit/{id}", params = {"submit"})//, "!save"})
 	public String submitTimesheet(@ModelAttribute("editTS") Timesheet timesheet, 
 								  SessionStatus status) {
 		
@@ -246,7 +246,7 @@ public class TimesheetController {
 		timesheet.setStatus(TimesheetStatus.VERIFIED);
 		timesheetService.create(timesheet);
 		
-		return "redirect:/admin";
+		return "redirect:/timesheets/byStatus?status=PENDING";
 	}
 	
 }

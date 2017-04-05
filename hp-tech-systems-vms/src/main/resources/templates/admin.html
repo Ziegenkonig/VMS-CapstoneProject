@@ -15,22 +15,22 @@
 				<li><a th:href="@{/projects/all}">View Project Overview</a></li>
 				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
 				<li><a th:href="@{/vendors}">View Vendor Overview</a></li>
-				<li><a th:href="@{/}">Add New Employee Account</a></li>
-				<li><a th:href="@{/}">Change Employee Permission Level (owner only)</a></li>
+				<li><a th:href="@{/}" onclick="return false;">Add New Employee Account --disabled</a></li>
+				<li><a th:href="@{/}" onclick="return false;">Change Employee Permission Level (owner only) --disabled</a></li>
 				<li><a th:href="@{/projects/all}">Add Employees To Project</a></li>
-				<li><a th:href="@{/}">Issue New Timesheets</a></li>
-				<li><a th:href="@{/}">Approve Pending Timesheets</a></li>
+				<li><a th:href="@{/}" onclick="return false;">Issue New Timesheets --disabled</a></li>
+				<li><a th:href="@{/timesheets/byStatus(status='PENDING')}">Approve Pending Timesheets</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>
 				<li><a th:href="@{/paystubs}">Paystub History</a></li>
-				<li><a th:href="@{/}">Issue Invoice</a></li>
-				<li><a th:href="@{/}">Invoice History</a></li>				
+				<li><a th:href="@{/invoice/new}">Issue Invoice</a></li>
+				<li><a th:href="@{/invoices}">Invoice History</a></li>				
 			</ul>
 		</main>
-		<div class = "adminDashboardDiv" align = "left">
+		<!-- <div class = "adminDashboardDiv" align = "left">
 			
-			<!-- Pending Timesheets -->
+			Pending Timesheets
 		<h2> Pending Timesheets </h2>
-		<!-- Will contain a list of pending timesheets -->
+		Will contain a list of pending timesheets
 		<ul>
 			<li>Timesheet 1, Date Submitted, Status</li>
 			<li>Timesheet 2, Date Submitted, Status</li>
@@ -41,9 +41,9 @@
 			<li><b> <a href = "http://localhost:8080/timesheet/approve">View all pending timesheets...</a> </b></li>
 		</ul>
 		
-		<!-- Past Timesheets -->
+		Past Timesheets
 		<h2> Approved Timesheets </h2>
-			<!--  Will contain a list of past timesheets for all employees -->
+			 Will contain a list of past timesheets for all employees
 			<ul>
 				<li>Timesheet 1, Date Created</li>
 				<li>Timesheet 2, Date Created</li>
@@ -54,18 +54,18 @@
 				<li><b> <a href = "http://localhost:8080/timesheets">View all timesheets...</a> </b></li>
 			</ul>
 			
-		<!-- Corrected Paystubs -->
+		Corrected Paystubs
 		<h2> Corrected Paystubs </h2>
-			<!-- Will contain a list of Paystubs that have returned from employee -->
+			Will contain a list of Paystubs that have returned from employee
 			<ul>
 				<li>Paystub 1, Date Received, Status</li>
 				<li>Paystub 2, Date Received, Status</li>
 				<li><b> <a href = "http://localhost:8080/paystubs">View all corrected paystubs...</a> </b></li>
 			</ul>
 			
-		<!-- Past Paystubs -->
+		Past Paystubs
 		<h2> Past Paystubs </h2>
-			<!-- Will contain a list of Paystubs that have been approved and received -->
+			Will contain a list of Paystubs that have been approved and received
 			<ul>
 				<li>Paystub 1, Date Received, Status</li>
 				<li>Paystub 2, Date Received, Status</li>
@@ -76,9 +76,9 @@
 				<li><b> <a href = "http://localhost:8080/paystubs">View all paystubs...</a> </b></li>
 			</ul>
 			
-		<!-- All Employees -->
+		All Employees
 		<h2> Employees </h2>
-			<!-- Will contain a list of all employees -->
+			Will contain a list of all employees
 			<ul>
 				<li>Employee Name, Active/Inactive, Date Hired, Current Project</li>
 				<li>Employee Name, Active/Inactive, Date Hired, Current Project</li>
@@ -89,9 +89,9 @@
 				<li><b> <a href = "http://localhost:8080/employees">View all employees...</a> </b></li>
 			</ul>
 		
-		<!-- All Vendors -->
+		All Vendors
 		<h2> All Vendors </h2>
-			<!-- Will contain a list of all Vendors currently engaged in contracts -->
+			Will contain a list of all Vendors currently engaged in contracts
 			<ul>
 				<li>Company Name, Phone, Contact Name, Primary Email</li>
 				<li>Company Name, Phone, Contact Name, Primary Email</li>
@@ -102,9 +102,9 @@
 				<li><b> <a href = "http://localhost:8080/vendors">View all vendors...</a> </b></li>
 			</ul>
 		
-		<!-- All Projects -->
+		All Projects
 		<h2> All Projects </h2>
-			<!-- Will contain a list of all Projects currently being worked on by Employees -->
+			Will contain a list of all Projects currently being worked on by Employees
 			<ul>
 				<li>Project Name, Associated Employee(s), Associated Vendor </li>
 				<li>Project Name, Associated Employee(s), Associated Vendor </li>
@@ -115,11 +115,11 @@
 				<li><b> <a href = "http://localhost:8080/projects">View all projects...</a> </b></li>
 			</ul>
 		
-		<!-- Tax Information -->
+		Tax Information
 		<h2> Tax Information </h2>
-			<!-- Will contain necessary tax information -->
+			Will contain necessary tax information
 		
-		</div>
+		</div> -->
 	</body>
 
 </html>

@@ -31,16 +31,19 @@
 						<td th:text = "${timesheet.getStatus()}">  </td>
 						<td><a th:if = "${timesheet.getStatus() == editCheck}" th:href="@{/timesheet/edit/{path}(path=${timesheet.getTimesheetId()})}"> Edit </a></td>
 						<td><a th:href="@{/timesheet/view/{path}(path=${timesheet.getTimesheetId()})}"> View </a></td>
+						<td><a th:if = "${timesheet.status.toString() == 'PENDING'}" th:href="@{/timesheet/approve/{id}(id=${timesheet.timesheetId})}"> Approve </a>
+							<a th:if="${timesheet.status.toString() == 'VERIFIED' AND timesheet.paystubs.isEmpty()}" th:href="@{/paystub/new/{path}(path=${timesheet.timesheetId})}">Generate Paystub</a>
+                			<a th:if="${timesheet.status.toString() == 'VERIFIED' AND !timesheet.paystubs.isEmpty()}" th:href="@{/paystub/regenerate(pId=${timesheet.paystubs.get(0).paystubId})}">Regenerate Paystub</a></td>
 					</tr>
 				</tbody>
 			
 			</table>
 
-		<h1>Timesheets</h1>
+	<!-- 	<h1>Timesheets</h1>
 		
 		<table id="tsTable"
 		       class="table table-bordered"
-		       th:if="${timesheets != null}"> <!--  and not #list.isEmpty(vendors) -->
+		       th:if="${timesheets != null}">
         <thead>
             <tr class="center middle">
                 <th>Employee Name</th>
@@ -60,8 +63,8 @@
                 	<a th:if="${ts.status.toString() == 'VERIFIED' AND !ts.paystubs.isEmpty()}" th:href="@{/paystub/regenerate(pId=${ts.paystubs.get(0).paystubId})}">Regenerate Paystub</a></td>
             </tr>
         </tbody>
-    </table>
-    
+    </table> -->
+
     <footer th:replace="base :: site-footer"></footer>
 
 	</body>
