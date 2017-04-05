@@ -76,7 +76,7 @@ public class EmployeeController{
 	@GetMapping("/dashboard")
 	public String dashboard(Model model) {
 		  
-		  int empIdPlaceholder = 2;
+		  int empIdPlaceholder = 1;
 		  
 		  List<Paystub> issuedPaystubs = paystubService.findIssued(empIdPlaceholder);
 		  List<Timesheet> openTimesheets = timesheetService.openTimesheets(employeeService.findOne(empIdPlaceholder));

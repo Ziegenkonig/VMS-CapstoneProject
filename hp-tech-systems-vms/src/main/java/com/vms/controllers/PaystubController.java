@@ -58,7 +58,7 @@ public class PaystubController {
 				e = null;
 				paystubs = null;
 		}
-		e = empService.findOne(empId);
+		e = empService.findOne(6);
 		model.addAttribute("employee", e);
 		model.addAttribute("paystubs", paystubs);
 		return "paystub/paystubs";

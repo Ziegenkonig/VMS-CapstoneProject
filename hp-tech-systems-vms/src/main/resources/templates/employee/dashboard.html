@@ -9,7 +9,7 @@
 	<nav th:replace="base :: site-nav('dashboard')">
 	</nav>
 	<div class = "employeeDashboardDiv" align = "left">
-		<h3 th:text="'Logged in as: ' + ${e.firstname} + ' ' + ${e.lastname}"></h3>
+		<h5 th:text="'Logged in as: ' + ${e.firstname} + ' ' + ${e.lastname}"></h5>
 		<!-- Non-submitted Timesheets -->
 		<h3> Current Timesheets </h3>
 		<!-- Will contain a list of non-submitted timesheets -->

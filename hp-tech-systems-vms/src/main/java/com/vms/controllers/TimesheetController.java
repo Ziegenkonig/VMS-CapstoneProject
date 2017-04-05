@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.vms.models.Employee;
+import com.vms.models.Paystub;
 import com.vms.models.Project;
 import com.vms.models.ProjectTimesheet;
 import com.vms.models.Timesheet;
 import com.vms.models.TimesheetStatus;
 import com.vms.services.EmployeeService;
+import com.vms.services.PaystubService;
 import com.vms.services.ProjectService;
 import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
@@ -38,6 +40,8 @@ public class TimesheetController {
 	EmployeeService employeeService = new EmployeeService();
 	@Autowired
 	ProjectService projectService = new ProjectService();
+	@Autowired
+	PaystubService paystubService = new PaystubService();
 	
 	//VIEWING ALL TIMESHEETS
 	@GetMapping("/timesheets")
@@ -246,7 +250,7 @@ public class TimesheetController {
 		timesheet.setStatus(TimesheetStatus.VERIFIED);
 		timesheetService.create(timesheet);
 		
-		return "redirect:/timesheets/byStatus?status=PENDING";
+		return "redirect:/paystub/new/" + timesheet.getTimesheetId();
 	}
 	
 }
