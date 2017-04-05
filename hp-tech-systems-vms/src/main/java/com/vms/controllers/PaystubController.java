@@ -66,16 +66,15 @@ public class PaystubController {
 	public String newPaystub(@PathVariable Integer tsId, Model model) {
 		Timesheet t = tSService.findById(tsId);
 		Paystub prev = pSService.findPreviousPaystubForYtd(t.getEmployee(), t);
+		Paystub ps = null;
 		if(prev == null) {
-			Paystub ps = new Paystub(t);
-			pSService.create(ps);
-			model.addAttribute("paystub", ps);
+			ps = new Paystub(t);
 		} else {
-			Paystub ps = new Paystub(t, prev);
-			pSService.create(ps);
-			model.addAttribute("paystub", ps);
+			ps = new Paystub(t, prev);
 		}
-		return "paystub/viewPs";
+		pSService.create(ps);
+		model.addAttribute("paystub", ps);
+		return "redirect:/paystub/" + ps.getPaystubId();
 	}
 	
 	//view an existing paystub

@@ -6,7 +6,7 @@
 </head>
 
 	<body>
-		<nav th:replace="base :: site-nav">
+		<nav th:replace="base :: site-nav('none')">
 		</nav>
 		
 		<h1>Projects</h1>
@@ -27,13 +27,13 @@
         </thead>
         <tbody>
             <tr th:each="project : ${projects}">
-                <td th:text="${project.getName()}"></td>
-                <td th:text="${project.getBillingRate()}"></td>
-                <td th:text="${project.getClientName()}"></td>
-                <td th:text="${project.getClientLocation()}"></td>
-                <td th:text="${project.getVendor().getName()}"></td>
-                <td><a th:href="@{/project/view/{path}(path=${project.getName()})}">View</a></td>
-                <td><a th:href="@{/project/edit/{path}(path=${project.getName()})}">Edit</a></td>
+                <td th:text="${project.name}"></td>
+                <td th:text="${project.billingRate}"></td>
+                <td th:text="${project.clientName}"></td>
+                <td th:text="${project.clientLocation}"></td>
+                <td th:text="${project.vendor?.name}"></td>
+                <td><a th:href="@{/project/view/{path}(path=${project.name})}">View</a></td>
+                <td><a th:href="@{/project/edit/{path}(path=${project.name})}">Edit</a></td>
             </tr>
         </tbody>
     </table>

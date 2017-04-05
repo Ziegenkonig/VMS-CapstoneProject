@@ -33,7 +33,7 @@ public class InvoiceController {
 	ProjectTimesheetService projTimeService = new ProjectTimesheetService();
 	
 	//Create a new invoice
-	@GetMapping()
+	@GetMapping("/invoice/new")
 	public String invoiceForm(Model model) {
 		//Have to instantiate the LocalDate
 		LocalDate date = null;
@@ -47,7 +47,7 @@ public class InvoiceController {
 	}
 
 	
-	@PostMapping()
+	@PostMapping("/invoice/new")
 	public String invoiceSubmit(@ModelAttribute Vendor selectedVendor, @ModelAttribute LocalDate date) {
 		//Grabbing vendor object associated with the name selected by user
 		selectedVendor = vendorService.findByName(selectedVendor.getName());

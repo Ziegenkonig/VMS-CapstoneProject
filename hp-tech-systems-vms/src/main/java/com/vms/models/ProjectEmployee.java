@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 //ProjectEmployee is a joined table that is used to keep track of the relations between
@@ -43,9 +45,13 @@ public class ProjectEmployee {
 	//Regular ol Attributes
 	@Column(nullable = false)
 	private BigDecimal payRate;
+	
 	@Column(nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateStarted;
-	@Column(nullable = false)
+	
+	@Column//(nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateEnded;
 	
 	//Methods
