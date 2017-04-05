@@ -81,6 +81,7 @@ public class EmployeeController{
 		  List<Paystub> issuedPaystubs = paystubService.findIssued(empIdPlaceholder);
 		  List<Timesheet> openTimesheets = timesheetService.openTimesheets(employeeService.findOne(empIdPlaceholder));
 		  
+		  model.addAttribute("eId", empIdPlaceholder);
 		  model.addAttribute("openTimesheets", openTimesheets);
 		  model.addAttribute("issuedPaystubs", issuedPaystubs);
 		  

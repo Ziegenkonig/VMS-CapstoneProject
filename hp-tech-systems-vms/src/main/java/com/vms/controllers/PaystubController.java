@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.vms.models.Employee;
 import com.vms.models.Paystub;
 import com.vms.models.PaystubStatus;
 import com.vms.models.Timesheet;
@@ -46,8 +45,9 @@ public class PaystubController {
 				break;
 			//not yet implemented
 			case "byEmployee":
-				Employee e = empService.findOne(empId);
-				paystubs = pSService.findPaystubByEmployee(e);
+				//Employee e = empService.findOne(empId);
+				//paystubs = pSService.findPaystubByEmployee(e);
+				paystubs = pSService.findIssued(empId);
 				break;
 			//not yet implemented
 			case "byStatus":
