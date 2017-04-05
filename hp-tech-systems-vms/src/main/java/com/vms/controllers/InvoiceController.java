@@ -1,10 +1,7 @@
 package com.vms.controllers;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +68,7 @@ public class InvoiceController {
 		System.out.println(vendorName);
 		System.out.println(date.toString());
 		System.out.println(date.getClass());
+
 		//Grabbing vendor object associated with the name selected by user
 		Vendor v = vendorService.findByName(vendorName);
 		//Putting all projects associated with the vendor into a list

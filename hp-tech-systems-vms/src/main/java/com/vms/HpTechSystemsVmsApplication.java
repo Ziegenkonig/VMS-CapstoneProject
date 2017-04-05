@@ -2,15 +2,15 @@ package com.vms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
-import com.vms.utilities.mail.Mail;
-
 
 @EnableJpaRepositories("com.vms.repositories")
 @SpringBootApplication
+@EnableCaching
 public class HpTechSystemsVmsApplication {
 
 	@Bean

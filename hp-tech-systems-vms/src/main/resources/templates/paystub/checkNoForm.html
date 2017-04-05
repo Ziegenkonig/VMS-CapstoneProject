@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace= "base :: site-head">
+  <title id="pageTitle">VMS | Issue Check</title>
+</head>
+
+	<body>
+		<nav th:replace="base :: site-nav('none')">
+		</nav>
+		
+		<div class="formAlignCenter" align = "center">
+		
+		    <h1>Add Check Number</h1>
+		    <form th:fragment="check-form" action="#" th:action="@{/paystub/addCheck}" th:object="${paystub}" method="post">
+		    	<div class="form-group">
+					<label for="checkNo">Check Number:</label>
+				    <input type="text" name="checkNo" value="" th:value="${paystub.checkNo}" />
+				</div>
+		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+		    </form>
+		    
+		</div>
+	
+	<footer th:replace="base :: site-footer"></footer>
+	</body>
+	
+</html>

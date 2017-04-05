@@ -33,7 +33,7 @@ public class HomeController {
 	public String approveTimesheet(Model model) {
 		return "timesheet/approve";
 	}
-	
+
 	//renders admin
 	//linksto: a lot and i dont wanna write them out right now
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)

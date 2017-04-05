@@ -16,13 +16,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.vms.services.ProjectService;
-import com.vms.services.VendorService;
-
-import lombok.Data;
-import lombok.NoArgsConstructor; 
+import lombok.Data; 
 
 @Data //standard getters/setters
 @Entity

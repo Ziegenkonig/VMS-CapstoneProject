@@ -6,9 +6,26 @@
 </head>
 
 	<body>
-		<nav th:replace="base :: site-nav">
+		<nav th:replace="base :: site-nav('admin')">
 		</nav>
 		
+		<main>
+			<ul>
+				<li><a th:href="@{/project/new}">Add a Project</a></li>
+				<li><a th:href="@{/projects/all}">View Project Overview</a></li>
+				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
+				<li><a th:href="@{/vendors}">View Vendor Overview</a></li>
+				<li><a th:href="@{/}">Add New Employee Account</a></li>
+				<li><a th:href="@{/}">Change Employee Permission Level (owner only)</a></li>
+				<li><a th:href="@{/projects/all}">Add Employees To Project</a></li>
+				<li><a th:href="@{/}">Issue New Timesheets</a></li>
+				<li><a th:href="@{/}">Approve Pending Timesheets</a></li>
+				<li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>
+				<li><a th:href="@{/paystubs}">Paystub History</a></li>
+				<li><a th:href="@{/}">Issue Invoice</a></li>
+				<li><a th:href="@{/}">Invoice History</a></li>				
+			</ul>
+		</main>
 		<div class = "adminDashboardDiv" align = "left">
 			
 			<!-- Pending Timesheets -->

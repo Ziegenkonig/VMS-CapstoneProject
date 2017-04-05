@@ -33,14 +33,17 @@ public class Paystub {
 	//deposit number
 	private int checkNo;
 	
-	/*
-    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDate createdDate;
-	*/
 	@Type(type = "org.hibernate.type.ZonedDateTimeType")
-    @Column(updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private ZonedDateTime createdDate;
 	
+	@Type(type = "org.hibernate.type.ZonedDateTimeType")
+    @Column//(updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private ZonedDateTime dateVoided;
+	
+	@Type(type = "org.hibernate.type.ZonedDateTimeType")
+    @Column//(updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private ZonedDateTime checkDate;
 	
     @Column(nullable = false)
     private PaystubStatus status;
@@ -106,6 +109,8 @@ public class Paystub {
 	@ManyToOne//(cascade = CascadeType.ALL)
 	@JoinColumn(name = "timesheet_id")
     private Timesheet timesheet;
+	
+	private Integer prevPaystubId;
 		
 	//constructors
 	//used if no previous paystubs for the year
@@ -156,6 +161,7 @@ public class Paystub {
 
 	public Paystub(Timesheet ts, Paystub previous) { //the input here is the list of timesheets from query that it should be generated from, and the previous paystub also from query
 		this.timesheet = ts;
+		this.prevPaystubId = previous.getPaystubId();
 		//info should be same from all timesheets
 		//Timesheet ts = timesheets.get(0);
 		this.periodStart = ts.getWeekStarting();
@@ -196,11 +202,11 @@ public class Paystub {
 		this.ytdMedInsurance = previous.getMedInsurance().add(this.medInsurance);
 		this.ytd401k = previous.getA401k().add(this.a401k);
 	}
-	
-	
+		
 	@PrePersist
 	protected void onCreate() {
 		createdDate = ZonedDateTime.now();
+		status = PaystubStatus.REQUIRES_CHECK;
 	}
 	
 	/*// testing Lombok - should not have any errors

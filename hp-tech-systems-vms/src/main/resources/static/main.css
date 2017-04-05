@@ -1,4 +1,3 @@
-
 title {
     
 }
@@ -10,4 +9,8 @@ p {
 body {
 	background-color = #353030
 	
+}
+
+.content {
+	width: 80%;
 }

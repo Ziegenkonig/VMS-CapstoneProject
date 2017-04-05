@@ -1,5 +1,6 @@
 package com.vms.services;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,23 @@ public class PaystubService {
 		}
 	}
 	
+	public List<Paystub> findByStatus(PaystubStatus s) {
+		return paystubRepo.findByStatusOrderByCreatedDateDesc(s);
+	}
+	
+	public boolean hasPaystubBeenGenerated(Timesheet t) {
+		if(paystubRepo.countByTimesheet(t) > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public Paystub voidPaystub(Paystub ps) {
+		ps.setStatus(PaystubStatus.VOIDED);
+		ps.setDateVoided(ZonedDateTime.now());
+		return paystubRepo.save(ps);
+	}
+	
 	//basic repo methods
 	public List<Paystub> findAll() {
 		return paystubRepo.findAll();
@@ -47,6 +65,10 @@ public class PaystubService {
 	}
 
 	public Paystub create(Paystub paystub) {
+		return paystubRepo.save(paystub);
+	}
+	
+	public Paystub update(Paystub paystub) {
 		return paystubRepo.save(paystub);
 	}
 	

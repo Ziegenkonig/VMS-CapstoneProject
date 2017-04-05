@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vms.models.Employee;
 import com.vms.models.Timesheet;
+import com.vms.models.TimesheetStatus;
 import com.vms.repositories.TimesheetRepository;
 
 @Service
@@ -44,6 +45,10 @@ public class TimesheetService {
 		return timesheetRepo.findByEmployeeOrderByWeekStartingDesc(e);
 	}
 	
+	public List<Timesheet> findByStatus(TimesheetStatus s) {
+		return timesheetRepo.findByStatusOrderByWeekStartingDesc(s);
+	} 
+	
 	//find pending timesheets for admin review
 	public List<Timesheet> pendingTimesheets() {
 		return timesheetRepo.findByStatusOrderByWeekStartingDesc(com.vms.models.TimesheetStatus.PENDING);
@@ -51,6 +56,11 @@ public class TimesheetService {
 	
 	public List<Timesheet> approvedTimesheets() {
 		return timesheetRepo.findByStatusOrderByWeekStartingDesc(com.vms.models.TimesheetStatus.VERIFIED);
+	}
+	
+	public Timesheet returnTimesheet(Timesheet t) {
+		t.setStatus(TimesheetStatus.NOT_SUBMITTED);
+		return timesheetRepo.save(t);
 	}
 }
 

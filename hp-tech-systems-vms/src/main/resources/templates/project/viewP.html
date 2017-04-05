@@ -6,17 +6,22 @@
 </head>
 
 <body>
-	<nav th:replace="base :: site-nav">
+	<nav th:replace="base :: site-nav('none')">
 	</nav>
 	
 	<!-- View Specific Project Details -->
 	<main th:if="${project}">
-		<p th:text="'Name: ' + ${project?.getName()}">Project Name</p>
-	    <p th:text="'Billing Rate: $' + ${project?.getBillingRate()}">$ 21.00</p>
-	    <p th:text="'Client Name: ' + ${project?.getClientName()}">Bob Jones</p>
-	    <p th:text="'Client Location: ' + ${project?.getClientLocation()}">on site</p>
-	    <p th:text="'Vendor: ' + ${project?.getVendor().getName()}">Some Company Name</p>
-	    <a th:href="@{/project/edit/{path}(path=${project.getName()})}">Edit Project</a>
+		<h2 th:text="${project.name}"></h2>
+	    <p th:text="'Billing Rate: $' + ${project.billingRate}">$ 21.00</p>
+	    <p th:text="'Client Name: ' + ${project.clientName}">Bob Jones</p>
+	    <p th:text="'Client Location: ' + ${project.clientLocation}">on site</p>
+	    <p th:text="'Vendor: ' + ${project.vendor.name}">Some Company Name</p>
+	    <a th:href="@{/project/edit/{path}(path=${project.name})}">Edit Project</a>
+	    <h3>Employees</h3>
+	    <ul>
+	    	<li th:each="pe : ${project.projemps}" th:text="${pe.employee.firstname + ' ' + pe.employee.lastname + ' ($' + pe.payRate + ') from ' + #temporals.format(pe.dateStarted,'MM/dd/yyyy')}"></li>
+	    </ul>
+	    <a th:href="@{/project/addEmployee(pId=${project.projectId})}">Add Employee</a>
 	</main>
 	
 	<footer th:replace="base :: site-footer"></footer>

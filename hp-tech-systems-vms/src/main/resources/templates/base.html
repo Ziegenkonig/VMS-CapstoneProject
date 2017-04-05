@@ -8,13 +8,14 @@
         
         <link rel="icon" href="/images/favicon.ico"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="main.css" th:href="@{/main.css}"/>
         <!-- <link rel = "stylesheet" th:href = "@{/css/style.css}" />  -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   		<script>document.createElement('main');</script>    
     </head>
     <body>
-	    <nav class="navbar navbar-inverse " th:fragment="site-nav">
+	    <nav class="navbar navbar-inverse " th:fragment="site-nav(activeTab)">
 		    <div class="container-fluid page-content-width">
 		      <!-- Brand and toggle get grouped for better mobile display -->
 		      <div class="navbar-header container-fluid">
@@ -31,8 +32,10 @@
 		      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		
 		        <ul class="nav navbar-nav navbar-right">
-		          <li class="active"><a th:href="@{/dashboard}">Dashboard</a></li>
-		          <li><a href="admin.html">Admin</a></li>
+		          <li th:class="${activeTab == 'dashboard'} ? 'active' : null">
+		          	<a th:href="@{/dashboard}">Dashboard</a></li>
+		          <li th:class="${activeTab == 'admin'} ? 'active' : null">
+		          	<a th:href="@{/admin}">Admin</a></li>
 		        </ul>
 		      </div><!-- /.navbar-collapse -->
 		    </div><!-- /.container-fluid -->

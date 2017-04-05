@@ -2,18 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace= "base :: site-head">
-	  <title id="pageTitle">VMS | View Timesheet</title>
-	</head>
+  <title id="pageTitle">VMS | View Timesheet</title>
+</head>
 
 <body>
-
-	<nav th:replace="base :: site-nav">
+	<nav th:replace="base :: site-nav('none')">
 	</nav>
 	
-		<h2> Timesheet </h2>
-		<h4 th:text = "'Status: ' + ${timesheet.getStatus()}"> </h4>
-		
-<footer th:replace="base :: site-footer"></footer>
-		
-	</body>
+	<main>
+		<p th:text="'Employee Name: ' + ${timesheet.employee.firstname} + ' ' + ${timesheet.employee.lastname}">Company Name</p>
+	    <p th:text="'Status: ' + ${timesheet.status}">Bob Jones</p>
+	    <form action="#" th:action="@{/timesheet/updateStatus}" th:object="${timesheet}" method="post">
+			<select th:field="*{status}" name="timesheet.status">
+			   <option th:each="st : ${statuses}"
+			          th:value="${st}"
+			          th:text="${st}"
+			          >
+			   </option>
+			</select>
+			<p><input type="submit" value="Submit" /></p>
+		</form>
+	</main>
+	
+	<footer th:replace="base :: site-footer"></footer>
+</body>
+
 </html>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -24,10 +25,6 @@ import com.vms.services.EmployeeService;
 import com.vms.services.ProjectService;
 import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
-
-import com.vms.models.Timesheet;
-import com.vms.services.TimesheetService;
-import com.vms.utilities.mail.Mail;
 
 @Controller
 @SessionAttributes(value = {"editTS"})
@@ -167,6 +164,52 @@ public class TimesheetController {
 		status.setComplete();
 		
 		return "redirect:" + "http://localhost:8080/timesheet/view/" + timesheet.getTimesheetId();
+	}
+	
+	
+	//admin/katie extras
+	@GetMapping(value = "/timesheets/{mode}")
+	public String viewTimesheets(@PathVariable String mode,
+							   @RequestParam(required = false) TimesheetStatus status,
+							   Model model) {
+		List<Timesheet> timesheets;
+		switch(mode) {
+			case "all":
+				timesheets = timesheetService.findAll();
+				break;
+			case "byStatus":
+				timesheets = timesheetService.findByStatus(status);
+				break;
+			default:
+				timesheets = null;
+		}
+		model.addAttribute("timesheets", timesheets);
+		return "timesheet/timesheets";
+	}
+	
+	@GetMapping(value = "/timesheet/{id}")
+	public String viewTimesheetK(@PathVariable("id") Integer tsId, Model model) {
+		Timesheet t = timesheetService.findById(tsId);
+		model.addAttribute("timesheet", t);
+		/*
+		List<String> statuses = new ArrayList<String>();
+		for(TimesheetStatus s : TimesheetStatus.values()) {
+			statuses.add(s.name());
+		}
+		*/
+		model.addAttribute("statuses", TimesheetStatus.values());
+		//String status = null;
+		//model.addAttribute("status", status);		
+		return "timesheet/viewT";
+	}
+	
+	@PostMapping("/timesheet/updateStatus")
+	public String updateStatus(@ModelAttribute("timesheet") Timesheet t,
+							   SessionStatus status) {
+		//t.setStatus(TimesheetStatus.valueOf(s));
+		timesheetService.edit(t);
+		status.setComplete();
+		return "redirect:/timesheet/" + t.getTimesheetId();
 	}
 	
 }
