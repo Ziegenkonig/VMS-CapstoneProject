@@ -21,6 +21,7 @@ import com.vms.models.ProjectTimesheet;
 import com.vms.models.Timesheet;
 import com.vms.models.TimesheetStatus;
 import com.vms.services.EmployeeService;
+import com.vms.services.PaystubService;
 import com.vms.services.ProjectService;
 import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
@@ -37,6 +38,8 @@ public class TimesheetController {
 	EmployeeService employeeService = new EmployeeService();
 	@Autowired
 	ProjectService projectService = new ProjectService();
+	@Autowired
+	PaystubService paystubService = new PaystubService();
 	
 	//VIEWING ALL TIMESHEETS
 	@GetMapping("/timesheets")

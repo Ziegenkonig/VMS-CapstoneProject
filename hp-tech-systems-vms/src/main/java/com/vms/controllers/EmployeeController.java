@@ -72,19 +72,23 @@ public class EmployeeController{
   
  
   @PostMapping("/editUserProfile/{id}")
-  public String employeeEdit(@ModelAttribute("employee") Employee employee,
+  public String employeeEdit(@ModelAttribute("employee")@Valid Employee employee,
+		  					 BindingResult bindingResult,
 		  					 SessionStatus sessionStatus){
-
+	//Checks for validation errors and renders this page again if any exist
+	if (bindingResult.hasErrors())
+		return "/editUserProfile/" + employee.getEmpId();
+	  
     //We need to set uneditable values of the employee we are editing manually
-	Employee editEmployee = employeeService.findByUsername(employee.getUsername());
-    employee.setEmpId(editEmployee.getEmpId());
-    employee.setHireDate(editEmployee.getHireDate());
-    employee.setPermissionLevel(editEmployee.getPermissionLevel());
-    employee.setProjemps(editEmployee.getProjemps());
-    employee.setActive(editEmployee.isActive());
-    employee.setTimesheets(editEmployee.getTimesheets());
-    employee.setPayPeriod(employee.getPayPeriod());
-    
+//	Employee editEmployee = employeeService.findByUsername(employee.getUsername());
+//    employee.setEmpId(editEmployee.getEmpId());
+//    employee.setHireDate(editEmployee.getHireDate());
+//    employee.setPermissionLevel(editEmployee.getPermissionLevel());
+//    employee.setProjemps(editEmployee.getProjemps());
+//    employee.setActive(editEmployee.isActive());
+//    employee.setTimesheets(editEmployee.getTimesheets());
+//    employee.setPayPeriod(employee.getPayPeriod());
+	
     //update this employee in the database
     employeeService.update(employee);
     
