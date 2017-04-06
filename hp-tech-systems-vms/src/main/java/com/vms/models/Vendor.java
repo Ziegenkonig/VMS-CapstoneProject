@@ -19,7 +19,7 @@ public class Vendor {
 	private int vendorId;
 	
 	//Regular ol Attributes
-	@Column(length = 32, nullable = false)
+	@Column(length = 120, nullable = false)
 	private String name;
 	
 	@Column(length = 50, nullable = false)
