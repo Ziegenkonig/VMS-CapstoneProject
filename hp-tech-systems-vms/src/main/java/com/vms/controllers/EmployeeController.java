@@ -46,7 +46,8 @@ public class EmployeeController{
   }
 
   @PostMapping("/register")
-  public String employeeSubmit(@ModelAttribute@Valid Employee employee, BindingResult bindingResult){
+  public String employeeSubmit(@ModelAttribute@Valid Employee employee, 
+		  					   BindingResult bindingResult){
     //Checks for input validation and returns to registration page if validation fails
 	if (bindingResult.hasErrors())
 	  return "employee/newE";
@@ -77,7 +78,7 @@ public class EmployeeController{
 		  					 SessionStatus sessionStatus){
 	//Checks for validation errors and renders this page again if any exist
 	if (bindingResult.hasErrors())
-		return "/editUserProfile/" + employee.getEmpId();
+		return "employee/editE";
 	  
     //We need to set uneditable values of the employee we are editing manually
 //	Employee editEmployee = employeeService.findByUsername(employee.getUsername());
@@ -94,18 +95,18 @@ public class EmployeeController{
     
     sessionStatus.setComplete();
     
-    return "employee/dashboard";
+    return "redirect:/dashboard";
   }
   
   @GetMapping("/dashboard")
   public String dashboard(Model model) {
 	  
-	  Employee employee = employeeService.findOne(1);
+	  Employee e = employeeService.findOne(1);
 	  
-	  List<Paystub> issuedPaystubs = paystubService.findIssued(employee.getEmpId());
-	  List<Timesheet> openTimesheets = timesheetService.openTimesheets(employee);
+	  List<Paystub> issuedPaystubs = paystubService.findIssued(e.getEmpId());
+	  List<Timesheet> openTimesheets = timesheetService.openTimesheets(e);
 	  
-	  model.addAttribute("loggedInEmp", employee);
+	  model.addAttribute("e", e);
 	  model.addAttribute("openTimesheets", openTimesheets);
 	  model.addAttribute("issuedPaystubs", issuedPaystubs);
 	  

@@ -9,7 +9,7 @@
 	<nav th:replace="base :: site-nav('dashboard')">
 	</nav>
 	<div class = "employeeDashboardDiv" align = "left">
-		<h5 th:text="'Logged in as: ' + ${loggedInEmp.firstname} + ' ' + ${loggedInEmp.lastname}"></h5>
+		<h5 th:text="'Logged in as: ' + ${e.getFirstname()} + ' ' + ${e.getLastname()}"></h5>
 		<!-- Non-submitted Timesheets -->
 		<h3> Current Timesheets </h3>
 		<!-- Will contain a list of non-submitted timesheets -->
@@ -38,7 +38,7 @@
 			<p> Coming Soon </p>
 			<!-- Will contain necessary tax information -->
 		
-		<a th:href="@{/editUserProfile/{path}(path=${loggedInEmp.empId})}"> Edit Profile </a>
+		<a th:href="@{/editUserProfile/{path}(path=${e.empId})}"> Edit Profile </a>
 		
 	</div>
 </body>
