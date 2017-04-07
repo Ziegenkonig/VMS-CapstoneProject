@@ -103,16 +103,23 @@ public class ProjectController {
 		return "redirect:/projects/all";
 	}
 	
-	@GetMapping(value = "/project/edit/{name}")
-	public String editProject(@PathVariable String name, Model model) {
+	@GetMapping(value = "/project/edit/{id}")
+	public String editProject(@PathVariable Integer id, Model model) {
 		List<Vendor> vendors = vService.findAll();
 		model.addAttribute("vendors", vendors);
-		model.addAttribute("project", pService.findByName(name));
+		model.addAttribute("project", pService.findById(id));
 		return "project/editP";
 	}
 	
-	@PostMapping("/project/edit")
-	public String saveProject(@ModelAttribute("project") Project p, SessionStatus status) {
+	@PostMapping("/project/edit{id}")
+	public String saveProject(@ModelAttribute("project")@Valid Project p, 
+							  BindingResult bindingResult,
+							  SessionStatus status) {
+		
+		//Checks to see if the input has any errors and renders the page over again with the errors included if it does
+		if (bindingResult.hasErrors())
+			return "project/editP";
+		
 		pService.edit(p);
 		status.setComplete();
 		return "redirect:/projects/all";

@@ -26,7 +26,7 @@ import com.vms.services.PaystubService;
 import com.vms.services.TimesheetService;
 
 @Controller
-@SessionAttributes(value = {"employee"})
+@SessionAttributes({"employee", "states"})
 public class EmployeeController{
 
 	//Hooking up the EmployeeService to the EmployeeController
@@ -47,7 +47,8 @@ public class EmployeeController{
 
   @PostMapping("/register")
   public String employeeSubmit(@ModelAttribute@Valid Employee employee, 
-		  					   BindingResult bindingResult){
+		  					   BindingResult bindingResult, 
+		  					   Model model){
     //Checks for input validation and returns to registration page if validation fails
 	if (bindingResult.hasErrors())
 	  return "employee/newE";
@@ -58,6 +59,8 @@ public class EmployeeController{
     //throw this new employee into the database
     employeeService.create(employee);
     
+    model.addAttribute("states", States.values());
+    
     //takes us straight to user profile page (not implemented yet)
     return "employee/dashboard";
   }
@@ -67,6 +70,7 @@ public class EmployeeController{
   public String employeeEditForm(@PathVariable("id") Integer id, 
 		  						 Model model) {
 	  
+	  model.addAttribute("states", States.values());
 	  model.addAttribute("employee", employeeService.findOne(id));
 	  return "employee/editE";
   }
@@ -75,20 +79,13 @@ public class EmployeeController{
   @PostMapping("/editUserProfile/{id}")
   public String employeeEdit(@ModelAttribute("employee")@Valid Employee employee,
 		  					 BindingResult bindingResult,
-		  					 SessionStatus sessionStatus){
+		  					 SessionStatus sessionStatus, 
+		  					 Model model){
 	//Checks for validation errors and renders this page again if any exist
 	if (bindingResult.hasErrors())
 		return "employee/editE";
 	  
-    //We need to set uneditable values of the employee we are editing manually
-//	Employee editEmployee = employeeService.findByUsername(employee.getUsername());
-//    employee.setEmpId(editEmployee.getEmpId());
-//    employee.setHireDate(editEmployee.getHireDate());
-//    employee.setPermissionLevel(editEmployee.getPermissionLevel());
-//    employee.setProjemps(editEmployee.getProjemps());
-//    employee.setActive(editEmployee.isActive());
-//    employee.setTimesheets(editEmployee.getTimesheets());
-//    employee.setPayPeriod(employee.getPayPeriod());
+	model.addAttribute("states", States.values());
 	
     //update this employee in the database
     employeeService.update(employee);

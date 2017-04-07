@@ -32,8 +32,8 @@
                 <td th:text="${project.clientName}"></td>
                 <td th:text="${project.clientLocation}"></td>
                 <td th:text="${project.vendor?.name}"></td>
-                <td><a th:href="@{/project/view/{path}(path=${project.name})}">View</a></td>
-                <td><a th:href="@{/project/edit/{path}(path=${project.name})}">Edit</a></td>
+                <td><a th:href="@{/project/view/{path}(path=${project.projectId})}">View</a></td>
+                <td><a th:href="@{/project/edit/{path}(path=${project.projectId})}">Edit</a></td>
             </tr>
         </tbody>
     </table>
