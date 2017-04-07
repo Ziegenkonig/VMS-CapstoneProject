@@ -22,19 +22,19 @@
 				   </option>
 				</select>
 				<h4 >Project Name</h4>
-				<p th:if = "${#fields.hasErrors('name')}" th:errors = "*{name}" style = "Color: red"></p>
+				<h5 th:if = "${#fields.hasErrors('name')}" th:errors = "*{name}" style = "Color: red"></h5>
 			    <input type = "text" name = "name" th:field = "*{name}" />
 				<h4 >Billing Rate</h4>
-				<p th:if = "${#fields.hasErrors('billingRate')}" th:errors = "*{billingRate}" style = "Color: red"></p>
+				<h5 th:if = "${#fields.hasErrors('billingRate')}" th:errors = "*{billingRate}" style = "Color: red"></h5>
 				<input type = "text" name = "billingRate" th:field = "*{billingRate}" />
 		        <h4 >Client Company</h4>
-		        <p th:if = "${#fields.hasErrors('clientName')}" th:errors = "*{clientName}" style = "Color: red"></p>
+		        <h5 th:if = "${#fields.hasErrors('clientName')}" th:errors = "*{clientName}" style = "Color: red"></h5>
 		        <input type = "text" name = "clientName" th:field = "*{clientName}" />
 		        <h4 >Client Location</h4>
-		        <p th:if = "${#fields.hasErrors('clientLocation')}" th:errors = "*{clientLocation}" style = "Color: red"></p>
+		        <h5 th:if = "${#fields.hasErrors('clientLocation')}" th:errors = "*{clientLocation}" style = "Color: red"></h5>
 		        <input type = "text" name = "clientLocation" value="" th:field="*{clientLocation}" />
 		        <h4></h4>
-		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+		        <h5><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></h5>
 		    </form>
 		    
 		</div>		

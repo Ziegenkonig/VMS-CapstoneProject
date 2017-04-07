@@ -1,5 +1,6 @@
 package com.vms.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -26,7 +27,7 @@ import com.vms.services.ProjectService;
 import com.vms.services.VendorService;
 
 @Controller
-@SessionAttributes({"project", "pe"})
+@SessionAttributes({"project", "pe", "vendors"})
 public class ProjectController {
 
 	@Autowired
@@ -85,9 +86,9 @@ public class ProjectController {
 	
 	@PostMapping("/project/new")
 	public String createProject(@RequestParam(value = "vendor", required = false) Vendor v, 
-								@ModelAttribute("project")@Valid Project p,
-								@ModelAttribute("vendors") List<Vendor> vendors,
-								BindingResult bindingResult,
+								@ModelAttribute("project")@Valid Project p, BindingResult bindingResult,
+								@ModelAttribute("vendors") ArrayList<Vendor> vendors,
+								Model model,
 								SessionStatus status) {
 		//Checks to see if the input has any errors and renders the page over again with the errors included if it does
 		if (bindingResult.hasErrors())
@@ -98,7 +99,7 @@ public class ProjectController {
 		}
 		pService.create(p);
 		status.setComplete();
-
+		
 		return "redirect:/projects/all";
 	}
 	
