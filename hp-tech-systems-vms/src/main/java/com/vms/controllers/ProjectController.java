@@ -1,5 +1,6 @@
 package com.vms.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.vms.models.Project;
@@ -23,6 +25,7 @@ import com.vms.services.ProjectService;
 import com.vms.services.VendorService;
 
 @Controller
+@SessionAttributes({"project", "pe", "vendors"})
 public class ProjectController {
 
 	@Autowired
@@ -68,20 +71,23 @@ public class ProjectController {
 	
 	@PostMapping("/project/new")
 	public String createProject(@RequestParam(value = "vendor", required = false) Vendor v, 
-								@ModelAttribute("project")@Valid Project p, 
-								BindingResult bindingResult,
-								SessionStatus status) {
-		//Checks to see if the input has any errors and renders the page over again with the errors included if it does
-		if (bindingResult.hasErrors())
-			return "project/newP";
+			@ModelAttribute("project")@Valid Project p, BindingResult bindingResult,
+			@ModelAttribute("vendors") ArrayList<Vendor> vendors,
+			Model model,
+			SessionStatus status) {
 		
-		if(p.getVendor() == null) {
-			p.setVendor(v);
-		}
-		pService.create(p);
-		status.setComplete();
-		return "redirect:/projects";
-}
+			//Checks to see if the input has any errors and renders the page over again with the errors included if it does
+			if (bindingResult.hasErrors())
+			return "project/newP";
+			
+			if(p.getVendor() == null) {
+				p.setVendor(v);
+			}
+			pService.create(p);
+			status.setComplete();
+			
+			return "redirect:/projects/all";
+	}
 	
 	@GetMapping(value = "/project/edit/{name}")
 	public String editProject(
