@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link rel = "stylesheet" th:href = "@{/css/style.css}" />
+</head>
+
+	<body>
+		
+		<div th:fragment = "VendorForm">
+		
+				<h4 >Vendor Company Name</h4>
+				<h5 th:if = "${#fields.hasErrors('name')}" th:errors = "*{name}" style = "Color: red"></h5>
+			    <input type = "text" name = "name" th:field = "*{name}" />
+				<h4 >Primary Email</h4>
+				<h5 th:if = "${#fields.hasErrors('primaryEmail')}" th:errors = "*{primaryEmail}" style = "Color: red"></h5>
+				<input type = "text" name = "primaryEmail" th:field = "*{primaryEmail}" />
+		        <h4 >Contact's Name</h4>
+		        <h5 th:if = "${#fields.hasErrors('contactName')}" th:errors = "*{contactName}" style = "Color: red"></h5>
+		        <input type = "text" name = "contactName" th:field = "*{contactName}" />
+		        <h4 >Address</h4>
+		        <h5 th:if = "${#fields.hasErrors('address')}" th:errors = "*{address}" style = "Color: red"></h5>
+		        <input type = "text" name = "address" value="" th:field="*{address}" />
+		        <h4 >City</h4>
+		        <h5 th:if = "${#fields.hasErrors('city')}" th:errors = "*{city}" style = "Color: red"></h5>
+		        <input type = "text" name = "city" value="" th:field="*{city}" />
+		        <h4 >State</h4>
+		        <select th:field = "*{state}">
+					<option value = "0" > Select State </option>
+					<option th:each = "state : ${states}" 
+							th:value = "${state}" 
+							th:text = "${state}"></option>
+				</select>
+		        <h4 >Phone Numebr</h4>
+		        <h5 th:if = "${#fields.hasErrors('phone')}" th:errors = "*{phone}" style = "Color: red"></h5>
+		        <input type = "text" name = "phone" value="" th:field="*{phone}" />
+		        <h4></h4>
+		        <h5><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></h5>
+		
+		</div>
+		
+	</body>
+
+</html>

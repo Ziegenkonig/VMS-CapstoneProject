@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.vms.models.Employee;
 import com.vms.models.Project;
+import com.vms.models.ProjectEmployee;
 import com.vms.models.Vendor;
 import com.vms.services.EmployeeService;
 import com.vms.services.ProjectEmployeeService;
@@ -32,17 +34,30 @@ public class ProjectController {
 	private ProjectService pService = new ProjectService();
 	@Autowired
 	private VendorService vService = new VendorService();
-	
 	@Autowired
 	private EmployeeService eService = new EmployeeService();
-	
 	@Autowired
 	private ProjectEmployeeService peService = new ProjectEmployeeService();
 	
-	
-	@GetMapping(value = "/projects")
-	public String viewProjects(Model model) {
-		List<Project> projects = pService.findAll();
+	@GetMapping(value = "/projects/{mode}")
+	public String viewProjects(@PathVariable String mode, 
+							   @RequestParam(required = false) Integer vId,
+							   Model model) {
+		List<Project> projects;
+		switch(mode) {
+			case "all":
+				projects = pService.findAll();
+				break;
+			//not yet implemented
+			case "byVendor":
+				Vendor v = vService.findOne(vId);
+				projects = pService.findByVendor(v);
+				break;
+			//not yet implemented
+			default:
+				projects = null;
+		}
+
 		model.addAttribute("projects", projects);
 		return "project/projects";
 	}
@@ -75,26 +90,57 @@ public class ProjectController {
 								@ModelAttribute("vendors") ArrayList<Vendor> vendors,
 								Model model,
 								SessionStatus status) {
-		
-			//Checks to see if the input has any errors and renders the page over again with the errors included if it does
-			if (bindingResult.hasErrors())
+		//Checks to see if the input has any errors and renders the page over again with the errors included if it does
+		if (bindingResult.hasErrors())
 			return "project/newP";
-			
-			if(p.getVendor() == null) {
-				p.setVendor(v);
-			}
-			pService.create(p);
-			status.setComplete();
-			
-			return "redirect:/projects/all";
+
+		if(p.getVendor() == null) {
+			p.setVendor(v);
+		}
+		pService.create(p);
+		status.setComplete();
+		
+		return "redirect:/projects/all";
 	}
 	
-	@GetMapping(value = "/project/edit/{name}")
-	public String editProject(
-			@PathVariable String name, 
-			Model model) {
-		model.addAttribute("project", pService.findByName(name));
+	@GetMapping(value = "/project/edit/{id}")
+	public String editProject(@PathVariable Integer id, Model model) {
+		List<Vendor> vendors = vService.findAll();
+		model.addAttribute("vendors", vendors);
+		model.addAttribute("project", pService.findById(id));
 		return "project/editP";
+	}
+	
+	@PostMapping("/project/edit{id}")
+	public String saveProject(@ModelAttribute("project")@Valid Project p, 
+							  BindingResult bindingResult,
+							  SessionStatus status) {
+		
+		//Checks to see if the input has any errors and renders the page over again with the errors included if it does
+		if (bindingResult.hasErrors())
+			return "project/editP";
+		
+		pService.edit(p);
+		status.setComplete();
+		return "redirect:/projects/all";
+	}
+	
+	@GetMapping("/project/addEmployee")
+	public String addEmployee(@RequestParam Integer pId, Model model) {
+		Project p = pService.findById(pId);
+		List<Employee> emps = eService.findAll();
+		model.addAttribute("emps", emps);
+		ProjectEmployee pe = new ProjectEmployee();
+		pe.setProject(p);
+		model.addAttribute("pe", pe);
+		return "project/addEmployeeForm";
+	}
+	
+	@PostMapping("/project/addEmployee")
+	public String saveAddedEmployee(@ModelAttribute("pe") ProjectEmployee pe, SessionStatus status) {
+		peService.create(pe);
+		status.setComplete();
+		return "redirect:/project/view/" + pe.getProject().getName();
 	}
   
 }

@@ -6,13 +6,15 @@
 </head>
 
 	<body>
-		<nav th:replace="base :: site-nav">
+		<nav th:replace="base :: site-nav('none')">
 		</nav>
 		
 		<div class="formAlignCenter" align = "center">
 		
 		    <h1>Edit Project</h1>
-		    <form th:replace="project/newP :: proj-form" action="#" th:action="@{/project/edit}" th:object="${project}" method="post">
+		    <form action="#" th:action="@{'/project/edit' + ${project.projectId}}" th:object="${project}" method="post">
+		    
+		    	<div th:replace = "project/fragments :: ProjectForm"></div>
 		    
 		    </form>
 		    
