@@ -9,7 +9,10 @@
 	<nav th:replace="base :: site-nav('none')">
 	</nav>
 	
+
 	<main>
+	
+		<h2> Timesheet </h2>
 		<p th:text = "'Employee Name: ' + ${timesheet.employee.firstname} + ' ' + ${timesheet.employee.lastname}"> </p>
 	    <p th:text = "'Status: ' + ${timesheet.status}"> </p>
 	    <p th:text = "'Pay Period: ' + ${timesheet.weekStarting}"> </p>
@@ -28,8 +31,7 @@
 				<p th:text = "${timesheet.weekStarting.plusDays(6)} + ': ' + ${week.hours7}" style = "text-indent: 2em;"> </p>
 			</div>
 			<b><span th:text = "'Total Hours: ' + ${projTimesheet.calcTotalHoursOfPT()}"></span></b>	
-		</div>
-			
+		</div>	
 			
 	</main>
 	
