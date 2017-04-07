@@ -71,10 +71,10 @@ public class ProjectController {
 	
 	@PostMapping("/project/new")
 	public String createProject(@RequestParam(value = "vendor", required = false) Vendor v, 
-			@ModelAttribute("project")@Valid Project p, BindingResult bindingResult,
-			@ModelAttribute("vendors") ArrayList<Vendor> vendors,
-			Model model,
-			SessionStatus status) {
+								@ModelAttribute("project")@Valid Project p, BindingResult bindingResult,
+								@ModelAttribute("vendors") ArrayList<Vendor> vendors,
+								Model model,
+								SessionStatus status) {
 		
 			//Checks to see if the input has any errors and renders the page over again with the errors included if it does
 			if (bindingResult.hasErrors())
