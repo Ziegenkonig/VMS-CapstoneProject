@@ -8,8 +8,65 @@
 	<body>
 	
 		<!-- Fragment that displays 3 columns with text and text fields underneath them -->
-		<div align = "center" th:fragment = "EmployeeForm">
+		<div align = "center" th:fragment = "EmployeeRegisterForm">
 	        	<form action="#" th:action="@{/register}" th:object="${employee}" method="post">
+		        	<div class = "container">
+						<div class = "flex-item">
+							<h4>Username</h4>
+							<p th:if = "${#fields.hasErrors('username')}" th:errors = "*{username}" style = "Color: red"></p>
+					        <input type="text" th:field="*{username}" autofocus = "autofocus"/>
+				        </div>
+				        <div class = "fixed">
+					        <h4>Password</h4>
+					        <p th:if = "${#fields.hasErrors('password')}" th:errors = "*{password}" style = "Color: red"></p>
+					        <input type="password" th:field="*{password}" />
+				        </div>
+			        </div>
+			        <div class = "container">
+				        <div class = "fixed">
+					        <h4>First Name</h4>
+					        <p th:if = "${#fields.hasErrors('firstname')}" th:errors = "*{firstname}" style = "Color: red"></p>
+							<input type="text" th:field = "*{firstname}" />
+						</div>
+						<div class = "flex-item">
+							<h4>Last Name</h4>
+							<p th:if = "${#fields.hasErrors('lastname')}" th:errors = "*{lastname}" style = "Color: red"></p>
+					        <input type="text" th:field="*{lastname}" />
+				        </div>
+				        <div class = "fixed">
+					        <h4>Email Address</h4>
+					        <p th:if = "${#fields.hasErrors('email')}" th:errors = "*{email}" style = "Color: red"></p>
+					        <input type="text" th:field="*{email}" />
+				        </div>
+			        </div>
+			        <div class = "container">
+				        <div class = "fixed">
+					        <h4>Address</h4>
+					        <p th:if = "${#fields.hasErrors('address')}" th:errors = "*{address}" style = "Color: red"></p>
+							<input type="text" th:field = "*{address}" />
+						</div>
+						<div class = "flex-item">
+							<h4>City</h4>
+							<p th:if = "${#fields.hasErrors('city')}" th:errors = "*{city}" style = "Color: red"></p>
+					        <input type="text" th:field="*{city}" />
+				        </div>
+				        <div class = "fixed">
+					        <h4>State</h4>
+					        <select th:field = "*{state}">
+		 					<option value = "0" > Select State </option>
+		 					<option th:each = "state : ${states}" 
+		 							th:value = "${state}" 
+		 							th:text = "${state}"></option>
+		 					</select>
+				        </div>
+			        </div>
+	        	    <h4></h4>
+        			<p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+		     	</form>
+		</div>
+		
+		<div align = "center" th:fragment = "EmployeeEditForm">
+	        	<form action="#" th:action="@{'/editUserProfile/' + ${employee.empId}}" th:object="${employee}" method="post">
 		        	<div class = "container">
 						<div class = "flex-item">
 							<h4>Username</h4>
