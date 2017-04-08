@@ -26,7 +26,7 @@ public class ProjectService {
 	}
 	
 	//basic repo methods
-	@Cacheable("projects")
+	//@Cacheable("projects")
 	public List<Project> findAll() {
 		return projRepo.findAll();
 	}
