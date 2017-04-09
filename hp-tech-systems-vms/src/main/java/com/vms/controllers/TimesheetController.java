@@ -19,11 +19,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.vms.forms.NewTimesheetForm;
 import com.vms.models.Employee;
 import com.vms.models.Project;
+import com.vms.models.ProjectEmployee;
 import com.vms.models.ProjectTimesheet;
 import com.vms.models.Timesheet;
 import com.vms.models.TimesheetStatus;
 import com.vms.services.EmployeeService;
 import com.vms.services.PaystubService;
+import com.vms.services.ProjectEmployeeService;
 import com.vms.services.ProjectService;
 import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
@@ -38,6 +40,8 @@ public class TimesheetController {
 	TimesheetService timesheetService = new TimesheetService();
 	@Autowired
 	EmployeeService employeeService = new EmployeeService();
+	@Autowired
+	ProjectEmployeeService peService = new ProjectEmployeeService();
 	@Autowired
 	ProjectService projectService = new ProjectService();
 	@Autowired
@@ -84,13 +88,20 @@ public class TimesheetController {
 		//Employee selectedEmployee = new Employee();
 		
 		//Last thing we need to create a new timesheet is an employee to assign it to
-		List<Employee> employees = employeeService.findAllSorted();
+		//List<Employee> employees = employeeService.findAllSorted();
 		List<Employee> validEmployees = new ArrayList<Employee>();
+		List<ProjectEmployee> pes = peService.findOpenProjects();
+		for(ProjectEmployee pe : pes) {
+			//temporary
+			if(pe.getDateEnded() == null) {
+				validEmployees.add(pe.getEmployee());
+			}
+		}/*
 		for(Employee e : employees) {
 			if(!e.getProjemps().isEmpty()) {
 				validEmployees.add(e);
 			}
-		}
+		}*/
 		//Now we just add everything to the model
 		model.addAttribute("dates", periods);
 		model.addAttribute("employees", validEmployees);

@@ -40,5 +40,9 @@ public class ProjectEmployeeService {
 	public List<ProjectEmployee> findAll() {
 		return projEmpRepo.findAll();
 	}
+	
+	public List<ProjectEmployee> findOpenProjects() {
+		return projEmpRepo.findByDateEnded(null);
+	}
 		
 }
