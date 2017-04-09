@@ -30,10 +30,10 @@
 				
 				
 				<h4>Select Employee</h4>
-		        <select th:field = "${selectedEmployee}">
+		        <select th:field = "${selectedEmployee.empId}">
  					<option th:value = "0"> Select Employee </option>
  					<option th:each = "employee : ${employees}"
- 							th:value = "${employee}"
+ 							th:value = "${employee.empId}"
  							th:text = "${employee.getLastname()} + ', ' + ${employee.getFirstname()}"></option>
 				</select> 
 				

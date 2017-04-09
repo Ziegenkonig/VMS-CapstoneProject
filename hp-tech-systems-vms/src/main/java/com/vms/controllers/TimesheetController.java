@@ -29,7 +29,7 @@ import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
 
 @Controller
-@SessionAttributes(value = {"editTS", "timesheet"})
+@SessionAttributes(value = {"timesheet", "editTimesheet"})
 public class TimesheetController {
 	
 	@Autowired
@@ -102,7 +102,7 @@ public class TimesheetController {
 		LocalDate finalDate = LocalDate.parse(selectedDate.getString());
 		
 		//Now we have all we need to create a new timesheet, and add it to the database
-		Timesheet newTimesheet = new Timesheet(selectedEmployee, finalDate);
+		Timesheet newTimesheet = new Timesheet(employeeService.findOne(selectedEmployee.getEmpId()), finalDate);
 		timesheetService.create(newTimesheet);
 		
 		//render the view page for our new timesheet
@@ -128,61 +128,39 @@ public class TimesheetController {
 	@GetMapping("/timesheet/edit/{id}")
 	public String editTimesheetForm(@PathVariable("id") Integer id,
 									Model model) {
-		//Setting timesheet to edit
+
 		Timesheet timesheet = timesheetService.findById(id);
+		StringHolder weekStarting = new StringHolder();
+		weekStarting.setLocalDate(timesheet.getWeekStarting().minusDays(1));
+		System.out.println(timesheet.getProjTimesheets().get(0).getWeekStarting());
 		
-		//Getting all of the projects associated with this timesheet
-		List<ProjectTimesheet> projTimesheets = timesheet.getProjTimesheets();
-		List<Project> projects = new ArrayList<Project>();
-		for (ProjectTimesheet projTS : projTimesheets)
-			projects.add( projectService.findById(projTS.getProjectId()) );
-		
-		//Checking pay period of associated employee
-		int payPeriod = timesheet.getEmployee().getPayPeriod();
-		//Getting list of dates in string form for the pay period (now with weekly/biweekly support)
-		List<String> datesList = new ArrayList<String>();
-		LocalDate maxDate = timesheet.getWeekStarting().plusDays(7); //this is here cause i was getting weird errors
-		//Checking for weekly/biweekly pay periods
-		if (payPeriod == 1) {
-			for (LocalDate date = timesheet.getWeekStarting(); (date.isBefore(maxDate)) ; date = date.plusDays(1))
-				datesList.add(date.toString());
-		} else if (payPeriod == 2) {
-			maxDate = maxDate.plusDays(7);
-			for (LocalDate date = timesheet.getWeekStarting(); (date.isBefore(maxDate)) ; date = date.plusDays(1))
-				datesList.add(date.toString());
-		}
-		ArrayHolder dates = new ArrayHolder();
-		dates.setList(datesList);
-		
-		model.addAttribute("id", id);
-		model.addAttribute("editTS", timesheet);
-		model.addAttribute("statuses", TimesheetStatus.values()); //all timesheet status values for dropdown box
-		model.addAttribute("projects", projects);
-		model.addAttribute("dates", dates);
-		model.addAttribute("projTimesheets", projTimesheets);
+		model.addAttribute("weekStarting", weekStarting);
+		model.addAttribute("days", DayOfWeek.values());
+		model.addAttribute("payPeriod", timesheet.getEmployee().getPayPeriod());
+		model.addAttribute("editTimesheet", timesheet);
 		
 		return "timesheet/editT";
 	}
 	
 	//handles submitting the timesheet, rendering it uneditable to the employee
 	@PostMapping(value = "/timesheet/edit/{id}", params = {"saveTimesheet", "!submit"})
-	public String saveTimesheet(@ModelAttribute("editTS") Timesheet timesheet, 
+	public String saveTimesheet(@ModelAttribute("editTimesheet") Timesheet editTimesheet,
 								SessionStatus status) {
-		
-		timesheetService.edit(timesheet);
+
+		timesheetService.edit(editTimesheet);
 		
 		status.setComplete();
 		
-		return "redirect:/timesheet/view/" + timesheet.getTimesheetId() + "/admin=" + false;
+		return "redirect:/timesheet/view/" + editTimesheet.getTimesheetId();
 	}
 	
 	//handles saving the current timesheet
 	@PostMapping(value = "/timesheet/edit/{id}", params = {"submit", "!saveTimesheet"})
-	public String submitTimesheet(@ModelAttribute("editTS") Timesheet timesheet, 
+	public String submitTimesheet(@ModelAttribute("editTimesheet") Timesheet editTimesheet, 
 								  SessionStatus status) {
 		
-		timesheet.setStatus(TimesheetStatus.PENDING);
-		timesheetService.create(timesheet);
+		editTimesheet.setStatus(TimesheetStatus.PENDING);
+		timesheetService.edit(editTimesheet);
 		
 		status.setComplete();
 		
@@ -238,8 +216,10 @@ public class TimesheetController {
 	public String approveTimesheet(@PathVariable Integer id, Model model) {
 		
 		Timesheet timesheet = timesheetService.findById(id);
+		timesheet.setWeekStarting(timesheet.getWeekStarting().minusDays(1));
 		
-		//model.addAttribute("admin", admin);
+		model.addAttribute("days", DayOfWeek.values());
+		model.addAttribute("payPeriod", timesheet.getEmployee().getPayPeriod());
 		model.addAttribute("timesheet", timesheet);
 		
 		return "timesheet/approve";

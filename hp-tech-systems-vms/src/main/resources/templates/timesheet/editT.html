@@ -13,10 +13,13 @@
 	<form action="#" th:action="@{'/timesheet/edit/' + ${id}}" method="post">
 	
 		<h2> Timesheet </h2>
-		<h4 th:text = "'Status: ' + ${editTS.getStatus()}"> </h4>
+		<h4 th:text = "'Employee Name: ' + ${editTimesheet.employee.firstname} + ' ' + ${editTimesheet.employee.lastname}"></h4>
+		<h4 th:if = "${payPeriod == 1}">Pay Period Type: Weekly</h4> <h4 th:if = "${payPeriod == 2}">Pay Period Type: Bi-Weekly</h4>
+		<h4 th:text = "'Pay Period: ' + ${weekStarting.localdate.plusDays(1)}"></h4>
 		
-		<div th:replace = "timesheet/fragments :: editTimesheetHours"></div>
+		<div th:replace = "timesheet/fragments :: editTimesheet"></div>
 		
+		<h4 th:text = "'Status: ' + ${editTimesheet.getStatus()}"> </h4>
 		<p><input type="submit" class = "button" name = "saveTimesheet" value="Save" /> <input type="reset" value="Reset" /> <input type="submit" class = "button" name = "submit" value="Submit Timesheet" /></p>
 	
 	</form>

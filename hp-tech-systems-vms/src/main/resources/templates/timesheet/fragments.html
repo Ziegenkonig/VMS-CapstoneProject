@@ -10,8 +10,8 @@
 		<!-- Fragment that displays 3 columns with text and text fields underneath them -->
 		<div align = "center" th:fragment = "newTimesheetForm">
 		    
-		    <form action="#" th:action="@{/submitTimesheet}" th:object="${editTS}" method="post">
-				<h4>Upload editTS</h4>
+		    <form action="#" th:action="@{/submitTimesheet}" th:object="${editTimesheet}" method="post">
+				<h4>Upload editTimesheet</h4>
 				<input type="file" name="pic" accept="image/*"/>
 				<h4>Starting Week</h4>
 		        <input type="date" 	th:field="*{week_starting}" 		value = ""/>
@@ -43,7 +43,7 @@
 					</thead>
 				
 					<tbody>
-						<tr th:each = "projectTimesheet, iter : ${timesheet.projTimesheets}">
+						<tr th:each = "projectTimesheet : ${timesheet.projTimesheets}">
 							<td th:text = "${projectTimesheet.projemp.project.name}"> </td>
 							<td th:each = "day, iter : ${days}" th:text = "${projectTimesheet.weeks[0].hours__${iter.index + 1}__}"></td>
 							<td th:text = "${projectTimesheet.calcTotalHoursOfPT()}"></td>
@@ -69,7 +69,7 @@
 					</thead>
 				
 					<tbody>
-						<tr th:each = "projectTimesheet, iter : ${timesheet.projTimesheets}">
+						<tr th:each = "projectTimesheet : ${timesheet.projTimesheets}">
 							<td th:text = "${projectTimesheet.projemp.project.name}"> </td>
 							<td th:each = "day, iter : ${days}" th:text = "${projectTimesheet.weeks.get(0).hours__${iter.index + 1}__}"></td>
 						</tr>
@@ -80,148 +80,62 @@
 			
 		</div>
 			
-			<!-- Displays table with dropdown boxes available to edit the editTS hours -->
-			<div th:each = "project, iter : ${projects}" th:fragment = "editTimesheetHours">
-					<h3 th:text = "'Hours for Project: ' + ${project.getName()}">  </h3>
-					<table class = "table table-bordered">
-						<thead>
-							<tr>
-								<th> Date </th>
-								<th> Hours </th>
-							</tr>
-						</thead>
-						
-						<tbody>
-							<tr>
-								<td th:text = "${dates.list.get(0)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[0].hours1}">
-										<option th:value = "0" th:text = "'Enter Hours'"> </option>
-										<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option> 
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td th:text = "${dates.list.get(1)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[0].hours2}">
+		<div th:fragment = "editTimesheet">
+			
+			<div th:if = "${payPeriod == 1}">
+				<table class = "table table-bordered"
+					   style = "white-space:nowrap;">
+					
+					<thead>
+						<tr bgcolor = "#cce6ff">
+							<td> Project </td>
+							<td th:each = "day : ${days}" th:utext = "${day.toString().substring(0,1) + day.toString().substring(1).toLowerCase()}
+																	+ '&lt;br /&gt;' + ${weekStarting.localdate = weekStarting.localdate.plusDays(1)}"> </td>
+							<td>Total</td>	
+						</tr>
+					</thead>
+				
+					<tbody>
+						<tr th:each = "projectTimesheet, projectIter : ${editTimesheet.projTimesheets}">
+							<td th:text = "${projectTimesheet.projemp.project.name}"> </td>
+							<td th:each = "day, iter : ${days}">
+								<select th:field = "${editTimesheet.projTimesheets[__${projectIter.index}__].weeks[0].hours__${iter.index + 1}__}">
 									<option th:value = "0" th:text = "'Enter Hours'"> </option>
 									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td th:text = "${dates.list.get(2)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[0].hours3}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td th:text = "${dates.list.get(3)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[0].hours4}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option> 
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td th:text = "${dates.list.get(4)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[0].hours5}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option> 
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td th:text = "${dates.list.get(5)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[0].hours6}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td th:text = "${dates.list.get(6)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[0].hours7}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
-									</select>
-								</td>
-							</tr>
-							<tr th:if = "${dates.list.size() == 14}">
-								<td th:text = "${dates.list.get(7)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[1].hours1}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
-									</select>
-								</td>
-							</tr>
-							<tr th:if = "${dates.list.size() == 14}">
-								<td th:text = "${dates.list.get(8)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[1].hours2}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
-									</select>
-								</td>
-							</tr>
-							<tr th:if = "${dates.list.size() == 14}">
-								<td th:text = "${dates.list.get(9)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[1].hours3}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
-									</select>
-								</td>
-							</tr>
-							<tr th:if = "${dates.list.size() == 14}">
-								<td th:text = "${dates.list.get(10)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[1].hours4}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option> 
-									</select>
-								</td>
-							</tr>
-							<tr th:if = "${dates.list.size() == 14}">
-								<td th:text = "${dates.list.get(11)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[1].hours5}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option> 
-									</select>
-								</td>
-							</tr>
-							<tr th:if = "${dates.list.size() == 14}">
-								<td th:text = "${dates.list.get(12)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[1].hours6}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
-									</select>
-								</td>
-							</tr>
-							<tr th:if = "${dates.list.size() == 14}">
-								<td th:text = "${dates.list.get(13)}"> </td>
-								<td> 
-									<select th:field = "${editTS.projTimesheets[__${iter.index}__].weeks[1].hours7}">
-									<option th:value = "0" th:text = "'Enter Hours'"> </option>
-									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
-									</select>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-	
+								</select>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<h4 th:text = "'Total Hours: ' + ${editTimesheet.calcTotalHoursOfT()}"></h4>
+			</div>
+			
+			<div th:if = "${payPeriod == 2} and ${timesheet.projTimesheets[0].weeks.size() == 2}" th:each = "i : ${#numbers.sequence(0, 1)}">
+				<h3 th:text = "'Pay Period ' + ${i + 1}"></h3>
+				<table class = "table table-bordered"
+					   style = "white-space:nowrap;">
+					
+					<thead>
+						<tr bgcolor = "#cce6ff">
+							<td> Project </td>
+							<td th:each = "day : ${days}" th:utext = "${day.toString().substring(0,1) + day.toString().substring(1).toLowerCase()}
+																	+ '&lt;br /&gt;' + ${originalTimesheet.weekStarting = originalTimesheet.weekStarting.plusDays(1)}"> </td>
+							<td>Total</td>	
+						</tr>
+					</thead>
+				
+					<tbody>
+						<tr th:each = "projectTimesheet, iter : ${timesheet.projTimesheets}">
+							<td th:text = "${projectTimesheet.projemp.project.name}"> </td>
+							<td th:each = "day, iter : ${days}" th:text = "${projectTimesheet.weeks.get(0).hours__${iter.index + 1}__}"></td>
+						</tr>
+					</tbody>
+				
+				</table>
+			</div>
+		</div>
+			
 	</body>
 
 </html>
