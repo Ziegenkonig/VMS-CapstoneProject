@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.vms.models.Employee;
-import com.vms.models.Paystub;
 import com.vms.models.Project;
 import com.vms.models.ProjectTimesheet;
 import com.vms.models.Timesheet;

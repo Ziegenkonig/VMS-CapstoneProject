@@ -128,6 +128,7 @@ public class ProjectController {
 	@GetMapping("/project/addEmployee")
 	public String addEmployee(@RequestParam Integer pId, Model model) {
 		Project p = pService.findById(pId);
+		model.addAttribute("project", p);
 		List<Employee> emps = eService.findAll();
 		model.addAttribute("emps", emps);
 		ProjectEmployee pe = new ProjectEmployee();
