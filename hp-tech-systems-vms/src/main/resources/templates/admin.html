@@ -16,9 +16,9 @@
 				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
 				<li><a th:href="@{/vendors}">View Vendor Overview</a></li>
 				<li><a th:href="@{/}" onclick="return false;">Add New Employee Account --disabled</a></li>
-				<li><a th:href="@{/}" onclick="return false;">Change Employee Permission Level (owner only) --disabled</a></li>
+				<li th:if="${emp.permissionLevel == 3}"><a th:href="@{/}" onclick="return false;">Change Employee Permission Level (owner only) --disabled</a></li>
 				<li><a th:href="@{/projects/all}">Add Employees To Project</a></li>
-				<li><a th:href="@{/}" onclick="return false;">Issue New Timesheets --disabled</a></li>
+				<li><a th:href="@{/timesheet/new}">Issue New Timesheet</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='PENDING')}">Approve Pending Timesheets</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>
 				<li><a th:href="@{/paystubs/all}">Paystub History</a></li>

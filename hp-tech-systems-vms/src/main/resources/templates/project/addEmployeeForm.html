@@ -24,6 +24,10 @@
 					</select>
 		    	</div>
 		    	<div class="form-group">
+					<label>Project Pay Rate Remaining:</label>
+		    		<span th:text="'$' + ${project.remainingEmpPayRate()} + ' of $' + ${project.billingRate}"></span>
+		    	</div>
+		    	<div class="form-group">
 					<label for="payRate">Employee Pay Rate:</label>
 				    <input type="text" name="payRate" value="" th:value="${pe.payRate}" />
 				</div>

@@ -67,6 +67,16 @@ public class Project {
 	@OneToMany(mappedBy = "project")//, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ProjectEmployee> projemps;
 	
+	public BigDecimal remainingEmpPayRate() {
+		BigDecimal rate = BigDecimal.ZERO;
+		BigDecimal remaining = BigDecimal.ZERO;
+		for(ProjectEmployee pe : projemps) {
+			rate = rate.add(pe.getPayRate());
+		}
+		remaining = billingRate.subtract(rate);
+		return remaining;
+	}
+	
 	
 	//Methods
 	//toString

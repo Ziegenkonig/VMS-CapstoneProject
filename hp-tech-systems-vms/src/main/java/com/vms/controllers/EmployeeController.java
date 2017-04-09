@@ -1,6 +1,5 @@
 package com.vms.controllers;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -109,4 +110,12 @@ public class EmployeeController{
 	  
 	  return "employee/dashboard";
   }
+  
+  	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public String adminDashboard(Model model) {
+  		Employee admin = employeeService.findOne(6);
+  		Employee owner =  employeeService.findOne(11);
+		model.addAttribute("emp", admin);
+		return "admin";
+	}
 }

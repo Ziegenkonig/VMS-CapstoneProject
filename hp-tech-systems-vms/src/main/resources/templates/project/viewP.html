@@ -21,6 +21,7 @@
 	    <ul>
 	    	<li th:each="pe : ${project.projemps}" th:text="${pe.employee.firstname + ' ' + pe.employee.lastname + ' ($' + pe.payRate + ') from ' + #temporals.format(pe.dateStarted,'MM/dd/yyyy')}"></li>
 	    </ul>
+	    <p th:text="'Project Pay Rate Remaining: $' + ${project.remainingEmpPayRate()} + ' of $' + ${project.billingRate}"></p>
 	    <a th:href="@{/project/addEmployee(pId=${project.projectId})}">Add Employee</a>
 	</main>
 	
