@@ -54,7 +54,7 @@
 				<h4 th:text = "'Total Hours: ' + ${timesheet.calcTotalHoursOfT()}"></h4>
 			</div>
 			
-			<div th:if = "${payPeriod == 2}" th:each = "i : ${#numbers.sequence(0, 1)}">
+			<div th:if = "${payPeriod == 2} and ${timesheet.projTimesheets[0].weeks.size() == 2}" th:each = "i : ${#numbers.sequence(0, 1)}">
 				<h3 th:text = "'Pay Period ' + ${i + 1}"></h3>
 				<table class = "table table-bordered"
 					   style = "white-space:nowrap;">
@@ -71,7 +71,7 @@
 					<tbody>
 						<tr th:each = "projectTimesheet, iter : ${timesheet.projTimesheets}">
 							<td th:text = "${projectTimesheet.projemp.project.name}"> </td>
-							<td th:each = "day, iter : ${days}" th:text = "${projectTimesheet.weeks.get(__${i}__).hours__${iter.index + 1}__}"></td>
+							<td th:each = "day, iter : ${days}" th:text = "${projectTimesheet.weeks.get(0).hours__${iter.index + 1}__}"></td>
 						</tr>
 					</tbody>
 				

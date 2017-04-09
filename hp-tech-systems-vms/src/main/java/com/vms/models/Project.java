@@ -42,7 +42,7 @@ public class Project {
 	
 	@NotNull()
 	@Size(min = 2, max = 64, message = "{irregular.size}")
-	@Pattern(regexp = "[a-zA-Z\\s-_.]*", message = "{irregular.pattern}")
+	@Pattern(regexp = "[a-zA-Z\\s-_.']*", message = "{irregular.pattern}")
 	@Column(length = 64, nullable = false)
 	private String name;
 	
