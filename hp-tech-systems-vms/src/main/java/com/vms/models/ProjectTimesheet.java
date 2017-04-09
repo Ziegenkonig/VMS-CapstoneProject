@@ -55,10 +55,11 @@ public class ProjectTimesheet {
 	//Methods
 	
 	//Constructor
-	public ProjectTimesheet(ProjectEmployee projEmp, LocalDate weekStarting) {
+	public ProjectTimesheet(ProjectEmployee projEmp, Timesheet t) {
 		weeks = new ArrayList<TimesheetRow>();
 		this.projemp = projEmp;
-		this.weekStarting = weekStarting;
+		this.timesheet = t;
+		this.weekStarting = t.getWeekStarting();
 		this.projectId = projEmp.getProject().getProjectId();
 		//this.period = projEmp.getEmployee().getPayPeriod();
 		TimesheetRow week1 = new TimesheetRow(this, 1);

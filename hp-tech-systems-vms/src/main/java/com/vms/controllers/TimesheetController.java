@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.vms.forms.NewTimesheetForm;
 import com.vms.models.Employee;
 import com.vms.models.Project;
 import com.vms.models.ProjectTimesheet;
@@ -28,7 +29,7 @@ import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
 
 @Controller
-@SessionAttributes(value = {"editTS", "timesheet"})
+@SessionAttributes(value = {"editTS", "timesheet", "selectedEmployee"})
 public class TimesheetController {
 	
 	@Autowired
@@ -73,37 +74,48 @@ public class TimesheetController {
 			periods.add(periods.get(i).plusWeeks(1));
 
 		//Also need to convert that list of dates into a list of strings
+		/*
 		List<String> dates = new ArrayList<String>();
 		for(LocalDate date : periods)
 			dates.add(date.toString());
-		
+		*/
 		//We also need empty objects to pass to the post method so that the html has something to modify
-		StringHolder selectedDate = new StringHolder();
-		Employee selectedEmployee = new Employee();
+		//StringHolder selectedDate = new StringHolder();
+		//Employee selectedEmployee = new Employee();
 		
 		//Last thing we need to create a new timesheet is an employee to assign it to
 		List<Employee> employees = employeeService.findAllSorted();
-		
+		List<Employee> validEmployees = new ArrayList<Employee>();
+		for(Employee e : employees) {
+			if(!e.getProjemps().isEmpty()) {
+				validEmployees.add(e);
+			}
+		}
 		//Now we just add everything to the model
-		model.addAttribute("dates", dates);
-		model.addAttribute("employees", employees);
-		model.addAttribute("selectedDate", selectedDate);
-		model.addAttribute("selectedEmployee", selectedEmployee);
+		model.addAttribute("dates", periods);
+		model.addAttribute("employees", validEmployees);
+		NewTimesheetForm tf = new NewTimesheetForm();
+		model.addAttribute("tf", tf);
+		//model.addAttribute("selectedDate", selectedDate);
+		//model.addAttribute("selectedEmployee", selectedEmployee);
 		
 		//returning html file to render
 		return "timesheet/newT";
 	}
 	
 	@PostMapping("/timesheet/new")
-	public String newTimesheetSubmit(@ModelAttribute("selectedDate") StringHolder selectedDate,
-									 @ModelAttribute("selectedEmployee") Employee selectedEmployee) {
+	public String newTimesheetSubmit(@ModelAttribute("tf") NewTimesheetForm tf) {
+									//@ModelAttribute("selectedDate") StringHolder selectedDate,
+									 //@SessionAttribute("selectedEmployee") Employee selectedEmployee,
+									 //SessionStatus status) {
 		//Convert selectedDate from String to LocalDate
-		LocalDate finalDate = LocalDate.parse(selectedDate.getString());
+		//LocalDate finalDate = LocalDate.parse(selectedDate.getString());
 		
 		//Now we have all we need to create a new timesheet, and add it to the database
-		Timesheet newTimesheet = new Timesheet(selectedEmployee, finalDate);
+		//Timesheet newTimesheet = new Timesheet(selectedEmployee, finalDate);
+		Timesheet newTimesheet = new Timesheet(tf.getE(), tf.getStartDate());
 		timesheetService.create(newTimesheet);
-		
+		//status.setComplete();		
 		//render the view page for our new timesheet
 		return "redirect:" + "http://localhost:8080/timesheet/view/" + newTimesheet.getTimesheetId();
 	}

@@ -14,26 +14,26 @@
 		
 		    <h1>New Timesheet</h1>
 		    
-		    <form action="#" th:action="@{/timesheet/new}" method="post">
+		    <form action="#" th:action="@{/timesheet/new}" th:object="${tf}" method="post">
 				
 				<!-- Cycles through every vendor and includes their names into the list -->
 				
 				<h4>Select Pay Period</h4>
-				<select th:field = "${selectedDate.string}">
- 					<option value = "0" > Select Pay Period </option>
+				<select th:field = "*{startDate}">
+ 					<!-- <option value = "0" > Select Pay Period </option> -->
  					<option th:each = "date : ${dates}" 
  							th:value = "${date}" 
- 							th:text = "${date}"></option>
+ 							th:text = "${#temporals.format(date, 'MM/dd/yyyy')}"></option>
 				</select>
 				
 				<!-- Cycles through every project-timesheet and adds their dates to the list with no repeating dates -->
 				
 				
 				<h4>Select Employee</h4>
-		        <select th:field = "${selectedEmployee}">
- 					<option th:value = "0"> Select Employee </option>
+		        <select th:field = "*{e}">
+ 					<!-- <option th:value = "0"> Select Employee </option>  -->
  					<option th:each = "employee : ${employees}"
- 							th:value = "${employee}"
+ 							th:value = "${employee.empId}"
  							th:text = "${employee.getLastname()} + ', ' + ${employee.getFirstname()}"></option>
 				</select> 
 				
