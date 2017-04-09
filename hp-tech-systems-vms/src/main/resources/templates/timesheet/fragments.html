@@ -27,9 +27,57 @@
 		    
 		</div>
 		
-		<div align = "center" th:fragment = "viewTimesheet">
-			<img src="" alt="" height="70" width="70"/>
-			<h4>Starting Week - # hours _ Period</h4>
+		<div th:fragment = "viewTimesheet">
+			
+			<div th:if = "${payPeriod == 1}">
+				<table class = "table table-bordered"
+					   style = "white-space:nowrap;">
+					
+					<thead>
+						<tr bgcolor = "#cce6ff">
+							<td> Project </td>
+							<td th:each = "day : ${days}" th:utext = "${day.toString().substring(0,1) + day.toString().substring(1).toLowerCase()}
+																	+ '&lt;br /&gt;' + ${timesheet.weekStarting = timesheet.weekStarting.plusDays(1)}"> </td>
+							<td>Total</td>	
+						</tr>
+					</thead>
+				
+					<tbody>
+						<tr th:each = "projectTimesheet, iter : ${timesheet.projTimesheets}">
+							<td th:text = "${projectTimesheet.projemp.project.name}"> </td>
+							<td th:each = "day, iter : ${days}" th:text = "${projectTimesheet.weeks[0].hours__${iter.index + 1}__}"></td>
+							<td th:text = "${projectTimesheet.calcTotalHoursOfPT()}"></td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<h4 th:text = "'Total Hours: ' + ${timesheet.calcTotalHoursOfT()}"></h4>
+			</div>
+			
+			<div th:if = "${payPeriod == 2}" th:each = "i : ${#numbers.sequence(0, 1)}">
+				<h3 th:text = "'Pay Period ' + ${i + 1}"></h3>
+				<table class = "table table-bordered"
+					   style = "white-space:nowrap;">
+					
+					<thead>
+						<tr bgcolor = "#cce6ff">
+							<td> Project </td>
+							<td th:each = "day : ${days}" th:utext = "${day.toString().substring(0,1) + day.toString().substring(1).toLowerCase()}
+																	+ '&lt;br /&gt;' + ${timesheet.weekStarting = timesheet.weekStarting.plusDays(1)}"> </td>
+							<td>Total</td>	
+						</tr>
+					</thead>
+				
+					<tbody>
+						<tr th:each = "projectTimesheet, iter : ${timesheet.projTimesheets}">
+							<td th:text = "${projectTimesheet.projemp.project.name}"> </td>
+							<td th:each = "day, iter : ${days}" th:text = "${projectTimesheet.weeks.get(__${i}__).hours__${iter.index + 1}__}"></td>
+						</tr>
+					</tbody>
+				
+				</table>
+			</div>
+			
 		</div>
 			
 			<!-- Displays table with dropdown boxes available to edit the editTS hours -->

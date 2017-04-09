@@ -115,8 +115,10 @@ public class TimesheetController {
 								Model model) {
 		
 		Timesheet timesheet = timesheetService.findById(id);
-		
-		//model.addAttribute("admin", admin);
+		timesheet.setWeekStarting(timesheet.getWeekStarting().minusDays(1));
+				timesheet.
+		model.addAttribute("days", DayOfWeek.values());
+		model.addAttribute("payPeriod", timesheet.getEmployee().getPayPeriod());
 		model.addAttribute("timesheet", timesheet);
 		
 		return "timesheet/viewT";
