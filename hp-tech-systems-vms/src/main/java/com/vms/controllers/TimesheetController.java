@@ -169,6 +169,10 @@ public class TimesheetController {
 		
 		status.setComplete();
 		
+		//notify employee timesheet has been submitted
+		Employee employee = employeeService.findOne(id);
+		employee.notifyTimesheetCompletion();
+		
 		return "redirect:/dashboard";
 	}
 	
@@ -238,6 +242,7 @@ public class TimesheetController {
 		timesheetService.create(timesheet);
 		
 		return "redirect:/paystub/new/" + timesheet.getTimesheetId();
+		
 	}
 	
 }

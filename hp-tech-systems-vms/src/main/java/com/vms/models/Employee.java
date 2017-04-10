@@ -111,5 +111,11 @@ public class Employee {
 		String subject = "Paystub is ready";
 		Mail.sendEmail(this.email, message, subject);
 	}
+	
+	public void notifyTimesheetCompletion(){
+		String message = "You just completed a timesheet. Go here to view it: http://localhost:8080/timesheet";
+		String subject = "Timesheet completion";
+		Mail.sendEmail(this.email, message, subject);
+	}
 }
 
