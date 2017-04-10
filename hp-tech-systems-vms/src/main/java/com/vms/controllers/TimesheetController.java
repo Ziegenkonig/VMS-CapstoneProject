@@ -241,6 +241,9 @@ public class TimesheetController {
 		timesheet.setStatus(TimesheetStatus.VERIFIED);
 		timesheetService.create(timesheet);
 		
+		Employee employee = timesheet.getEmployee();
+		employee.notifyTimesheetAccepted();
+		
 		return "redirect:/paystub/new/" + timesheet.getTimesheetId();
 		
 	}

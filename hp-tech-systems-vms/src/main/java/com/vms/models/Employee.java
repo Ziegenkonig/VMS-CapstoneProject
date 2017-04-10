@@ -117,5 +117,10 @@ public class Employee {
 		String subject = "Timesheet completion";
 		Mail.sendEmail(this.email, message, subject);
 	}
+	public void notifyTimesheetAccepted(){
+		String message = "Your timesheet has been accepted. Go here to view it: http://localhost:8080/timesheet";
+		String subject = "Timesheet has been accepted";
+		Mail.sendEmail(this.email, message, subject);
+	}
 }
 
