@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.vms.utilities.mail.Mail;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -67,6 +69,13 @@ public class Vendor {
 	
 	public String toString() {
 		return name;
+	}
+	
+	public void notifyInvoiceCompletion(){
+		//this.email = the current instance of vendor that has an invoice created
+		String message = "An employee has submitted an invoice. Go here to check it: http://localhost:8080/invoice";
+		String subject = "An invoice has been created";
+		Mail.sendEmail(this.primaryEmail, message, subject);
 	}
 	
 }

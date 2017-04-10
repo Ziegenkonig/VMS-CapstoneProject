@@ -125,6 +125,9 @@ public class Invoice {
 		//Setting total_amount
 		this.totalAmt = this.rate.multiply(BigDecimal.valueOf(totalHours));
 		
+		
+		//Send an email to the vendor notifying him/her that an invoice has been created
+		vendor.notifyInvoiceCompletion();
 	}
 	
 	//Called before .save
