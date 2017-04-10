@@ -169,8 +169,8 @@ public class TimesheetController {
 		status.setComplete();
 		
 		//notify employee timesheet has been submitted
-		Employee employee = editTimesheet.getEmployee();
-		employee.notifyTimesheetCompletion();
+//		Employee employee = editTimesheet.getEmployee();
+//		employee.notifyTimesheetCompletion();
 		
 		return "redirect:/dashboard";
 	}
@@ -245,8 +245,8 @@ public class TimesheetController {
 		timesheet.setStatus(TimesheetStatus.VERIFIED);
 		timesheetService.create(timesheet);
 		
-		Employee employee = timesheet.getEmployee();
-		employee.notifyTimesheetAccepted();
+//		Employee employee = timesheet.getEmployee();
+//		employee.notifyTimesheetAccepted();
 		
 		return "redirect:/paystub/new/" + timesheet.getTimesheetId();
 		

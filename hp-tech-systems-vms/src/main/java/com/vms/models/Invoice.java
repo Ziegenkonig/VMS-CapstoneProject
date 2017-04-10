@@ -131,7 +131,7 @@ public class Invoice {
 
 		// Send an email to the vendor notifying him/her that an invoice has
 		// been created
-		vendor.notifyInvoiceCompletion();
+//		vendor.notifyInvoiceCompletion();
 	}
 
 	// Called before .save

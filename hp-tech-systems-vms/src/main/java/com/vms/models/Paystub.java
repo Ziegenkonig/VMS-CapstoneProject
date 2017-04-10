@@ -203,7 +203,7 @@ public class Paystub {
 		this.ytd401k = previous.getA401k().add(this.a401k);
 		
 		//send an email upon creation
-		emp.notifyPaystubCompletion();
+//		emp.notifyPaystubCompletion();
 	}
 		
 	@PrePersist
