@@ -170,7 +170,7 @@ public class TimesheetController {
 		status.setComplete();
 		
 		//notify employee timesheet has been submitted
-		Employee employee = employeeService.findOne(id);
+		Employee employee = editTimesheet.getEmployee();
 		employee.notifyTimesheetCompletion();
 		
 		return "redirect:/dashboard";
