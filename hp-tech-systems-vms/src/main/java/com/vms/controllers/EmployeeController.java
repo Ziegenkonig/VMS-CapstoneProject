@@ -102,7 +102,7 @@ public class EmployeeController{
 	  Employee e = employeeService.findOne(1);
 	  
 	  List<Paystub> issuedPaystubs = paystubService.findIssued(e.getEmpId());
-	  List<Timesheet> openTimesheets = timesheetService.openTimesheets(e);
+	  List<Timesheet> openTimesheets = timesheetService.dashboardTimesheets(e);
 	  
 	  model.addAttribute("e", e);
 	  model.addAttribute("openTimesheets", openTimesheets);
@@ -114,8 +114,9 @@ public class EmployeeController{
   	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminDashboard(Model model) {
   		Employee admin = employeeService.findOne(6);
-  		Employee owner =  employeeService.findOne(11);
-		model.addAttribute("emp", admin);
+  		//Employee owner =  employeeService.findOne(11);
+  		//model.addAttribute("emp", owner);
+  		model.addAttribute("emp", admin);
 		return "admin";
 	}
 }

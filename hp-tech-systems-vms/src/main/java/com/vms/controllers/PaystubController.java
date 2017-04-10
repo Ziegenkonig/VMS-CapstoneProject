@@ -36,6 +36,7 @@ public class PaystubController {
 	//reads all vendors from the db and displays in table form -working
 	@GetMapping(value = "/paystubs/{mode}")
 	public String viewPaystubs(@PathVariable String mode, 
+							   //@RequestParam Integer callerId,
 							   @RequestParam(required = false) Integer empId,
 							   @RequestParam(required = false) PaystubStatus status,
 							   Model model) {
@@ -58,7 +59,7 @@ public class PaystubController {
 			//	e = null;
 				paystubs = null;
 		}
-		e = empService.findOne(6);
+		e = empService.findOne(empId);
 		model.addAttribute("employee", e);
 
 		model.addAttribute("paystubs", paystubs);

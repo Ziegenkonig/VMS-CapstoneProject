@@ -21,20 +21,23 @@
                 <th>Client Name</th>
                 <th>Client Location</th>
                 <th>Vendor</th>
+                <!-- 
                 <th></th>
                 <th></th>
+                 -->
             </tr>
         </thead>
         <tbody>
             <tr th:each="project : ${projects}">
-                <td th:text="${project.name}"></td>
+                <td><a th:href="@{/project/view(pId=${project.projectId})}" th:text="${project.name}">View</a></td>
                 <td th:text="${project.billingRate}"></td>
                 <td th:text="${project.clientName}"></td>
                 <td th:text="${project.clientLocation}"></td>
                 <td th:text="${project.vendor?.name}"></td>
-                <td><a th:href="@{/project/view/{name}(name=${project.name})}">View</a></td>
+                <!-- 
                 <td><a th:href="@{/project/edit/{id}(id=${project.projectId})}">Edit</a></td>
                 <td><a th:href="@{/project/addEmployee(pId=${project.projectId})}">Add Employee to Project</a></td>
+                 -->
             </tr>
         </tbody>
     </table>

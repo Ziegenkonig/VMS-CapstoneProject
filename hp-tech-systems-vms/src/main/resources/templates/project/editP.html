@@ -12,7 +12,7 @@
 		<div class="formAlignCenter" align = "center">
 		
 		    <h1>Edit Project</h1>
-		    <form action="#" th:action="@{'/project/edit' + ${project.projectId}}" th:object="${project}" method="post">
+		    <form action="#" th:action="@{/project/edit}" th:object="${project}" method="post">
 		    
 		    	<div th:replace = "project/fragments :: ProjectForm"></div>
 		    

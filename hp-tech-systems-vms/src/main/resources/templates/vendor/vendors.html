@@ -9,7 +9,7 @@
 		<nav th:replace="base :: site-nav('none')">
 		</nav>
 		<h1>Vendors</h1>
-		<a th:href="@{/vendor/new/)">Create New Vendor</a>
+		<a th:href="@{/vendor/new}">Create New Vendor</a>
 		<table id="vendorTable"
 		       class="table table-bordered"
 		       th:if="${vendors != null}"> <!--  and not #list.isEmpty(vendors) -->
@@ -22,22 +22,25 @@
                 <th>City</th>
                 <th>State</th>
                 <th>Phone</th>
+                <!-- 
                 <th></th>
                 <th></th>
+                 -->
             </tr>
         </thead>
         <tbody>
             <tr th:each="vendor : ${vendors}">
-                <td th:text="${vendor.name}"></td>
+                <td><a th:href="@{/vendor/view(vId=${vendor.vendorId})}" th:text="${vendor.name}">View</a></td>
                 <td th:text="${vendor.primaryEmail}"></td>
                 <td th:text="${vendor.contactName}"></td>
                 <td th:text="${vendor.address}"></td>
                 <td th:text="${vendor.city}"></td>
                 <td th:text="${vendor.state}"></td>
                 <td th:text="${vendor.phone}"></td>
-                <td><a th:href="@{/vendor/view/{path}(path=${vendor.name})}">View</a></td>
-                <td><a th:href="@{/vendor/edit/{path}(path=${vendor.vendorId})}">Edit</a></td>
+                <!-- 
+                <td><a th:href="@{/vendor/edit(vId=${vendor.vendorId})}">Edit</a></td>
                 <td><a th:href="@{/projects/{mode}(mode='byVendor',vId=${vendor.vendorId})}">View Projects</a></td>
+            	 -->
             </tr>
         </tbody>
     </table>

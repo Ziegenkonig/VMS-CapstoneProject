@@ -10,6 +10,7 @@
 		</nav>
 		
 		<main>
+			<h5 th:text="'Logged in as: ' + ${emp.getFirstname()} + ' ' + ${emp.getLastname()}"></h5>
 			<ul>
 				<li><a th:href="@{/project/new}">Add a Project</a></li>
 				<li><a th:href="@{/projects/all}">View Project Overview</a></li>
@@ -21,7 +22,7 @@
 				<li><a th:href="@{/timesheet/new}">Issue New Timesheet</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='PENDING')}">Approve Pending Timesheets</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>
-				<li><a th:href="@{/paystubs/all}">Paystub History</a></li>
+				<li><a th:href="@{/paystubs/all(empId=${emp.empId})}">Paystub History</a></li>
 				<li><a th:href="@{/invoice/new}">Issue Invoice</a></li>
 				<li><a th:href="@{/invoices}">Invoice History</a></li>				
 			</ul>

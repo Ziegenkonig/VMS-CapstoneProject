@@ -18,7 +18,7 @@
 				<b> <span  th:text = "'Pay Period: ' + ${timesheet.weekStarting}"></span> </b>
 				<span th:text = "'(' + ${timesheet.status.toString()} + ')'"></span>
 				<b> <a th:if="${timesheet.status.toString() != 'PENDING'}" th:href="@{/timesheet/edit/{path}(path=${timesheet.timesheetId})}"> Edit </a> </b>
-				<a th:href="@{/timesheet/view/{path}(path=${timesheet.timesheetId})}"> View </a>
+				<a th:if="${timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/timesheet/view/{path}(path=${timesheet.timesheetId})}"> View </a>
 			</li> 
 		</ul>
 		

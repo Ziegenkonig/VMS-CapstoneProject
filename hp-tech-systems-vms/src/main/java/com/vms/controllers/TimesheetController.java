@@ -18,9 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.vms.forms.NewTimesheetForm;
 import com.vms.models.Employee;
-import com.vms.models.Project;
 import com.vms.models.ProjectEmployee;
-import com.vms.models.ProjectTimesheet;
 import com.vms.models.Timesheet;
 import com.vms.models.TimesheetStatus;
 import com.vms.services.EmployeeService;
@@ -83,7 +81,7 @@ public class TimesheetController {
 		List<ProjectEmployee> pes = peService.findOpenProjects();
 		for(ProjectEmployee pe : pes) {
 			//temporary
-			if(pe.getDateEnded() == null) {
+			if(pe.getDateEnded() == null && !validEmployees.contains(pe.getEmployee())) {
 				validEmployees.add(pe.getEmployee());
 			}
 		}/*
@@ -137,7 +135,7 @@ public class TimesheetController {
 		Timesheet timesheet = timesheetService.findById(id);
 		StringHolder weekStarting = new StringHolder();
 		weekStarting.setLocalDate(timesheet.getWeekStarting().minusDays(1));
-		System.out.println(timesheet.getProjTimesheets().get(0).getWeekStarting());
+		//System.out.println(timesheet.getProjTimesheets().get(0).getWeekStarting());
 		
 		model.addAttribute("weekStarting", weekStarting);
 		model.addAttribute("days", DayOfWeek.values());
@@ -156,7 +154,7 @@ public class TimesheetController {
 		
 		status.setComplete();
 		
-		return "redirect:/timesheet/view/" + editTimesheet.getTimesheetId();
+		return "redirect:/timesheet/edit/" + editTimesheet.getTimesheetId();
 	}
 	
 	//handles saving the current timesheet

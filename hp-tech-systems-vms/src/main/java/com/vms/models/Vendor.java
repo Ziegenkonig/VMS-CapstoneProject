@@ -1,10 +1,13 @@
 package com.vms.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -66,6 +69,9 @@ public class Vendor {
 	@Pattern(regexp = "[0-9]*{10}|[0-9]*{11}", message = "{phone.pattern}")
 	@Column(length = 20, nullable = false)
 	private String phone; //not including non-numerical characters
+	
+	@OneToMany(mappedBy="vendor")//, cascade = CascadeType.ALL)
+	private List<Project> projects;
 	
 	public String toString() {
 		return name;

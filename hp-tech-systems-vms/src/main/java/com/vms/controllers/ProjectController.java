@@ -62,9 +62,9 @@ public class ProjectController {
 		return "project/projects";
 	}
 	
-	@GetMapping(value = "/project/view/{name}")
-	public String viewProject(@PathVariable String name, Model model) {
-		model.addAttribute("project", pService.findByName(name));
+	@GetMapping(value = "/project/view")
+	public String viewProject(@RequestParam("pId") Integer pId, Model model) {
+		model.addAttribute("project", pService.findById(pId));
 		return "project/viewP";
 	}
 	
@@ -103,15 +103,15 @@ public class ProjectController {
 		return "redirect:/projects/all";
 	}
 	
-	@GetMapping(value = "/project/edit/{id}")
-	public String editProject(@PathVariable Integer id, Model model) {
+	@GetMapping(value = "/project/edit")
+	public String editProject(@RequestParam("pId") Integer pId, Model model) {
 		List<Vendor> vendors = vService.findAll();
 		model.addAttribute("vendors", vendors);
-		model.addAttribute("project", pService.findById(id));
+		model.addAttribute("project", pService.findById(pId));
 		return "project/editP";
 	}
 	
-	@PostMapping("/project/edit{id}")
+	@PostMapping("/project/edit")
 	public String saveProject(@ModelAttribute("project")@Valid Project p, 
 							  BindingResult bindingResult,
 							  SessionStatus status) {
