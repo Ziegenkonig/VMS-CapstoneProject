@@ -50,11 +50,12 @@ public class TimesheetController {
 	public String allTimesheets(Model model) {
 		//Getting all timesheets
 		List<Timesheet> timesheets = timesheetService.findAll();
-		TimesheetStatus editCheck = TimesheetStatus.NOT_SUBMITTED;
+		//TimesheetStatus editCheck = TimesheetStatus.NOT_SUBMITTED;
 		
 		//Adding all invoices to the model
 		model.addAttribute("timesheets", timesheets);
-		model.addAttribute("editCheck", editCheck);
+		
+		//model.addAttribute("editCheck", editCheck);
 		
 		//specifying which html file rendering
 		return "timesheet/timesheets";
@@ -178,11 +179,12 @@ public class TimesheetController {
 	@GetMapping(value = "/timesheets/{mode}")
 	public String viewTimesheets(@PathVariable String mode,
 							   @RequestParam(required = false) TimesheetStatus status,
+							   @RequestParam(required = false) Boolean edit,
 							   Model model) {
 		List<Timesheet> timesheets;
 		switch(mode) {
 			case "all":
-				timesheets = timesheetService.findAll();
+				timesheets = timesheetService.findAllOrdered();
 				break;
 			case "byStatus":
 				timesheets = timesheetService.findByStatus(status);
@@ -191,6 +193,10 @@ public class TimesheetController {
 				timesheets = null;
 		}
 		model.addAttribute("timesheets", timesheets);
+		if(edit == null) {
+			edit = false;
+		}
+		model.addAttribute("edit", edit);
 		return "timesheet/timesheets";
 	}
 	

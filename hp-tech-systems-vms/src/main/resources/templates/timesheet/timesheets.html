@@ -18,7 +18,7 @@
 						<th> Period Starting </th>
 						<th> Employee </th>
 						<th> Status </th>
-						<th th:if = "${timesheet.getStatus() == editCheck}">  </th> <!-- For edit button -->
+						 <!--<th th:if = "${edit}">  </th> For edit button -->
 						<!-- <th>  </th> For view button --> 
 						<th>  </th> <!-- For approve/generate/regenerate button -->
 						
@@ -31,9 +31,9 @@
 						<td th:text = "${timesheet.getWeekStarting()}">  </td>
 						<td th:text = "${timesheet.getEmployee().getFirstname()} + ' ' + ${timesheet.getEmployee().getLastname()}">  </td>
 						<td th:text = "${timesheet.getStatus()}">  </td>
-						<td th:if = "${timesheet.getStatus() == editCheck}"><a th:href="@{/timesheet/edit/{path}(path=${timesheet.getTimesheetId()})}"> Edit </a></td>
+						<td><a th:if = "${timesheet.getStatus().toString() == 'NOT_SUBMITTED'}" th:href="@{/timesheet/edit/{path}(path=${timesheet.getTimesheetId()})}"> Edit </a>
 						<!-- <td><a th:href="@{/timesheet/view/{path}(path=${timesheet.getTimesheetId()})}"> View </a></td>  -->
-						<td><a th:if = "${timesheet.status.toString() == 'PENDING'}" th:href="@{/timesheet/approve/{id}(id=${timesheet.timesheetId})}"> Approve </a>
+							<a th:if = "${timesheet.status.toString() == 'PENDING'}" th:href="@{/timesheet/approve/{id}(id=${timesheet.timesheetId})}"> Approve </a>
 							<a th:if="${timesheet.status.toString() == 'VERIFIED' AND timesheet.paystubs.isEmpty()}" th:href="@{/paystub/new/{path}(path=${timesheet.timesheetId})}">Generate Paystub</a>
                 			<a th:if="${timesheet.status.toString() == 'VERIFIED' AND !timesheet.paystubs.isEmpty()}" th:href="@{/paystub/regenerate(pId=${timesheet.paystubs.get(0).paystubId})}">Regenerate Paystub</a></td>
 					</tr>

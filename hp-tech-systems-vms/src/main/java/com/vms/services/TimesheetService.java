@@ -70,5 +70,10 @@ public class TimesheetService {
 		statuses.add(TimesheetStatus.PENDING);
 		return timesheetRepo.findByEmployeeAndStatusInOrderByWeekStartingDesc(e, statuses);
 	}
+	
+	public List<Timesheet> findAllOrdered() {
+		return timesheetRepo.findByOrderByWeekStartingDesc();
+	} 
+	
 }
 
