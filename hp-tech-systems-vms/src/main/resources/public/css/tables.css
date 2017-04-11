@@ -1,0 +1,10 @@
+
+
+.allDataTable table {
+	border-spacing: 10px; 
+	border-collapse: separate;
+}
+
+.allDataTable td {
+	padding: 10px
+}

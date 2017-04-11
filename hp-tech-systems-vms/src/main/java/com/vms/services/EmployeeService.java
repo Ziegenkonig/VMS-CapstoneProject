@@ -35,6 +35,16 @@ public class EmployeeService {
 	
 	//Search methods
 	
+	//returns an employee that matches the given first and last name
+	public Employee findByName(String firstname, String lastname) {
+		return employeeRepo.findByName(firstname, lastname);
+	}
+	
+	//returns a list of all employee names
+	public List<String[]> findAllNames() {
+		return employeeRepo.findAllNames();
+	}
+	
 	//returns one object with specified id
 	public Employee findOne(Integer id) {
 		return employeeRepo.findOne(id);
@@ -42,6 +52,11 @@ public class EmployeeService {
 	
 	public Employee findByUsername(String name) {
 		return employeeRepo.findByUsername(name);
+	}
+	
+	//returns all employees sorted by last name in ascending order
+	public List<Employee> findAllSorted() {
+		return employeeRepo.findAllByOrderByLastnameAsc();
 	}
 	
 	//returns all objects

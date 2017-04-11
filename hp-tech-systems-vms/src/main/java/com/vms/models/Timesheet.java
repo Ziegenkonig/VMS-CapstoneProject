@@ -19,7 +19,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data //standard getters/setters
 @Entity
 @Table(name = "timesheets")
@@ -45,7 +47,7 @@ public class Timesheet { //new summary timesheet
 	//private String imageUrl;
 	//private int noHours;
 	
-	@OneToMany(mappedBy="timesheet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="timesheet", cascade = CascadeType.ALL)
 	private List<ProjectTimesheet> projTimesheets;
 	//fks
 	

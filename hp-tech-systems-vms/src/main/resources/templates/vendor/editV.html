@@ -6,13 +6,16 @@
 </head>
 
 	<body>
-		<nav th:replace="base :: site-nav">
+		<nav th:replace="base :: site-nav('none')">
 		</nav>
 		
 		<div class="formAlignCenter" align = "center">
 		
 		    <h1>Edit Vendor</h1>
-		    <form th:replace="vendor/newV :: vendor-form" action="#" th:action="@{/vendor/edit}" th:object="${vendor}" method="post">
+		    <form action="#" th:action="@{'/vendor/edit/' + ${vendor.vendorId}}" th:object="${vendor}" method="post">
+		    
+		    	<div th:replace = "vendor/fragments :: VendorForm"></div>
+		    	
 		    </form>
 		    
 		</div>

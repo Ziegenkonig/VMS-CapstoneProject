@@ -8,17 +8,34 @@
 	<body>
 		<nav th:replace="base :: site-nav">
 		</nav>
-			<h4>Timesheet 1</h4>
-			<img src="https://images.sampletemplates.com/wp-content/uploads/2015/06/weekly-timesheet-printable.jpg" alt="" height="400" width="400"/>
-			<h4>Starting Week - # hours - Period | <a href="http://localhost:8080/timesheet/view">View</a></h4>
 			
-			<h4>Timesheet 2</h4>
-			<img src="https://images.sampletemplates.com/wp-content/uploads/2015/06/weekly-timesheet-printable.jpg" alt="" height="400" width="400"/>
-			<h4>Starting Week - # hours - Period | <a href="http://localhost:8080/timesheet/view">View</a></h4>
-
-			<h4>Timesheet 3</h4>
-			<img src="https://images.sampletemplates.com/wp-content/uploads/2015/06/weekly-timesheet-printable.jpg" alt="" height="400" width="400"/>
-			<h4>Starting Week - # hours - Period | <a href="http://localhost:8080/timesheet/view">View</a></h4>
+			<table id = "timesheetsTable"
+				   class="table table-bordered"
+				   th:if="${timesheets != null}">
+				   
+				<thead>
+					<tr bgcolor = "#cce6ff"> 
+						<th> Timesheet ID </th>
+						<th> Pay Period </th>
+						<th> Employee </th>
+						<th> Status </th>
+						<th>  </th> <!-- For view button -->
+						<th>  </th> <!-- For edit button -->
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each = "timesheet : ${timesheets}"> 
+						<td th:text = "${timesheet.getTimesheetId()}">  </td>
+						<td th:text = "${timesheet.getWeekStarting()}">  </td>
+						<td th:text = "${timesheet.getEmployee().getFirstname()} + ' ' + ${timesheet.getEmployee().getLastname()}">  </td>
+						<td th:text = "${timesheet.getStatus()}">  </td>
+						<td><a th:if = "${timesheet.getStatus() == editCheck}" th:href="@{/timesheet/edit/{path}(path=${timesheet.getTimesheetId()})}"> Edit </a></td>
+						<td><a th:href="@{/timesheet/view/{path}(path=${timesheet.getTimesheetId()})}"> View </a></td>
+					</tr>
+				</tbody>
+			
+			</table>
 
 	</body>
 

@@ -40,8 +40,19 @@ public class VendorService {
 		return vendorRepo.findAll();
 	}
 	
+	//Finds a vendor by their name attribute
 	public Vendor findByName(String name) {
 		return vendorRepo.findByName(name);
+	}
+	
+	//Returns all vendors, sorted by their names in alphabetical order
+	public List<Vendor> findAllSorted() {
+		return vendorRepo.findAllByOrderByNameAsc();
+	}
+	
+	//returns every name associated with the vendors in alphabetical order
+	public List<String> findAllNames() {
+		return vendorRepo.findAllVendorNames();
 	}
 	
 	
