@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data //standard getters/setters
 @NoArgsConstructor
 @Entity
