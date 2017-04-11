@@ -9,19 +9,16 @@
 	<nav th:replace="base :: site-nav('none')">
 	</nav>
 	
+	<h3>Timesheet</h3>
+	
+	<h4 th:text = "'Employee Name: ' + ${timesheet.employee.firstname} + ' ' + ${timesheet.employee.lastname}"></h4>
+	<h4 th:if = "${payPeriod == 1}">Pay Period Type: Weekly</h4> <h4 th:if = "${payPeriod == 2}">Pay Period Type: Bi-Weekly</h4>
+	<h4 th:text = "'Pay Period: ' + ${timesheet.weekStarting.plusDays(1)}"></h4>
+	
 	<main>
-		<p th:text="'Employee Name: ' + ${timesheet.employee.firstname} + ' ' + ${timesheet.employee.lastname}">Company Name</p>
-	    <p th:text="'Status: ' + ${timesheet.status}">Bob Jones</p>
-	    <form action="#" th:action="@{/timesheet/updateStatus}" th:object="${timesheet}" method="post">
-			<select th:field="*{status}" name="timesheet.status">
-			   <option th:each="st : ${statuses}"
-			          th:value="${st}"
-			          th:text="${st}"
-			          >
-			   </option>
-			</select>
-			<p><input type="submit" value="Submit" /></p>
-		</form>
+	
+		<div th:replace = "timesheet/fragments :: viewTimesheet"></div>
+		
 	</main>
 	
 	<footer th:replace="base :: site-footer"></footer>

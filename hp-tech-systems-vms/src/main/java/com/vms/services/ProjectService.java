@@ -3,7 +3,6 @@ package com.vms.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.vms.models.Project;
@@ -26,7 +25,7 @@ public class ProjectService {
 	}
 	
 	//basic repo methods
-	@Cacheable("projects")
+	//@Cacheable("projects")
 	public List<Project> findAll() {
 		return projRepo.findAll();
 	}

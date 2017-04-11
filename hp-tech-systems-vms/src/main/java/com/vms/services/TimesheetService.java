@@ -1,5 +1,6 @@
 package com.vms.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +63,17 @@ public class TimesheetService {
 		t.setStatus(TimesheetStatus.NOT_SUBMITTED);
 		return timesheetRepo.save(t);
 	}
+	
+	public List<Timesheet> dashboardTimesheets(Employee e) {
+		List<TimesheetStatus> statuses = new ArrayList<TimesheetStatus>();
+		statuses.add(TimesheetStatus.NOT_SUBMITTED);
+		statuses.add(TimesheetStatus.PENDING);
+		return timesheetRepo.findByEmployeeAndStatusInOrderByWeekStartingDesc(e, statuses);
+	}
+	
+	public List<Timesheet> findAllOrdered() {
+		return timesheetRepo.findByOrderByWeekStartingDesc();
+	} 
+	
 }
 

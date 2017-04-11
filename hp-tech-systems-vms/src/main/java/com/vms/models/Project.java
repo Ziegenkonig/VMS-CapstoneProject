@@ -11,6 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -29,12 +34,27 @@ public class Project {
 	private int projectId;
 
 	//Regular attributes.  Does not yet include length some specialties(i.e. BigDecimal)
+	@NotNull(message = "{dollar.size}")
+	@Digits(integer=6, fraction=2)
+	@DecimalMin("0.00") 
 	@Column(nullable = false)
 	private BigDecimal billingRate;
+	
+	@NotNull()
+	@Size(min = 2, max = 64, message = "{irregular.size}")
+	@Pattern(regexp = "[a-zA-Z\\s-_.']*", message = "{irregular.pattern}")
 	@Column(length = 64, nullable = false)
 	private String name;
+	
+	@NotNull()
+	@Size(min = 2, max = 64, message = "{irregular.size}")
+	@Pattern(regexp = "[a-zA-Z\\s-_.]*", message = "{irregular.pattern}")
 	@Column(length = 64, nullable = false)
 	private String clientName;
+	
+	@NotNull()
+	@Size(min = 2, max = 64, message = "{address.size}")
+	@Pattern(regexp = "[0-9]*+\\s+[a-zA-Z0-9\\s.]*", message = "{address.pattern}")
 	@Column(length = 64, nullable = false)
 	private String clientLocation;
 	
@@ -46,6 +66,16 @@ public class Project {
 	
 	@OneToMany(mappedBy = "project")//, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ProjectEmployee> projemps;
+	
+	public BigDecimal remainingEmpPayRate() {
+		BigDecimal rate = BigDecimal.ZERO;
+		BigDecimal remaining = BigDecimal.ZERO;
+		for(ProjectEmployee pe : projemps) {
+			rate = rate.add(pe.getPayRate());
+		}
+		remaining = billingRate.subtract(rate);
+		return remaining;
+	}
 	
 	
 	//Methods

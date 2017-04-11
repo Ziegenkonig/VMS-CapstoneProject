@@ -201,6 +201,9 @@ public class Paystub {
 		this.ytdMedicaretax = previous.getMedicareTax().add(this.medicareTax);
 		this.ytdMedInsurance = previous.getMedInsurance().add(this.medInsurance);
 		this.ytd401k = previous.getA401k().add(this.a401k);
+		
+		//send an email upon creation
+//		emp.notifyPaystubCompletion();
 	}
 		
 	@PrePersist

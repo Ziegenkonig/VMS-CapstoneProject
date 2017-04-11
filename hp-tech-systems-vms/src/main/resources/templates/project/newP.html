@@ -12,34 +12,9 @@
 		
 		    <h1>New Project</h1>
 		    <form th:fragment="proj-form" action="#" th:action="@{/project/new}" th:object="${project}" method="post">
-		    	<div>
-		    		<label for="project.vendor">Vendor:</label>
-		    		<select name="vendor">
-					   <option th:each="v : ${vendors}"
-							th:selected="${project.vendor != null AND project.vendor == v}"
-							th:value="${v.vendorId}"
-							th:text="${v.name}">
-					   </option>
-					</select>
-		    	</div>
-		    	<div class="form-group">
-					<label for="name">Project Name:</label>
-				    <!-- <input type="email" class="form-control" id="name">  -->
-				    <input type="text" name="name" value="" th:value="${project.name}" />
-				</div>
-		    	<div class="form-group">
-					<label for="billingRate">Billing Rate: $</label>
-					<input type="text" name="billingRate" value="" th:value="${project.billingRate}" />
-		        </div>
-		        <div class="form-group">
-			        <label for="clientName">Client Company:</label>
-			        <input type="text" name="clientName" value="" th:value="${project.clientName}" />
-			    </div>
-		        <div class="form-group">
-			        <label for="clientLocation">Client Location:</label>
-			        <input type="text" name="clientLocation" value="" th:value="${project.clientLocation}" />
-		        </div>
-		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+
+	    		<div th:replace = "project/fragments :: ProjectForm"></div>
+	    		
 		    </form>
 		    
 		</div>		

@@ -1,10 +1,14 @@
 package com.vms.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,18 +27,15 @@ import com.vms.services.ProjectService;
 import com.vms.services.VendorService;
 
 @Controller
-@SessionAttributes({"project", "pe"})
+@SessionAttributes({"project", "pe", "vendors"})
 public class ProjectController {
 
 	@Autowired
 	private ProjectService pService = new ProjectService();
-	
 	@Autowired
 	private VendorService vService = new VendorService();
-	
 	@Autowired
 	private EmployeeService eService = new EmployeeService();
-	
 	@Autowired
 	private ProjectEmployeeService peService = new ProjectEmployeeService();
 	
@@ -56,13 +57,14 @@ public class ProjectController {
 			default:
 				projects = null;
 		}
+
 		model.addAttribute("projects", projects);
 		return "project/projects";
 	}
 	
-	@GetMapping(value = "/project/view/{name}")
-	public String viewProject(@PathVariable String name, Model model) {
-		model.addAttribute("project", pService.findByName(name));
+	@GetMapping(value = "/project/view")
+	public String viewProject(@RequestParam("pId") Integer pId, Model model) {
+		model.addAttribute("project", pService.findById(pId));
 		return "project/viewP";
 	}
 	
@@ -84,25 +86,40 @@ public class ProjectController {
 	
 	@PostMapping("/project/new")
 	public String createProject(@RequestParam(value = "vendor", required = false) Vendor v, 
-								@ModelAttribute("project") Project p, SessionStatus status) {
+								@ModelAttribute("project")@Valid Project p, BindingResult bindingResult,
+								@ModelAttribute("vendors") ArrayList<Vendor> vendors,
+								Model model,
+								SessionStatus status) {
+		//Checks to see if the input has any errors and renders the page over again with the errors included if it does
+		if (bindingResult.hasErrors())
+			return "project/newP";
+
 		if(p.getVendor() == null) {
 			p.setVendor(v);
 		}
 		pService.create(p);
 		status.setComplete();
+		
 		return "redirect:/projects/all";
 	}
 	
-	@GetMapping(value = "/project/edit/{name}")
-	public String editProject(@PathVariable String name, Model model) {
+	@GetMapping(value = "/project/edit")
+	public String editProject(@RequestParam("pId") Integer pId, Model model) {
 		List<Vendor> vendors = vService.findAll();
 		model.addAttribute("vendors", vendors);
-		model.addAttribute("project", pService.findByName(name));
+		model.addAttribute("project", pService.findById(pId));
 		return "project/editP";
 	}
 	
 	@PostMapping("/project/edit")
-	public String saveProject(@ModelAttribute("project") Project p, SessionStatus status) {
+	public String saveProject(@ModelAttribute("project")@Valid Project p, 
+							  BindingResult bindingResult,
+							  SessionStatus status) {
+		
+		//Checks to see if the input has any errors and renders the page over again with the errors included if it does
+		if (bindingResult.hasErrors())
+			return "project/editP";
+		
 		pService.edit(p);
 		status.setComplete();
 		return "redirect:/projects/all";
@@ -111,6 +128,7 @@ public class ProjectController {
 	@GetMapping("/project/addEmployee")
 	public String addEmployee(@RequestParam Integer pId, Model model) {
 		Project p = pService.findById(pId);
+		model.addAttribute("project", p);
 		List<Employee> emps = eService.findAll();
 		model.addAttribute("emps", emps);
 		ProjectEmployee pe = new ProjectEmployee();

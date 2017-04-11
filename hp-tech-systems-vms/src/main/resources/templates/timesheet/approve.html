@@ -9,11 +9,16 @@
 
 	<nav th:replace="base :: site-nav('none')">
 	</nav>
-
-	<img src="https://images.sampletemplates.com/wp-content/uploads/2015/06/weekly-timesheet-printable.jpg" alt="" height="400" width="400"/>
-	<h4>Starting Week - # hours - Period</h4>
-				
-	<p><button type="button">Approve</button> <button type="button">Reject</button></p>
+	
+	<h4 th:text = "'Employee Name: ' + ${timesheet.employee.firstname} + ' ' + ${timesheet.employee.lastname}"></h4>
+	<h4 th:if = "${payPeriod == 1}">Pay Period Type: Weekly</h4> <h4 th:if = "${payPeriod == 2}">Pay Period Type: Bi-Weekly</h4>
+	<h4 th:text = "'Pay Period: ' + ${timesheet.weekStarting.plusDays(1)}"></h4>
+	
+	<div th:replace = "timesheet/fragments :: viewTimesheet"></div>
+	
+	<form action="#" th:action="@{'/timesheet/approve/' + ${id}}" method="post">	
+		<input type="submit" class = "button" value="Approve" /> <input type="reset" value="Reset" />
+	</form>
 	
 	<footer th:replace="base :: site-footer"></footer>
 		

@@ -2,18 +2,25 @@ package com.vms.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
+import com.vms.models.States;
 import com.vms.models.Vendor;
 import com.vms.services.VendorService;
 
 @Controller
+@SessionAttributes({"vendor", "states"})
 public class VendorController {
 	
 	@Autowired
@@ -28,41 +35,65 @@ public class VendorController {
 	}
 	
 	//displays a single vendor -working
-	@GetMapping(value = "/vendor/view/{name}")
-	public String viewVendor(@PathVariable String name, Model model) {
-		model.addAttribute("vendor", vendorService.findByName(name));
+	@GetMapping(value = "/vendor/view")
+	public String viewVendor(@RequestParam("vId") Integer vId, Model model) {
+		model.addAttribute("vendor", vendorService.findOne(vId));
 		return "vendor/viewV";
 	}
 	
 	//create new vendor object and display form fields -working
 	@GetMapping(value = "/vendor/new")
 	public String newVendor(Model model) {
-		Vendor v = new Vendor();
-		model.addAttribute("vendor", v);
+		
+		Vendor vendor = new Vendor();
+		
+		model.addAttribute("states", States.values());
+		model.addAttribute("vendor", vendor);
 		return "vendor/newV";
 	}
 	
 	@PostMapping(value = "/vendor/new")
-	public String createVendor(@ModelAttribute Vendor v) {
-		vendorService.create(v);
-		//some validation crap needs to go here bc it should show error on same page or continue on
-		return "vendor/viewV";
+	public String createVendor(@ModelAttribute@Valid Vendor vendor,
+							   BindingResult bindingResult,
+							   Model model) {
+		
+		if (bindingResult.hasErrors())
+			return "vendor/newV";
+		
+		vendorService.create(vendor);
+		
+		model.addAttribute("states", States.values());
+		
+		return "redirect:/vendor/view?vId=" + vendor.getVendorId();
 	}
 	
 	//get an vendor object and populate form fields -working
-	@GetMapping(value = "/vendor/edit/{name}")
-	public String editVendor(
-			@PathVariable String name, 
-			Model model) {
-		model.addAttribute("vendor", vendorService.findByName(name));
+	@GetMapping(value = "/vendor/edit")
+	public String editVendor(@RequestParam("vId") Integer vId, 
+							 Model model) {
+		
+		model.addAttribute("vendor", vendorService.findOne(vId));
+		model.addAttribute("states", States.values());
+		
 		return "vendor/editV";
 	}
 	
 	@PostMapping(value = "/vendor/edit")
-	public String updateVendor(@ModelAttribute Vendor v, Model model) {
-		vendorService.update(v);
-		//some validation crap needs to go here bc it should show error on same page or continue on
-		return "vendor/viewV";
+	public String updateVendor(@ModelAttribute("vendor")@Valid Vendor vendor, 
+							   BindingResult bindingResult,
+							   SessionStatus sessionStatus,
+							   Model model) {
+		//input validation
+		if (bindingResult.hasErrors())
+			return "vendor/editV";
+		
+		vendorService.update(vendor);
+		
+		sessionStatus.setComplete();
+		
+		model.addAttribute("states", States.values());
+		
+		return "redirect:/vendor/view?vId=" + vendor.getVendorId();
 	}
 	
 	

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vms.models.Invoice;
+import com.vms.models.InvoiceStatus;
 import com.vms.models.Project;
 import com.vms.models.ProjectTimesheet;
 import com.vms.models.Vendor;
@@ -40,21 +41,12 @@ public class InvoiceController {
 	@GetMapping("/invoice/new")
 	public String invoiceForm(Model model) {
 		
-		//Need a string to keep track of selected date since Thymeleaf and LocalDate dont play well together
-		//I had to create a new object that specifically holds a string as an attribute to pass it correctly
-		//StringHolder stringHolder = new StringHolder();
 		//Here we have to transfer all of the LocalDates inside of uniqueDates into Strings because LocalDates are dumb
 		//Or maybe I am and I just dont know what im doing
 		List<LocalDate> uniqueDates = projTimeService.uniqueDates();
-		/*
-		List<String> allDates = new ArrayList<String>();
-		for (LocalDate date : uniqueDates) 
-			allDates.add(date.toString());
-		*/
+
 		//Setting all of the model attributes that are used in the corresponding html
-		//model.addAttribute("stringHolder", stringHolder); //contains the user selected date in string format
 		model.addAttribute("allDates", uniqueDates); //All unique pay periods
-		//model.addAttribute("selectedVendor", new Vendor()); //Pass this to @PostMapping
 		model.addAttribute("vendorNames", vendorService.findAllNames()); //All Vendors
 		
 		return "invoice/newI";
@@ -73,13 +65,13 @@ public class InvoiceController {
 		Vendor v = vendorService.findByName(vendorName);
 		//Putting all projects associated with the vendor into a list
 		List<Project> projects = projectService.findByVendor(v);
-		System.out.println(projects.isEmpty());
+
 		//Cycling through projects list and appending all of the associated ProjectTimesheets into one list
 		//(within pay period)
 		List<ProjectTimesheet> projectTimesheets = new ArrayList<ProjectTimesheet>();
 		for (Project project : projects)
 			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project.getProjectId(), date));
-		System.out.println(projectTimesheets.isEmpty());
+
 		//Creating new invoice
 		Invoice newInvoice = new Invoice(projectTimesheets);
 		invoiceService.create(newInvoice);
@@ -90,17 +82,42 @@ public class InvoiceController {
 	
 	//VIEWING ALL INVOICES
 	//Needs countermeasures to make sure only authorized people can view
-	@GetMapping("/invoices")
+	@GetMapping(value = "/invoices")
 	public String viewInvoices(Model model) {
 		
 		//Getting all invoices
 		List<Invoice> invoices = invoiceService.findAll();
-
-		//Adding all invoices to the model
-		model.addAttribute("invoices", invoices);
 		
+		//Adding all invoices to the model
+		model.addAttribute("draft", InvoiceStatus.DRAFT);
+		model.addAttribute("invoices", invoices);
+		model.addAttribute("projectService", projectService);
 		//specifying which html file rendering
 		return "invoice/invoices";
+	}
+	
+	@GetMapping("invoice/regenerate/{id}")
+	public String regenerateInvoice(@PathVariable("id") Integer invoiceId) {
+		
+		Invoice regenInvoice = invoiceService.findById(invoiceId);
+		
+		//Grabbing vendor object associated with the name selected by user
+		Vendor v = vendorService.findOne(regenInvoice.getVendorId());
+		
+		//Putting all projects associated with the vendor into a list
+		List<Project> projects = projectService.findByVendor(v);
+
+		//Cycling through projects list and appending all of the associated ProjectTimesheets into one list
+		//(within pay period)
+		List<ProjectTimesheet> projectTimesheets = new ArrayList<ProjectTimesheet>();
+		for (Project project : projects)
+			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project.getProjectId(), regenInvoice.getPeriodStart()));
+
+		//Creating new invoice
+		regenInvoice = new Invoice(projectTimesheets);
+		invoiceService.edit(regenInvoice);
+		
+		return "redirect:/invoice/view/" + invoiceId;
 	}
 	
 	//VIEWING ONE INVOICE
@@ -117,4 +134,5 @@ public class InvoiceController {
 		
 		return "invoice/viewI";
 	}
+
 }

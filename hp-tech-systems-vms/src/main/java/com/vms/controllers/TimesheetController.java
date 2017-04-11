@@ -16,18 +16,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.vms.forms.NewTimesheetForm;
 import com.vms.models.Employee;
-import com.vms.models.Project;
-import com.vms.models.ProjectTimesheet;
+import com.vms.models.ProjectEmployee;
 import com.vms.models.Timesheet;
 import com.vms.models.TimesheetStatus;
 import com.vms.services.EmployeeService;
+import com.vms.services.PaystubService;
+import com.vms.services.ProjectEmployeeService;
 import com.vms.services.ProjectService;
 import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
 
 @Controller
-@SessionAttributes(value = {"editTS"})
+@SessionAttributes(value = {"editTimesheet", "timesheet", "selectedEmployee"})
 public class TimesheetController {
 	
 	@Autowired
@@ -37,18 +39,23 @@ public class TimesheetController {
 	@Autowired
 	EmployeeService employeeService = new EmployeeService();
 	@Autowired
+	ProjectEmployeeService peService = new ProjectEmployeeService();
+	@Autowired
 	ProjectService projectService = new ProjectService();
+	@Autowired
+	PaystubService paystubService = new PaystubService();
 	
 	//VIEWING ALL TIMESHEETS
 	@GetMapping("/timesheets")
 	public String allTimesheets(Model model) {
 		//Getting all timesheets
 		List<Timesheet> timesheets = timesheetService.findAll();
-		TimesheetStatus editCheck = TimesheetStatus.NOT_SUBMITTED;
+		//TimesheetStatus editCheck = TimesheetStatus.NOT_SUBMITTED;
 		
 		//Adding all invoices to the model
 		model.addAttribute("timesheets", timesheets);
-		model.addAttribute("editCheck", editCheck);
+		
+		//model.addAttribute("editCheck", editCheck);
 		
 		//specifying which html file rendering
 		return "timesheet/timesheets";
@@ -68,49 +75,54 @@ public class TimesheetController {
 		periods.add(now);
 		for(int i = 0; i <= 30; i++)
 			periods.add(periods.get(i).plusWeeks(1));
-
-		//Also need to convert that list of dates into a list of strings
-		List<String> dates = new ArrayList<String>();
-		for(LocalDate date : periods)
-			dates.add(date.toString());
-		
-		//We also need empty objects to pass to the post method so that the html has something to modify
-		StringHolder selectedDate = new StringHolder();
-		Employee selectedEmployee = new Employee();
 		
 		//Last thing we need to create a new timesheet is an employee to assign it to
-		List<Employee> employees = employeeService.findAllSorted();
-		
+		//List<Employee> employees = employeeService.findAllSorted();
+		List<Employee> validEmployees = new ArrayList<Employee>();
+		List<ProjectEmployee> pes = peService.findOpenProjects();
+		for(ProjectEmployee pe : pes) {
+			//temporary
+			if(pe.getDateEnded() == null && !validEmployees.contains(pe.getEmployee())) {
+				validEmployees.add(pe.getEmployee());
+			}
+		}/*
+		for(Employee e : employees) {
+			if(!e.getProjemps().isEmpty()) {
+				validEmployees.add(e);
+			}
+		}*/
 		//Now we just add everything to the model
-		model.addAttribute("dates", dates);
-		model.addAttribute("employees", employees);
-		model.addAttribute("selectedDate", selectedDate);
-		model.addAttribute("selectedEmployee", selectedEmployee);
+		model.addAttribute("dates", periods);
+		model.addAttribute("employees", validEmployees);
+		NewTimesheetForm tf = new NewTimesheetForm();
+		model.addAttribute("tf", tf);
 		
 		//returning html file to render
 		return "timesheet/newT";
 	}
 	
 	@PostMapping("/timesheet/new")
-	public String newTimesheetSubmit(@ModelAttribute("selectedDate") StringHolder selectedDate,
-									 @ModelAttribute("selectedEmployee") Employee selectedEmployee) {
-		//Convert selectedDate from String to LocalDate
-		LocalDate finalDate = LocalDate.parse(selectedDate.getString());
+	public String newTimesheetSubmit(@ModelAttribute("tf") NewTimesheetForm tf) {
 		
 		//Now we have all we need to create a new timesheet, and add it to the database
-		Timesheet newTimesheet = new Timesheet(selectedEmployee, finalDate);
+		//Timesheet newTimesheet = new Timesheet(selectedEmployee, finalDate);
+		Timesheet newTimesheet = new Timesheet(tf.getE(), tf.getStartDate());
 		timesheetService.create(newTimesheet);
-		
+	
 		//render the view page for our new timesheet
 		return "redirect:" + "http://localhost:8080/timesheet/view/" + newTimesheet.getTimesheetId();
 	}
 	
 	//VIEWING ONE TIMESHEET
 	@GetMapping("/timesheet/view/{id}")
-	public String viewTimesheet(@PathVariable("id") Integer id, Model model) {
+	public String viewTimesheet(@PathVariable("id") Integer id, 
+								Model model) {
 		
 		Timesheet timesheet = timesheetService.findById(id);
-		
+		timesheet.setWeekStarting(timesheet.getWeekStarting().minusDays(1));
+
+		model.addAttribute("days", DayOfWeek.values());
+		model.addAttribute("payPeriod", timesheet.getEmployee().getPayPeriod());
 		model.addAttribute("timesheet", timesheet);
 		
 		return "timesheet/viewT";
@@ -118,64 +130,61 @@ public class TimesheetController {
 	
 	//EDITING A TIMESHEET
 	@GetMapping("/timesheet/edit/{id}")
-	public String editTimesheetForm(@PathVariable("id") Integer id, Model model) {
-		//Setting timesheet to edit
+	public String editTimesheetForm(@PathVariable("id") Integer id,
+									Model model) {
+
 		Timesheet timesheet = timesheetService.findById(id);
+		StringHolder weekStarting = new StringHolder();
+		weekStarting.setLocalDate(timesheet.getWeekStarting().minusDays(1));
+		//System.out.println(timesheet.getProjTimesheets().get(0).getWeekStarting());
 		
-		//Getting all of the projects associated with this timesheet
-		List<ProjectTimesheet> projTimesheets = timesheet.getProjTimesheets();
-		List<Project> projects = new ArrayList<Project>();
-		for (ProjectTimesheet projTS : projTimesheets)
-			projects.add( projectService.findById(projTS.getProjectId()) );
-		
-		//Checking pay period of associated employee
-		int payPeriod = timesheet.getEmployee().getPayPeriod();
-		//Getting list of dates in string form for the pay period (now with weekly/biweekly support)
-		List<String> datesList = new ArrayList<String>();
-		LocalDate maxDate = timesheet.getWeekStarting().plusDays(7); //this is here cause i was getting weird errors
-		//Checking for weekly/biweekly pay periods
-		if (payPeriod == 1) {
-			for (LocalDate date = timesheet.getWeekStarting(); (date.isBefore(maxDate)) ; date = date.plusDays(1))
-				datesList.add(date.toString());
-		} else if (payPeriod == 2) {
-			maxDate = maxDate.plusDays(7);
-			for (LocalDate date = timesheet.getWeekStarting(); (date.isBefore(maxDate)) ; date = date.plusDays(1))
-				datesList.add(date.toString());
-		}
-		ArrayHolder dates = new ArrayHolder();
-		dates.setList(datesList);
-		
-		model.addAttribute("id", id);
-		model.addAttribute("editTS", timesheet);
-		model.addAttribute("statuses", TimesheetStatus.values()); //all timesheet status values for dropdown box
-		model.addAttribute("projects", projects);
-		model.addAttribute("dates", dates);
-		model.addAttribute("projTimesheets", projTimesheets);
+		model.addAttribute("weekStarting", weekStarting);
+		model.addAttribute("days", DayOfWeek.values());
+		model.addAttribute("payPeriod", timesheet.getEmployee().getPayPeriod());
+		model.addAttribute("editTimesheet", timesheet);
 		
 		return "timesheet/editT";
 	}
 	
-	@PostMapping("/timesheet/edit/{id}")
-	public String editTimesheetPost(@ModelAttribute("editTS") Timesheet timesheet, 
-									SessionStatus status) {
-		
-		timesheetService.create(timesheet);
+	//handles submitting the timesheet, rendering it uneditable to the employee
+	@PostMapping(value = "/timesheet/edit/{id}", params = {"saveTimesheet", "!submit"})
+	public String saveTimesheet(@ModelAttribute("editTimesheet") Timesheet editTimesheet,
+								SessionStatus status) {
+
+		timesheetService.edit(editTimesheet);
 		
 		status.setComplete();
 		
-		return "redirect:" + "http://localhost:8080/timesheet/view/" + timesheet.getTimesheetId();
+		return "redirect:/timesheet/edit/" + editTimesheet.getTimesheetId();
 	}
 	
+	//handles saving the current timesheet
+	@PostMapping(value = "/timesheet/edit/{id}", params = {"submit", "!saveTimesheet"})
+	public String submitTimesheet(@ModelAttribute("editTimesheet") Timesheet editTimesheet, 
+								  SessionStatus status) {
+		
+		editTimesheet.setStatus(TimesheetStatus.PENDING);
+		timesheetService.edit(editTimesheet);
+		
+		status.setComplete();
+		
+		//notify employee timesheet has been submitted
+//		Employee employee = editTimesheet.getEmployee();
+//		employee.notifyTimesheetCompletion();
+		
+		return "redirect:/dashboard";
+	}
 	
 	//admin/katie extras
 	@GetMapping(value = "/timesheets/{mode}")
 	public String viewTimesheets(@PathVariable String mode,
 							   @RequestParam(required = false) TimesheetStatus status,
+							   @RequestParam(required = false) Boolean edit,
 							   Model model) {
 		List<Timesheet> timesheets;
 		switch(mode) {
 			case "all":
-				timesheets = timesheetService.findAll();
+				timesheets = timesheetService.findAllOrdered();
 				break;
 			case "byStatus":
 				timesheets = timesheetService.findByStatus(status);
@@ -184,6 +193,10 @@ public class TimesheetController {
 				timesheets = null;
 		}
 		model.addAttribute("timesheets", timesheets);
+		if(edit == null) {
+			edit = false;
+		}
+		model.addAttribute("edit", edit);
 		return "timesheet/timesheets";
 	}
 	
@@ -210,6 +223,33 @@ public class TimesheetController {
 		timesheetService.edit(t);
 		status.setComplete();
 		return "redirect:/timesheet/" + t.getTimesheetId();
+	}
+	
+	@GetMapping("/timesheet/approve/{id}")
+	public String approveTimesheet(@PathVariable Integer id, Model model) {
+		
+		Timesheet timesheet = timesheetService.findById(id);
+		timesheet.setWeekStarting(timesheet.getWeekStarting().minusDays(1));
+		
+		model.addAttribute("days", DayOfWeek.values());
+		model.addAttribute("payPeriod", timesheet.getEmployee().getPayPeriod());
+		model.addAttribute("timesheet", timesheet);
+		
+		return "timesheet/approve";
+
+	}
+	
+	@PostMapping("/timesheet/approve/{id}")
+	public String approveTimesheetPost(@ModelAttribute("timesheet") Timesheet timesheet) {
+		
+		timesheet.setStatus(TimesheetStatus.VERIFIED);
+		timesheetService.create(timesheet);
+		
+//		Employee employee = timesheet.getEmployee();
+//		employee.notifyTimesheetAccepted();
+		
+		return "redirect:/paystub/new/" + timesheet.getTimesheetId();
+		
 	}
 	
 }

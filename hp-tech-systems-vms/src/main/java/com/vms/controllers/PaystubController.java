@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.vms.models.Employee;
 import com.vms.models.Paystub;
 import com.vms.models.PaystubStatus;
 import com.vms.models.Timesheet;
@@ -35,17 +36,18 @@ public class PaystubController {
 	//reads all vendors from the db and displays in table form -working
 	@GetMapping(value = "/paystubs/{mode}")
 	public String viewPaystubs(@PathVariable String mode, 
+							   //@RequestParam Integer callerId,
 							   @RequestParam(required = false) Integer empId,
 							   @RequestParam(required = false) PaystubStatus status,
 							   Model model) {
 		List<Paystub> paystubs;
+		Employee e;
 		switch(mode) {
 			case "all":
 				paystubs = pSService.findAll();
 				break;
 			//not yet implemented
 			case "byEmployee":
-				//Employee e = empService.findOne(empId);
 				//paystubs = pSService.findPaystubByEmployee(e);
 				paystubs = pSService.findIssued(empId);
 				break;
@@ -54,9 +56,12 @@ public class PaystubController {
 				paystubs = pSService.findByStatus(status);
 				break;
 			default:
+			//	e = null;
 				paystubs = null;
 		}
-		
+		e = empService.findOne(empId);
+		model.addAttribute("employee", e);
+
 		model.addAttribute("paystubs", paystubs);
 		return "paystub/paystubs";
 	}

@@ -24,14 +24,24 @@ public interface TimesheetRepository extends JpaRepository<Timesheet, Integer>{
 	*/
 	
 	//timesheetHistory
+	@Query
 	public List<Timesheet> findByEmployeeOrderByWeekStartingDesc(Employee e);
 	
+	//for the employee dashboard
+	@Query
+	public List<Timesheet> findByEmployeeAndStatusInOrderByWeekStartingDesc(Employee e, List<TimesheetStatus> statuses);
+	
 	//openTimesheets
+	@Query
 	public List<Timesheet> findByEmployeeAndStatusOrderByWeekStartingDesc(Employee e, TimesheetStatus status);
 	
 	//pendingTimesheets
+	@Query
 	public List<Timesheet> findByStatusOrderByWeekStartingDesc(TimesheetStatus status);
 
+	@Query
+	public List<Timesheet> findByOrderByWeekStartingDesc();
+	
 	//List<Timesheet> findByEmpIdOrderByWeekStartingDesc(Integer empId);
 	
 }

@@ -20,8 +20,8 @@ public class MailSender {
 		props.put("mail.debug", "true");
 		props.put("mail.store.protocol", "pop3");
 		props.put("mail.transport.protocol", "smtp");
-		final String username = "uofmcapstonebanana@gmail.com";//
-		final String password = "alwaysmoneyinthebananastand123";
+		//final String username = "uofmcapstonebanana@gmail.com";
+		//final String password = "alwaysmoneyinthebananastand123";
 	}
 
 	public String getUsername() {

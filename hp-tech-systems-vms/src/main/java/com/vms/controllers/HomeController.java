@@ -53,7 +53,7 @@ public class HomeController {
 	//Renders employee/login
 	//linksto: employee/register(EmployeeController) | employee/dashboard(this)
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String login(Principal principal, Model model) {
 		//model.addAttribute("employee", employeeService.findOne(1));
 		return "employee/login";
 	}
@@ -194,8 +194,5 @@ public class HomeController {
 	
 	//renders admin
 	//linksto: a lot and i dont wanna write them out right now
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String adminDashboard(Model model) {
-		return "admin";
-	}
+	
 }

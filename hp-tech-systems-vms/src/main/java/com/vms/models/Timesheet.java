@@ -70,8 +70,13 @@ public class Timesheet { //new summary timesheet
 		this.weekStarting = periodStart;
 		this.projTimesheets = new ArrayList<ProjectTimesheet>();
 		List<ProjectEmployee> projEmps = e.getProjemps();
+		if(projEmps.isEmpty()) {
+			System.out.println("Empty projemps");
+		}
 		for(ProjectEmployee pe:projEmps) {
-			projTimesheets.add(new ProjectTimesheet(pe, weekStarting));
+			if(pe.getDateEnded() == null || pe.getDateEnded().isAfter(weekStarting)) {
+				projTimesheets.add(new ProjectTimesheet(pe, this));
+			}
 		}
 		this.status = com.vms.models.TimesheetStatus.NOT_SUBMITTED;
 	}

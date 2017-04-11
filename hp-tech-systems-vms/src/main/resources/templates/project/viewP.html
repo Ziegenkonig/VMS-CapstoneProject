@@ -16,11 +16,12 @@
 	    <p th:text="'Client Name: ' + ${project.clientName}">Bob Jones</p>
 	    <p th:text="'Client Location: ' + ${project.clientLocation}">on site</p>
 	    <p th:text="'Vendor: ' + ${project.vendor.name}">Some Company Name</p>
-	    <a th:href="@{/project/edit/{path}(path=${project.name})}">Edit Project</a>
+	    <a th:href="@{/project/edit(pId=${project.projectId})}">Edit Project</a>
 	    <h3>Employees</h3>
 	    <ul>
 	    	<li th:each="pe : ${project.projemps}" th:text="${pe.employee.firstname + ' ' + pe.employee.lastname + ' ($' + pe.payRate + ') from ' + #temporals.format(pe.dateStarted,'MM/dd/yyyy')}"></li>
 	    </ul>
+	    <p th:text="'Project Pay Rate Remaining: $' + ${project.remainingEmpPayRate()} + ' of $' + ${project.billingRate}"></p>
 	    <a th:href="@{/project/addEmployee(pId=${project.projectId})}">Add Employee</a>
 	</main>
 	
