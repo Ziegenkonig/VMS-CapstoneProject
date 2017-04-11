@@ -104,7 +104,7 @@ public class PaystubController {
 		ps.setCheckDate(ZonedDateTime.now());
 		pSService.update(ps);
 		status.setComplete();
-		return "redirect:/paystubs/all";
+		return "redirect:/paystubs/all?empId=6";
 	}
 	
 	//recreating a paystub from an existing paystub
@@ -119,7 +119,7 @@ public class PaystubController {
 		}
 		pSService.voidPaystub(ps);
 		pSService.create(copy);
-		return "redirect:/paystubs/all";
+		return "redirect:/paystubs/all?empId=6";
 	}
 	
 	//return associated timesheet and void paystub
@@ -129,6 +129,6 @@ public class PaystubController {
 		Timesheet ts = ps.getTimesheet();
 		tSService.returnTimesheet(ts);
 		pSService.voidPaystub(ps);
-		return "redirect:/paystubs/all";
+		return "redirect:/paystubs/all?empId=6";
 	}
 }
