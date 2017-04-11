@@ -8,17 +8,36 @@
 	<body>
 		<nav th:replace="base :: site-nav('none')">
 		</nav>
-			<h4>Invoice 1</h4>
-			<img src="http://www.pay-stubs.com/wp-content/uploads/2015/11/sample-pay-stub.png" alt="" height="400" width="400"/>
-			<h4>Vendor | <a href="http://localhost:8080/invoice/viewInvoice">View</a></h4>
 			
-			<h4>Invoice 2</h4>
-			<img src="http://www.pay-stubs.com/wp-content/uploads/2015/11/sample-pay-stub.png" alt="" height="400" width="400"/>
-			<h4>Vendor | <a href="http://localhost:8080/invoice/viewInvoice">View</a></h4>
+			<table id = "invoiceTable"
+				   class="table table-bordered"
+				   th:if="${invoices != null}">
+				   
+				<thead>
+					<tr bgcolor = "#cce6ff"> 
+						<th> Invoice ID </th>
+						<th> Vendor </th>
+						<th> Pay Period </th>
+						<th> Vendor Phone </th>
+						<th> Status </th>
+						<th>  </th> <!-- For regenerate button -->
+						<th>  </th> <!-- For view button -->
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each = "invoice, iter : ${invoices}"> 
+						<td th:text = "${invoice.getInvoiceId()}">  </td>
+						<td th:text = "${invoice.getName()}">  </td>
+						<td th:text = "${invoice.getPeriodStart()}">  </td>
+						<td th:text = "${invoice.getPhone()}">  </td>
+						<td th:text = "${invoice.getStatus()}">  </td>
+						<td><a th:href="@{/invoice/view/{path}(path=${invoice.getInvoiceId()})}"> View </a></td>
+						<td><a th:if = "${invoice.status == draft}" th:href="@{/invoice/regenerate/{path}(path=${invoice.getInvoiceId()})}"> Regenerate </a></td>
+					</tr>
+				</tbody>
 			
-			<h4>Invoice 3</h4>
-			<img src="http://www.pay-stubs.com/wp-content/uploads/2015/11/sample-pay-stub.png" alt="" height="400" width="400"/>
-			<h4>Vendor | <a href="http://localhost:8080/invoice/viewInvoice">View</a></h4>
+			</table>
 			
 	</body>
 

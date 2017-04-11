@@ -16,20 +16,23 @@ public class TimesheetService {
 	@Autowired
 	private TimesheetRepository timesheetRepo;
 	
-	public List<Timesheet> findAll() {
-		return timesheetRepo.findAll();
-	}
-	
-	public Timesheet findById(Integer id) {
-		return timesheetRepo.findOne(id);
-	}
-
+	//general service methods
 	public Timesheet create(Timesheet timesheet) {
 		return timesheetRepo.save(timesheet);
 	}
 	
 	public Timesheet edit(Timesheet timesheet) {
 		return timesheetRepo.save(timesheet);
+	}
+	
+	//Search methods
+	
+	public List<Timesheet> findAll() {
+		return timesheetRepo.findAll();
+	}
+	
+	public Timesheet findById(Integer id) {
+		return timesheetRepo.findOne(id);
 	}
 	
 	//Returns open timesheets for specified employee - current timesheet would be thisList.get(0)
