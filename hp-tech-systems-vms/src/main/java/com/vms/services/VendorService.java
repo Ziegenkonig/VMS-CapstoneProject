@@ -3,6 +3,7 @@ package com.vms.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.vms.models.Vendor;
@@ -36,6 +37,7 @@ public class VendorService {
 	}
 	
 	//returns all objects
+	@Cacheable("vendors")
 	public List<Vendor> findAll() {
 		return vendorRepo.findAll();
 	}

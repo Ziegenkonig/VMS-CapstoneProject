@@ -7,7 +7,7 @@
 
 <body>
 
-	<nav th:replace="base :: site-nav">
+	<nav th:replace="base :: site-nav('none')">
 	</nav>
 
 	<p th:text = "'Employee Name: ' + ${timesheet.employee.firstname} + ' ' + ${timesheet.employee.lastname}"> </p>

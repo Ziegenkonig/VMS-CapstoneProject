@@ -3,10 +3,8 @@ package com.vms.models;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -66,7 +64,7 @@ public class Project {
 	@ManyToOne @JoinColumn(name = "vendor_id")
 	private Vendor vendor;
 	
-	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "project")//, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ProjectEmployee> projemps;
 	
 	

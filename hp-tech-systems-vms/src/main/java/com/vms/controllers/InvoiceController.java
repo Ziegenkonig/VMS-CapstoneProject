@@ -37,6 +37,7 @@ public class InvoiceController {
 	
 	//CREATING NEW INVOICE
 	//Needs countermeasures to make sure only authorized people can view
+
 	@GetMapping("/invoice/new")
 	public String invoiceForm(Model model) {
 		
@@ -99,7 +100,7 @@ public class InvoiceController {
 	public String regenerateInvoice(@PathVariable("id") Integer invoiceId) {
 		
 		Invoice regenInvoice = invoiceService.findById(invoiceId);
-		
+
 		//Grabbing vendor object associated with the name selected by user
 		Vendor v = vendorService.findOne(regenInvoice.getVendorId());
 		

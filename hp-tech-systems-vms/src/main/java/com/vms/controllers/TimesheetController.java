@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -58,9 +59,21 @@ public class TimesheetController {
 	@Autowired
 	TimesheetService tSService = new TimesheetService();
 	
-	@GetMapping(value = "/timesheets")
-	public String viewTimesheets(Model model) {
-		List<Timesheet> timesheets = tSService.findAll();
+	@GetMapping(value = "/timesheets/{mode}")
+	public String viewTimesheets(@PathVariable String mode,
+							   @RequestParam(required = false) TimesheetStatus status,
+							   Model model) {
+		List<Timesheet> timesheets;
+		switch(mode) {
+			case "all":
+				timesheets = tSService.findAll();
+				break;
+			case "byStatus":
+				timesheets = tSService.fi();
+				break;
+			default:
+				timesheets = null;
+		}
 		model.addAttribute("timesheets", timesheets);
 		return "timesheet/timesheets";
 	}

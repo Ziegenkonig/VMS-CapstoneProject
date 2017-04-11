@@ -32,10 +32,13 @@ public class ProjectController {
 
 	@Autowired
 	private ProjectService pService = new ProjectService();
+
 	@Autowired
 	private VendorService vService = new VendorService();
+	
 	@Autowired
 	private EmployeeService eService = new EmployeeService();
+
 	@Autowired
 	private ProjectEmployeeService peService = new ProjectEmployeeService();
 	
@@ -99,7 +102,21 @@ public class ProjectController {
 		}
 		pService.create(p);
 		status.setComplete();
-		
+
+		return "redirect:/projects/all";
+	}
+	
+	@GetMapping(value = "/project/edit/{name}")
+	public String editProject(@PathVariable String name, Model model) {
+		List<Vendor> vendors = vService.findAll();
+		model.addAttribute("vendors", vendors);
+		model.addAttribute("project", pService.findByName(name));
+		return "project/editP";
+	}
+	
+	@PostMapping("/project/edit")
+	public String saveProject(@ModelAttribute("project") Project p, SessionStatus status) {
+
 		return "redirect:/projects/all";
 	}
 	

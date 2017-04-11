@@ -6,7 +6,7 @@
 </head>
 
 	<body>
-		<nav th:replace="base :: site-nav">
+		<nav th:replace="base :: site-nav('none')">
 		</nav>
 			<!-- Header for invoice, includes invoice ID -->
 			<h3 th:text = "INVOICE + ' ' + '#' + ${invoice.getInvoiceId()} + ' for Project(s): ' + ${project.getName()}"> </h3>
