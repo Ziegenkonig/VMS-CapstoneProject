@@ -30,7 +30,7 @@ public interface TimesheetRepository extends JpaRepository<Timesheet, Integer>{
 	public List<Timesheet> findByEmployeeAndStatusOrderByWeekStartingDesc(Employee e, TimesheetStatus status);
 	
 	//pendingTimesheets
-	public List<Timesheet> findByStatus(TimesheetStatus status);
+	public List<Timesheet> findByStatusOrderByWeekStartingDesc(TimesheetStatus status);
 
 	//List<Timesheet> findByEmpIdOrderByWeekStartingDesc(Integer empId);
 	

@@ -2,14 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace= "base :: site-head">
-	  <title id="pageTitle">VMS | View Timesheet</title>
-	</head>
+  <title id="pageTitle">VMS | View Timesheet</title>
+</head>
 
 <body>
-
 	<nav th:replace="base :: site-nav">
 	</nav>
 	
+
+	<!-- View Specific Paystub Details --> 
+
+
 		<h2> Timesheet </h2>
 		<p th:text = "'Employee Name: ' + ${timesheet.employee.firstname} + ' ' + ${timesheet.employee.lastname}"> </p>
 	    <p th:text = "'Status: ' + ${timesheet.status}"> </p>
@@ -34,4 +37,5 @@
 <footer th:replace="base :: site-footer"></footer>
 		
 	</body>
+
 </html>

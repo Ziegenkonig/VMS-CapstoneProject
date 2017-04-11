@@ -10,12 +10,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data //standard getters/setters
+@NoArgsConstructor
 @Entity
 @Table(name = "timesheets")
 public class Timesheet { //new summary timesheet
@@ -58,6 +59,7 @@ public class Timesheet { //new summary timesheet
     */
 	
 	@OneToMany(mappedBy="timesheet", cascade = CascadeType.ALL)
+	@OrderBy("createdDate DESC")
 	//@JoinTable(name="TIMESHEET_PAYSTUB", joinColumns = @JoinColumn(name = "timesheet_id"), inverseJoinColumns = @JoinColumn(name = "paystub_id"))
     private List<Paystub> paystubs; 
 	
@@ -89,7 +91,9 @@ public class Timesheet { //new summary timesheet
 		double noHours;
 		for(ProjectTimesheet pt:projTimesheets) {
 			noHours = pt.calcTotalHoursOfPT();
-			earned.add(pt.getProjemp().getPayRate().multiply(new BigDecimal(noHours)));
+			BigDecimal numHours = new BigDecimal(noHours);			
+			BigDecimal prt = pt.getProjemp().getPayRate();
+			earned = earned.add(prt.multiply(numHours));
 		}
 		return earned;
 	}

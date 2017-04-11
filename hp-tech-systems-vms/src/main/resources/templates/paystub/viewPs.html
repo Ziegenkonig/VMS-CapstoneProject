@@ -5,13 +5,42 @@
   <title id="pageTitle">VMS | View Paystub</title>
 </head>
 
-	<body>
-		<nav th:replace="base :: site-nav">
-		</nav>
-			<h4>Paystub X</h4>
-			<img src="http://www.pay-stubs.com/wp-content/uploads/2015/11/sample-pay-stub.png" alt="" height="400" width="400"/>
-			<br/>
-			<a href="http://localhost:8080/paystubs">Return to Paystubs</a>	
-	</body>
+<body>
+	<nav th:replace="base :: site-nav">
+	</nav>
+	
+	<!-- View Specific Paystub Details --> 
+	<main>
+		<p th:text="'Employee Name: ' + ${paystub.firstname} + ' ' + ${paystub.lastname}">Company Name</p>
+	    <p th:text="'Employee Address: ' + ${paystub.address} + ' ' + ${paystub.city} + ', ' + ${paystub.state}">bjones@companyname.com</p>
+	    <p th:text="'Date Generated: ' + ${#temporals.format(paystub.createdDate,'MM/dd/yyyy HH:mm')}">1562 SomeRoad Ave.</p>
+	    <p th:text="'Status: ' + ${paystub.status}">Bob Jones</p>
+	    <p th:text="${paystub.dateVoided} ? 'Date Voided: ' + ${#temporals.format(paystub.dateVoided,'MM/dd/yyyy HH:mm')}">1562 SomeRoad Ave.</p>
+	    <p th:text="'Check No: ' + ${paystub.checkNo}">Bob Jones</p>
+	    <p th:text="${paystub.checkDate} ? 'Check Date: ' + ${#temporals.format(paystub.checkDate,'MM/dd/yyyy HH:mm')}">1562 SomeRoad Ave.</p>
+	    <p th:text="'Period Start: ' + ${#temporals.format(paystub.periodStart,'MM/dd/yyyy')}">Memphis</p>
+	    <p th:text="'Period End: ' + ${#temporals.format(paystub.periodEnd,'MM/dd/yyyy')}">TN</p>
+	    <p th:text="'Net Pay: ' + ${paystub.netPay}">901-567-9345</p>
+	    <p th:text="'YTD Net Pay: ' + ${paystub.ytdNetPay}">901-567-9345</p>
+	    <p th:text="'Total: ' + ${paystub.total}">901-567-9345</p>
+	    <p th:text="'YTD Gross: ' + ${paystub.ytdGross}">901-567-9345</p>
+	    <p th:text="'YTD Deductions: ' + ${paystub.ytdDeductions}">901-567-9345</p>
+	    <p th:text="'Deductions: ' + ${paystub.deductions}">901-567-9345</p>
+	    <p th:text="'Federal Tax: ' + ${paystub.federalTax}">901-567-9345</p>
+	    <p th:text="'State Tax: ' + ${paystub.stateTax}">901-567-9345</p>
+	    <p th:text="'SS Tax: ' + ${paystub.ssTax}">901-567-9345</p>
+	    <p th:text="'Medicare Tax: ' + ${paystub.medicareTax}">901-567-9345</p>
+	    <p th:text="'Medical Insurance: ' + ${paystub.medInsurance}">901-567-9345</p>
+	    <p th:text="'401k: ' + ${paystub.a401k}">901-567-9345</p>
+	    <p th:text="'YTD Federal Tax: ' + ${paystub.ytdFederalTax}">901-567-9345</p>
+	    <p th:text="'YTD State Tax: ' + ${paystub.ytdStateTax}">901-567-9345</p>
+	    <p th:text="'YTD SS Tax: ' + ${paystub.ytdSsTax}">901-567-9345</p>
+	    <p th:text="'YTD Medicare Tax: ' + ${paystub.ytdMedicaretax}">901-567-9345</p>
+	    <p th:text="'YTD Medical Insurance: ' + ${paystub.ytdMedInsurance}">901-567-9345</p>
+	    <p th:text="'YTD 401k: ' + ${paystub.ytd401k}">901-567-9345</p>
+	</main>
+	
+	<footer th:replace="base :: site-footer"></footer>
+</body>
 
 </html>

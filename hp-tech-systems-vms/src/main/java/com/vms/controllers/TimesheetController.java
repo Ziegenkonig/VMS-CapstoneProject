@@ -1,8 +1,10 @@
 package com.vms.controllers;
 
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
+
+import com.vms.models.Timesheet;
+import com.vms.models.TimesheetStatus;
+import com.vms.services.TimesheetService;
+
 
 import com.vms.models.Employee;
 import com.vms.models.Project;
@@ -27,7 +35,8 @@ import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
 
 @Controller
-@SessionAttributes(value = {"editTS"})
+@SessionAttributes(value = {"editTS", "timesheet"})
+
 public class TimesheetController {
 	
 	@Autowired
@@ -45,6 +54,52 @@ public class TimesheetController {
 	@GetMapping("/timesheets")
 	public String allTimesheets(Model model) {
 
+
+	@Autowired
+	TimesheetService tSService = new TimesheetService();
+	
+	@GetMapping(value = "/timesheets")
+	public String viewTimesheets(Model model) {
+		List<Timesheet> timesheets = tSService.findAll();
+		model.addAttribute("timesheets", timesheets);
+		return "timesheet/timesheets";
+	}
+	
+	@GetMapping(value = "/timesheet/{id}")
+	public String viewTimesheet(@PathVariable("id") Integer tsId, Model model) {
+		Timesheet t = tSService.findById(tsId);
+		model.addAttribute("timesheet", t);
+		/*
+		List<String> statuses = new ArrayList<String>();
+		for(TimesheetStatus s : TimesheetStatus.values()) {
+			statuses.add(s.name());
+		}
+		*/
+		model.addAttribute("statuses", TimesheetStatus.values());
+		//String status = null;
+		//model.addAttribute("status", status);		
+		return "timesheet/viewT";
+	}
+	
+	@PostMapping("/timesheet/updateStatus")
+	public String updateStatus(@ModelAttribute("timesheet") Timesheet t,
+							   SessionStatus status) {
+		//t.setStatus(TimesheetStatus.valueOf(s));
+		tSService.edit(t);
+		status.setComplete();
+		return "redirect:/timesheet/" + t.getTimesheetId();
+	}
+	
+	//return associated timesheet to employee for edit
+	@GetMapping("/timesheet/return")
+	public String returnTimesheet(@RequestParam Integer tsId) {
+		Timesheet t = tSService.findById(tsId);
+		t.setStatus(TimesheetStatus.NOT_SUBMITTED);
+		tSService.edit(t);
+		return "timesheet/timesheets";
+	}
+	
+	
 		//Getting all timesheets
 		List<Timesheet> timesheets = timesheetService.findAll();
 		TimesheetStatus editCheck = TimesheetStatus.NOT_SUBMITTED;
@@ -71,6 +126,7 @@ public class TimesheetController {
 		periods.add(now);
 		for(int i = 0; i <= 30; i++)
 			periods.add(periods.get(i).plusWeeks(1));
+
 
 		//Also need to convert that list of dates into a list of strings
 		List<String> dates = new ArrayList<String>();
@@ -204,4 +260,5 @@ public class TimesheetController {
 		
 		return "redirect:/paystub/new/" + timesheet.getTimesheetId();
 }
+
 }

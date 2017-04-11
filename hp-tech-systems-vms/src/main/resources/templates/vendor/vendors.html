@@ -36,8 +36,10 @@
                 <td th:text="${vendor.state}"></td>
                 <td th:text="${vendor.phone}"></td>
                 <td><a th:href="@{/vendor/view/{path}(path=${vendor.name})}">View</a></td>
+
                 <td><a th:href="@{/vendor/edit/{path}(path=${vendor.vendorId})}">Edit</a></td>
                 <td><a th:href="@{/projects/{mode}(mode='byVendor',vId=${vendor.vendorId})}">View Projects</a></td>
+
             </tr>
         </tbody>
     </table>

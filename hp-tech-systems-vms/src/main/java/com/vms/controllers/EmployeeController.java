@@ -33,7 +33,6 @@ import com.vms.services.TimesheetService;
 @Controller
 @SessionAttributes({"employee", "states"})
 public class EmployeeController{
-
 	//Hooking up the EmployeeService to the EmployeeController
 	@Autowired
 	EmployeeService employeeService = new EmployeeService();

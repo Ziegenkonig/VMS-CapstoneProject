@@ -58,11 +58,13 @@ public class HomeController {
 	
 	//Renders employee/dashboard 
 	//linksto: timesheet/history(this) | timesheet/new(this) | paystub/history(this) | employee/edit(this)
+
 //	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 //	public String employeeDashboard(Model model) {
 //		return "employee/dashboard";
 //	}
 	
+
 	//renders paystub/history
 	//linksto: employee/dashboard(this)
 	@RequestMapping(value = "/paystubs", method = RequestMethod.GET)
@@ -76,14 +78,16 @@ public class HomeController {
 	public String viewPaystub(Model model) {
 		return "paystub/viewPs";
 	}
-	
+	/*
 	//renders timesheet/history
 	//linksto: employee/dashboard(this)
-//	@RequestMapping(value = "/timesheets", method = RequestMethod.GET)
-//	public String historyTimesheet(Model model) {
-//		return "timesheet/timesheets";
-//	}
-	
+
+	@RequestMapping(value = "/timesheets", method = RequestMethod.GET)
+	public String historyTimesheet(Model model) {
+		return "timesheet/timesheets";
+	}
+	*/
+
 	//renders timesheet/new
 	//linksto: admin(this)
 //	@RequestMapping(value = "/timesheet/new", method = RequestMethod.GET)

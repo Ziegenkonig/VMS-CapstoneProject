@@ -2,6 +2,7 @@ package com.vms.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,14 +17,20 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+
+import org.hibernate.annotations.Type;
+
+import lombok.Data;
+import lombok.NoArgsConstructor; 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vms.services.ProjectService;
 import com.vms.services.VendorService;
 
-import lombok.Data; 
 
 @Data //standard getters/setters
+@NoArgsConstructor
 @Entity
 @Table(name="invoices")
 public class Invoice {
@@ -40,8 +47,9 @@ public class Invoice {
 	@ManyToMany(mappedBy = "invoices", cascade = CascadeType.ALL)
     private List<ProjectTimesheet> projTimesheets; 
 	
-    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDate createdDate;
+	@Type(type = "org.hibernate.type.ZonedDateTimeType")
+    @Column(updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private ZonedDateTime createdDate;
 	
 //fields to store info from other tables
 	//from project
@@ -130,7 +138,7 @@ public class Invoice {
 	//Called before .save
 	@PrePersist
 	protected void onCreate() {
-		createdDate = LocalDate.now();
+		createdDate = ZonedDateTime.now();
 	}
 	
 	//toString
