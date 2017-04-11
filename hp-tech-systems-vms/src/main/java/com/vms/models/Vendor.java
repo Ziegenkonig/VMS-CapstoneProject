@@ -1,14 +1,19 @@
 package com.vms.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.vms.utilities.mail.Mail;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -65,8 +70,18 @@ public class Vendor {
 	@Column(length = 20, nullable = false)
 	private String phone; //not including non-numerical characters
 	
+	@OneToMany(mappedBy="vendor")//, cascade = CascadeType.ALL)
+	private List<Project> projects;
+	
 	public String toString() {
 		return name;
+	}
+	
+	public void notifyInvoiceCompletion(){
+		//this.email = the current instance of vendor that has an invoice created
+		String message = "An employee has submitted an invoice. Go here to check it: http://localhost:8080/invoice";
+		String subject = "An invoice has been created";
+		Mail.sendEmail(this.primaryEmail, message, subject);
 	}
 	
 }

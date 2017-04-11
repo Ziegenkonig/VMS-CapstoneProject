@@ -1,6 +1,5 @@
 package com.vms.models;
 
-
 //import java.util.Date;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -38,10 +37,17 @@ public class LocalDateAttributeConverter implements AttributeConverter<LocalDate
         }
 
         // Fixed implementation considering server timezone
-
-
     	return sqlDate.toLocalDate();
+    	/*
+        Instant instant = Instant.ofEpochMilli(sqlDate.getTime());
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZONE_AMERICA_CENTRAL);
+        LocalDate localDate = localDateTime.toLocalDate();
+<<<<<<< HEAD
+=======
 
+>>>>>>> 23d765e63d376df8ec1e9c2726082e3b390ecc12
+        return localDate;
+        */
     	//return (sqlDate == null ? null : sqlDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
     }
 }

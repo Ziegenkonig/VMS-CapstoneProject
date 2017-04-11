@@ -42,7 +42,7 @@ public class Project {
 	
 	@NotNull()
 	@Size(min = 2, max = 64, message = "{irregular.size}")
-	@Pattern(regexp = "[a-zA-Z\\s-_.]*", message = "{irregular.pattern}")
+	@Pattern(regexp = "[a-zA-Z\\s-_.']*", message = "{irregular.pattern}")
 	@Column(length = 64, nullable = false)
 	private String name;
 	
@@ -66,6 +66,16 @@ public class Project {
 	
 	@OneToMany(mappedBy = "project")//, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ProjectEmployee> projemps;
+	
+	public BigDecimal remainingEmpPayRate() {
+		BigDecimal rate = BigDecimal.ZERO;
+		BigDecimal remaining = BigDecimal.ZERO;
+		for(ProjectEmployee pe : projemps) {
+			rate = rate.add(pe.getPayRate());
+		}
+		remaining = billingRate.subtract(rate);
+		return remaining;
+	}
 	
 	
 	//Methods

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace= "base :: site-head">
+  <title id="pageTitle">VMS | All Projects</title>
+</head>
+
+	<body>
+		<nav th:replace="base :: site-nav">
+		</nav>
+		
+		<h1>Projects</h1>
+		<a th:href="@{/project/new}">Create New Project</a>
+		<table id="projectTable"
+		       class="table table-bordered"
+		       th:if="${projects != null}"> <!--  and not #list.isEmpty(projects) -->
+        <thead>
+            <tr class="center middle">
+                <th>Name</th>
+                <th>Billing Rate</th>
+                <th>Client Name</th>
+                <th>Client Location</th>
+                <th>Vendor</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="project : ${projects}">
+                <td th:text="${project.getName()}"></td>
+                <td th:text="${project.getBillingRate()}"></td>
+                <td th:text="${project.getClientName()}"></td>
+                <td th:text="${project.getClientLocation()}"></td>
+                <td th:text="${project.getVendor().getName()}"></td>
+                <td><a th:href="@{/project/view/{path}(path=${project.getName()})}">View</a></td>
+                <td><a th:href="@{/project/edit/{path}(path=${project.getName()})}">Edit</a></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <footer th:replace="base :: site-footer"></footer>
+    
+	</body>
+
+</html>

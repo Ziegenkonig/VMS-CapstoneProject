@@ -16,9 +16,9 @@
 		<ul th:each = "timesheet : ${openTimesheets}">
 			<li>
 				<b> <span  th:text = "'Pay Period: ' + ${timesheet.weekStarting}"></span> </b>
-				<span th:text = "'(Not Submitted)'"></span>
-				<b> <a th:href="@{/timesheet/edit/{path}(path=${timesheet.timesheetId})}"> Edit </a> </b>
-				<a th:href="@{/timesheet/view/{path}(path=${timesheet.timesheetId})}"> View </a>
+				<span th:text = "'(' + ${timesheet.status.toString()} + ')'"></span>
+				<b> <a th:if="${timesheet.status.toString() != 'PENDING'}" th:href="@{/timesheet/edit/{path}(path=${timesheet.timesheetId})}"> Edit </a> </b>
+				<a th:if="${timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/timesheet/view/{path}(path=${timesheet.timesheetId})}"> View </a>
 			</li> 
 		</ul>
 		
@@ -29,10 +29,10 @@
 			<li>
 				<b> <span  th:text = "'Pay Period: ' + ${paystub.periodStart}"></span> </b>
 				<span th:text = "'(Issued)'"></span>
-				<a th:href="@{/paystub/view/{path}(path=${paystub.paystubId})}"> View </a>
+				<a th:href="@{/paystub/{path}(path = ${paystub.paystubId})}"> View </a>
 			</li> 
 		</ul>
-		<a th:href="@{/paystubs}"> View Past Paystubs </a>
+		<a th:href="@{/paystubs/byEmployee(empId=${e.empId})}"> View Past Paystubs </a>
 		<!-- Tax Information -->
 		<h3> Tax Information </h3>
 			<p> Coming Soon </p>

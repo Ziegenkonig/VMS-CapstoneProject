@@ -9,26 +9,12 @@
 
 	<nav th:replace="base :: site-nav('none')">
 	</nav>
-
-	<p th:text = "'Employee Name: ' + ${timesheet.employee.firstname} + ' ' + ${timesheet.employee.lastname}"> </p>
-    <p th:text = "'Status: ' + ${timesheet.status}"> </p>
-    <p th:text = "'Pay Period: ' + ${timesheet.weekStarting}"> </p>
-	<div th:each = "projTimesheet : ${timesheet.projTimesheets}"> 
-		<p th:text = "'Project: ' + ${projTimesheet.projemp.project.name}"></p>
-		<p th:text = "'Payrate: ' + ${projTimesheet.projemp.payRate}" style = "text-indent: 2em;"></p>
-		<p th:text = "'Vendor: ' + ${projTimesheet.projemp.project.clientName}" style = "text-indent: 2em;"></p>
-		<p style = "text-indent: 2em;"><b>Hours</b></p>
-		<div th:each = "week, iter : ${projTimesheet.weeks}">
-			<p th:text = "${timesheet.weekStarting} + ': ' + ${week.hours1}" style = "text-indent: 2em;"> </p>
-			<p th:text = "${timesheet.weekStarting.plusDays(1)} + ': ' + ${week.hours2}" style = "text-indent: 2em;"> </p>
-			<p th:text = "${timesheet.weekStarting.plusDays(2)} + ': ' + ${week.hours3}" style = "text-indent: 2em;"> </p>
-			<p th:text = "${timesheet.weekStarting.plusDays(3)} + ': ' + ${week.hours4}" style = "text-indent: 2em;"> </p>
-			<p th:text = "${timesheet.weekStarting.plusDays(4)} + ': ' + ${week.hours5}" style = "text-indent: 2em;"> </p>
-			<p th:text = "${timesheet.weekStarting.plusDays(5)} + ': ' + ${week.hours6}" style = "text-indent: 2em;"> </p>
-			<p th:text = "${timesheet.weekStarting.plusDays(6)} + ': ' + ${week.hours7}" style = "text-indent: 2em;"> </p>
-		</div>
-		<b><span th:text = "'Total Hours: ' + ${projTimesheet.calcTotalHoursOfPT()}"></span></b>	
-	</div>
+	
+	<h4 th:text = "'Employee Name: ' + ${timesheet.employee.firstname} + ' ' + ${timesheet.employee.lastname}"></h4>
+	<h4 th:if = "${payPeriod == 1}">Pay Period Type: Weekly</h4> <h4 th:if = "${payPeriod == 2}">Pay Period Type: Bi-Weekly</h4>
+	<h4 th:text = "'Pay Period: ' + ${timesheet.weekStarting.plusDays(1)}"></h4>
+	
+	<div th:replace = "timesheet/fragments :: viewTimesheet"></div>
 	
 	<form action="#" th:action="@{'/timesheet/approve/' + ${id}}" method="post">	
 		<input type="submit" class = "button" value="Approve" /> <input type="reset" value="Reset" />

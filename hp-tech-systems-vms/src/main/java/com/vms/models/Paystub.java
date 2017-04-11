@@ -45,9 +45,9 @@ public class Paystub {
     @Column//(updatable = false)//, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private ZonedDateTime checkDate;
 	
-	@Column(nullable = false)
-	private PaystubStatus status;
-	    
+    @Column(nullable = false)
+    private PaystubStatus status;
+    
 // calculated or imported fields
 	//pay period start and end (14/7 day interval)
     @Column(nullable = false)
@@ -106,7 +106,6 @@ public class Paystub {
 	private BigDecimal ytdMedInsurance;
 	private BigDecimal ytd401k;
 	
-
 	@ManyToOne//(cascade = CascadeType.ALL)
 	@JoinColumn(name = "timesheet_id")
     private Timesheet timesheet;
@@ -159,8 +158,7 @@ public class Paystub {
 		this.ytdMedInsurance = this.medInsurance;
 		this.ytd401k = this.a401k;
 	}
-	
-	//constructor
+
 	public Paystub(Timesheet ts, Paystub previous) { //the input here is the list of timesheets from query that it should be generated from, and the previous paystub also from query
 		this.timesheet = ts;
 		this.prevPaystubId = previous.getPaystubId();
@@ -203,6 +201,9 @@ public class Paystub {
 		this.ytdMedicaretax = previous.getMedicareTax().add(this.medicareTax);
 		this.ytdMedInsurance = previous.getMedInsurance().add(this.medInsurance);
 		this.ytd401k = previous.getA401k().add(this.a401k);
+		
+		//send an email upon creation
+//		emp.notifyPaystubCompletion();
 	}
 		
 	@PrePersist

@@ -25,9 +25,9 @@
                 <th>Date Voided</th>
                 <th>Check No</th>
                 <th>Check Date</th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th th:if="${employee.permissionLevel > 1}"></th>
+                <th th:if="${employee.permissionLevel > 1}"></th>
+                <th th:if="${employee.permissionLevel > 1}"></th>
             </tr>
         </thead>
         <tbody>
@@ -41,9 +41,9 @@
                 <td th:text="${ps.checkNo != 0} ? ${ps.checkNo}"></td>
                 <td th:text="${ps.checkDate} ? ${#temporals.format(ps.checkDate,'MM/dd/yyyy HH:mm')}"></td>
                 <td><a th:href="@{/paystub/{path}(path=${ps.paystubId})}">View</a></td>
-                <td><a th:if="${ps.status.toString() != 'VOIDED'}" th:href="@{/paystub/addCheck(pId=${ps.paystubId})}">Issue Check</a></td>
-                <td><a th:if="${ps.timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/paystub/regenerate(pId=${ps.paystubId})}">Regenerate</a></td>
-                <td><a th:if="${ps.timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/paystub/returnTimesheet(psId=${ps.paystubId})}">Return Timesheet</a>
+                <td th:if="${employee.permissionLevel > 1}"><a th:if="${ps.status.toString() != 'VOIDED' and employee.permissionLevel > 1}" th:href="@{/paystub/addCheck(pId=${ps.paystubId})}">Issue Check</a></td>
+                <td th:if="${employee.permissionLevel > 1}"><a th:if="${ps.timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/paystub/regenerate(pId=${ps.paystubId})}">Regenerate</a></td>
+                <td th:if="${employee.permissionLevel > 1}"><a th:if="${ps.timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/paystub/returnTimesheet(psId=${ps.paystubId})}">Return Timesheet</a>
                 	<a th:if="${ps.timesheet.status.toString() == 'NOT_SUBMITTED'}" th:href="@{/timesheet/{id}(id=${ps.timesheet.timesheetId})}">View Returned Timesheet</a></td>
             </tr>
         </tbody>

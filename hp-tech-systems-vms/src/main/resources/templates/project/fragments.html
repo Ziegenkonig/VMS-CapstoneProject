@@ -12,7 +12,7 @@
 			<label for="project.vendor">Vendor:</label>
 	    		<select name="vendor">
 				   <option th:each="v : ${vendors}"
-						th:selected="${project.vendor != null AND project.vendor == v}"
+						th:selected="${project.vendor != null AND project.vendor.vendorId == v.vendorId}"
 						th:value="${v.vendorId}"
 						th:text="${v.name}">
 				   </option>
@@ -26,7 +26,7 @@
 		        <h4 >Client Company</h4>
 		        <h5 th:if = "${#fields.hasErrors('clientName')}" th:errors = "*{clientName}" style = "Color: red"></h5>
 		        <input type = "text" name = "clientName" th:field = "*{clientName}" />
-		        <h4 >Client Location</h4>
+		        <h4 >Client Location (Address)</h4>
 		        <h5 th:if = "${#fields.hasErrors('clientLocation')}" th:errors = "*{clientLocation}" style = "Color: red"></h5>
 		        <input type = "text" name = "clientLocation" value="" th:field="*{clientLocation}" />
 		        <h4></h4>

@@ -1,10 +1,12 @@
 package com.vms.controllers;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 //Spring imports
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-
 import com.vms.models.Employee;
 import com.vms.models.Paystub;
 import com.vms.models.States;
@@ -27,6 +30,7 @@ import com.vms.services.TimesheetService;
 @Controller
 @SessionAttributes({"employee", "states"})
 public class EmployeeController{
+
 	//Hooking up the EmployeeService to the EmployeeController
 	@Autowired
 	EmployeeService employeeService = new EmployeeService();
@@ -99,7 +103,7 @@ public class EmployeeController{
 	  Employee e = employeeService.findOne(1);
 	  
 	  List<Paystub> issuedPaystubs = paystubService.findIssued(e.getEmpId());
-	  List<Timesheet> openTimesheets = timesheetService.openTimesheets(e);
+	  List<Timesheet> openTimesheets = timesheetService.dashboardTimesheets(e);
 	  
 	  model.addAttribute("e", e);
 	  model.addAttribute("openTimesheets", openTimesheets);
@@ -107,4 +111,13 @@ public class EmployeeController{
 	  
 	  return "employee/dashboard";
   }
+  
+  	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public String adminDashboard(Model model) {
+  		Employee admin = employeeService.findOne(6);
+  		//Employee owner =  employeeService.findOne(11);
+  		//model.addAttribute("emp", owner);
+  		model.addAttribute("emp", admin);
+		return "admin";
+	}
 }

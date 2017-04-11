@@ -11,8 +11,10 @@
 		<div class="formAlignCenter" align = "center">
 		
 		    <h1>New Vendor</h1>
-		    <form action="#" th:action="@{/vendor/new/}" th:object="${vendor}" method="post">
+		    <form action="#" th:action="@{/vendor/new}" th:object="${vendor}" method="post">
+					
 					<div th:replace = "vendor/fragments :: VendorForm"></div>
+
 		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 		    </form>
 		    

@@ -10,8 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -35,9 +35,9 @@ public class VendorController {
 	}
 	
 	//displays a single vendor -working
-	@GetMapping(value = "/vendor/view/{name}")
-	public String viewVendor(@PathVariable String name, Model model) {
-		model.addAttribute("vendor", vendorService.findByName(name));
+	@GetMapping(value = "/vendor/view")
+	public String viewVendor(@RequestParam("vId") Integer vId, Model model) {
+		model.addAttribute("vendor", vendorService.findOne(vId));
 		return "vendor/viewV";
 	}
 	
@@ -64,21 +64,21 @@ public class VendorController {
 		
 		model.addAttribute("states", States.values());
 		
-		return "vendor/viewV";
+		return "redirect:/vendor/view?vId=" + vendor.getVendorId();
 	}
 	
 	//get an vendor object and populate form fields -working
-	@GetMapping(value = "/vendor/edit/{id}")
-	public String editVendor(@PathVariable Integer id, 
+	@GetMapping(value = "/vendor/edit")
+	public String editVendor(@RequestParam("vId") Integer vId, 
 							 Model model) {
 		
-		model.addAttribute("vendor", vendorService.findOne(id));
+		model.addAttribute("vendor", vendorService.findOne(vId));
 		model.addAttribute("states", States.values());
 		
 		return "vendor/editV";
 	}
 	
-	@PostMapping(value = "/vendor/edit/{id}")
+	@PostMapping(value = "/vendor/edit")
 	public String updateVendor(@ModelAttribute("vendor")@Valid Vendor vendor, 
 							   BindingResult bindingResult,
 							   SessionStatus sessionStatus,
@@ -93,7 +93,7 @@ public class VendorController {
 		
 		model.addAttribute("states", States.values());
 		
-		return "vendor/viewV";
+		return "redirect:/vendor/view?vId=" + vendor.getVendorId();
 	}
 	
 	

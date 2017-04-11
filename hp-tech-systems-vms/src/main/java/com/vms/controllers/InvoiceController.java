@@ -38,7 +38,6 @@ public class InvoiceController {
 	
 	//CREATING NEW INVOICE
 	//Needs countermeasures to make sure only authorized people can view
-
 	@GetMapping("/invoice/new")
 	public String invoiceForm(Model model) {
 		
@@ -71,7 +70,7 @@ public class InvoiceController {
 		//(within pay period)
 		List<ProjectTimesheet> projectTimesheets = new ArrayList<ProjectTimesheet>();
 		for (Project project : projects)
-			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project, date));
+			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project.getProjectId(), date));
 
 		//Creating new invoice
 		Invoice newInvoice = new Invoice(projectTimesheets);
@@ -101,7 +100,7 @@ public class InvoiceController {
 	public String regenerateInvoice(@PathVariable("id") Integer invoiceId) {
 		
 		Invoice regenInvoice = invoiceService.findById(invoiceId);
-
+		
 		//Grabbing vendor object associated with the name selected by user
 		Vendor v = vendorService.findOne(regenInvoice.getVendorId());
 		
@@ -112,7 +111,7 @@ public class InvoiceController {
 		//(within pay period)
 		List<ProjectTimesheet> projectTimesheets = new ArrayList<ProjectTimesheet>();
 		for (Project project : projects)
-			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project, regenInvoice.getPeriodStart()));
+			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project.getProjectId(), regenInvoice.getPeriodStart()));
 
 		//Creating new invoice
 		regenInvoice = new Invoice(projectTimesheets);
