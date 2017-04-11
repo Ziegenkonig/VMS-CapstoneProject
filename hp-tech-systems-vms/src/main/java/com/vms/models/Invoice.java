@@ -10,23 +10,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-
 import org.hibernate.annotations.Type;
 
 import lombok.Data;
-import lombok.NoArgsConstructor; 
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.vms.services.ProjectService;
-import com.vms.services.VendorService;
+import lombok.NoArgsConstructor;
 
 
 @Data //standard getters/setters
@@ -88,12 +81,7 @@ public class Invoice {
 	private String phone;
 	
 	//employer info saved in global variables somewhere
-	
-	//default constructor
-	public Invoice() {
 		
-	}
-	
 	//constructor
 	public Invoice(List<ProjectTimesheet> projTimesheets) { 
 		//Setting timesheets

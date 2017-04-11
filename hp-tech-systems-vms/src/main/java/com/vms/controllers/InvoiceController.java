@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -70,7 +71,7 @@ public class InvoiceController {
 		//(within pay period)
 		List<ProjectTimesheet> projectTimesheets = new ArrayList<ProjectTimesheet>();
 		for (Project project : projects)
-			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project.getProjectId(), date));
+			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project, date));
 
 		//Creating new invoice
 		Invoice newInvoice = new Invoice(projectTimesheets);
@@ -111,7 +112,7 @@ public class InvoiceController {
 		//(within pay period)
 		List<ProjectTimesheet> projectTimesheets = new ArrayList<ProjectTimesheet>();
 		for (Project project : projects)
-			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project.getProjectId(), regenInvoice.getPeriodStart()));
+			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project, regenInvoice.getPeriodStart()));
 
 		//Creating new invoice
 		regenInvoice = new Invoice(projectTimesheets);

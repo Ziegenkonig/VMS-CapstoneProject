@@ -5,13 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.vms.models.Employee;
 import com.vms.models.Paystub;
 import com.vms.models.PaystubStatus;
 import com.vms.models.Timesheet;
-
-
-import com.vms.models.TimesheetStatus;
 
 
 public interface PaystubRepository extends JpaRepository<Paystub, Integer>{

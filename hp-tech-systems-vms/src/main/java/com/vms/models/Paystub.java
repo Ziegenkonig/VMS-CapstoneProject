@@ -47,10 +47,7 @@ public class Paystub {
 	
 	@Column(nullable = false)
 	private PaystubStatus status;
-	
-    @Column(nullable = false)
-    private PaystubStatus status;
-    
+	    
 // calculated or imported fields
 	//pay period start and end (14/7 day interval)
     @Column(nullable = false)
@@ -163,14 +160,7 @@ public class Paystub {
 		this.ytd401k = this.a401k;
 	}
 	
-
-	//default constructor
-	public Paystub() {
-		
-	}
-	
 	//constructor
-
 	public Paystub(Timesheet ts, Paystub previous) { //the input here is the list of timesheets from query that it should be generated from, and the previous paystub also from query
 		this.timesheet = ts;
 		this.prevPaystubId = previous.getPaystubId();
