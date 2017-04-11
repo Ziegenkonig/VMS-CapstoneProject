@@ -18,7 +18,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data //standard getters/setters
 @Entity
 @Table(name = "project_timesheets")
@@ -43,7 +45,7 @@ public class ProjectTimesheet {
 	@JoinColumn(name = "project_employee_id")
 	private ProjectEmployee projemp;
 	
-	@OneToMany(mappedBy="projTimesheet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="projTimesheet", cascade = CascadeType.ALL)
 	private List<TimesheetRow> weeks;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -84,5 +86,4 @@ public class ProjectTimesheet {
 				" Starting: " + timesheet.getWeekStarting());
 	}
 	
-
 }

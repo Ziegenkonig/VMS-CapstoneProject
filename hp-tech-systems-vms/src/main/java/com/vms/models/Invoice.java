@@ -16,13 +16,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.vms.services.ProjectService;
+import com.vms.services.VendorService;
+
 import lombok.Data; 
 
 @Data //standard getters/setters
 @Entity
 @Table(name="invoices")
 public class Invoice {
-
+	
 	@Id @GeneratedValue
 	private int invoiceId;
 	// reference
@@ -32,7 +37,7 @@ public class Invoice {
 	@Enumerated(EnumType.STRING)
 	private InvoiceStatus status;
 	
-	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "invoices", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "invoices", cascade = CascadeType.ALL)
     private List<ProjectTimesheet> projTimesheets; 
 	
     @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -76,6 +81,11 @@ public class Invoice {
 	
 	//employer info saved in global variables somewhere
 	
+	//default constructor
+	public Invoice() {
+		
+	}
+	
 	//constructor
 	public Invoice(List<ProjectTimesheet> projTimesheets) { 
 		//Setting timesheets
@@ -91,7 +101,7 @@ public class Invoice {
 			this.periodEnd = this.periodStart.plusDays(7);
 		
 		//Setting payment_due
-		this.paymentDue = this.paymentDue.plusMonths(1);
+		this.paymentDue = this.periodEnd.plusMonths(1);
 		
 		//Grabbing the project/vendor out of the timesheet object and using it to set all kinds of info
 		Project proj = proj_emp.getProject();

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vms.models.Employee;
 import com.vms.models.Paystub;
+import com.vms.models.PaystubStatus;
 import com.vms.repositories.PaystubRepository;
 
 @Service
@@ -28,6 +29,11 @@ public class PaystubService {
 	//basic repo methods
 	public List<Paystub> findAll() {
 		return paystubRepo.findAll();
+	}
+	
+	//find all issued paystubs associated with a given employee
+	public List<Paystub> findIssued(Integer id) {
+		return paystubRepo.findByEmpIdAndStatusOrderByPeriodStartDesc(id, PaystubStatus.ISSUED);
 	}
 	
 	public Paystub findById(Integer id) {

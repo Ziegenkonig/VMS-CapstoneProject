@@ -53,6 +53,7 @@ public class TimesheetRow {
 	
 	//methods
 	public TimesheetRow() {
+		
 		this.hours1 = 0;
 		this.hours2 = 0;
 		this.hours3 = 0;
@@ -60,12 +61,24 @@ public class TimesheetRow {
 		this.hours5 = 0;
 		this.hours6 = 0;
 		this.hours7 = 0;
+		
 	}
 	
 	public TimesheetRow(ProjectTimesheet pt, int week_no) {
 		this();
+		
 		this.projTimesheet = pt;
 		this.weekNo = week_no;
+	}
+	
+	public void updateHours(Integer[] hours) {
+		this.hours1 = hours[0];
+		this.hours2 = hours[1];
+		this.hours3 = hours[2];
+		this.hours4 = hours[3];
+		this.hours5 = hours[4];
+		this.hours6 = hours[5];
+		this.hours7 = hours[6];
 	}
 	
 	public int calculateTotalHoursOfTR() {
