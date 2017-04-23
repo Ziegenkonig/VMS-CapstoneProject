@@ -1,16 +1,6 @@
-title {
-    
+body{
+	padding:.75%;
 }
-
-p {
-    text-align:justify;
-}
-
-body {
-	background-color = #353030
-	
-}
-
-.content {
-	width: 80%;
+.dropdown{
+	display: inline-block;
 }
