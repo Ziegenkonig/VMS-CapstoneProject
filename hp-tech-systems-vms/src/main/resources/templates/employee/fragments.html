@@ -6,7 +6,7 @@
 </head>
 
 	<body>
-	
+
 		<!-- Fragment that displays 3 columns with text and text fields underneath them -->
 		<div align = "center" th:fragment = "EmployeeRegisterForm">
 	        	<form action="#" th:action="@{/register}" th:object="${employee}" method="post">
@@ -33,7 +33,8 @@
 							<h5 th:if = "${#fields.hasErrors('lastname')}" th:errors = "*{lastname}" style = "Color: red"></h5>
 					        <input type="text" th:field="*{lastname}" />
 				        </div>
-				        <div class = "fixed">
+		        <div class = "fixed">
+							<h4>Email</h4>
 					        <h5 th:if = "${#fields.hasErrors('email')}" th:errors = "*{email}" style = "Color: red"></h5>
 					        <input type="text" th:field="*{email}" />
 				        </div>
@@ -53,8 +54,8 @@
 					        <h4>State</h4>
 					        <select th:field = "*{state}">
 		 					<option value = "0" > Select State </option>
-		 					<option th:each = "state : ${states}" 
-		 							th:value = "${state}" 
+		 					<option th:each = "state : ${states}"
+		 							th:value = "${state}"
 		 							th:text = "${state}"></option>
 		 					</select>
 				        </div>
@@ -63,7 +64,7 @@
         			<input type="submit" value="Submit" /> <input type="reset" value="Reset" />
 		     	</form>
 		</div>
-		
+
 		<div align = "center" th:fragment = "EmployeeEditForm">
 	        	<form action="#" th:action="@{'/editUserProfile/' + ${employee.empId}}" th:object="${employee}" method="post">
 		        	<div class = "container">
@@ -110,8 +111,8 @@
 					        <h4>State</h4>
 					        <select th:field = "*{state}">
 		 					<option value = "0" > Select State </option>
-		 					<option th:each = "state : ${states}" 
-		 							th:value = "${state}" 
+		 					<option th:each = "state : ${states}"
+		 							th:value = "${state}"
 		 							th:text = "${state}"></option>
 		 					</select>
 				        </div>
@@ -120,7 +121,7 @@
         			<h5><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></h5>
 		     	</form>
 		</div>
-	
+
 	</body>
 
 </html>
