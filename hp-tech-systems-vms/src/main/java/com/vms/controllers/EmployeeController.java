@@ -119,4 +119,10 @@ public class EmployeeController{
   		model.addAttribute("emp", admin);
 		return "admin";
 	}
+  	
+  	@GetMapping("/employees")
+  	public String viewEmployees(Model model) {
+  		model.addAttribute("employees", employeeService.findAll());
+  		return "employee/employees";
+  	}
 }

@@ -17,6 +17,7 @@
 				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
 				<li><a th:href="@{/vendors}">View Vendor Overview</a></li>
 				<li><a th:href="@{/}" onclick="return false;">Add New Employee Account --disabled</a></li>
+				<li><a th:href="@{/employees}">Manage Employees</a></li>
 				<li th:if="${emp.permissionLevel == 3}"><a th:href="@{/}" onclick="return false;">Change Employee Permission Level (owner only) --disabled</a></li>
 				<li><a th:href="@{/projects/all}">Add Employees To Project</a></li>
 				<li><a th:href="@{/timesheet/new}">Issue New Timesheet</a></li>

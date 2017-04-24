@@ -18,18 +18,18 @@
                 <th>Name</th>
                 <th>Hire Date</th>
                 <th>Active</th>
-                <th></th>
-                <th></th>
+                <!-- <th></th> -->
+                <!-- <th></th>  -->
             </tr>
         </thead>
         <tbody>
             <tr th:each="e : ${employees}">
-                <td th:text="${e.firstname} + ' ' + ${e.lastname}"></td>
+                <td><a th:href="@{/editUserProfile/{id}(id=${e.empId})}" th:text="${e.firstname} + ' ' + ${e.lastname}">View</a></td>
                 <td th:text="${e.hireDate}"></td>
-                <td th:if="${e.status} == true" th:text="Yes"></td>
-                <td th:if="${e.status} == false" th:text="No"></td>
-                <td><a th:href="@{/editUserProfile}">View</a></td>
-                <td><a th:href="@{/vendor/edit/{path}(path=${vendor.name})}">Edit</a></td>
+                <td th:if="${e.active} == true" th:text="Yes"></td>
+                <td th:if="${e.active} == false" th:text="No"></td>
+                <!-- <td><a th:href="@{/editUserProfile/{id}(id=${e.empId})}">View</a></td> -->
+                <!-- <td><a th:href="@{/editUserProfile/{id}(path=${vendor.name})}">Edit</a></td> -->
             </tr>
         </tbody>
     </table>
