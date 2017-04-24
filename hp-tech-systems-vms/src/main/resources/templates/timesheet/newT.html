@@ -1,49 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace= "base :: site-head">
-	  <title id="pageTitle">VMS | New Timesheet</title>
-	</head>
+<head th:replace="base :: site-head">
+<title id="pageTitle">VMS | New Timesheet</title>
+</head>
 
 <body>
 
-	<nav th:replace="base :: site-nav('none')">
-	</nav>
-	
-		<div class="formAlignCenter" align = "center">
-		
-		    <h1>New Timesheet</h1>
-		    
-		    <form action="#" th:action="@{/timesheet/new}" th:object="${tf}" method="post">
-				
-				<!-- Cycles through every vendor and includes their names into the list -->
-				
-				<h4>Select Pay Period</h4>
-				<select th:field = "*{startDate}">
- 					<!-- <option value = "0" > Select Pay Period </option> -->
- 					<option th:each = "date : ${dates}" 
- 							th:value = "${date}" 
- 							th:text = "${#temporals.format(date, 'MM/dd/yyyy')}"></option>
-				</select>
-				
-				<!-- Cycles through every project-timesheet and adds their dates to the list with no repeating dates -->
-				
-				
-				<h4>Select Employee</h4>
-		        <select th:field = "*{e}">
- 					<!-- <option th:value = "0"> Select Employee </option>  -->
- 					<option th:each = "employee : ${employees}"
- 							th:value = "${employee.empId}"
- 							th:text = "${employee.getLastname()} + ', ' + ${employee.getFirstname()}"></option>
-				</select> 
-				
-				
-				
-				<h4></h4>
-		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-		    </form>
-		</div>
+	<nav th:replace="base :: site-nav('none')"></nav>
+
+	<div class="formAlignCenter" align="center">
+
+		<h1>New Timesheet</h1>
+
+		<form action="#" th:action="@{/timesheet/new}" th:object="${tf}"
+			method="post">
+
+			<!-- Cycles through every vendor and includes their names into the list -->
+
+			<h4>Select Pay Period</h4>
+			<select th:field="*{startDate}">
+				<!-- <option value = "0" > Select Pay Period </option> -->
+				<option th:each="date : ${dates}" th:value="${date}"
+					th:text="${#temporals.format(date, 'MM/dd/yyyy')}"></option>
+			</select>
+
+			<!-- Cycles through every project-timesheet and adds their dates to the list with no repeating dates -->
+
+
+			<h4>Select Employee</h4>
+			<select th:field="*{e}">
+				<!-- <option th:value = "0"> Select Employee </option>  -->
+				<option th:each="employee : ${employees}"
+					th:value="${employee.empId}"
+					th:text="${employee.getLastname()} + ', ' + ${employee.getFirstname()}"></option>
+			</select>
+
+
+
+
+			<p>
+				<input type="reset" value="Reset" style="color: red;" /> <input
+					type="submit" value="Submit" style="color: green;" />
+
+			</p>
+		</form>
+	</div>
 	<footer th:replace="base :: site-footer"></footer>
-		
-	</body>
+
+</body>
 </html>
