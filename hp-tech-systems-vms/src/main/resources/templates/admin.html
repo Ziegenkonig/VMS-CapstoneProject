@@ -1,33 +1,95 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace= "base :: site-head">
-  <title id="pageTitle">VMS | Admin Dashboard</title>>
+<head th:replace="base :: site-head">
+<title id="pageTitle">VMS | Admin Dashboard</title>>
 </head>
 
-	<body>
-		<nav th:replace="base :: site-nav('admin')">
-		</nav>
-		
-		<main>
-			<h5 th:text="'Logged in as: ' + ${emp.getFirstname()} + ' ' + ${emp.getLastname()}"></h5>
-			<ul>
-				<li><a th:href="@{/project/new}">Add a Project</a></li>
-				<li><a th:href="@{/projects/all}">View Project Overview</a></li>
-				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
-				<li><a th:href="@{/vendors}">View Vendor Overview</a></li>
-				<li><a th:href="@{/}" onclick="return false;">Add New Employee Account --disabled</a></li>
-				<li th:if="${emp.permissionLevel == 3}"><a th:href="@{/}" onclick="return false;">Change Employee Permission Level (owner only) --disabled</a></li>
-				<li><a th:href="@{/projects/all}">Add Employees To Project</a></li>
+<body>
+	<nav th:replace="base :: site-nav('admin')"></nav>
+
+	<main>
+	<h5
+		th:text="'Logged in as: ' + ${emp.getFirstname()} + ' ' + ${emp.getLastname()}"></h5>
+	<ul>
+
+
+	</ul>
+	</main>
+
+
+
+	<div class="main-menu">
+		<div class="dropdown">
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				data-toggle="dropdown">
+				Timesheet <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
 				<li><a th:href="@{/timesheet/new}">Issue New Timesheet</a></li>
-				<li><a th:href="@{/timesheets/byStatus(status='PENDING')}">Approve Pending Timesheets</a></li>
-				<li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>
-				<li><a th:href="@{/paystubs/all(empId=${emp.empId})}">Paystub History</a></li>
-				<li><a th:href="@{/invoice/new}">Issue Invoice</a></li>
-				<li><a th:href="@{/invoices}">Invoice History</a></li>				
+				<li><a th:href="@{/timesheets/byStatus(status='PENDING')}">Approve
+						Pending Timesheets</a></li>
 			</ul>
-		</main>
-		<!-- <div class = "adminDashboardDiv" align = "left">
+		</div>
+
+		<div class="dropdown">
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				data-toggle="dropdown">
+				Project<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a th:href="@{/project/new}">Add a Project</a></li>
+				<li><a th:href="@{/projects/all}">Project Overview</a></li>
+				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
+				<li><a th:href="@{/vendors}">Vendor Overview</a></li>
+			</ul>
+		</div>
+
+		<div class="dropdown">
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				data-toggle="dropdown">
+				Paystub<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue
+						Paystub</a></li>
+				<li><a th:href="@{/paystubs/all(empId=${emp.empId})}">Paystub
+						History</a></li>
+			</ul>
+		</div>
+		<div class="dropdown">
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				data-toggle="dropdown">
+				Employee<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a th:href="@{/}" onclick="return false;">Add New
+						Employee Account --disabled</a></li>
+				<li th:if="${emp.permissionLevel == 3}"><a th:href="@{/}"
+					onclick="return false;">Change Employee Permission Level (owner
+						only) --disabled</a></li>
+				<li><a th:href="@{/projects/all}">Add Employees To Project</a></li>
+			</ul>
+		</div>
+
+		<div class="dropdown">
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				data-toggle="dropdown">
+				Invoice<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a th:href="@{/invoice/new}">Issue Invoice</a></li>
+				<li><a th:href="@{/invoices}">Invoice History</a></li>
+			</ul>
+		</div>
+
+	</div>
+
+
+
+
+
+	<!-- <div class = "adminDashboardDiv" align = "left">
 			
 			Pending Timesheets
 		<h2> Pending Timesheets </h2>
@@ -121,6 +183,6 @@
 			Will contain necessary tax information
 		
 		</div> -->
-	</body>
+</body>
 
 </html>
