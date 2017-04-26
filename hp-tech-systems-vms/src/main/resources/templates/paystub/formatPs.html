@@ -5,24 +5,18 @@
 	<body>
 		<nav th:replace="base :: site-nav">
 		</nav>
-<!--
-	ALERT!!! ALERT!!! ALERT!!!
-	Go do the framework on the paystub itself rather than the generation!
-	Think of how to format using Excel as a workspace, but DON'T use this for the actual thing!
-	Then find out how to make such cells in HTML and the ways to take DB info and throw them into their respective cells.
-	For Iteration 3, figure out how to convert the resulting image into a PDF. If that fails, a raw image could be rendered.
+<!-- 
+
+INSERT INTO paystubs (paystub_id,address,check_no,city,created_date,emp_id,firstname,lastname,net_pay,pay_date,period_end,period_start,state,total,ytd_gross) VALUES (1,"Ap #514-9757 Auctor Rd.","4235589698285","Bellevue","16-12-03",1,"Tamekah","Haynes","635.72","16-03-18","16-03-17","16-03-10","WA","263.18","8537.07");
+
 -->
-		<table class="Tabular Paystub"cellspacing="0"cellpadding="0">
+		<table class="Paystub Owed To"bgcolor="#FFFFFF"cellspacing="12"cellpadding="1">
 			<thead>
 				<tr>
-					<!--This is for whoever is getting paid.-->
 					<th>Payable To</th>
-					<!--This is for which week is being paid for.-->
-					<th>Week Ending</th>
-					<!--This is for how many hours, if it's hourly, the pay is worth.-->
-					<th class="ActionCell"colspan="1"rowspan="2">Hours<br>Billable</th>
-					<!--This is for the total money that is being paid to the party mentioned in the first column.-->
-					<th>Amount Due</th>
+					<!--This is for whoever is getting paid.-->
+					<th>Address</th>
+					<!--This is the vendor/employee's main address of contact.-->
 				</tr>
 			</thead>
 			<tbody>
@@ -32,6 +26,53 @@
 							<!-- Code that gets name of party to be paid from ID of invoice. -->
 						</div>
 					</td>
+					<tr>
+						<td class="Addr"title="">
+						<div class=""title="">
+							<!-- Code that gets address. -->
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="CiSt"title="">
+						<div class""title="">
+							<!-- Code that gets city, then state, then ZIP code.-->
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="Tabular Paystub"bgcolor=""cellspacing="15"cellpadding="1">
+			<thead>
+				<tr>
+					<th>Week</th>
+					<!--This is for which week's worth of pay it's for.-->
+				</tr>
+				<tr>
+					<th>Hours</th>
+					<!--This is how many hours a paystub is for-->
+				</tr>
+				<tr>
+					<th>Rate</th>
+					<!--This is how much money is earned per hour of work.-->
+				</tr>
+				<tr>
+					<th>Subtotal</th>
+					<!--This is the inital payment before deductibles.-->
+				</tr>
+				<tr>
+					<th>Taxes</th>
+					<!--This is how much is taken out by taxes.-->
+				</tr>
+				<tr>
+					<th>Deductibles</th>
+					<!--This is how much is taken out by non-tax deductibles.-->
+				</tr>
+				<tr>
+					<th>Total Due</th>
+					<!--This is the grand total that is due on the paystub.-->
+				</tr>
+				<tr>
 					<td class="Week"title="">
 						<div class=""title="">
 							<!-- Code that gets week of work to pay for from ID of invoice. -->
@@ -42,9 +83,28 @@
 							<!-- Code that gets duration of work to be paid for from ID of invoice. -->
 						</div>
 					</td>
+					<td class="Rate"title="">
+						<div class=""title="">
+							<!-- Code that gets hourly wage. -->
+						</div>
+					</td>
+					<td class="Subto"title="">
+						<div class=""title="">
+							<!-- Code that calculates hours and rate into payment.-->
+					</div>
+					<td class="Taxes"title="">
+						<div class=""title="">
+							<!-- Code that gets taxable amount. -->
+						</div>
+					</td>
+					<td class="Deduc"title="">
+						<div class=""title="">
+							<!-- Code that gets amount less paid. -->
+						</div>
+					</td>
 					<td class="Total"title="">
 						<div class=""title="">
-							<!-- Code that gets total amount of money to be paid based on work, hours, and taxes if applicable, from ID of invoice. -->
+							<!-- Code that gets grand total of money due to paid party. -->
 						</div>
 					</td>
 				</tr>
