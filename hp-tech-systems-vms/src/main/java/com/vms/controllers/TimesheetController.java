@@ -27,6 +27,7 @@ import com.vms.services.ProjectEmployeeService;
 import com.vms.services.ProjectService;
 import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
+import com.vms.utilities.MailService;
 
 @Controller
 @SessionAttributes(value = {"editTimesheet", "timesheet", "selectedEmployee"})
@@ -44,6 +45,8 @@ public class TimesheetController {
 	ProjectService projectService = new ProjectService();
 	@Autowired
 	PaystubService paystubService = new PaystubService();
+	@Autowired
+	MailService mailService;
 	
 	//VIEWING ALL TIMESHEETS
 	@GetMapping("/timesheets")
@@ -108,7 +111,7 @@ public class TimesheetController {
 		//Timesheet newTimesheet = new Timesheet(selectedEmployee, finalDate);
 		Timesheet newTimesheet = new Timesheet(tf.getE(), tf.getStartDate());
 		timesheetService.create(newTimesheet);
-	
+		mailService.sendEmail(newTimesheet, "timesheetAvailable");
 		//render the view page for our new timesheet
 		return "redirect:" + "http://localhost:8080/timesheet/view/" + newTimesheet.getTimesheetId();
 	}
@@ -154,7 +157,7 @@ public class TimesheetController {
 		timesheetService.edit(editTimesheet);
 		
 		status.setComplete();
-		
+		mailService.sendEmail(editTimesheet, "timesheetSubmitted");
 		return "redirect:/timesheet/edit/" + editTimesheet.getTimesheetId();
 	}
 	

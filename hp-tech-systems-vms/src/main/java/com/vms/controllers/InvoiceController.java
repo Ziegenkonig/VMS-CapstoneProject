@@ -23,6 +23,7 @@ import com.vms.services.InvoiceService;
 import com.vms.services.ProjectService;
 import com.vms.services.ProjectTimesheetService;
 import com.vms.services.VendorService;
+import com.vms.utilities.MailService;
 
 @Controller
 public class InvoiceController {
@@ -35,6 +36,8 @@ public class InvoiceController {
 	ProjectService projectService = new ProjectService();
 	@Autowired
 	ProjectTimesheetService projTimeService = new ProjectTimesheetService();
+	@Autowired
+	MailService mailService;
 	
 	//CREATING NEW INVOICE
 	//Needs countermeasures to make sure only authorized people can view
@@ -75,7 +78,7 @@ public class InvoiceController {
 		//Creating new invoice
 		Invoice newInvoice = new Invoice(projectTimesheets);
 		invoiceService.create(newInvoice);
-		
+		mailService.sendEmail(newInvoice, "invoiceReady");
 		//Displaying new invoice
 		return "redirect:" + "http://localhost:8080/invoice/view/" + newInvoice.getInvoiceId();
 	}
@@ -116,7 +119,7 @@ public class InvoiceController {
 		//Creating new invoice
 		regenInvoice = new Invoice(projectTimesheets);
 		invoiceService.edit(regenInvoice);
-		
+		mailService.sendEmail(regenInvoice, "invoiceReady");
 		return "redirect:/invoice/view/" + invoiceId;
 	}
 	

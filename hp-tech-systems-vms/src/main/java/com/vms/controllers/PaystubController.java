@@ -21,6 +21,7 @@ import com.vms.models.Timesheet;
 import com.vms.services.EmployeeService;
 import com.vms.services.PaystubService;
 import com.vms.services.TimesheetService;
+import com.vms.utilities.MailService;
 
 @Controller
 @SessionAttributes("paystub")
@@ -32,6 +33,8 @@ public class PaystubController {
 	PaystubService pSService = new PaystubService();
 	@Autowired
 	EmployeeService	empService = new EmployeeService();
+	@Autowired
+	MailService mailService;
 	
 	//reads all vendors from the db and displays in table form -working
 	@GetMapping(value = "/paystubs/{mode}")
@@ -104,6 +107,7 @@ public class PaystubController {
 		ps.setCheckDate(ZonedDateTime.now());
 		pSService.update(ps);
 		status.setComplete();
+		mailService.sendEmail(ps, "paystub");
 		return "redirect:/paystubs/all?empId=6";
 	}
 	
@@ -129,6 +133,7 @@ public class PaystubController {
 		Timesheet ts = ps.getTimesheet();
 		tSService.returnTimesheet(ts);
 		pSService.voidPaystub(ps);
+		mailService.sendEmail(ts, "timesheetCorrection");
 		return "redirect:/paystubs/all?empId=6";
 	}
 }
