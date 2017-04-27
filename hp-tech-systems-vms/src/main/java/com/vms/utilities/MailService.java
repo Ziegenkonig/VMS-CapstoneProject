@@ -30,6 +30,7 @@ public class MailService {
 	VendorService vendService;
 	
 	String testEmail = "ktred63@gmail.com";
+	String vmsEmail = "uofmcapstonebanana@gmail.com";
  
     public void sendEmail(Object object, String type) {
  
@@ -74,7 +75,7 @@ public class MailService {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                mimeMessage.setFrom(new InternetAddress("uofmcapstonebanana@gmail.com"));
+                mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 //Employee e = empService.findOne(ps.getEmpId());
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
@@ -93,7 +94,7 @@ public class MailService {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                mimeMessage.setFrom(new InternetAddress("uofmcapstonebanana@gmail.com"));
+                mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 Employee e = t.getEmployee();//empService.findOne(ps.getEmpId());
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
@@ -112,7 +113,7 @@ public class MailService {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                mimeMessage.setFrom(new InternetAddress("uofmcapstonebanana@gmail.com"));
+                mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 Employee e = t.getEmployee();//empService.findOne(ps.getEmpId());
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
@@ -131,7 +132,7 @@ public class MailService {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                mimeMessage.setFrom(new InternetAddress("uofmcapstonebanana@gmail.com"));
+                mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 Employee e = t.getEmployee();//empService.findOne(ps.getEmpId());
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
@@ -151,7 +152,7 @@ public class MailService {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                mimeMessage.setFrom(new InternetAddress("uofmcapstonebanana@gmail.com"));
+                mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 Employee e = t.getEmployee();//empService.findOne(ps.getEmpId());
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
@@ -171,14 +172,14 @@ public class MailService {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                mimeMessage.setFrom(new InternetAddress("uofmcapstonebanana@gmail.com"));
+                mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
                 mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear " + e.getFirstname() + " " + e.getLastname()
 		                + ", you may complete your registration using the link below.\n"
 		                + "http://localhost:8080/register/");
-                mimeMessage.setSubject("Complete Your Registration with VMS");
+                mimeMessage.setSubject("Complete Your Registration with HpTechSystems' VMS");
             }
         };
         return preparator;
@@ -189,7 +190,7 @@ public class MailService {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                mimeMessage.setFrom(new InternetAddress("uofmcapstonebanana@gmail.com"));
+                mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 Vendor v = vendService.findOne(i.getVendorId());
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(v.getPrimaryEmail()));
                 //for testing
