@@ -29,8 +29,8 @@ public class MailService {
 	@Autowired
 	VendorService vendService;
 	
-	String testEmail = "ziegenkonigreality@gmail.com";
-//	String testEmail = "ktred63@gmail.com";
+	//String testEmail = "ziegenkonigreality@gmail.com";
+	String testEmail = "ktred63@gmail.com";
 	String vmsEmail = "uofmcapstonebanana@gmail.com";
  
     public void sendEmail(Object object, String type) {
@@ -176,8 +176,9 @@ public class MailService {
                 mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
-                mimeMessage.setText("Dear future employee, you may complete your registration using the link below.\n"
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
+                mimeMessage.setText("Dear future employee at " + e.getEmail() 
+                		+ ", you may complete your registration using the link below.\n"
 		                + "http://localhost:8080/register/" + e.getRegistrationUrl());
                 mimeMessage.setSubject("Complete Your Registration with HpTechSystems' VMS");
             }

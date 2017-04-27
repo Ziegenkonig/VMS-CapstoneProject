@@ -39,6 +39,8 @@ public class EmployeeController{
 	TimesheetService timesheetService = new TimesheetService();
 	@Autowired
 	PaystubService paystubService = new PaystubService();
+	@Autowired
+	MailService mailService;
   
   @GetMapping("/register")
   public String employeeForm(Model model){
@@ -158,8 +160,8 @@ public class EmployeeController{
     	employeeService.create(employee);
   		
   		//sending email to new employee
-  		MailService mail = new MailService();
-  		mail.sendEmail(employee, "employeeRegistration");
+  		//MailService mail = new MailService();
+  		mailService.sendEmail(employee, "employeeRegistration");
   		
   		return "admin";
   	}
