@@ -29,34 +29,35 @@ public class Employee {
 	private int empId;
 	
 	//Regular attributes.  Does not yet include length, hashing, or some specialties(i.e. tinyint)
-	@NotNull()
+	//@NotNull()
 	@Size(min = 2, max = 32, message = "{username.size}")
 	@Pattern(regexp = "[a-zA-Z0-9_-]*", message = "{username.pattern}")
-	@Column(length = 32, unique = true, nullable = false)
+	@Column(length = 32, unique = true, nullable = true)
 	private String username;
 	
-	@NotNull()
+	//Hashed field
+	//@NotNull()
 	@Size(min = 3, max = 32, message = "{password.size}")
 	@Pattern(regexp = "[a-zA-Z0-9_-]*", message = "{password.pattern}")
-	@Column(length = 32, nullable = false)
+	@Column(nullable = true)
 	private String password;
 	
-	@NotNull()
+	//@NotNull()
 	@Size(min = 6, max = 64, message = "{email.size}")
 	@Pattern(regexp = "[a-zA-Z0-9_-]*+@+[a-zA-Z0-9-]*+\\.+[A-Za-z]*{2,6}", message = "{email.pattern}")
-	@Column(length = 64, nullable = false)
+	@Column(length = 64, nullable = true)
 	private String email;
 	
-	@NotNull()
+	//@NotNull()
 	@Size(min = 2, max = 32, message = "{human.size}")
 	@Pattern(regexp = "[a-zA-Z]*", message = "{human.pattern}")
-	@Column(length = 32, nullable = false)
+	@Column(length = 32, nullable = true)
 	private String firstname;
 	
-	@NotNull()
+	//@NotNull()
 	@Size(min = 2, max = 32, message = "{human.size}")
 	@Pattern(regexp = "[a-zA-Z]*", message = "{human.pattern}")
-	@Column(length = 32, nullable = false)
+	@Column(length = 32, nullable = true)
 	private String lastname;
 	
 	//Not included in the registration/edit forms, 
@@ -64,20 +65,20 @@ public class Employee {
 	private int permissionLevel;
 	
 
-	@NotNull()
+	//@NotNull()
 	@Size(min = 5, max = 120, message = "{address.size}")
 	@Pattern(regexp = "[0-9]*+\\s+[a-zA-Z0-9\\s.]*", message = "{address.pattern}")
-	@Column(length = 120, nullable = false)
+	@Column(length = 120, nullable = true)
 	private String address;
 	
-	@NotNull()
+	//@NotNull()
 	@Size(min = 2, max = 64, message = "{city.size}")
 	@Pattern(regexp = "[a-zA-Z]*", message = "{city.pattern}")
-	@Column(length = 64, nullable = false)
+	@Column(length = 64, nullable = true)
 	private String city;
 	
 	//Validation not needed due to being dropdown box
-	@Column(length = 32, nullable = false)
+	@Column(length = 32, nullable = true)
 	private String state;
 	
 	//Hiredate won't be included in a form
@@ -89,6 +90,14 @@ public class Employee {
 	private boolean active;
 	@Column(length = 1, nullable = false)
 	private int payPeriod; //weekly, biweekly
+	
+	//Hashed field
+	@Column(nullable = true)
+	private String registrationUrl;
+	
+	//Flag to tell whether email is confirmed
+	@Column(nullable = false)
+	private boolean confirmEmail;
 	
 	//The parameter mappedBy is necessary for OneToMany relationships
 	//It references the foreign key name inside of the associated entity
@@ -102,23 +111,5 @@ public class Employee {
 		return (firstname + " " + lastname);
 	}
 	
-	//If we want to notify the employee that their paystub is complete, use this method.. Should be called once paystub has been persisted to database 
-//	public void notifyPaystubCompletion(){
-//		//this.email = the current instance of employee that has a paystub ready
-//		String message = "Your paystub is complete. Go here to check it: http://localhost:8080/paystub";
-//		String subject = "Paystub is ready";
-//		Mail.sendEmail(this.email, message, subject);
-//	}
-//	
-//	public void notifyTimesheetCompletion(){
-//		String message = "You just completed a timesheet. Go here to view it: http://localhost:8080/timesheet";
-//		String subject = "Timesheet completion";
-//		Mail.sendEmail(this.email, message, subject);
-//	}
-//	public void notifyTimesheetAccepted(){
-//		String message = "Your timesheet has been accepted. Go here to view it: http://localhost:8080/timesheet";
-//		String subject = "Timesheet has been accepted";
-//		Mail.sendEmail(this.email, message, subject);
-//	}
 }
 

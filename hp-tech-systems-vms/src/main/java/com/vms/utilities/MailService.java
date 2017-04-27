@@ -20,16 +20,17 @@ import com.vms.services.VendorService;
 
 @Service
 public class MailService {
-
+	
 	@Autowired
     JavaMailSender mailSender;
 	
 	@Autowired
-	EmployeeService empService;
+	EmployeeService empService = new EmployeeService();
 	@Autowired
 	VendorService vendService;
 	
-	String testEmail = "ktred63@gmail.com";
+	String testEmail = "ziegenkonigreality@gmail.com";
+//	String testEmail = "ktred63@gmail.com";
 	String vmsEmail = "uofmcapstonebanana@gmail.com";
  
     public void sendEmail(Object object, String type) {
@@ -69,7 +70,7 @@ public class MailService {
             System.err.println(ex.getMessage());
         }
     }
- 
+    
     private MimeMessagePreparator generatePaystubNotification(final Paystub ps) {
  
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
@@ -168,17 +169,16 @@ public class MailService {
     
     //not finished - requires hash for unique email link
     private MimeMessagePreparator generateEmployeeRegistrationNotification(final Employee e) {
-     	 
+  		System.out.println("test");
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
-                mimeMessage.setText("Dear " + e.getFirstname() + " " + e.getLastname()
-		                + ", you may complete your registration using the link below.\n"
-		                + "http://localhost:8080/register/");
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
+                mimeMessage.setText("Dear future employee, you may complete your registration using the link below.\n"
+		                + "http://localhost:8080/register/" + e.getRegistrationUrl());
                 mimeMessage.setSubject("Complete Your Registration with HpTechSystems' VMS");
             }
         };

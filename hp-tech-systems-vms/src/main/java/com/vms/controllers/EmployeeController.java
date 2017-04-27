@@ -25,6 +25,8 @@ import com.vms.models.Timesheet;
 import com.vms.services.EmployeeService;
 import com.vms.services.PaystubService;
 import com.vms.services.TimesheetService;
+import com.vms.utilities.Encoder;
+import com.vms.utilities.MailService;
 
 @Controller
 @SessionAttributes({"employee", "states"})
@@ -124,5 +126,41 @@ public class EmployeeController{
   	public String viewEmployees(Model model) {
   		model.addAttribute("employees", employeeService.findAll());
   		return "employee/employees";
+  	}
+  	
+  	//The admin must send an email to an employee before the employee is allowed to register
+  	@GetMapping("/inviteEmployee")
+  	public String sendRegistrationEmail(Model model) {
+  		
+  		Employee employee = new Employee();
+  		
+  		model.addAttribute("employee", employee);
+  		
+  		return "employee/registrationEmail";
+  	}
+  	
+  	@PostMapping("/inviteEmployee")
+  	public String sentRegistrationEmail(@ModelAttribute Employee employee) {
+
+  		//Taking care of basic declaration for the new employee
+  		employee.setPayPeriod(1);
+  		employee.setConfirmEmail(false);
+  		employee.setActive(true);
+  		employee.setHireDate(LocalDate.now());
+  		employee.setPermissionLevel(1);
+  		
+  		//Taking care of encrypting and setting the confirmation url
+  		Encoder encoder = new Encoder();
+  		String registrationUrl = encoder.secureRegistration();
+  		//setting hashed registration url
+  		employee.setRegistrationUrl( encoder.encode(registrationUrl) );
+  		//updating new employee
+    	employeeService.create(employee);
+  		
+  		//sending email to new employee
+  		MailService mail = new MailService();
+  		mail.sendEmail(employee, "employeeRegistration");
+  		
+  		return "admin";
   	}
 }
