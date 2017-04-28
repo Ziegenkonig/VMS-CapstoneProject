@@ -29,8 +29,8 @@ public class MailService {
 	@Autowired
 	VendorService vendService;
 	
-	//String testEmail = "ziegenkonigreality@gmail.com";
-	String testEmail = "ktred63@gmail.com";
+	String testEmail = "ziegenkonigreality@gmail.com";
+//	String testEmail = "ktred63@gmail.com";
 	String vmsEmail = "uofmcapstonebanana@gmail.com";
  
     public void sendEmail(Object object, String type) {
@@ -169,7 +169,9 @@ public class MailService {
     
     //not finished - requires hash for unique email link
     private MimeMessagePreparator generateEmployeeRegistrationNotification(final Employee e) {
-  		System.out.println("test");
+  		
+    	
+    	
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {

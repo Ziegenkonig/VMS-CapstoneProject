@@ -9,6 +9,7 @@
 		<nav th:replace="base :: site-nav('none')">
 		</nav>
 		
+		<div align = "center">
 		<form action="#" th:action="@{/inviteEmployee}" th:object="${employee}" method="post">
 			
 			<h4>Email Address</h4>
@@ -17,6 +18,7 @@
 			<h3></h3>
 			<input type="submit" value="Submit" /> <input type="reset" value="Reset" />
 		</form>
+		</div>
 		
     <footer th:replace="base :: site-footer"></footer>
 	</body>

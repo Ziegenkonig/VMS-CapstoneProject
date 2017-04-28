@@ -40,34 +40,45 @@ public class EmployeeController{
 	@Autowired
 	PaystubService paystubService = new PaystubService();
 	@Autowired
-	MailService mailService;
+	MailService mailService = new MailService();
   
-  @GetMapping("/register")
-  public String employeeForm(Model model){
-	  
+  @GetMapping("/register/{registrationUrl}")
+  public String employeeForm(@PathVariable("registrationUrl") String registrationUrl, 
+		  					 Model model) {
+	
+	Employee newEmp = employeeService.findByRegistrationUrl(registrationUrl);
+	if ( newEmp ==  null )  
+		return "redirect:/";
+	
+	model.addAttribute("url", registrationUrl);
 	model.addAttribute("states", States.values());
-    model.addAttribute("employee", new Employee());
+    model.addAttribute("employee", newEmp);
+    
     return "employee/newE";
   }
 
-  @PostMapping("/register")
-  public String employeeSubmit(@ModelAttribute@Valid Employee employee, 
-		  					   BindingResult bindingResult, 
+  @PostMapping("/register/{registrationUrl}")
+  public String employeeSubmit(@ModelAttribute("employee")@Valid Employee employee, 
+		  					   BindingResult bindingResult,
+		  					   SessionStatus sessionStatus,
 		  					   Model model){
     //Checks for input validation and returns to registration page if validation fails
 	if (bindingResult.hasErrors())
 	  return "employee/newE";
-		
-	//setting hiredate to present time
-    employee.setHireDate(LocalDate.now());
     
+	//If we have gotten this far, the new employee is about to be created, we just need to delete
+	//the used registration link
+	employee.setRegistrationUrl(null);
+	
     //throw this new employee into the database
-    employeeService.create(employee);
+    employeeService.update(employee);
     
     model.addAttribute("states", States.values());
     
+    sessionStatus.setComplete();
+    
     //takes us straight to user profile page (not implemented yet)
-    return "employee/dashboard";
+    return "redirect:/dashboard";
   }
   
   //employeeService.findOne(1) here just populates the editProfile page with the correct information
@@ -154,15 +165,21 @@ public class EmployeeController{
   		//Taking care of encrypting and setting the confirmation url
   		Encoder encoder = new Encoder();
   		String registrationUrl = encoder.secureRegistration();
+  		
+  		//We have to send the email in between the time when we create the random url link
+  		//and the time we hash it, so that the user receives a valid url. therefore . . .
+  
+  		//sending email to new employee
+  		employee.setRegistrationUrl(registrationUrl);
+  		mailService.sendEmail(employee, "employeeRegistration");
+  		
   		//setting hashed registration url
   		employee.setRegistrationUrl( encoder.encode(registrationUrl) );
   		//updating new employee
     	employeeService.create(employee);
   		
-  		//sending email to new employee
-  		//MailService mail = new MailService();
-  		mailService.sendEmail(employee, "employeeRegistration");
+
   		
-  		return "admin";
+  		return "redirect:/admin";
   	}
 }

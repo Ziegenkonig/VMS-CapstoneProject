@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vms.models.Employee;
 import com.vms.repositories.EmployeeRepository;
+import com.vms.utilities.Encoder;
 
 /*
  * Method to check whether an employee with the given username and password exists (login/register)
@@ -38,6 +39,24 @@ public class EmployeeService {
 	//returns an employee that matches the given first and last name
 	public Employee findByName(String firstname, String lastname) {
 		return employeeRepo.findByName(firstname, lastname);
+	}
+	
+	//returns an employee that has a matching registration url
+	public Employee findByRegistrationUrl(String rawUrl) {
+		Encoder encoder = new Encoder();
+		
+		List<Employee> employees = employeeRepo.findByRegistrationUrlIsNotNull();
+		
+		for (Employee e : employees) {
+			if ( encoder.decode(rawUrl, e.getRegistrationUrl()) )
+					return e;
+		}
+		
+		return null;
+	}
+	
+	public List<Employee> findUnregisteredEmployees() {
+		return employeeRepo.findByRegistrationUrlIsNotNull();
 	}
 	
 	//returns a list of all employee names
