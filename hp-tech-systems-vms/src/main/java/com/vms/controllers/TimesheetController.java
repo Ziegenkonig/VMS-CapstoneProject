@@ -112,6 +112,8 @@ public class TimesheetController {
 		Timesheet newTimesheet = new Timesheet(tf.getE(), tf.getStartDate());
 		timesheetService.create(newTimesheet);
 		mailService.sendEmail(newTimesheet, "timesheetAvailable");
+		//for testing
+		mailService.sendEmail(newTimesheet, "timesheetAlmostDue");
 		//render the view page for our new timesheet
 		return "redirect:" + "http://localhost:8080/timesheet/view/" + newTimesheet.getTimesheetId();
 	}

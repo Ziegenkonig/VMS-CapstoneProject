@@ -2,8 +2,11 @@ package com.vms.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +42,10 @@ public class Timesheet { //new summary timesheet
 	//private int projectId;
 	@Column(nullable = false)
 	private LocalDate weekStarting;
+	
+	@Type(type = "org.hibernate.type.LocalDateTimeType")
+    @Column
+    private LocalDateTime dueDate;
 	
 	//might change to enum weekly/biweekly
 	//private int period;
@@ -68,6 +77,11 @@ public class Timesheet { //new summary timesheet
 	public Timesheet(Employee e, LocalDate periodStart) {
 		this.employee = e;
 		this.weekStarting = periodStart;
+		if(e.getPayPeriod() == 2) {
+			this.dueDate = weekStarting.plusWeeks(1).with(WeekFields.of(Locale.US).dayOfWeek(), 6).atTime(10, 0);//.atZone(ZoneId.of("America/Chicago"));
+		} else {
+			this.dueDate = weekStarting.with(WeekFields.of(Locale.US).dayOfWeek(), 6).atTime(10, 0);//.atZone(ZoneId.of("America/Chicago"));
+		}
 		this.projTimesheets = new ArrayList<ProjectTimesheet>();
 		List<ProjectEmployee> projEmps = e.getProjemps();
 		if(projEmps.isEmpty()) {
