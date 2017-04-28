@@ -171,6 +171,57 @@ public class EmployeeController{
     return "redirect:/dashboard";
   }
   
+  @GetMapping("/confirmNewPassword/{id}")
+  public String confirmNewPasswordGet(@PathVariable("id") Integer id,
+		  						   Model model) {
+	  
+	  model.addAttribute("employee", employeeService.findOne(id));
+	  
+	  return "employee/confirmNewPassword";
+  }
+  
+  @PostMapping("/confirmNewPassword/{id}")
+  public String confirmNewPasswordPost(@ModelAttribute("employee") Employee employee,
+		  					SessionStatus sessionStatus,
+		  					Model model) {
+	  HashSlingingSlasher encoder = new HashSlingingSlasher();
+	  
+	  if ( !(encoder.decode(employee.getConfirmPassword(), employee.getPassword())) )
+		  return "employee/confirmNewPassword";
+	  
+	  sessionStatus.setComplete();
+	  
+	  return "redirect:/newPassword/" + employee.getEmpId();
+  }
+  
+  @GetMapping("/newPassword/{id}")
+  public String newPasswordGet(@PathVariable("id") Integer id,
+		  						   Model model) {
+	  
+	  model.addAttribute("employee", employeeService.findOne(id));
+	  
+	  return "employee/newPassword";
+  }
+  
+  @PostMapping("/newPassword/{id}")
+  public String newPasswordPost(@ModelAttribute("employee") Employee employee,
+		  					 	SessionStatus sessionStatus,
+		  						Model model) {
+	  HashSlingingSlasher encoder = new HashSlingingSlasher();
+	  
+	  if ( !( employee.getPassword().equals(employee.getConfirmPassword()) ) )
+		  return "employee/newPassword";
+	  
+	  employee.setPassword( encoder.encode(employee.getPassword()) );
+	  employee.setConfirmPassword(null);
+	  
+	  employeeService.update(employee);
+	  
+	  sessionStatus.setComplete();
+	  
+	  return "redirect:/dashboard";
+  }
+  
   @GetMapping("/dashboard")
   public String dashboard(Model model) {
 	  
