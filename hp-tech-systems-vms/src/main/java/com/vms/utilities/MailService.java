@@ -49,6 +49,9 @@ public class MailService {
         case("timesheetAlmostDue"):
         	preparator = generateTimesheetAlmostDueNotification((Timesheet) object);
     		break;
+        case("emailConfirmation"):
+        	preparator = generateEmailConfirmationNotification((Employee) object);
+    		break;
         case("employeeRegistration"):
         	preparator = generateEmployeeRegistrationNotification((Employee) object);
     		break;
@@ -167,10 +170,26 @@ public class MailService {
         return preparator;
     }
     
-    //not finished - requires hash for unique email link
-    private MimeMessagePreparator generateEmployeeRegistrationNotification(final Employee e) {
-  		
+    
+    private MimeMessagePreparator generateEmailConfirmationNotification(final Employee e) {
     	
+        MimeMessagePreparator preparator = new MimeMessagePreparator() {
+ 
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                mimeMessage.setFrom(new InternetAddress(vmsEmail));
+                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
+                //for testing
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getConfirmEmail()));
+                mimeMessage.setText("Dear future employee at " + e.getEmail() 
+                		+ ", please click on the link below to confirm your email address!\n"
+		                + "http://localhost:8080/emailConfirmation/" + e.getConfirmationUrl());
+                mimeMessage.setSubject("Email Confirmation with HP Tech Systems' VMS");
+            }
+        };
+        return preparator;
+    }
+    
+    private MimeMessagePreparator generateEmployeeRegistrationNotification(final Employee e) {
     	
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
  

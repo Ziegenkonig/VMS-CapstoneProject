@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vms.models.Employee;
 import com.vms.repositories.EmployeeRepository;
-import com.vms.utilities.Encoder;
+import com.vms.utilities.HashSlingingSlasher;
 
 /*
  * Method to check whether an employee with the given username and password exists (login/register)
@@ -43,7 +43,7 @@ public class EmployeeService {
 	
 	//returns an employee that has a matching registration url
 	public Employee findByRegistrationUrl(String rawUrl) {
-		Encoder encoder = new Encoder();
+		HashSlingingSlasher encoder = new HashSlingingSlasher();
 		
 		List<Employee> employees = employeeRepo.findByRegistrationUrlIsNotNull();
 		
@@ -54,6 +54,21 @@ public class EmployeeService {
 		
 		return null;
 	}
+	
+	//returns an employee whose confirmation url matches the given one
+	public Employee findByConfirmationUrl(String rawUrl) {
+		HashSlingingSlasher encoder = new HashSlingingSlasher();
+		
+		List<Employee> employees = employeeRepo.findByConfirmationUrlIsNotNull();
+		
+		for (Employee e : employees) {
+			if ( encoder.decode(rawUrl, e.getConfirmationUrl()) )
+					return e;
+		}
+		
+		return null;
+	}
+	
 	
 	public List<Employee> findUnregisteredEmployees() {
 		return employeeRepo.findByRegistrationUrlIsNotNull();

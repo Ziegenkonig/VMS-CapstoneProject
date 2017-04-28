@@ -21,6 +21,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	
 	Employee findByRegistrationUrl(String registrationUrl);
 	
+	List<Employee> findByConfirmationUrlIsNotNull();
+	
+	Employee findByConfirmationUrl(String confirmationUrl);
+	
 	//Grabs all first and last names from the database
 	@Query (
 			value = "SELECT firstname, lastname FROM employees ORDER BY lastname ASC",

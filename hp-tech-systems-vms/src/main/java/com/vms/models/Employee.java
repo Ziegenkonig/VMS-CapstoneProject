@@ -37,16 +37,26 @@ public class Employee {
 	
 	//Hashed field
 	//@NotNull()
-	@Size(min = 3, max = 32, message = "{password.size}")
-	@Pattern(regexp = "[a-zA-Z0-9_-]*", message = "{password.pattern}")
+	@Size(min = 2, message = "{password.size}")
+	//@Pattern(regexp = "[a-zA-Z0-9_-]*", message = "{password.pattern}")
 	@Column(nullable = true)
 	private String password;
 	
+	@Size(min = 2, message = "{password.size}")
+	//@Pattern(regexp = "[a-zA-Z0-9_-$%@#/]*", message = "{password.pattern}")
+	@Column(nullable = true)
+	private String confirmPassword;
+	
 	//@NotNull()
-	@Size(min = 6, max = 64, message = "{email.size}")
+	@Size(min = 6, message = "{email.size}")
 	@Pattern(regexp = "[a-zA-Z0-9_-]*+@+[a-zA-Z0-9-]*+\\.+[A-Za-z]*{2,6}", message = "{email.pattern}")
-	@Column(length = 64, nullable = true)
+	@Column(length = 128, nullable = true)
 	private String email;
+	
+	@Size(min = 6, message = "{email.size}")
+	@Pattern(regexp = "[a-zA-Z0-9_-]*+@+[a-zA-Z0-9-]*+\\.+[A-Za-z]*{2,6}", message = "{email.pattern}")
+	@Column(length = 128, nullable = true)
+	private String confirmEmail;
 	
 	//@NotNull()
 	@Size(min = 2, max = 32, message = "{human.size}")
@@ -91,13 +101,13 @@ public class Employee {
 	@Column(length = 1, nullable = false)
 	private int payPeriod; //weekly, biweekly
 	
-	//Hashed field
+	//Hashed field --  for account registration link
 	@Column(nullable = true)
 	private String registrationUrl;
 	
-	//Flag to tell whether email is confirmed
-	@Column(nullable = false)
-	private boolean confirmEmail;
+	//Hashed field --  for email confirmation link
+	@Column(nullable = true)
+	private String confirmationUrl;
 	
 	//The parameter mappedBy is necessary for OneToMany relationships
 	//It references the foreign key name inside of the associated entity

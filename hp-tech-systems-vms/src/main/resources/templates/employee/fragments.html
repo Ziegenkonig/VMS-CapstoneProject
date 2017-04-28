@@ -21,6 +21,11 @@
 					        <h5 th:if = "${#fields.hasErrors('password')}" th:errors = "*{password}" style = "Color: red"></h5>
 					        <input type="password" th:field="*{password}" />
 				        </div>
+				         <div class = "fixed">
+					        <h4>Confirm Password</h4>
+					        <h5 th:if = "${#fields.hasErrors('password')}" th:errors = "*{password}" style = "Color: red"></h5>
+					        <input type="password" th:field="*{confirmPassword}" />
+				        </div>
 			        </div>
 			        <div class = "container">
 				        <div class = "fixed">
@@ -36,7 +41,7 @@
 				        <div class = "fixed">
 					        <h4>Email Address</h4>
 					        <h5 th:if = "${#fields.hasErrors('email')}" th:errors = "*{email}" style = "Color: red"></h5>
-					        <input type="text" th:field="*{email}" />
+					        <input type="text" th:field="*{confirmEmail}" />
 				        </div>
 			        </div>
 			        <div class = "container">
@@ -72,11 +77,6 @@
 							<h4>Username</h4>
 							<h5 th:if = "${#fields.hasErrors('username')}" th:errors = "*{username}" style = "Color: red"></h5>
 					        <input type="text" th:field="*{username}" autofocus = "autofocus"/>
-				        </div>
-				        <div class = "fixed">
-					        <h4>Password</h4>
-					        <h5 th:if = "${#fields.hasErrors('password')}" th:errors = "*{password}" style = "Color: red"></h5>
-					        <input type="password" th:field="*{password}" />
 				        </div>
 			        </div>
 			        <div class = "container">

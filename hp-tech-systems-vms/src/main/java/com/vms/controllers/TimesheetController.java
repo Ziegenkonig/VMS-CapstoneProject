@@ -181,9 +181,9 @@ public class TimesheetController {
 	//admin/katie extras
 	@GetMapping(value = "/timesheets/{mode}")
 	public String viewTimesheets(@PathVariable String mode,
-							   @RequestParam(required = false) TimesheetStatus status,
-							   @RequestParam(required = false) Boolean edit,
-							   Model model) {
+							     @RequestParam(required = false) TimesheetStatus status,
+							     @RequestParam(required = false) Boolean edit,
+							     Model model) {
 		List<Timesheet> timesheets;
 		switch(mode) {
 			case "all":

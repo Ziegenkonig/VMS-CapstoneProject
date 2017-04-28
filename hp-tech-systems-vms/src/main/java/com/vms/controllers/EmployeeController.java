@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -25,7 +26,7 @@ import com.vms.models.Timesheet;
 import com.vms.services.EmployeeService;
 import com.vms.services.PaystubService;
 import com.vms.services.TimesheetService;
-import com.vms.utilities.Encoder;
+import com.vms.utilities.HashSlingingSlasher;
 import com.vms.utilities.MailService;
 
 @Controller
@@ -58,17 +59,35 @@ public class EmployeeController{
   }
 
   @PostMapping("/register/{registrationUrl}")
-  public String employeeSubmit(@ModelAttribute("employee")@Valid Employee employee, 
-		  					   BindingResult bindingResult,
-		  					   SessionStatus sessionStatus,
-		  					   Model model){
-    //Checks for input validation and returns to registration page if validation fails
-	if (bindingResult.hasErrors())
-	  return "employee/newE";
+  public String employeeSubmit(@ModelAttribute("employee")@Valid Employee employee,
+			   				   BindingResult bindingResult,
+			   				   SessionStatus sessionStatus,
+		  					   Model model) {
+    HashSlingingSlasher encoder = new HashSlingingSlasher();
     
+	//Checks for input validation and returns to registration page if validation fails
+	if ( bindingResult.hasErrors() )
+		return "employee/newE";
+	//Check for whether or not the two password fields match
+	if ( !(employee.getPassword().equals(employee.getConfirmPassword())) )
+		return "redirect:/emailConfirmation";
+	
+	//Hashing the password and removing confirmPassword from employee
+	employee.setPassword( encoder.encode(employee.getPassword()) );
+	employee.setConfirmPassword(null);
+	
+	//Check for whether or not the email selected matches the email on file currently
+	System.out.println(employee.getEmail() + " v.s " + employee.getConfirmEmail());
+	if ( !(employee.getEmail().equals(employee.getConfirmEmail())) ) {
+		employeeService.update(employee);
+		sessionStatus.setComplete();
+		return "redirect:/emailConfirmationNotification/" + employee.getEmpId();
+	}
+	
 	//If we have gotten this far, the new employee is about to be created, we just need to delete
-	//the used registration link
+	//the used registration link, as well as delete the confirmEmail field
 	employee.setRegistrationUrl(null);
+	employee.setConfirmEmail(null);
 	
     //throw this new employee into the database
     employeeService.update(employee);
@@ -79,6 +98,47 @@ public class EmployeeController{
     
     //takes us straight to user profile page (not implemented yet)
     return "redirect:/dashboard";
+  }
+  
+  @GetMapping("/emailConfirmationNotification/{empId}")
+  public String emailConfirmationNotification(@PathVariable("empId") Integer empId) {
+	  
+	  	Employee employee = employeeService.findOne(empId);
+	  
+		//Taking care of encrypting and setting the confirmation url
+		HashSlingingSlasher encoder = new HashSlingingSlasher();
+		String confirmationUrl = encoder.secureRegistration();
+		
+		//We have to send the email in between the time when we create the random url link
+		//and the time we hash it, so that the user receives a valid url. therefore . . .
+	
+		//sending confirmation email to employee
+		employee.setConfirmationUrl(confirmationUrl);
+		mailService.sendEmail(employee, "emailConfirmation");
+		
+		//setting hashed registration url
+		employee.setConfirmationUrl( encoder.encode(confirmationUrl) );
+	  
+		employeeService.update(employee);
+		
+	    return "employee/emailConfirmation";
+  }
+  
+  @GetMapping("/emailConfirmation/{confirmationUrl}")
+  public String emailConfirmation(@PathVariable("confirmationUrl") String confirmationUrl) {
+	  
+	  Employee newEmp = employeeService.findByConfirmationUrl(confirmationUrl);
+	  if ( newEmp ==  null )  
+		  return "redirect:/";
+	  
+	  newEmp.setEmail(newEmp.getConfirmEmail());
+	  newEmp.setConfirmEmail(null);
+	  newEmp.setRegistrationUrl(null);
+	  newEmp.setConfirmationUrl(null);
+	  
+	  employeeService.update(newEmp);
+	  
+	  return "employee/emailConfirmed";
   }
   
   //employeeService.findOne(1) here just populates the editProfile page with the correct information
@@ -157,13 +217,12 @@ public class EmployeeController{
 
   		//Taking care of basic declaration for the new employee
   		employee.setPayPeriod(1);
-  		employee.setConfirmEmail(false);
   		employee.setActive(true);
   		employee.setHireDate(LocalDate.now());
   		employee.setPermissionLevel(1);
   		
   		//Taking care of encrypting and setting the confirmation url
-  		Encoder encoder = new Encoder();
+  		HashSlingingSlasher encoder = new HashSlingingSlasher();
   		String registrationUrl = encoder.secureRegistration();
   		
   		//We have to send the email in between the time when we create the random url link

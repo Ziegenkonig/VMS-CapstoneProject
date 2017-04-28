@@ -8,12 +8,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //This class is used to encode strings using the spring security library
 //This class also has secure random number generator
 
-public class Encoder {
+public class HashSlingingSlasher {
 	//Secure random for randomly generating secure bits
 	private SecureRandom random;
 	
 	//Constructor to intialize the SecureRandom once -- it's expensive
-	public Encoder() {
+	public HashSlingingSlasher() {
 	
 		this.random = new SecureRandom();
 		
