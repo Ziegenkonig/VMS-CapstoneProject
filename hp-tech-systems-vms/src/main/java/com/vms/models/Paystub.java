@@ -82,6 +82,8 @@ public class Paystub {
 	private String city;
 	@Column(length = 32, nullable = false)
 	private String state;
+	@Column(length = 32, nullable = false)
+	private String zipcode;
 	
 	//employer info saved in global variables somewhere
 	
@@ -132,6 +134,7 @@ public class Paystub {
 		this.address = emp.getAddress();
 		this.city = emp.getCity();
 		this.state = emp.getState();
+		this.zipcode = emp.getZipcode();
 		//this.projectId = ts.getProjemp().getProject().getProjectId();
 		
 		//math

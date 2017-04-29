@@ -6,8 +6,7 @@
 </head>
 
 	<body>
-		<nav th:replace="base :: site-nav('none')">
-		</nav>
+		<div align = "center">
 			<!-- Header for invoice, includes invoice ID -->
 			<h3 th:text = "INVOICE + ' ' + '#' + ${invoice.getInvoiceId()} + ' for Project(s): ' + ${project.getName()}"> </h3>
 			<!-- The outer table for the invoice  -->
@@ -28,7 +27,7 @@
 						<!-- Information: Vendor Name, Vendor Address, Vendor Phone Number -->
 						<td style = "border-color: #6699ff">
 							<!-- Inner table 1 for information in the invoice -->
-							<table id = "invoiceInnerTable1"
+							<table id = "topLeftCell"
 								   class = "table"
 								   style = "border-collapse: separate; border-spacing: 5px;">
 								<tbody>
@@ -50,7 +49,7 @@
 						<!-- Information: HP Tech Systems, HP Tech Address, HP Tech Phone, HP Tech Contact Name -->
 						<td style = "border-color: #6699ff">
 							<!-- Inner table 2 for information in the invoice -->
-							<table id = "invoiceInnerTable2"
+							<table id = "topRightCell"
 								   class = "table"
 								   style = "border-collapse: separate; border-spacing: 5px;">
 								<tbody>
@@ -60,15 +59,11 @@
 									</tr>
 									<tr>
 										<td> <p><b> Address: </b></p> </td>
-										<td> <p th:text = " 'HP Tech Systems Address' "></p> </td>
+										<td> <p th:text = " '1307 Carmony St, Collierville TN 38017' "></p> </td>
 									</tr>
 									<tr>
-										<td> <p><b> Phone: </b></p> </td>
-										<td> <p th:text = " 'HP Tech Phone Number' "></p> </td>
-									</tr>
-									<tr>
-										<td> <p><b> Contact Name: </b></p> </td>
-										<td> <p th:text = " 'HP Tech Contact Name' "></p> </td>
+										<td> <p><b> EIN: </b></p> </td>
+										<td> <p th:text = " '81-0935780' "></p> </td>
 									</tr>
 								</tbody>
 							</table>
@@ -79,7 +74,7 @@
 						<!-- Information: Date Pyament is Due, Recruiter Name -->
 						<td style = "border-color: #6699ff">
 							<!-- Inner table 3 for information in the invoice -->
-							<table id = "invoiceInnerTable3"
+							<table id = "bottomLeftCell"
 								   class = "table"
 								   style = "border-collapse: separate; border-spacing: 5px;">
 								<tbody>
@@ -97,7 +92,7 @@
 						<!-- Information: Vendor Name, Vendor Address, Vendor Phone Number -->
 						<td style = "border-color: #6699ff">
 							<!-- Inner table 1 for information in the invoice -->
-							<table id = "invoiceInnerTable1"
+							<table id = "bottomRightCell"
 								   class = "table"
 								   style = "border-collapse: separate; border-spacing: 5px;">
 								<tbody>
@@ -130,6 +125,8 @@
 			</table>
 			
 		<h5> <b>Status:</b> <b th:text = "${invoice.getStatus()}"></b> </h5>
+		<footer th:replace="base :: site-footer"></footer>
+		</div>
 	</body>
 
 </html>

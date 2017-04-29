@@ -70,6 +70,12 @@ public class Employee {
 	@Column(length = 32, nullable = true)
 	private String lastname;
 	
+	//@NotNull()
+	@Size(min = 5, message = "{zipcode.size}")
+	@Pattern(regexp = "[0-9]*{5}", message = "{zipcode.pattern}")
+	@Column(length = 32, nullable = true)
+	private String zipcode;
+	
 	//Not included in the registration/edit forms, 
 	@Column(length = 1, nullable = false)
 	private int permissionLevel;
