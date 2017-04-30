@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -50,6 +51,14 @@ public class HpTechSystemsVmsApplication {
          
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;
+    }
+	
+	@Bean(name = "messageSource")
+    public ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasenames("classpath:ValidationMessages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
     }
 	
 	public static void main(String[] args) {

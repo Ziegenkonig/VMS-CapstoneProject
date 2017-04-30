@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.vms.models.Employee;
@@ -20,4 +21,7 @@ public interface ProjectEmployeeRepository extends JpaRepository<ProjectEmployee
 	
 	@Query("select distinct pe.employee from ProjectEmployee pe")
 	public List<Employee> findDistinctEmployee();
+	
+	@Query("select distinct pe.employee from ProjectEmployee pe where pe.project.projectId=?1")
+	public List<Employee> findDistinctEmployeeOnProject(@Param("pId") Integer pId);
 }

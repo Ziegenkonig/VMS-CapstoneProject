@@ -14,8 +14,11 @@
 		    <h1 th:text="'Add Employee to ' + ${pe.project.name}">Add Check Number</h1>
 		    <form th:fragment="proj-emp-form" action="#" th:action="@{/project/addEmployee}" th:object="${pe}" method="post">
 		    	<div>
+		    		<h5 th:if = "${#fields.hasErrors('employee')}" th:errors = "*{employee}" style = "Color: red"></h5>
 		    		<label for="pe.employee">Employee:</label>
 		    		<select name="employee">
+		    			<option th:value="${null}" selected="selected" th:text="'Select an Employee'">
+		    			</option>
 					   <option th:each="e : ${emps}"
 							th:selected="${pe.employee != null AND pe.employee == e}"
 							th:value="${e.empId}"

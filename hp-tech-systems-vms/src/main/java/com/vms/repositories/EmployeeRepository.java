@@ -30,4 +30,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 			nativeQuery = true
 		)
 	public Employee findByName(@Param("firstname") String firstname, @Param("lastname") String lastname);
+	
+	@Query("select e from Employee e where e not in ?1") 
+	public List<Employee> findEmployeesNotInList(List<Employee> emps);
 }
