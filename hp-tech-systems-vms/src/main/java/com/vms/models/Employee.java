@@ -89,7 +89,7 @@ public class Employee {
 	
 	//@NotNull()
 	@Size(min = 2, max = 64, message = "{city.size}")
-	@Pattern(regexp = "[a-zA-Z]*", message = "{city.pattern}")
+	@Pattern(regexp = "[a-zA-Z']*", message = "{city.pattern}")
 	@Column(length = 64, nullable = true)
 	private String city;
 	
