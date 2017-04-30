@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/register/**").permitAll()
+				.antMatchers("/register/**", "/emailConfirmationNotification/**", "/emailConfirmation/**").permitAll()
 				.anyRequest().authenticated() //We allow all users to access all pages here, need to write some rules in for admin pages
 				.and()
 			.formLogin() //here specify custom login page
