@@ -31,7 +31,7 @@
 							th:value = "${state}" 
 							th:text = "${state}"></option>
 				</select>
-		        <h4 >Phone Numebr</h4>
+		        <h4 >Phone Number</h4>
 		        <h5 th:if = "${#fields.hasErrors('phone')}" th:errors = "*{phone}" style = "Color: red"></h5>
 		        <input type = "text" name = "phone" value="" th:field="*{phone}" />
 		        <h4></h4>

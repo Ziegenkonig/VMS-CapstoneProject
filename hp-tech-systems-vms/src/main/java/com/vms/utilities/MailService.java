@@ -1,5 +1,7 @@
 package com.vms.utilities;
 
+import java.time.format.DateTimeFormatter;
+
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -85,7 +87,8 @@ public class MailService {
                 //for testing
                 mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear " + ps.getFirstname() + " " + ps.getLastname()
-                        + ", your paystub for the period " + ps.getPeriodStart() + " to " + ps.getPeriodEnd()
+                        + ", your paystub for the period " + ps.getPeriodStart().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]")) 
+                        + " to " + ps.getPeriodEnd().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]"))
                         + " has been issued.");
                 mimeMessage.setSubject("Paystub Issued");
             }
@@ -104,7 +107,7 @@ public class MailService {
                 //for testing
                 mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear " + e.getFirstname() + " " + e.getLastname()
-                        + ", your timesheet for the period starting" + t.getWeekStarting()
+                        + ", your timesheet for the period starting " + t.getWeekStarting().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]"))
                         + " is now available.");
                 mimeMessage.setSubject("Timesheet Available");
             }
@@ -142,7 +145,7 @@ public class MailService {
                 //for testing
                 mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear " + e.getFirstname() + " " + e.getLastname()
-		                + ", your timesheet for the period starting" + t.getWeekStarting()
+		                + ", your timesheet for the period starting " + t.getWeekStarting().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]"))
 		                + " has been returned by an admin for correction.");
                 mimeMessage.setSubject("Timesheet Returned for Correction");
             }
@@ -162,8 +165,8 @@ public class MailService {
                 //for testing
                 mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear " + e.getFirstname() + " " + e.getLastname()
-		                + ", your timesheet for the period starting" + t.getWeekStarting()
-		                + " is due by.");
+		                + ", your timesheet for the period starting " + t.getWeekStarting().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]"))
+		                + " is due by " + t.getDueDate().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]")) + ".");
                 mimeMessage.setSubject("Timesheet Submission Deadline Approaching");
             }
         };
@@ -217,8 +220,9 @@ public class MailService {
                 //for testing
                 mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear " + v.getContactName()
-		                + ", an invoice for the period " + i.getPeriodStart() + " to " + i.getPeriodEnd()
-		                + " has been generated. Payment is due by " + i.getPaymentDue() + ".");
+		                + ", an invoice for the period " + i.getPeriodStart().format(DateTimeFormatter.ofPattern("d MMM yyyy[ HH:mm a]")) 
+		                + " to " + i.getPeriodEnd().format(DateTimeFormatter.ofPattern("d MMM yyyy[ HH:mm a]"))
+		                + " has been generated. Payment is due by " + i.getPaymentDue().format(DateTimeFormatter.ofPattern("d MMM yyyy[ HH:mm a]")) + ".");
                 mimeMessage.setSubject("HpTechSystems Invoice Ready");
             }
         };

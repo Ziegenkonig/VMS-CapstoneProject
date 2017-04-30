@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.vms.models.Employee;
+import com.vms.models.Project;
 import com.vms.models.ProjectEmployee;
 import com.vms.repositories.ProjectEmployeeRepository;
 
@@ -14,7 +16,8 @@ public class ProjectEmployeeService {
 	//pulling in repository
 	@Autowired
 	ProjectEmployeeRepository projEmpRepo;
-	
+	@Autowired
+	EmployeeService empService;
 	
 	
 	//General methods
@@ -43,6 +46,19 @@ public class ProjectEmployeeService {
 	
 	public List<ProjectEmployee> findOpenProjects() {
 		return projEmpRepo.findByDateEnded(null);
+	}
+	
+	public List<Employee> findEmployeesForTimesheets() {
+		return projEmpRepo.findDistinctEmployeeByDateEndedIsNull();
+	}
+	
+	public List<Employee> findEmployeesForCustomTimesheets() {
+		return projEmpRepo.findDistinctEmployee();
+	}
+	
+	public List<Employee> findRemainingEmployeesForProject(Project p) {
+		List<Employee> emps = projEmpRepo.findDistinctEmployeeOnProject(p.getProjectId());
+		return empService.findEmployeesNotInList(emps);
 	}
 		
 }
