@@ -14,8 +14,11 @@
 		    <h1 th:text="'Add Employee to ' + ${pe.project.name}">Add Check Number</h1>
 		    <form th:fragment="proj-emp-form" action="#" th:action="@{/project/addEmployee}" th:object="${pe}" method="post">
 		    	<div>
+		    		<h5 th:if = "${#fields.hasErrors('employee')}" th:errors = "*{employee}" style = "Color: red"></h5>
 		    		<label for="pe.employee">Employee:</label>
 		    		<select name="employee">
+		    			<option th:value="${null}" selected="selected" th:text="'Select an Employee'">
+		    			</option>
 					   <option th:each="e : ${emps}"
 							th:selected="${pe.employee != null AND pe.employee == e}"
 							th:value="${e.empId}"
@@ -28,12 +31,19 @@
 		    		<span th:text="'$' + ${project.remainingEmpPayRate()} + ' of $' + ${project.billingRate}"></span>
 		    	</div>
 		    	<div class="form-group">
+		    		<h5 th:if = "${#fields.hasErrors('payRate')}" th:errors = "*{payRate}" style = "Color: red"></h5>
 					<label for="payRate">Employee Pay Rate:</label>
 				    <input type="text" name="payRate" value="" th:value="${pe.payRate}" />
 				</div>
 				<div class="form-group">
+					<h5 th:if = "${#fields.hasErrors('dateStarted')}" th:errors = "*{dateStarted}" style = "Color: red"></h5>
 					<label for="dateStarted">Date Started:</label>
 				    <input type="date" name="dateStarted" value="" th:value="${pe.dateStarted}" />
+				</div>
+				<div class="form-group">
+					<h5 th:if = "${#fields.hasErrors('dateEnded')}" th:errors = "*{dateEnded}" style = "Color: red"></h5>
+					<label for="dateEnded">Date Ended (Optional):</label>
+				    <input type="date" name="dateEnded" value="" th:value="${pe.dateEnded}" />
 				</div>
 		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 		    </form>

@@ -119,4 +119,12 @@ public class EmployeeService {
 			
 		return false;
 	}
+	
+	public List<Employee> findEmployeesNotInList(List<Employee> emps) {
+		return employeeRepo.findEmployeesNotInList(emps);
+	}
+	
+	public List<Employee> findActiveEmployees() {
+		return employeeRepo.findByActive(true);
+	}
 }
