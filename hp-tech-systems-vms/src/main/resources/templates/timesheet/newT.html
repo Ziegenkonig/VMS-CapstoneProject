@@ -14,13 +14,16 @@
 		
 		    <h1>New Timesheet</h1>
 		    
-		    <form action="#" th:action="@{/timesheet/new}" th:object="${tf}" method="post">
+		    <form action="#" th:action="@{/timesheet/new}" th:object="${timesheet}" method="post">
 				
 				<!-- Cycles through every vendor and includes their names into the list -->
 				
 				<h4>Select Pay Period</h4>
-				<select th:field = "*{startDate}">
+				<h5 th:if = "${#fields.hasErrors('weekStarting')}" th:errors = "*{weekStarting}" style = "Color: red"></h5>
+				<select th:field = "*{weekStarting}">
  					<!-- <option value = "0" > Select Pay Period </option> -->
+ 					<option th:value="${null}" selected="selected" th:text="'Select a date'">
+		    		</option>
  					<option th:each = "date : ${dates}" 
  							th:value = "${date}" 
  							th:text = "${#temporals.format(date, 'MM/dd/yyyy')}"></option>
@@ -30,8 +33,11 @@
 				
 				
 				<h4>Select Employee</h4>
-		        <select th:field = "*{e}">
+				<h5 th:if = "${#fields.hasErrors('employee')}" th:errors = "*{employee}" style = "Color: red"></h5>
+		        <select th:field = "*{employee}">
  					<!-- <option th:value = "0"> Select Employee </option>  -->
+ 					<option th:value="${null}" selected="selected" th:text="'Select an Employee'">
+		    		</option>
  					<option th:each = "employee : ${employees}"
  							th:value = "${employee.empId}"
  							th:text = "${employee.getLastname()} + ', ' + ${employee.getFirstname()}"></option>

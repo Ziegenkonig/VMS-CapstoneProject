@@ -19,26 +19,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	//dataSource is basically a reference point to our DB for security to pull from
 	@Autowired
 	private DataSource dataSource;
-	//We need to specify an encoder so that we can check our raw passwords against the hashed ones inside the DB
+//	//We need to specify an encoder so that we can check our raw passwords against the hashed ones inside the DB
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	//Our bean for the encoder
+//	//Our bean for the encoder
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		return bCryptPasswordEncoder;
 	}
-	//Our bean for the users, not sure if we need this anymore
+//	//Our bean for the users, not sure if we need this anymore
 	@Bean
 	public UserDetailsService userDetailsService() {
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
 		manager.createUser(User.withUsername("user").password("password").roles("USER").build());
 		return manager;
 	}
-	
-	//This is our authentication configuration station, where we specify what security should be checking the
-	//usernames and passwords against
+
+//	//This is our authentication configuration station, where we specify what security should be checking the
+//	//usernames and passwords against
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
@@ -53,14 +53,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
+				.antMatchers("/register/**").permitAll()
 				.anyRequest().authenticated() //We allow all users to access all pages here, need to write some rules in for admin pages
 				.and()
 			.formLogin() //here specify custom login page
-//				.loginPage("/login")
-//				.permitAll()
+////				.loginPage("/login")
+////				.permitAll()
 				.and()
-			.csrf() //disabled csrf token for now because it was messed up for me
-				.disable()
+////			.csrf() //disabled csrf token for now because it was messed up for me
+////				.disable()
 			.httpBasic();
 	}
 	

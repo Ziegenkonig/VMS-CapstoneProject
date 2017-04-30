@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -118,7 +119,7 @@ public class Employee {
 	
 	//The parameter mappedBy is necessary for OneToMany relationships
 	//It references the foreign key name inside of the associated entity
-	@OneToMany(mappedBy="employee")
+	@OneToMany(mappedBy="employee", fetch = FetchType.EAGER)
 	private List<ProjectEmployee> projemps;
 	
 	@OneToMany(mappedBy="employee")

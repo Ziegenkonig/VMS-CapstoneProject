@@ -2,12 +2,17 @@ package com.vms.controllers;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.vms.forms.NewTimesheetForm;
 import com.vms.models.Employee;
-import com.vms.models.ProjectEmployee;
 import com.vms.models.Timesheet;
 import com.vms.models.TimesheetStatus;
 import com.vms.services.EmployeeService;
@@ -28,6 +32,7 @@ import com.vms.services.ProjectService;
 import com.vms.services.TimesheetService;
 import com.vms.services.VendorService;
 import com.vms.utilities.MailService;
+import com.vms.validators.TimesheetValidator;
 
 @Controller
 @SessionAttributes(value = {"editTimesheet", "timesheet", "selectedEmployee"})
@@ -47,6 +52,8 @@ public class TimesheetController {
 	PaystubService paystubService = new PaystubService();
 	@Autowired
 	MailService mailService;
+	@Autowired
+	TimesheetValidator tv;
 	
 	//VIEWING ALL TIMESHEETS
 	@GetMapping("/timesheets")
@@ -68,21 +75,22 @@ public class TimesheetController {
 	@GetMapping("/timesheet/new")
 	public String newTimesheetForm(Model model) {
 		//Grabbing the local date, and setting it to the nearest future sunday (start of pay period)
-		LocalDate now = LocalDate.now();
-		while( !(now.getDayOfWeek().equals(DayOfWeek.SUNDAY)) ) {
-			now = now.plusDays(1);
-		}
-
+		LocalDate startOfYear = LocalDate.of(2017, 1, 1).with(WeekFields.of(Locale.US).dayOfWeek(), 1);
+		
 		//Making a list of local dates with 30 available future pay periods (for use in dropdown box)
 		List<LocalDate> periods = new ArrayList<LocalDate>();
-		periods.add(now);
-		for(int i = 0; i <= 30; i++)
-			periods.add(periods.get(i).plusWeeks(1));
+		periods.add(startOfYear);
+		LocalDate holder = startOfYear;
+		for(int i = 0; i < 52; i++) {
+			holder = holder.plusWeeks(1);
+			periods.add(holder);
+		}
 		
 		//Last thing we need to create a new timesheet is an employee to assign it to
 		//List<Employee> employees = employeeService.findAllSorted();
-		List<Employee> validEmployees = new ArrayList<Employee>();
-		List<ProjectEmployee> pes = peService.findOpenProjects();
+		//List<Employee> validEmployees = new ArrayList<Employee>();
+		List<Employee> validEmployees = peService.findEmployeesForCustomTimesheets();
+		/*
 		for(ProjectEmployee pe : pes) {
 			//temporary
 			if(pe.getDateEnded() == null && !validEmployees.contains(pe.getEmployee())) {
@@ -97,23 +105,42 @@ public class TimesheetController {
 		//Now we just add everything to the model
 		model.addAttribute("dates", periods);
 		model.addAttribute("employees", validEmployees);
+		/*
 		NewTimesheetForm tf = new NewTimesheetForm();
-		model.addAttribute("tf", tf);
+		model.addAttribute("tf", tf); */
+		Timesheet t = new Timesheet();
+		model.addAttribute("timesheet", t);
 		
 		//returning html file to render
 		return "timesheet/newT";
 	}
 	
 	@PostMapping("/timesheet/new")
-	public String newTimesheetSubmit(@ModelAttribute("tf") NewTimesheetForm tf) {
+	public String newTimesheetSubmit(@ModelAttribute("timesheet") @Valid Timesheet timesheet, 
+							BindingResult result, RedirectAttributes redirectAttributes) {
 		
 		//Now we have all we need to create a new timesheet, and add it to the database
 		//Timesheet newTimesheet = new Timesheet(selectedEmployee, finalDate);
-		Timesheet newTimesheet = new Timesheet(tf.getE(), tf.getStartDate());
-		timesheetService.create(newTimesheet);
-		mailService.sendEmail(newTimesheet, "timesheetAvailable");
+		//Timesheet newTimesheet = new Timesheet(tf.getE(), tf.getStartDate());
+		//TimesheetValidator tv = new TimesheetValidator();
+		if(result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.timesheet", result);
+	        redirectAttributes.addFlashAttribute("timesheet", timesheet);
+			return "redirect:/timesheet/new";
+		}
+		timesheet.populateFields();
+		tv.validate(timesheet, result);
+		if(result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.timesheet", result);
+	        redirectAttributes.addFlashAttribute("timesheet", timesheet);
+			return "redirect:/timesheet/new";
+		}
+		timesheetService.create(timesheet);
+		mailService.sendEmail(timesheet, "timesheetAvailable");
+		//for testing
+		//mailService.sendEmail(newTimesheet, "timesheetAlmostDue");
 		//render the view page for our new timesheet
-		return "redirect:" + "http://localhost:8080/timesheet/view/" + newTimesheet.getTimesheetId();
+		return "redirect:" + "http://localhost:8080/timesheet/view/" + timesheet.getTimesheetId();
 	}
 	
 	//VIEWING ONE TIMESHEET
