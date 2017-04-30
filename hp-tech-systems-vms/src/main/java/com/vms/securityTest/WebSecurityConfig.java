@@ -46,8 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth
 			.jdbcAuthentication()
 				.dataSource(dataSource) //Our database
-				.usersByUsernameQuery("SELECT username,password,permission_level FROM employees WHERE username=?") //Query for regular users, not sure how to specify specific roles yet
-				.authoritiesByUsernameQuery("SELECT username,password,permission_level FROM employees WHERE username=?") //not sur eif this is needed
+				.usersByUsernameQuery("SELECT username,password,active FROM employees WHERE username=?") //Query for regular users, not sure how to specify specific roles yet
+				.authoritiesByUsernameQuery("SELECT username,permission_level FROM employees WHERE username=?") //not sur eif this is needed
 				.passwordEncoder(bCryptPasswordEncoder); //specify encoder that security uses to match raw vs hashed password
 	}
 	
@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/register/**", "/emailConfirmationNotification/**", "/emailConfirmation/**").permitAll()
+				.antMatchers("/admin").hasRole("ADMIN")
 				.anyRequest().authenticated() //We allow all users to access all pages here, need to write some rules in for admin pages
 				.and()
 			.formLogin() //here specify custom login page

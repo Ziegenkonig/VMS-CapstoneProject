@@ -27,7 +27,7 @@
 	        <select th:field = "*{permissionLevel}">
 				<option value = "null" > Select Permission Level </option>
 				<option th:each = "permissionlevel : ${permission}" 
-							th:value = "${permissionlevel}" 
+							th:value = "${permissionlevel.toString()}" 
 							th:text = "${permissionlevel}"></option>
 			</select>
 			

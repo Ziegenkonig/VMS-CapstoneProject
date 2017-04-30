@@ -93,6 +93,8 @@ public class EmployeeController{
 		employee.setRegistrationUrl(null);
 		employee.setConfirmEmail(null);
 
+		employee.setActive(true);
+		
 		//throw this new employee into the database
 		employeeService.update(employee);
 
@@ -139,6 +141,7 @@ public class EmployeeController{
 		newEmp.setConfirmEmail(null);
 		newEmp.setRegistrationUrl(null);
 		newEmp.setConfirmationUrl(null);
+		newEmp.setActive(true);
 
 		employeeService.update(newEmp);
 

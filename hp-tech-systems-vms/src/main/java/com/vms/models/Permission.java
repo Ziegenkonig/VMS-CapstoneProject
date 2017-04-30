@@ -1,7 +1,7 @@
 package com.vms.models;
 
 public enum Permission {
-	USER,
-	ADMIN,
-	OWNER
+	ROLE_USER,
+	ROLE_ADMIN,
+	ROLE_OWNER
 }

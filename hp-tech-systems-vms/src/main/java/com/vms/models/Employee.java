@@ -78,7 +78,7 @@ public class Employee {
 	
 	//Not included in the registration/edit forms, 
 	@Column(nullable = false)
-	private Permission permissionLevel;
+	private String permissionLevel;
 	
 
 	//@NotNull()
