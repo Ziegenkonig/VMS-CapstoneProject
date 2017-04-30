@@ -123,7 +123,7 @@ public class Paystub {
 		this.periodStart = ts.getWeekStarting();
 		Employee emp = ts.getEmployee();
 		this.empId = emp.getEmpId();
-		if(emp.getPayPeriod() == 2) {
+		if(emp.getPayPeriod() == PayPeriod.BIWEEKLY) {
 			this.periodEnd = this.periodStart.plusDays(14);
 		} else { 
 			this.periodEnd = this.periodStart.plusDays(7); 
@@ -170,7 +170,7 @@ public class Paystub {
 		this.periodStart = ts.getWeekStarting();
 		Employee emp = ts.getEmployee();
 		this.empId = emp.getEmpId();
-		if(emp.getPayPeriod() == 2) {
+		if(emp.getPayPeriod() == PayPeriod.BIWEEKLY) {
 			this.periodEnd = this.periodStart.plusDays(14);
 		} else { this.periodEnd = this.periodStart.plusDays(7); }
 		this.payDate = this.periodEnd.plusDays(10);

@@ -196,7 +196,7 @@ public class MailService {
                 mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 mimeMessage.setText("Dear future employee at " + e.getEmail() 
                 		+ ", you may complete your registration using the link below.\n"
 		                + "http://localhost:8080/register/" + e.getRegistrationUrl());

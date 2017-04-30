@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.vms.models.Employee;
+import com.vms.models.PayPeriod;
 import com.vms.models.Paystub;
+import com.vms.models.Permission;
 import com.vms.models.States;
 import com.vms.models.Timesheet;
 import com.vms.services.EmployeeService;
@@ -92,6 +94,7 @@ public class EmployeeController{
 	employee.setRegistrationUrl(null);
 	employee.setConfirmEmail(null);
 	
+	employee.setActive(true);
     //throw this new employee into the database
     employeeService.update(employee);
     
@@ -138,6 +141,7 @@ public class EmployeeController{
 	  newEmp.setConfirmEmail(null);
 	  newEmp.setRegistrationUrl(null);
 	  newEmp.setConfirmationUrl(null);
+	  newEmp.setActive(true);
 	  
 	  employeeService.update(newEmp);
 	  
@@ -268,6 +272,8 @@ public class EmployeeController{
   		Employee employee = new Employee();
   		
   		model.addAttribute("employee", employee);
+  		model.addAttribute("period", PayPeriod.values());
+  		model.addAttribute("permission", Permission.values());
   		
   		return "employee/registrationEmail";
   	}
@@ -276,10 +282,8 @@ public class EmployeeController{
   	public String sentRegistrationEmail(@ModelAttribute Employee employee) {
 
   		//Taking care of basic declaration for the new employee
-  		employee.setPayPeriod(1);
-  		employee.setActive(true);
+  		employee.setActive(false);
   		employee.setHireDate(LocalDate.now());
-  		employee.setPermissionLevel(1);
   		
   		//Taking care of encrypting and setting the confirmation url
   		HashSlingingSlasher encoder = new HashSlingingSlasher();

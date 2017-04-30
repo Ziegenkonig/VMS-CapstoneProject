@@ -50,12 +50,12 @@ public class Employee {
 	//@NotNull()
 	@Size(min = 6, message = "{email.size}")
 	@Pattern(regexp = "[a-zA-Z0-9_-]*+@+[a-zA-Z0-9-]*+\\.+[A-Za-z]*{2,6}", message = "{email.pattern}")
-	@Column(length = 128, nullable = true)
+	@Column(length = 128, unique = true, nullable = true)
 	private String email;
 	
 	@Size(min = 6, message = "{email.size}")
 	@Pattern(regexp = "[a-zA-Z0-9_-]*+@+[a-zA-Z0-9-]*+\\.+[A-Za-z]*{2,6}", message = "{email.pattern}")
-	@Column(length = 128, nullable = true)
+	@Column(length = 128, unique = true, nullable = true)
 	private String confirmEmail;
 	
 	//@NotNull()
@@ -77,8 +77,8 @@ public class Employee {
 	private String zipcode;
 	
 	//Not included in the registration/edit forms, 
-	@Column(length = 1, nullable = false)
-	private int permissionLevel;
+	@Column(nullable = false)
+	private Permission permissionLevel;
 	
 
 	//@NotNull()
@@ -104,8 +104,9 @@ public class Employee {
 	//These two attributes will be selected via dropdown box
 	@Column(nullable = false)
 	private boolean active;
-	@Column(length = 1, nullable = false)
-	private int payPeriod; //weekly, biweekly
+	
+	@Column(nullable = false)
+	private PayPeriod payPeriod; //weekly, biweekly
 	
 	//Hashed field --  for account registration link
 	@Column(nullable = true)
