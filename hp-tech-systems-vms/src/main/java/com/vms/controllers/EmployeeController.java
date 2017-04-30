@@ -68,16 +68,19 @@ public class EmployeeController{
 	//Checks for input validation and returns to registration page if validation fails
 	if ( bindingResult.hasErrors() )
 		return "employee/newE";
+	
 	//Check for whether or not the two password fields match
-	if ( !(employee.getPassword().equals(employee.getConfirmPassword())) )
-		return "redirect:/emailConfirmation";
+	if ( !(employee.getPassword().equals(employee.getConfirmPassword())) ) {
+		model.addAttribute("employee", employee);
+		model.addAttribute("passwordMatch", false);
+		return "employee/newE";
+	}
 	
 	//Hashing the password and removing confirmPassword from employee
 	employee.setPassword( encoder.encode(employee.getPassword()) );
 	employee.setConfirmPassword(null);
 	
 	//Check for whether or not the email selected matches the email on file currently
-	System.out.println(employee.getEmail() + " v.s " + employee.getConfirmEmail());
 	if ( !(employee.getEmail().equals(employee.getConfirmEmail())) ) {
 		employeeService.update(employee);
 		sessionStatus.setComplete();
@@ -182,13 +185,16 @@ public class EmployeeController{
   
   @PostMapping("/confirmNewPassword/{id}")
   public String confirmNewPasswordPost(@ModelAttribute("employee") Employee employee,
-		  					SessionStatus sessionStatus,
-		  					Model model) {
+		  							   SessionStatus sessionStatus,
+		  							   Model model) {
 	  HashSlingingSlasher encoder = new HashSlingingSlasher();
 	  
-	  if ( !(encoder.decode(employee.getConfirmPassword(), employee.getPassword())) )
+	  if ( !(encoder.decode(employee.getConfirmPassword(), employee.getPassword())) ) {
+		  model.addAttribute("employee", employee);
+		  model.addAttribute("wrongPassword", false);
 		  return "employee/confirmNewPassword";
-	  
+	  }
+		  
 	  sessionStatus.setComplete();
 	  
 	  return "redirect:/newPassword/" + employee.getEmpId();
@@ -209,8 +215,11 @@ public class EmployeeController{
 		  						Model model) {
 	  HashSlingingSlasher encoder = new HashSlingingSlasher();
 	  
-	  if ( !( employee.getPassword().equals(employee.getConfirmPassword()) ) )
+	  if ( !( employee.getPassword().equals(employee.getConfirmPassword()) ) ) {
+		  model.addAttribute("employee", employee);
+		  model.addAttribute("passwordMatch", false);
 		  return "employee/newPassword";
+	  }
 	  
 	  employee.setPassword( encoder.encode(employee.getPassword()) );
 	  employee.setConfirmPassword(null);
