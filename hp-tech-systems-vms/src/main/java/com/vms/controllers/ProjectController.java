@@ -25,6 +25,7 @@ import com.vms.services.EmployeeService;
 import com.vms.services.ProjectEmployeeService;
 import com.vms.services.ProjectService;
 import com.vms.services.VendorService;
+import com.vms.validators.ProjectEmployeeValidator;
 
 @Controller
 @SessionAttributes({"project", "pe", "vendors"})
@@ -38,6 +39,8 @@ public class ProjectController {
 	private EmployeeService eService = new EmployeeService();
 	@Autowired
 	private ProjectEmployeeService peService = new ProjectEmployeeService();
+	@Autowired
+	private ProjectEmployeeValidator pev;
 	
 	@GetMapping(value = "/projects/{mode}")
 	public String viewProjects(@PathVariable String mode, 
@@ -138,10 +141,15 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/project/addEmployee")
-	public String saveAddedEmployee(@ModelAttribute("pe") ProjectEmployee pe, SessionStatus status) {
-		peService.create(pe);
+	public String saveAddedEmployee(@ModelAttribute("pe") ProjectEmployee pe, BindingResult result, SessionStatus status) {
+		//ProjectEmployeeValidator pev = new ProjectEmployeeValidator();
+		pev.validate(pe, result);
+		if (result.hasErrors()){
+			return "project/addEmployeeForm";
+        }
+        peService.create(pe);
 		status.setComplete();
-		return "redirect:/project/view/" + pe.getProject().getName();
+		return "redirect:/project/view/pId?" + pe.getProject().getProjectId();
 	}
   
 }

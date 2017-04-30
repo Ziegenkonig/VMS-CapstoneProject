@@ -20,6 +20,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
 
@@ -29,7 +32,8 @@ import lombok.NoArgsConstructor;
 @Data //standard getters/setters
 @NoArgsConstructor
 @Entity
-@Table(name = "timesheets")
+@Table(name = "timesheets",
+	   uniqueConstraints= @UniqueConstraint(columnNames = {"emp_id", "weekStarting"}))
 public class Timesheet { //new summary timesheet
 	
 	@Id @GeneratedValue
@@ -40,6 +44,7 @@ public class Timesheet { //new summary timesheet
 	private Employee employee;
 	//private int empId;
 	//private int projectId;
+	
 	@Column(nullable = false)
 	private LocalDate weekStarting;
 	
@@ -56,6 +61,8 @@ public class Timesheet { //new summary timesheet
 	//private String imageUrl;
 	//private int noHours;
 	
+	@NotNull
+	@Size(min=1)
 	@OneToMany(mappedBy="timesheet", cascade = CascadeType.ALL)
 	private List<ProjectTimesheet> projTimesheets;
 	//fks
@@ -86,10 +93,11 @@ public class Timesheet { //new summary timesheet
 		List<ProjectEmployee> projEmps = e.getProjemps();
 		if(projEmps.isEmpty()) {
 			System.out.println("Empty projemps");
-		}
-		for(ProjectEmployee pe:projEmps) {
-			if(pe.getDateEnded() == null || pe.getDateEnded().isAfter(weekStarting)) {
-				projTimesheets.add(new ProjectTimesheet(pe, this));
+		} else {
+			for(ProjectEmployee pe:projEmps) {
+				if(!pe.getDateStarted().isAfter(periodStart) && (pe.getDateEnded() == null || pe.getDateEnded().isAfter(weekStarting))) {
+					projTimesheets.add(new ProjectTimesheet(pe, this));
+				}
 			}
 		}
 		this.status = com.vms.models.TimesheetStatus.NOT_SUBMITTED;
