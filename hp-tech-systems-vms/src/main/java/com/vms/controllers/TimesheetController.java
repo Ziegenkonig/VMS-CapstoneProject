@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.vms.forms.NewTimesheetForm;
 import com.vms.models.Employee;
 import com.vms.models.Timesheet;
 import com.vms.models.TimesheetStatus;
@@ -50,6 +52,8 @@ public class TimesheetController {
 	PaystubService paystubService = new PaystubService();
 	@Autowired
 	MailService mailService;
+	@Autowired
+	TimesheetValidator tv;
 	
 	//VIEWING ALL TIMESHEETS
 	@GetMapping("/timesheets")
@@ -101,30 +105,42 @@ public class TimesheetController {
 		//Now we just add everything to the model
 		model.addAttribute("dates", periods);
 		model.addAttribute("employees", validEmployees);
+		/*
 		NewTimesheetForm tf = new NewTimesheetForm();
-		model.addAttribute("tf", tf);
+		model.addAttribute("tf", tf); */
+		Timesheet t = new Timesheet();
+		model.addAttribute("timesheet", t);
 		
 		//returning html file to render
 		return "timesheet/newT";
 	}
 	
 	@PostMapping("/timesheet/new")
-	public String newTimesheetSubmit(@ModelAttribute("tf") NewTimesheetForm tf, BindingResult result) {
+	public String newTimesheetSubmit(@ModelAttribute("timesheet") @Valid Timesheet timesheet, 
+							BindingResult result, RedirectAttributes redirectAttributes) {
 		
 		//Now we have all we need to create a new timesheet, and add it to the database
 		//Timesheet newTimesheet = new Timesheet(selectedEmployee, finalDate);
-		Timesheet newTimesheet = new Timesheet(tf.getE(), tf.getStartDate());
-		TimesheetValidator tv = new TimesheetValidator();
-		tv.validate(newTimesheet, result);
+		//Timesheet newTimesheet = new Timesheet(tf.getE(), tf.getStartDate());
+		//TimesheetValidator tv = new TimesheetValidator();
 		if(result.hasErrors()) {
-			return "timesheet/newT";
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.timesheet", result);
+	        redirectAttributes.addFlashAttribute("timesheet", timesheet);
+			return "redirect:/timesheet/new";
 		}
-		timesheetService.create(newTimesheet);
-		mailService.sendEmail(newTimesheet, "timesheetAvailable");
+		timesheet.populateFields();
+		tv.validate(timesheet, result);
+		if(result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.timesheet", result);
+	        redirectAttributes.addFlashAttribute("timesheet", timesheet);
+			return "redirect:/timesheet/new";
+		}
+		timesheetService.create(timesheet);
+		mailService.sendEmail(timesheet, "timesheetAvailable");
 		//for testing
 		//mailService.sendEmail(newTimesheet, "timesheetAlmostDue");
 		//render the view page for our new timesheet
-		return "redirect:" + "http://localhost:8080/timesheet/view/" + newTimesheet.getTimesheetId();
+		return "redirect:" + "http://localhost:8080/timesheet/view/" + timesheet.getTimesheetId();
 	}
 	
 	//VIEWING ONE TIMESHEET

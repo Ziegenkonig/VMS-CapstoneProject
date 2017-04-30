@@ -1,11 +1,13 @@
 package com.vms.validators;
 
 
+import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.vms.models.Timesheet;
 
+@Service
 public class TimesheetValidator implements Validator {
 
 	@Override
@@ -22,7 +24,7 @@ public class TimesheetValidator implements Validator {
       }
 */
       // do "complex" validation here
-      if(t.getWeekStarting().isBefore(t.getEmployee().getHireDate())) {
+      if(t.getWeekStarting() != null && t.getWeekStarting().isBefore(t.getEmployee().getHireDate())) {
     	  errors.rejectValue("weekStarting", "weekStarting.beforeHireDate");
       }
       

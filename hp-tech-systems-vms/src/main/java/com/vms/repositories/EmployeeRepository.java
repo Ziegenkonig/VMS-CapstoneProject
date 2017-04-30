@@ -33,4 +33,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	
 	@Query("select e from Employee e where e not in ?1") 
 	public List<Employee> findEmployeesNotInList(List<Employee> emps);
+	
+	@Query
+	public List<Employee> findByActive(Boolean active);
 }

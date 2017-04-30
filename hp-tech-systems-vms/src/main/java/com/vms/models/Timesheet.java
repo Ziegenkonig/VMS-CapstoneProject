@@ -22,9 +22,9 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,13 +39,16 @@ public class Timesheet { //new summary timesheet
 	@Id @GeneratedValue
 	private int timesheetId;
 	//references
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "emp_id")
 	private Employee employee;
 	//private int empId;
 	//private int projectId;
 	
+	@NotNull
 	@Column(nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate weekStarting;
 	
 	@Type(type = "org.hibernate.type.LocalDateTimeType")
@@ -61,8 +64,6 @@ public class Timesheet { //new summary timesheet
 	//private String imageUrl;
 	//private int noHours;
 	
-	@NotNull
-	@Size(min=1)
 	@OneToMany(mappedBy="timesheet", cascade = CascadeType.ALL)
 	private List<ProjectTimesheet> projTimesheets;
 	//fks
@@ -84,24 +85,29 @@ public class Timesheet { //new summary timesheet
 	public Timesheet(Employee e, LocalDate periodStart) {
 		this.employee = e;
 		this.weekStarting = periodStart;
-		if(e.getPayPeriod() == 2) {
+		populateFields();
+	}
+	
+	public void populateFields() {
+		if(employee.getPayPeriod() == 2) {
 			this.dueDate = weekStarting.plusWeeks(1).with(WeekFields.of(Locale.US).dayOfWeek(), 6).atTime(10, 0);//.atZone(ZoneId.of("America/Chicago"));
 		} else {
 			this.dueDate = weekStarting.with(WeekFields.of(Locale.US).dayOfWeek(), 6).atTime(10, 0);//.atZone(ZoneId.of("America/Chicago"));
 		}
 		this.projTimesheets = new ArrayList<ProjectTimesheet>();
-		List<ProjectEmployee> projEmps = e.getProjemps();
+		List<ProjectEmployee> projEmps = employee.getProjemps();
 		if(projEmps.isEmpty()) {
 			System.out.println("Empty projemps");
 		} else {
 			for(ProjectEmployee pe:projEmps) {
-				if(!pe.getDateStarted().isAfter(periodStart) && (pe.getDateEnded() == null || pe.getDateEnded().isAfter(weekStarting))) {
+				if(!pe.getDateStarted().isAfter(weekStarting) && (pe.getDateEnded() == null || pe.getDateEnded().isAfter(weekStarting))) {
 					projTimesheets.add(new ProjectTimesheet(pe, this));
 				}
 			}
 		}
 		this.status = com.vms.models.TimesheetStatus.NOT_SUBMITTED;
 	}
+	
 	
 	//calculates total number of hours
 	public int calcTotalHoursOfT() {

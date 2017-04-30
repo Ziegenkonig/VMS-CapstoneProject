@@ -88,6 +88,7 @@ public class Employee {
 	//These two attributes will be selected via dropdown box
 	@Column(nullable = false)
 	private boolean active;
+	
 	@Column(length = 1, nullable = false)
 	private int payPeriod; //weekly, biweekly
 	
