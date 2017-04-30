@@ -108,8 +108,10 @@ public class TimesheetController {
 		/*
 		NewTimesheetForm tf = new NewTimesheetForm();
 		model.addAttribute("tf", tf); */
-		Timesheet t = new Timesheet();
-		model.addAttribute("timesheet", t);
+		if(!model.containsAttribute("timesheet")) {
+			Timesheet t = new Timesheet();
+			model.addAttribute("timesheet", t);
+		}
 		
 		//returning html file to render
 		return "timesheet/newT";
@@ -117,7 +119,7 @@ public class TimesheetController {
 	
 	@PostMapping("/timesheet/new")
 	public String newTimesheetSubmit(@ModelAttribute("timesheet") @Valid Timesheet timesheet, 
-							BindingResult result, RedirectAttributes redirectAttributes) {
+							BindingResult result, SessionStatus status, RedirectAttributes redirectAttributes) {
 		
 		//Now we have all we need to create a new timesheet, and add it to the database
 		//Timesheet newTimesheet = new Timesheet(selectedEmployee, finalDate);
@@ -140,6 +142,7 @@ public class TimesheetController {
 		//for testing
 		//mailService.sendEmail(newTimesheet, "timesheetAlmostDue");
 		//render the view page for our new timesheet
+		status.setComplete();
 		return "redirect:" + "http://localhost:8080/timesheet/view/" + timesheet.getTimesheetId();
 	}
 	

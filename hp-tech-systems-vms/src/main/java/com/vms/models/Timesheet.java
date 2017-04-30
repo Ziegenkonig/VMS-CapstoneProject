@@ -27,9 +27,11 @@ import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data //standard getters/setters
+@EqualsAndHashCode(callSuper = false, exclude={"projTimesheets"})
 @NoArgsConstructor
 @Entity
 @Table(name = "timesheets",
@@ -39,14 +41,15 @@ public class Timesheet { //new summary timesheet
 	@Id @GeneratedValue
 	private int timesheetId;
 	//references
-	@NotNull
+	
+	@NotNull(message = "{employee.null}")
 	@ManyToOne
 	@JoinColumn(name = "emp_id")
 	private Employee employee;
 	//private int empId;
 	//private int projectId;
 	
-	@NotNull
+	@NotNull(message = "{weekStarting.null}")
 	@Column(nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate weekStarting;
