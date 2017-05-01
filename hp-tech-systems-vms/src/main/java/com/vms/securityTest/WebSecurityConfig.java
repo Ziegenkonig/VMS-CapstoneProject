@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/register/**", "/emailConfirmationNotification/**", "/emailConfirmation/**").permitAll()
 				.antMatchers("/admin", "/inviteEmployee", "/project/new", "/projects/all", "/vendor/new", "/vendors", "/employees", "/projects/all",
 						"/timesheet/new", "/timesheets/**", "/invoice/new", "/invoices/").access("hasRole('ADMIN') or hasRole('OWNER')")
-				.anyRequest().authenticated() //We allow all users to access all pages here, need to write some rules in for admin pages
+				.anyRequest().authenticated() //We allow all users to access all pages here
 				.and()
 			.formLogin() //here specify custom login page
 ////				.loginPage("/login")

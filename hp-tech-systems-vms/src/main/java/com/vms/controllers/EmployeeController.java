@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 //Spring imports
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -153,6 +155,12 @@ public class EmployeeController{
 	public String employeeEditForm(@PathVariable("id") Integer id, 
 			Model model) {
 
+		//Checking to make sure the user isn't being sneaky
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+		if (e.getEmpId() != id)
+			return "redirect:/dashboard";
+		
 		model.addAttribute("states", States.values());
 		model.addAttribute("employee", employeeService.findOne(id));
 
@@ -239,8 +247,10 @@ public class EmployeeController{
 	@GetMapping("/dashboard")
 	public String dashboard(Model model) {
 
-		Employee e = employeeService.findOne(1);
-
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Employee e = employeeService.findByUsername(auth.getName());
+		
 		List<Paystub> issuedPaystubs = paystubService.findIssued(e.getEmpId());
 		List<Timesheet> openTimesheets = timesheetService.dashboardTimesheets(e);
 
