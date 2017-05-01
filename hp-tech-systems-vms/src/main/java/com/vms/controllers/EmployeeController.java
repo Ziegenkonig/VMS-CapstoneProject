@@ -43,6 +43,8 @@ public class EmployeeController{
 	PaystubService paystubService = new PaystubService();
 	@Autowired
 	MailService mailService;
+	@Autowired
+	HashSlingingSlasher encryptService;
 
 	@GetMapping("/register/{registrationUrl}")
 	public String employeeForm(@PathVariable("registrationUrl") String registrationUrl, 
@@ -239,6 +241,7 @@ public class EmployeeController{
 	@GetMapping("/dashboard")
 	public String dashboard(Model model) {
 
+		System.out.println(encryptService.encode("vmstest"));
 		Employee e = employeeService.findOne(1);
 
 		List<Paystub> issuedPaystubs = paystubService.findIssued(e.getEmpId());

@@ -187,7 +187,7 @@ public class TimesheetController {
 		timesheetService.edit(editTimesheet);
 		
 		status.setComplete();
-		mailService.sendEmail(editTimesheet, "timesheetSubmitted");
+		
 		return "redirect:/timesheet/edit/" + editTimesheet.getTimesheetId();
 	}
 	
@@ -200,7 +200,7 @@ public class TimesheetController {
 		timesheetService.edit(editTimesheet);
 		
 		status.setComplete();
-		
+		mailService.sendEmail(editTimesheet, "timesheetSubmitted");
 		//notify employee timesheet has been submitted
 //		Employee employee = editTimesheet.getEmployee();
 //		employee.notifyTimesheetCompletion();
