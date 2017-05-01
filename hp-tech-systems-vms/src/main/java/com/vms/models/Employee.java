@@ -80,7 +80,6 @@ public class Employee {
 	@Column(nullable = false)
 	private String permissionLevel;
 	
-
 	//@NotNull()
 	@Size(min = 5, max = 120, message = "{address.size}")
 	@Pattern(regexp = "[0-9]*+\\s+[a-zA-Z0-9\\s.]*", message = "{address.pattern}")

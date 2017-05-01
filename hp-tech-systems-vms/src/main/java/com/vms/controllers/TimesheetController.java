@@ -89,7 +89,8 @@ public class TimesheetController {
 		//Last thing we need to create a new timesheet is an employee to assign it to
 		//List<Employee> employees = employeeService.findAllSorted();
 		//List<Employee> validEmployees = new ArrayList<Employee>();
-		List<Employee> validEmployees = peService.findEmployeesForCustomTimesheets();
+		//List<Employee> validEmployees = peService.findEmployeesForCustomTimesheets();
+		List<Employee> validEmployees = employeeService.findActiveEmployees();
 		/*
 		for(ProjectEmployee pe : pes) {
 			//temporary

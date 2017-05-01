@@ -125,6 +125,6 @@ public class EmployeeService {
 	}
 	
 	public List<Employee> findActiveEmployees() {
-		return employeeRepo.findByActive(true);
+		return employeeRepo.findByActiveOrderByLastnameAsc(true);
 	}
 }

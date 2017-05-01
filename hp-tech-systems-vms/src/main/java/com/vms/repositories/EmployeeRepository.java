@@ -43,5 +43,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	public List<Employee> findEmployeesNotInList(List<Employee> emps);
 	
 	@Query
-	public List<Employee> findByActive(Boolean active);
+	public List<Employee> findByActiveOrderByLastnameAsc(Boolean active);
 }

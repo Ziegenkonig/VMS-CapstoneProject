@@ -42,7 +42,7 @@
  							th:value = "${employee.empId}"
  							th:text = "${employee.getLastname()} + ', ' + ${employee.getFirstname()}"></option>
 				</select> 
-				
+				<h5 th:if = "${#fields.hasErrors('projTimesheets')}" th:errors = "*{projTimesheets}" style = "Color: red"></h5>
 				
 				
 				<h4></h4>
