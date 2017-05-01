@@ -25,14 +25,13 @@ public class MailService {
 	
 	@Autowired
     JavaMailSender mailSender;
-	
 	@Autowired
-	EmployeeService empService = new EmployeeService();
+	EmployeeService empService;
 	@Autowired
 	VendorService vendService;
 	
-	String testEmail = "ziegenkonigreality@gmail.com";
-//	String testEmail = "ktred63@gmail.com";
+//	String testEmail = "ziegenkonigreality@gmail.com";
+	String testEmail = "ktred63@gmail.com";
 	String vmsEmail = "uofmcapstonebanana@gmail.com";
  
     public void sendEmail(Object object, String type) {
@@ -82,10 +81,10 @@ public class MailService {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 mimeMessage.setFrom(new InternetAddress(vmsEmail));
-                //Employee e = empService.findOne(ps.getEmpId());
-                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
+                Employee e = empService.findOne(ps.getEmpId());
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
+                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear " + ps.getFirstname() + " " + ps.getLastname()
                         + ", your paystub for the period " + ps.getPeriodStart().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]")) 
                         + " to " + ps.getPeriodEnd().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]"))
@@ -103,9 +102,9 @@ public class MailService {
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 Employee e = t.getEmployee();//empService.findOne(ps.getEmpId());
-                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
+                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear " + e.getFirstname() + " " + e.getLastname()
                         + ", your timesheet for the period starting " + t.getWeekStarting().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]"))
                         + " is now available.");
@@ -122,9 +121,9 @@ public class MailService {
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 Employee e = t.getEmployee();//empService.findOne(ps.getEmpId());
-                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
+                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear Admin"
                         + ", " + e.getFirstname() + " " + e.getLastname()
                         + " has submitted a timesheet for approval.");
@@ -141,9 +140,9 @@ public class MailService {
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 Employee e = t.getEmployee();//empService.findOne(ps.getEmpId());
-                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
+                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear " + e.getFirstname() + " " + e.getLastname()
 		                + ", your timesheet for the period starting " + t.getWeekStarting().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]"))
 		                + " has been returned by an admin for correction.");
@@ -161,9 +160,9 @@ public class MailService {
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 Employee e = t.getEmployee();//empService.findOne(ps.getEmpId());
-                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
+                //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(testEmail));
                 mimeMessage.setText("Dear " + e.getFirstname() + " " + e.getLastname()
 		                + ", your timesheet for the period starting " + t.getWeekStarting().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]"))
 		                + " is due by " + t.getDueDate().format(DateTimeFormatter.ofPattern("EEE, d MMM yyyy[ HH:mm a]")) + ".");

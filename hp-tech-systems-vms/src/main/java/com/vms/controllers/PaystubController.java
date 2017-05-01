@@ -41,6 +41,19 @@ public class PaystubController {
 	@Autowired
 	MailService mailService;
 	
+	
+	@GetMapping("/paystubHistory")
+	public String viewOwnPaystubs(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+			
+		List<Paystub> paystubs = pSService.findIssued(e.getEmpId());
+		model.addAttribute("employee", e);
+		model.addAttribute("paystubs", paystubs);
+		
+		return "paystub/userPaystubs";
+	}
+	
 	//reads all vendors from the db and displays in table form -working
 	@GetMapping(value = "/paystubs/{mode}")
 	public String viewPaystubs(@PathVariable String mode, 

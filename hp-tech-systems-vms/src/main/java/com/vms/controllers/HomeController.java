@@ -43,7 +43,7 @@ public class HomeController {
 	//Renders index
 	@RequestMapping(value = "/")
     public String index() {	
-        return "employee/login";
+        return "employee/dashboard";
     }
 	
 	//This Model object in the argument list is from the spring library, and is basically a hashmap containing
