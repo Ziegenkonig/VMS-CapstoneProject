@@ -61,6 +61,7 @@ public class Project {
 	
 	//Foreign Keys
 	//Note the way you have to reference the Entity you are pulling the FK from
+	@NotNull(message = "{vendor.null}")
 	@ManyToOne @JoinColumn(name = "vendor_id")
 	private Vendor vendor;
 	

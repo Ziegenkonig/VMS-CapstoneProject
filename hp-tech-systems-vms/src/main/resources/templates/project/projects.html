@@ -12,10 +12,10 @@
 		<h1>Projects</h1>
 		<a th:href="@{/project/new}">Create New Project</a>
 		<table id="projectTable"
-		       class="table table-bordered"
+		       class="table table-bordered table-fit"
 		       th:if="${projects != null}"> <!--  and not #list.isEmpty(projects) -->
         <thead>
-            <tr class="center middle">
+            <tr bgcolor = "#cce6ff" class="center middle">
                 <th>Name</th>
                 <th>Billing Rate</th>
                 <th>Client Name</th>
@@ -30,7 +30,7 @@
         <tbody>
             <tr th:each="project : ${projects}">
                 <td><a th:href="@{/project/view(pId=${project.projectId})}" th:text="${project.name}">View</a></td>
-                <td th:text="${project.billingRate}"></td>
+                <td th:text="'$ ' + ${project.billingRate}"></td>
                 <td th:text="${project.clientName}"></td>
                 <td th:text="${project.clientLocation}"></td>
                 <td th:text="${project.vendor?.name}"></td>

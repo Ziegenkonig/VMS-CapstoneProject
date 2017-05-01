@@ -13,10 +13,10 @@
 		
 		<p th:if="${paystubs == null OR paystubs.isEmpty()}" th:text="'No paystub history found'"></p>
 		<table id="tsTable"
-		       class="table table-bordered"
+		       class="table table-bordered table-fit"
 		       th:if="${paystubs != null}"> <!--  and not #list.isEmpty(vendors) -->
         <thead>
-            <tr class="center middle">
+            <tr bgcolor = "#cce6ff" class="center middle">
                 <th>Dates</th>
                 <th>Amount</th>
                 <th>Date Issued</th>

@@ -9,14 +9,18 @@
 		
 		<div th:fragment = "ProjectForm">
 		
+			<h5 th:if = "${#fields.hasErrors('vendor')}" th:errors = "*{vendor}" style = "Color: red"></h5>
 			<label for="project.vendor">Vendor:</label>
 	    		<select name="vendor">
+	    			<option th:value="${null}" selected="selected" th:text="'Select a Vendor'">
+		    		</option>
 				   <option th:each="v : ${vendors}"
 						th:selected="${project.vendor != null AND project.vendor.vendorId == v.vendorId}"
 						th:value="${v.vendorId}"
 						th:text="${v.name}">
 				   </option>
 				</select>
+				<p><a th:href="@{/vendor/new}" th:text="'Create New Vendor'"></a></p>
 				<h4 >Project Name</h4>
 				<h5 th:if = "${#fields.hasErrors('name')}" th:errors = "*{name}" style = "Color: red"></h5>
 			    <input type = "text" name = "name" th:field = "*{name}" />

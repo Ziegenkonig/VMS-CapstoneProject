@@ -10,8 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -97,7 +100,9 @@ public class Employee {
 	private String state;
 	
 	//Hiredate won't be included in a form
+	@NotNull
 	@Column(nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate hireDate;
 	
 	//These two attributes will be selected via dropdown box

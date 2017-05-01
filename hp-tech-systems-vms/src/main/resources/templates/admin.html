@@ -11,22 +11,34 @@
 		
 		<main>
 			<h5 th:text="'Logged in as: ' + ${emp.getFirstname()} + ' ' + ${emp.getLastname()}"></h5>
+			
+			<h4 th:text="'Employees'"></h4>
 			<ul>
-				<li><a th:href="@{/inviteEmployee}">Invite A New Employee To The Site</a></li>
-				<li><a th:href="@{/project/new}">Add a Project</a></li>
-				<li><a th:href="@{/projects/all}">View Project Overview</a></li>
-				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
-				<li><a th:href="@{/vendors}">View Vendor Overview</a></li>
-				<li><a th:href="@{/}" onclick="return false;">Add New Employee Account --disabled</a></li>
+				<li><a th:href="@{/inviteEmployee}">Invite A New Employee</a></li>
 				<li><a th:href="@{/employees}">Manage Employees</a></li>
-				<li th:if="${emp.permissionLevel == 3}"><a th:href="@{/}" onclick="return false;">Change Employee Permission Level (owner only) --disabled</a></li>
+			</ul>
+				
+			<h4 th:text="'Projects'"></h4>
+			<ul>
+				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
+				<li><a th:href="@{/vendors}">Manage Vendors</a></li>
+				<li><a th:href="@{/project/new}">Add a Project</a></li>
+				<li><a th:href="@{/projects/all}">Manage Projects</a></li>
 				<li><a th:href="@{/projects/all}">Add Employees To Project</a></li>
-				<li><a th:href="@{/timesheet/new}">Issue New Timesheet</a></li>
+			</ul>
+				
+			<h4 th:text="'Timesheets'"></h4>
+			<ul>
+				<li><a th:href="@{/timesheet/new}">Issue Timesheet</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='PENDING')}">Approve Pending Timesheets</a></li>
-				<li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>
-				<li><a th:href="@{/paystubs/all(empId=${emp.empId})}">Paystub History</a></li>
+				<!-- <li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>  -->
+			</ul>
+				
+			<h4 th:text="'Accounting'"></h4>
+			<ul>
+				<li><a th:href="@{/paystubs/all}">Paystubs</a></li>
 				<li><a th:href="@{/invoice/new}">Issue Invoice</a></li>
-				<li><a th:href="@{/invoices}">Invoice History</a></li>				
+				<li><a th:href="@{/invoices}">Invoices</a></li>
 			</ul>
 		</main>
 		<!-- <div class = "adminDashboardDiv" align = "left">

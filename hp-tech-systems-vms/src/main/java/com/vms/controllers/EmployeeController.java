@@ -38,11 +38,11 @@ public class EmployeeController{
 
 	//Hooking up the EmployeeService to the EmployeeController
 	@Autowired
-	EmployeeService employeeService = new EmployeeService();
+	EmployeeService employeeService;
 	@Autowired
-	TimesheetService timesheetService = new TimesheetService();
+	TimesheetService timesheetService;
 	@Autowired
-	PaystubService paystubService = new PaystubService();
+	PaystubService paystubService;
 	@Autowired
 	MailService mailService;
 	@Autowired
@@ -168,7 +168,6 @@ public class EmployeeController{
 
 		return "employee/editE";
 	}
-
 
 	@PostMapping("/editUserProfile/{id}")
 	public String employeeEdit(@ModelAttribute("employee")@Valid Employee employee,
@@ -331,4 +330,32 @@ public class EmployeeController{
   		return "redirect:/admin";
   	}
 
+  	@GetMapping("/admin/editEmployee/{id}")
+  	public String adminEmployeeEditForm(@PathVariable("id") Integer empId, 
+			Model model) {
+		
+		model.addAttribute("states", States.values());
+		model.addAttribute("employee", employeeService.findOne(empId));
+		model.addAttribute("period", PayPeriod.values());
+  		model.addAttribute("permission", Permission.values());
+
+		return "employee/adminEditE";
+	}
+
+  	@PostMapping("/admin/editEmployee/{id}")
+	public String adminEmployeeEdit(@ModelAttribute("employee")@Valid Employee employee,
+					BindingResult bindingResult, SessionStatus sessionStatus, Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("states", States.values());
+			model.addAttribute("period", PayPeriod.values());
+	  		model.addAttribute("permission", Permission.values());
+			return "employee/adminEditE";
+		}
+
+		employeeService.update(employee);
+		sessionStatus.setComplete();
+		
+		return "redirect:/employees";
+	}
 }

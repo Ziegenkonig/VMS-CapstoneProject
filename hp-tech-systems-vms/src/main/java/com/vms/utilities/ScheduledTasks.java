@@ -39,7 +39,7 @@ public class ScheduledTasks {
 
 	//
 	//@Scheduled(cron = "10 * * * * *")
-	@Scheduled(fixedRate = 20000)
+	//@Scheduled(fixedRate = 20000)
 	public void generateTimesheets() {
 		//get all the employees working on projects
 		if(nextPeriod.getYear() != 2018) {

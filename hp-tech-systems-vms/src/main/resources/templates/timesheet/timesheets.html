@@ -9,7 +9,7 @@
 		<nav th:replace="base :: site-nav('none')">
 		</nav>
 			<table id = "timesheetsTable"
-				   class="table table-bordered"
+				   class="table table-bordered table-fit"
 				   th:if="${timesheets != null}">
 				   
 				<thead>
@@ -40,32 +40,6 @@
 				</tbody>
 			
 			</table>
-
-	<!-- 	<h1>Timesheets</h1>
-		
-		<table id="tsTable"
-		       class="table table-bordered"
-		       th:if="${timesheets != null}">
-        <thead>
-            <tr class="center middle">
-                <th>Employee Name</th>
-                <th>Week Starting</th>
-                <th>Status</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="ts : ${timesheets}">
-                <td th:text="${ts.employee.firstname} + ' ' + ${ts.employee.lastname}"></td>
-                <td th:text="${ts.weekStarting}"></td>
-                <td th:text="${ts.status}"></td>
-                <td><a th:href="@{/timesheet/{id}(id=${ts.timesheetId})}">View</a></td>
-                <td><a th:if="${ts.status.toString() == 'VERIFIED' AND ts.paystubs.isEmpty()}" th:href="@{/paystub/new/{path}(path=${ts.timesheetId})}">Generate Paystub</a>
-                	<a th:if="${ts.status.toString() == 'VERIFIED' AND !ts.paystubs.isEmpty()}" th:href="@{/paystub/regenerate(pId=${ts.paystubs.get(0).paystubId})}">Regenerate Paystub</a></td>
-            </tr>
-        </tbody>
-    </table> -->
 
     <footer th:replace="base :: site-footer"></footer>
 

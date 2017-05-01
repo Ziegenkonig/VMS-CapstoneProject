@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/register/**", "/emailConfirmationNotification/**", "/emailConfirmation/**").permitAll()
-				.antMatchers("/admin", "/inviteEmployee", 
+				.antMatchers("/admin", "/admin/**", "/inviteEmployee", 
 							 "/project/new", "/projects/all", "/project/view**", "/project/edit**",  "/project/addEmployee**",
 							 "/vendor/new", "/vendors", "/vendor/view**", "/vendor/edit**",
 							 "/employees", "/timesheet/new", "/timesheets/**", 
