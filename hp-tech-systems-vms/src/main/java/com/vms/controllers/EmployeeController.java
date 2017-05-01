@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 //Spring imports
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,7 +55,7 @@ public class EmployeeController{
 		Employee newEmp = employeeService.findByRegistrationUrl(registrationUrl);
 		if ( newEmp ==  null )  
 			return "redirect:/";
-
+		
 		model.addAttribute("url", registrationUrl);
 		model.addAttribute("states", States.values());
 		model.addAttribute("employee", newEmp);
@@ -155,6 +157,12 @@ public class EmployeeController{
 	public String employeeEditForm(@PathVariable("id") Integer id, 
 			Model model) {
 
+		//Checking to make sure the user isn't being naughty
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+		if (e.getEmpId() != id)
+			return "redirect:/dashboard";
+		
 		model.addAttribute("states", States.values());
 		model.addAttribute("employee", employeeService.findOne(id));
 
@@ -185,6 +193,12 @@ public class EmployeeController{
 	public String confirmNewPasswordGet(@PathVariable("id") Integer id,
 			Model model) {
 
+		//Checking to make sure the user isn't being naughty
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+		if (e.getEmpId() != id)
+			return "redirect:/dashboard";
+		
 		model.addAttribute("employee", employeeService.findOne(id));
 
 		return "employee/confirmNewPassword";
@@ -210,6 +224,12 @@ public class EmployeeController{
 	@GetMapping("/newPassword/{id}")
 	public String newPasswordGet(@PathVariable("id") Integer id,
 			Model model) {
+		
+		//Checking to make sure the user isn't being naughty
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+		if (e.getEmpId() != id)
+			return "redirect:/dashboard";
 
 		model.addAttribute("employee", employeeService.findOne(id));
 
@@ -241,9 +261,10 @@ public class EmployeeController{
 	@GetMapping("/dashboard")
 	public String dashboard(Model model) {
 
-		System.out.println(encryptService.encode("vmstest"));
-		Employee e = employeeService.findOne(1);
-
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Employee e = employeeService.findByUsername(auth.getName());
+		
 		List<Paystub> issuedPaystubs = paystubService.findIssued(e.getEmpId());
 		List<Timesheet> openTimesheets = timesheetService.dashboardTimesheets(e);
 
@@ -256,7 +277,9 @@ public class EmployeeController{
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminDashboard(Model model) {
-		Employee admin = employeeService.findOne(6);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Employee admin = employeeService.findByUsername(auth.getName());
 		//Employee owner =  employeeService.findOne(11);
 		//model.addAttribute("emp", owner);
 		model.addAttribute("emp", admin);
@@ -304,8 +327,6 @@ public class EmployeeController{
   		employee.setRegistrationUrl( encoder.encode(registrationUrl) );
   		//updating new employee
     	employeeService.create(employee);
-  		
-
   		
   		return "redirect:/admin";
   	}

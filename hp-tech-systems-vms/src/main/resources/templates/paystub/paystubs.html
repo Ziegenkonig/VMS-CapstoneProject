@@ -25,9 +25,9 @@
                 <th>Date Voided</th>
                 <th>Check No</th>
                 <th>Check Date</th>
-                <th th:if="${employee.permissionLevel > 1}"></th>
-                <th th:if="${employee.permissionLevel > 1}"></th>
-                <th th:if="${employee.permissionLevel > 1}"></th>
+                <th th:if="${employee.permissionLevel != permissions[0].toString()}"></th>
+                <th th:if="${employee.permissionLevel != permissions[0].toString()}"></th>
+                <th th:if="${employee.permissionLevel != permissions[0].toString()}"></th>
             </tr>
         </thead>
         <tbody>

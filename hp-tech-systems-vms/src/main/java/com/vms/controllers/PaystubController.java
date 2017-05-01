@@ -4,6 +4,8 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.vms.models.Employee;
 import com.vms.models.Paystub;
 import com.vms.models.PaystubStatus;
+import com.vms.models.Permission;
 import com.vms.models.Timesheet;
 import com.vms.services.EmployeeService;
 import com.vms.services.PaystubService;
@@ -27,6 +30,8 @@ import com.vms.utilities.MailService;
 @SessionAttributes("paystub")
 public class PaystubController {
 
+	@Autowired
+	EmployeeService employeeService = new EmployeeService();
 	@Autowired
 	TimesheetService tSService = new TimesheetService();
 	@Autowired
@@ -43,8 +48,13 @@ public class PaystubController {
 							   @RequestParam(required = false) Integer empId,
 							   @RequestParam(required = false) PaystubStatus status,
 							   Model model) {
+		//Checking to make sure the user isn't being naughty
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+		if (e.getEmpId() != empId && e.getPermissionLevel() == Permission.ROLE_USER.toString())
+			return "redirect:/paystubs/byEmployee?empId=" + e.getEmpId();
+		
 		List<Paystub> paystubs;
-		Employee e;
 		switch(mode) {
 			case "all":
 				paystubs = pSService.findAll();
@@ -63,8 +73,9 @@ public class PaystubController {
 				paystubs = null;
 		}
 		e = empService.findOne(empId);
+		
 		model.addAttribute("employee", e);
-
+		model.addAttribute("permissions", Permission.values());
 		model.addAttribute("paystubs", paystubs);
 		return "paystub/paystubs";
 	}
