@@ -10,13 +10,16 @@
 	</nav>
 	
 	<main>
-		<h1>Employees</h1>
-		<a th:href="@{/inviteEmployee}">Invite New Employee</a>
+		<div class="content table-title">
+			<h1>Employees</h1>
+			<a th:href="@{/inviteEmployee}">Invite New Employee</a>
+		</div>
+		
 		<table id="empTable"
-		       class="table table-bordered table-fit"
+		       class="table table-bordered table-fit main-table"
 		       th:if="${employees != null}"> <!--  and not #list.isEmpty(vendors) -->
 	        <thead>
-	            <tr bgcolor = "#cce6ff" class="center middle">
+	            <tr bgcolor = "#FDA023" class="center middle">
 	                <th>Name</th>
 	                <th>Hire Date</th>
 	                <th>Active</th>

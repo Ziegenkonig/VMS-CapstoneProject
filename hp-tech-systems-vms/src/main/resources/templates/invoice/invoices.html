@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace= "base :: site-head">
-  <title id="pageTitle">VMS | Invoices</title>
+<head th:replace="base :: site-head">
+<title id="pageTitle">VMS | Invoices</title>
 </head>
 
-	<body>
-		<nav th:replace="base :: site-nav('none')">
-		</nav>
-			
-			<table id = "invoiceTable"
-				   class="table table-bordered table-fit"
-				   th:if="${invoices != null}">
-				   
-				<thead>
-					<tr bgcolor = "#cce6ff"> 
-						<th> Invoice ID </th>
-						<th> Vendor </th>
-						<th> Pay Period </th>
-						<th> Vendor Phone </th>
-						<th> Status </th>
-						<th>  </th> <!-- For regenerate button -->
-						<th>  </th> <!-- For view button -->
-					</tr>
-				</thead>
-				
-				<tbody>
-					<tr th:each = "invoice, iter : ${invoices}"> 
-						<td th:text = "${invoice.getInvoiceId()}">  </td>
-						<td th:text = "${invoice.getName()}">  </td>
-						<td th:text = "${invoice.getPeriodStart()}">  </td>
-						<td th:text = "${invoice.getPhone()}">  </td>
-						<td th:text = "${invoice.getStatus()}">  </td>
-						<td><a th:href="@{/invoice/view/{path}(path=${invoice.getInvoiceId()})}"> View </a></td>
-						<td><a th:if = "${invoice.status == draft}" th:href="@{/invoice/regenerate/{path}(path=${invoice.getInvoiceId()})}"> Regenerate </a></td>
-					</tr>
-				</tbody>
-			
-			</table>
-			
-	</body>
+<body>
+	<nav th:replace="base :: site-nav('none')"></nav>
+
+	<div class="content table-title">
+		<h1>Invoices</h1>
+		
+		<h5 th:if="${invoices == null OR invoices.isEmpty()}" th:text="'No invoices found'" style="Color: red"></h5>
+	</div>
+	
+	<table id="invoiceTable" class="table table-bordered table-fit main-table"
+		th:if="${invoices != null}">
+
+		<thead>
+			<tr bgcolor="#cce6ff">
+				<th>Invoice ID</th>
+				<th>Vendor</th>
+				<th>Pay Period</th>
+				<th>Vendor Phone</th>
+				<th>Status</th>
+				<th></th>
+				<!-- For regenerate button -->
+				<th></th>
+				<!-- For view button -->
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="invoice, iter : ${invoices}">
+				<td th:text="${invoice.getInvoiceId()}"></td>
+				<td th:text="${invoice.getName()}"></td>
+				<td th:text="${invoice.getPeriodStart()}"></td>
+				<td th:text="${invoice.getPhone()}"></td>
+				<td th:text="${invoice.getStatus()}"></td>
+				<td><a
+					th:href="@{/invoice/view/{path}(path=${invoice.getInvoiceId()})}">
+						View </a></td>
+				<td><a th:if="${invoice.status == draft}"
+					th:href="@{/invoice/regenerate/{path}(path=${invoice.getInvoiceId()})}">
+						Regenerate </a></td>
+			</tr>
+		</tbody>
+
+	</table>
+	<footer th:replace="base :: site-footer"></footer>
+</body>
 
 </html>

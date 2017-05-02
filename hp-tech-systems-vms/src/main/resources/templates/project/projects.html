@@ -9,9 +9,12 @@
 	<nav th:replace="base :: site-nav('none')"></nav>
 
 	<main>
-		<h1>Projects</h1>
-		<a th:href="@{/project/new}">Create New Project</a>
-		<table id="projectTable" class="table table-bordered table-fit"
+		<div class="content table-title">
+			<h1>Projects</h1>
+			<a th:href="@{/project/new}">Create New Project</a>
+		</div>
+		
+		<table id="projectTable" class="table table-bordered table-fit main-table"
 			th:if="${projects != null}">
 			<!--  and not #list.isEmpty(projects) -->
 			<thead>
