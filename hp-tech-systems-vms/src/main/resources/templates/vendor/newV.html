@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace= "base :: site-head">
-  <title id="pageTitle">VMS | New Vendor</title>
+<head th:replace="base :: site-head">
+<title id="pageTitle">VMS | New Vendor</title>
 </head>
-	<body>
-		<nav th:replace="base :: site-nav('none')">
-		</nav>
-		
-		<div class="formAlignCenter" align = "center">
-		
-		    <h1>New Vendor</h1>
-		    <form action="#" th:action="@{/vendor/new}" th:object="${vendor}" method="post">
-					
-					<div th:replace = "vendor/fragments :: VendorForm"></div>
+<body>
+	<nav th:replace="base :: site-nav('none')"></nav>
 
-		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-		    </form>
-		    
-		</div>		
-		
-		<footer th:replace="base :: site-footer"></footer>
-	</body>
+	<div class="formAlignCenter" align="center">
+
+		<h1>New Vendor</h1>
+		<form class="form-horizontal" action="#" th:action="@{/vendor/new}" th:object="${vendor}" method="post">
+
+			<div th:replace="vendor/fragments :: VendorForm"></div>
+
+		</form>
+
+	</div>
+
+	<footer th:replace="base :: site-footer"></footer>
+</body>
 
 </html>

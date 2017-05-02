@@ -1,55 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace= "base :: site-head">
-	  <title id="pageTitle">VMS | New Timesheet</title>
-	</head>
+<head th:replace="base :: site-head">
+<title id="pageTitle">VMS | New Timesheet</title>
+</head>
 
 <body>
 
-	<nav th:replace="base :: site-nav('none')">
-	</nav>
-	
-		<div class="formAlignCenter" align = "center">
-		
-		    <h1>New Timesheet</h1>
-		    
-		    <form action="#" th:action="@{/timesheet/new}" th:object="${timesheet}" method="post">
-				
-				<!-- Cycles through every vendor and includes their names into the list -->
-				
-				<h4>Select Pay Period</h4>
-				<h5 th:if = "${#fields.hasErrors('weekStarting')}" th:errors = "*{weekStarting}" style = "Color: red"></h5>
-				<select th:field = "*{weekStarting}">
- 					<!-- <option value = "0" > Select Pay Period </option> -->
- 					<option th:value="${null}" selected="selected" th:text="'Select a date'">
-		    		</option>
- 					<option th:each = "date : ${dates}" 
- 							th:value = "${date}" 
- 							th:text = "${#temporals.format(date, 'MM/dd/yyyy')}"></option>
-				</select>
-				
-				<!-- Cycles through every project-timesheet and adds their dates to the list with no repeating dates -->
-				
-				
-				<h4>Select Employee</h4>
-				<h5 th:if = "${#fields.hasErrors('employee')}" th:errors = "*{employee}" style = "Color: red"></h5>
-		        <select th:field = "*{employee}">
- 					<!-- <option th:value = "0"> Select Employee </option>  -->
- 					<option th:value="${null}" selected="selected" th:text="'Select an Employee'">
-		    		</option>
- 					<option th:each = "employee : ${employees}"
- 							th:value = "${employee.empId}"
- 							th:text = "${employee.getLastname()} + ', ' + ${employee.getFirstname()}"></option>
-				</select> 
-				<h5 th:if = "${#fields.hasErrors('projTimesheets')}" th:errors = "*{projTimesheets}" style = "Color: red"></h5>
-				
-				
-				<h4></h4>
-		        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-		    </form>
-		</div>
+	<nav th:replace="base :: site-nav('none')"></nav>
+
+	<div class="formAlignCenter" align="center">
+
+		<h1>New Timesheet</h1>
+
+		<form class="form-horizontal" action="#" th:action="@{/timesheet/new}" th:object="${timesheet}" method="post">
+
+			<div class="form-group">
+				<h5 th:if="${#fields.hasErrors('weekStarting')}" th:errors="*{weekStarting}" style="Color: red"></h5>
+				<label for="*{weekStarting}" class="control-label col-xs-2 col-xs-offset-3">Period Start:</label>
+				<div class="col-xs-3">
+					<select class="form-control" th:field="*{weekStarting}">
+						<!-- <option value = "0" > Select Pay Period </option> -->
+						<option th:value="${null}" selected="selected" th:text="'Select a date'"></option>
+						<option th:each="date : ${dates}" th:value="${date}"
+							th:text="${#temporals.format(date, 'MM/dd/yyyy')}"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<h5 th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}" style="Color: red"></h5>
+				<label for="*{employee}" class="control-label col-xs-2 col-xs-offset-3">Employee:</label>
+				<div class="col-xs-3">
+					<select class="form-control" th:field="*{employee}">
+						<!-- <option th:value = "0"> Select Employee </option>  -->
+						<option th:value="${null}" selected="selected"
+							th:text="'Select an Employee'"></option>
+						<option th:each="employee : ${employees}"
+							th:value="${employee.empId}"
+							th:text="${employee.getLastname()} + ', ' + ${employee.getFirstname()}"></option>
+					</select>
+				</div>
+			</div>
+			
+			<h5 th:if="${#fields.hasErrors('projTimesheets')}" th:errors="*{projTimesheets}" style="Color: red"></h5>
+			
+			<div class="btn-group">
+  				<input class="btn btn-primary" type="submit" value="Submit" /> 
+  				<input class="btn btn-warning" type="reset" value="Reset" />
+  			</div>
+		</form>
+	</div>
 	<footer th:replace="base :: site-footer"></footer>
-		
-	</body>
+
+</body>
 </html>

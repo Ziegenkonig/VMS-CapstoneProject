@@ -19,3 +19,11 @@ body {
 	white-space: nowrap;
     width: 1px;
 }
+
+main {
+	width: 80%;
+	margin: auto;
+}
+.form-horizontal .control-label.text-left{
+    text-align: left;
+}

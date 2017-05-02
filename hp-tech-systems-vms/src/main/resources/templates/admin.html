@@ -12,13 +12,13 @@
 		<main>
 			<h5 th:text="'Logged in as: ' + ${emp.getFirstname()} + ' ' + ${emp.getLastname()}"></h5>
 			
-			<h4 th:text="'Employees'"></h4>
+			<h3 th:text="'Employees'"></h3>
 			<ul>
 				<li><a th:href="@{/inviteEmployee}">Invite A New Employee</a></li>
 				<li><a th:href="@{/employees}">Manage Employees</a></li>
 			</ul>
 				
-			<h4 th:text="'Projects'"></h4>
+			<h3 th:text="'Projects'"></h3>
 			<ul>
 				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
 				<li><a th:href="@{/vendors}">Manage Vendors</a></li>
@@ -27,14 +27,14 @@
 				<li><a th:href="@{/projects/all}">Add Employees To Project</a></li>
 			</ul>
 				
-			<h4 th:text="'Timesheets'"></h4>
+			<h3 th:text="'Timesheets'"></h3>
 			<ul>
 				<li><a th:href="@{/timesheet/new}">Issue Timesheet</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='PENDING')}">Approve Pending Timesheets</a></li>
 				<!-- <li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>  -->
 			</ul>
 				
-			<h4 th:text="'Accounting'"></h4>
+			<h3 th:text="'Accounting'"></h3>
 			<ul>
 				<li><a th:href="@{/paystubs/all}">Paystubs</a></li>
 				<li><a th:href="@{/invoice/new}">Issue Invoice</a></li>
