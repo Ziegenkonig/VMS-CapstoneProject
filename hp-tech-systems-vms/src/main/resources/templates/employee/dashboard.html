@@ -10,7 +10,7 @@
 		</nav>
 		
 		<div class = "employeeDashboardDiv" align = "left">
-			<h5 th:text="'Logged in as: ' + ${e.getFirstname()} + ' ' + ${e.getLastname()}"></h5>
+			<h5 th:text="'Logged in as: ' + ${employee.getFirstname()} + ' ' + ${employee.getLastname()}"></h5>
 			<!-- Non-submitted Timesheets -->
 			<h3> Current Timesheets </h3>
 			<!-- Will contain a list of non-submitted timesheets -->
@@ -37,7 +37,6 @@
 			<h3> Tax Information </h3>
 				<p> Coming Soon </p>
 				<!-- Will contain necessary tax information -->
-			
 			
 		</div>
 	</body>

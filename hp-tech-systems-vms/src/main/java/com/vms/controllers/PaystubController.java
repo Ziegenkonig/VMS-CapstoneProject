@@ -41,19 +41,35 @@ public class PaystubController {
 	@Autowired
 	MailService mailService;
 	
+	//user view all paystubs
+	@GetMapping("/paystubHistory")
+	public String viewOwnPaystubs(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+			
+		List<Paystub> paystubs = pSService.findIssued(e.getEmpId());
+		model.addAttribute("employee", e);
+		model.addAttribute("paystubs", paystubs);
+		
+		return "paystub/userPaystubs";
+	}
+	
 	//reads all vendors from the db and displays in table form -working
 	@GetMapping(value = "/paystubs/{mode}")
-	public String viewPaystubs(@PathVariable String mode, 
-							   //@RequestParam Integer callerId,
+	public String viewPaystubs(@PathVariable String mode,
 							   @RequestParam(required = false) Integer empId,
 							   @RequestParam(required = false) PaystubStatus status,
 							   Model model) {
-		//Checking to make sure the user isn't being naughty
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Employee e = employeeService.findByUsername(auth.getName());
-		if (e.getEmpId() != empId && e.getPermissionLevel() == Permission.ROLE_USER.toString())
-			return "redirect:/paystubs/byEmployee?empId=" + e.getEmpId();
+		Employee employee = employeeService.findByUsername(auth.getName());
 		
+		//Checking to make sure the user isn't being naughty
+		auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+		if (e.getPermissionLevel() == Permission.ROLE_USER.toString())
+			return "redirect:/dashboard";
+		
+		e = null;
 		List<Paystub> paystubs;
 		switch(mode) {
 			case "all":
@@ -61,21 +77,23 @@ public class PaystubController {
 				break;
 			//not yet implemented
 			case "byEmployee":
-				//paystubs = pSService.findPaystubByEmployee(e);
-				paystubs = pSService.findIssued(empId);
+				e = empService.findOne(empId);
+				paystubs = pSService.findPaystubByEmployee(e);
+				//paystubs = pSService.findIssued(empId);
 				break;
 			//not yet implemented
 			case "byStatus":
 				paystubs = pSService.findByStatus(status);
 				break;
 			default:
-			//	e = null;
 				paystubs = null;
 		}
-		e = empService.findOne(empId);
 		
-		model.addAttribute("employee", e);
-		model.addAttribute("permissions", Permission.values());
+		if(e != null) {
+			model.addAttribute("employee", e);
+		}
+		//model.addAttribute("permissions", Permission.values());
+		model.addAttribute("employee", employee);
 		model.addAttribute("paystubs", paystubs);
 		return "paystub/paystubs";
 	}
@@ -83,6 +101,11 @@ public class PaystubController {
 	//generate new paystub based on a timesheet
 	@GetMapping("/paystub/new/{tsId}")
 	public String newPaystub(@PathVariable Integer tsId, Model model) {
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		Timesheet t = tSService.findById(tsId);
 		Paystub prev = pSService.findPreviousPaystubForYtd(t.getEmployee(), t);
 		Paystub ps = null;
@@ -99,6 +122,11 @@ public class PaystubController {
 	//view an existing paystub
 	@GetMapping("/paystub/{psId}")
 	public String viewExistingPaystub(@PathVariable Integer psId, Model model) {
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		Paystub ps = pSService.findById(psId);
 		model.addAttribute("paystub", ps);
 		return "paystub/viewPs";
@@ -107,6 +135,11 @@ public class PaystubController {
 	//adding a check number and updating status
 	@GetMapping("/paystub/addCheck")
 	public String addCheckToPaystub(@RequestParam Integer pId, Model model) {
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		Paystub ps = pSService.findById(pId);
 		model.addAttribute("paystub", ps);
 		return "paystub/checkNoForm";
@@ -125,6 +158,7 @@ public class PaystubController {
 	//recreating a paystub from an existing paystub
 	@GetMapping("/paystub/regenerate")
 	public String reGeneratePaystub(@RequestParam Integer pId) {
+		
 		Paystub ps = pSService.findById(pId);
 		Paystub copy;
 		if(ps.getPrevPaystubId() != null) {

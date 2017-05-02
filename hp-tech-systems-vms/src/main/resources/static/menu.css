@@ -24,7 +24,7 @@
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover, .offcanvas a:focus{
-    color: #afafaf;
+    color: #d4d2d2;
     background-color: #db881a;
 }
 

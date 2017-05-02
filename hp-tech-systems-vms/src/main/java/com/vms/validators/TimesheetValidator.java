@@ -29,7 +29,7 @@ public class TimesheetValidator implements Validator {
       }
       
       if(t.getProjTimesheets().isEmpty()) {
-    	  errors.reject("projTimesheets.isEmpty");
+    	  errors.rejectValue("projTimesheets", "projTimesheets.isEmpty");
       }
     }
 }

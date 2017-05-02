@@ -2,30 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace= "base :: site-head">
-  <title id="pageTitle">VMS | Admin Dashboard</title>>
+  <title id="pageTitle">VMS | Admin Dashboard</title>
 </head>
 
 	<body id = "main">
 		<nav th:replace="base :: site-nav('admin')">
 		</nav>
 		
-			<h5 th:text="'Logged in as: ' + ${e.getFirstname()} + ' ' + ${e.getLastname()}"></h5>
+			<h5 th:text="'Logged in as: ' + ${employee.getFirstname()} + ' ' + ${employee.getLastname()}"></h5>
+			
+			<h3 th:text="'Employees'"></h3>
 			<ul>
-				<li><a th:href="@{/inviteEmployee}">Invite A New Employee To The Site</a></li>
-				<li><a th:href="@{/project/new}">Add a Project</a></li>
-				<li><a th:href="@{/projects/all}">View Project Overview</a></li>
-				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
-				<li><a th:href="@{/vendors}">View Vendor Overview</a></li>
-				<li><a th:href="@{/}" onclick="return false;">Add New Employee Account --disabled</a></li>
+				<li><a th:href="@{/inviteEmployee}">Invite A New Employee</a></li>
 				<li><a th:href="@{/employees}">Manage Employees</a></li>
-				<li th:if="${e.permissionLevel == permissions[2].toString()}"><a th:href="@{/}" onclick="return false;">Change Employee Permission Level (owner only) --disabled</a></li>
+				<li th:if="${employee.permissionLevel == permissions[2].toString()}"><a th:href="@{/}" onclick="return false;">Change Employee Permission Level (owner only) --disabled</a></li>
+			</ul>
+				
+			<h3 th:text="'Projects'"></h3>
+			<ul>
+				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
+				<li><a th:href="@{/vendors}">Manage Vendors</a></li>
+				<li><a th:href="@{/project/new}">Add a Project</a></li>
+				<li><a th:href="@{/projects/all}">Manage Projects</a></li>
 				<li><a th:href="@{/projects/all}">Add Employees To Project</a></li>
-				<li><a th:href="@{/timesheet/new}">Issue New Timesheet</a></li>
+			</ul>
+				
+			<h3 th:text="'Timesheets'"></h3>
+			<ul>
+				<li><a th:href="@{/timesheet/new}">Issue Timesheet</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='PENDING')}">Approve Pending Timesheets</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>
-				<li><a th:href="@{/paystubs/all(empId=${e.empId})}">Paystub History</a></li>
+				<li><a th:href="@{/paystubs/all(empId=${employee.empId})}">Paystub History</a></li>
+				<!-- <li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>  -->
+			</ul>
+				
+			<h3 th:text="'Accounting'"></h3>
+			<ul>
+				<li><a th:href="@{/paystubs/all}">Paystubs</a></li>
 				<li><a th:href="@{/invoice/new}">Issue Invoice</a></li>
-				<li><a th:href="@{/invoices}">Invoice History</a></li>				
+				<li><a th:href="@{/invoices}">Invoices</a></li>
 			</ul>
 
 	</body>

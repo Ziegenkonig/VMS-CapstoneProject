@@ -64,6 +64,12 @@ public class Vendor {
 	@Column(length = 2, nullable = false)
 	private String state; //Should be two capital letters
 	
+	//@NotNull()
+	@Size(min = 5, message = "{zipcode.size}")
+	@Pattern(regexp = "[0-9]*{5}", message = "{zipcode.pattern}")
+	@Column(length = 32, nullable = true)
+	private String zipcode;
+	
 	@NotNull()
 	@Size(min = 10, max = 20, message = "{phone.size}")
 	@Pattern(regexp = "[0-9]*{10}|[0-9]*{11}", message = "{phone.pattern}")

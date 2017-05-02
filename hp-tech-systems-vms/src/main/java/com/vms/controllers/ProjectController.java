@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,7 @@ import com.vms.models.Employee;
 import com.vms.models.Project;
 import com.vms.models.ProjectEmployee;
 import com.vms.models.Vendor;
+import com.vms.services.EmployeeService;
 import com.vms.services.ProjectEmployeeService;
 import com.vms.services.ProjectService;
 import com.vms.services.VendorService;
@@ -39,6 +42,8 @@ public class ProjectController {
 	private ProjectEmployeeService peService = new ProjectEmployeeService();
 	@Autowired
 	private ProjectEmployeeValidator pev;
+	@Autowired
+	private EmployeeService employeeService = new EmployeeService();
 	/*
 	@InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -50,6 +55,12 @@ public class ProjectController {
 	public String viewProjects(@PathVariable String mode, 
 							   @RequestParam(required = false) Integer vId,
 							   Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		List<Project> projects;
 		switch(mode) {
 			case "all":
@@ -71,6 +82,12 @@ public class ProjectController {
 	
 	@GetMapping(value = "/project/view")
 	public String viewProject(@RequestParam("pId") Integer pId, Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		model.addAttribute("project", pService.findById(pId));
 		return "project/viewP";
 	}
@@ -78,6 +95,12 @@ public class ProjectController {
 	@GetMapping(value = "/project/new")
 	public String newProject(@RequestParam(required = false) Integer vId, 
 							 Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		Project p = null;
 		if(vId == null) {
 			p = new Project();
@@ -112,6 +135,12 @@ public class ProjectController {
 	
 	@GetMapping(value = "/project/edit")
 	public String editProject(@RequestParam("pId") Integer pId, Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		List<Vendor> vendors = vService.findAll();
 		model.addAttribute("vendors", vendors);
 		model.addAttribute("project", pService.findById(pId));
@@ -134,6 +163,12 @@ public class ProjectController {
 	
 	@GetMapping("/project/addEmployee")
 	public String addEmployee(@RequestParam(required=false) Integer pId, Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		List<Employee> emps;
 		Project p;
 		if(!model.containsAttribute("pe") && pId == null) {

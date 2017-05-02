@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace= "base :: site-head">
+  <title id="pageTitle">VMS | Paystubs</title>
+</head>
+
+	<body>
+		<nav th:replace="base :: site-nav('none')">
+		</nav>
+		<!-- user version -->
+		<h1 th:text="'Paystub History for ' + ${employee.firstname} + ' ' + ${employee.lastname}"></h1>
+		
+		<p th:if="${paystubs == null OR paystubs.isEmpty()}" th:text="'No paystub history found'"></p>
+		<table id="tsTable"
+		       class="table table-bordered table-fit"
+		       th:if="${paystubs != null}"> <!--  and not #list.isEmpty(vendors) -->
+        <thead>
+            <tr bgcolor = "#cce6ff" class="center middle">
+                <th>Dates</th>
+                <th>Amount</th>
+                <th>Date Issued</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ps : ${paystubs}">
+                <td><a th:href="@{/paystub/{path}(path=${ps.paystubId})}" 
+                	   th:text="${#temporals.format(ps.periodStart,'MM/dd/yyyy')} + ' - ' + ${#temporals.format(ps.periodEnd,'MM/dd/yyyy')}"></a></td>
+                <td th:text="${ps.netPay}"></td>
+                <td th:text="${ps.checkDate} ? ${#temporals.format(ps.checkDate,'MM/dd/yyyy HH:mm')}"></td>
+                <td th:text="${ps.status}"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <footer th:replace="base :: site-footer"></footer>
+
+	</body>
+</html>

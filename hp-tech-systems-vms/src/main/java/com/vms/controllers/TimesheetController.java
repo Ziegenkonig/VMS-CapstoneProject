@@ -10,6 +10,8 @@ import java.util.Locale;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,6 +60,12 @@ public class TimesheetController {
 	//VIEWING ALL TIMESHEETS
 	@GetMapping("/timesheets")
 	public String allTimesheets(Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		//Getting all timesheets
 		List<Timesheet> timesheets = timesheetService.findAll();
 		//TimesheetStatus editCheck = TimesheetStatus.NOT_SUBMITTED;
@@ -74,6 +82,12 @@ public class TimesheetController {
 	//CREATING NEW TIMESHEET
 	@GetMapping("/timesheet/new")
 	public String newTimesheetForm(Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		//Grabbing the local date, and setting it to the nearest future sunday (start of pay period)
 		LocalDate startOfYear = LocalDate.of(2017, 1, 1).with(WeekFields.of(Locale.US).dayOfWeek(), 1);
 		
@@ -89,7 +103,8 @@ public class TimesheetController {
 		//Last thing we need to create a new timesheet is an employee to assign it to
 		//List<Employee> employees = employeeService.findAllSorted();
 		//List<Employee> validEmployees = new ArrayList<Employee>();
-		List<Employee> validEmployees = peService.findEmployeesForCustomTimesheets();
+		//List<Employee> validEmployees = peService.findEmployeesForCustomTimesheets();
+		List<Employee> validEmployees = employeeService.findActiveEmployees();
 		/*
 		for(ProjectEmployee pe : pes) {
 			//temporary
@@ -151,6 +166,11 @@ public class TimesheetController {
 	public String viewTimesheet(@PathVariable("id") Integer id, 
 								Model model) {
 		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		Timesheet timesheet = timesheetService.findById(id);
 		timesheet.setWeekStarting(timesheet.getWeekStarting().minusDays(1));
 
@@ -166,6 +186,11 @@ public class TimesheetController {
 	public String editTimesheetForm(@PathVariable("id") Integer id,
 									Model model) {
 
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		Timesheet timesheet = timesheetService.findById(id);
 		StringHolder weekStarting = new StringHolder();
 		weekStarting.setLocalDate(timesheet.getWeekStarting().minusDays(1));
@@ -187,7 +212,7 @@ public class TimesheetController {
 		timesheetService.edit(editTimesheet);
 		
 		status.setComplete();
-		mailService.sendEmail(editTimesheet, "timesheetSubmitted");
+		
 		return "redirect:/timesheet/edit/" + editTimesheet.getTimesheetId();
 	}
 	
@@ -200,7 +225,7 @@ public class TimesheetController {
 		timesheetService.edit(editTimesheet);
 		
 		status.setComplete();
-		
+		mailService.sendEmail(editTimesheet, "timesheetSubmitted");
 		//notify employee timesheet has been submitted
 //		Employee employee = editTimesheet.getEmployee();
 //		employee.notifyTimesheetCompletion();
@@ -214,6 +239,11 @@ public class TimesheetController {
 							     @RequestParam(required = false) TimesheetStatus status,
 							     @RequestParam(required = false) Boolean edit,
 							     Model model) {
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		List<Timesheet> timesheets;
 		switch(mode) {
 			case "all":
@@ -235,6 +265,12 @@ public class TimesheetController {
 	
 	@GetMapping(value = "/timesheet/{id}")
 	public String viewTimesheetK(@PathVariable("id") Integer tsId, Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		Timesheet t = timesheetService.findById(tsId);
 		model.addAttribute("timesheet", t);
 		/*
@@ -260,6 +296,11 @@ public class TimesheetController {
 	
 	@GetMapping("/timesheet/approve/{id}")
 	public String approveTimesheet(@PathVariable Integer id, Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
 		
 		Timesheet timesheet = timesheetService.findById(id);
 		timesheet.setWeekStarting(timesheet.getWeekStarting().minusDays(1));

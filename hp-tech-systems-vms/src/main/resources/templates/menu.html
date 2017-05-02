@@ -3,9 +3,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <head th:fragment= "site-head">
-    
-       <link rel = "stylesheet" href = "menu.css" th:ref = "@{/menu.css}"/>
-       <script type="text/javascript" th:src = "@{/menu.js}"></script>
         
     </head>
     
@@ -17,16 +14,16 @@
 	   		
 	   		<div class = "profileInfo">
 		   		<img src="/images/HPTechLogo.png"/>
-		   		<p th:text = "'Hello, ' + ${e.getFirstname()}"></p>
+		   		<p th:text = "'Hello, ' + ${employee.getFirstname()}"></p>
 		   	</div>
 	   		
 	   		<a th:href="@{/dashboard}"> Dashboard </a>
 	   		
 	   		<a th:href="@{/admin}"> Admin Tools </a>
 	   		
-	   		<a th:href="@{/paystubs/byEmployee(empId=${e.empId})}"> View Paystubs </a>
+	   		<a th:href="@{/paystubs/byEmployee(empId=${employee.empId})}"> View Paystubs </a>
 	   		
-	   		<a th:href="@{/editUserProfile/{path}(path=${e.empId})}"> Edit Profile </a>
+	   		<a th:href="@{/editUserProfile/{path}(path=${employee.empId})}"> Edit Profile </a>
 	   		
 	   		
 	   	</div>

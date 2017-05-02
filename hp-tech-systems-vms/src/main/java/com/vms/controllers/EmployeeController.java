@@ -38,13 +38,15 @@ public class EmployeeController{
 
 	//Hooking up the EmployeeService to the EmployeeController
 	@Autowired
-	EmployeeService employeeService = new EmployeeService();
+	EmployeeService employeeService;
 	@Autowired
-	TimesheetService timesheetService = new TimesheetService();
+	TimesheetService timesheetService;
 	@Autowired
-	PaystubService paystubService = new PaystubService();
+	PaystubService paystubService;
 	@Autowired
 	MailService mailService;
+	@Autowired
+	HashSlingingSlasher encryptService;
 
 	@GetMapping("/register/{registrationUrl}")
 	public String employeeForm(@PathVariable("registrationUrl") String registrationUrl, 
@@ -157,16 +159,15 @@ public class EmployeeController{
 
 		//Checking to make sure the user isn't being naughty
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Employee e = employeeService.findByUsername(auth.getName());
-		if (e.getEmpId() != id)
+		Employee employee = employeeService.findByUsername(auth.getName());
+		if (employee.getEmpId() != id)
 			return "redirect:/dashboard";
 		
 		model.addAttribute("states", States.values());
-		model.addAttribute("employee", employeeService.findOne(id));
+		model.addAttribute("employee", employee);
 
 		return "employee/editE";
 	}
-
 
 	@PostMapping("/editUserProfile/{id}")
 	public String employeeEdit(@ModelAttribute("employee")@Valid Employee employee,
@@ -176,14 +177,14 @@ public class EmployeeController{
 		//Checks for validation errors and renders this page again if any exist
 		if (bindingResult.hasErrors())
 			return "employee/editE";
-
+		
 		model.addAttribute("states", States.values());
 
 		//update this employee in the database
 		employeeService.update(employee);
 
 		sessionStatus.setComplete();
-
+		
 		return "redirect:/dashboard";
 	}
 
@@ -193,11 +194,11 @@ public class EmployeeController{
 
 		//Checking to make sure the user isn't being naughty
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Employee e = employeeService.findByUsername(auth.getName());
-		if (e.getEmpId() != id)
+		Employee employee = employeeService.findByUsername(auth.getName());
+		if (employee.getEmpId() != id)
 			return "redirect:/dashboard";
 		
-		model.addAttribute("employee", employeeService.findOne(id));
+		model.addAttribute("employee", employee);
 
 		return "employee/confirmNewPassword";
 	}
@@ -225,11 +226,11 @@ public class EmployeeController{
 		
 		//Checking to make sure the user isn't being naughty
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Employee e = employeeService.findByUsername(auth.getName());
-		if (e.getEmpId() != id)
+		Employee employee = employeeService.findByUsername(auth.getName());
+		if (employee.getEmpId() != id)
 			return "redirect:/dashboard";
 
-		model.addAttribute("employee", employeeService.findOne(id));
+		model.addAttribute("employee", employee);
 
 		return "employee/newPassword";
 	}
@@ -261,12 +262,12 @@ public class EmployeeController{
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
-		Employee e = employeeService.findByUsername(auth.getName());
+		Employee employee = employeeService.findByUsername(auth.getName());
 		
-		List<Paystub> issuedPaystubs = paystubService.findIssued(e.getEmpId());
-		List<Timesheet> openTimesheets = timesheetService.dashboardTimesheets(e);
+		List<Paystub> issuedPaystubs = paystubService.findIssued(employee.getEmpId());
+		List<Timesheet> openTimesheets = timesheetService.dashboardTimesheets(employee);
 
-		model.addAttribute("e", e);
+		model.addAttribute("employee", employee);
 		model.addAttribute("permissions", Permission.values());
 		model.addAttribute("openTimesheets", openTimesheets);
 		model.addAttribute("issuedPaystubs", issuedPaystubs);
@@ -281,13 +282,18 @@ public class EmployeeController{
 		Employee admin = employeeService.findByUsername(auth.getName());
 		//Employee owner =  employeeService.findOne(11);
 		//model.addAttribute("emp", owner);
-		model.addAttribute("e", admin);
+		model.addAttribute("employee", admin);
 		model.addAttribute("permissions", Permission.values());
 		return "admin";
 	}
   	
   	@GetMapping("/employees")
   	public String viewEmployees(Model model) {
+  		//Adding currently logged in employee to model
+  		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+  		
+		model.addAttribute("employee", employee);
   		model.addAttribute("employees", employeeService.findAll());
   		return "employee/employees";
   	}
@@ -331,4 +337,35 @@ public class EmployeeController{
   		return "redirect:/admin";
   	}
 
+  	@GetMapping("/admin/editEmployee/{id}")
+  	public String adminEmployeeEditForm(@PathVariable("id") Integer empId, 
+			Model model) {
+  		//Adding currently logged in employee to model
+  		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+  		
+		model.addAttribute("employee", employee);
+		model.addAttribute("states", States.values());
+		model.addAttribute("period", PayPeriod.values());
+  		model.addAttribute("permission", Permission.values());
+
+		return "employee/adminEditE";
+	}
+
+  	@PostMapping("/admin/editEmployee/{id}")
+	public String adminEmployeeEdit(@ModelAttribute("employee")@Valid Employee employee,
+					BindingResult bindingResult, SessionStatus sessionStatus, Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("states", States.values());
+			model.addAttribute("period", PayPeriod.values());
+	  		model.addAttribute("permission", Permission.values());
+			return "employee/adminEditE";
+		}
+
+		employeeService.update(employee);
+		sessionStatus.setComplete();
+		
+		return "redirect:/employees";
+	}
 }

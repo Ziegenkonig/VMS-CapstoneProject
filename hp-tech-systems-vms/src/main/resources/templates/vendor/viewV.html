@@ -10,7 +10,7 @@
 	</nav>
 	
 	<!-- View Specific Vendor Details --> 
-	<main>
+	
 		<h2 th:text="${vendor?.name}">Company Name</h2>
 	    <p th:text="'Primary Email: ' + ${vendor?.primaryEmail}">bjones@companyname.com</p>
 	    <p th:text="'Contact Name: ' + ${vendor?.contactName}">Bob Jones</p>
@@ -24,7 +24,7 @@
 	    	<li th:each="project : ${vendor.projects}"><a th:href="@{/project/view(pId=${project.projectId})}" th:text="${project.name}"></a></li>
 	    </ul>
 	    <p><a th:href="@{/project/new(vId=${vendor.vendorId})}" th:text="'Add New Project'"></a></p>
-	</main>
+	
 	
 	<footer th:replace="base :: site-footer"></footer>
 </body>
