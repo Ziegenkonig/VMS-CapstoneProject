@@ -267,6 +267,7 @@ public class EmployeeController{
 		List<Timesheet> openTimesheets = timesheetService.dashboardTimesheets(e);
 
 		model.addAttribute("e", e);
+		model.addAttribute("permissions", Permission.values());
 		model.addAttribute("openTimesheets", openTimesheets);
 		model.addAttribute("issuedPaystubs", issuedPaystubs);
 
@@ -280,7 +281,8 @@ public class EmployeeController{
 		Employee admin = employeeService.findByUsername(auth.getName());
 		//Employee owner =  employeeService.findOne(11);
 		//model.addAttribute("emp", owner);
-		model.addAttribute("emp", admin);
+		model.addAttribute("e", admin);
+		model.addAttribute("permissions", Permission.values());
 		return "admin";
 	}
   	
