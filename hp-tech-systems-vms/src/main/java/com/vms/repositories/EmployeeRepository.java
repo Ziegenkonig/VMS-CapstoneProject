@@ -39,7 +39,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 		)
 	public Employee findByName(@Param("firstname") String firstname, @Param("lastname") String lastname);
 	
-	@Query("select e from Employee e where e not in ?1") 
+	@Query("select e from Employee e where e not in ?1 AND active=1") 
 	public List<Employee> findEmployeesNotInList(List<Employee> emps);
 	
 	@Query

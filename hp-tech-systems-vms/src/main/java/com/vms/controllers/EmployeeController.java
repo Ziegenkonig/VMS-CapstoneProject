@@ -304,6 +304,9 @@ public class EmployeeController{
   		
   		Employee employee = new Employee();
   		
+  		employee.setActive(false);
+  		employee.setHireDate(LocalDate.now());
+  		
   		model.addAttribute("employee", employee);
   		model.addAttribute("period", PayPeriod.values());
   		model.addAttribute("permission", Permission.values());
@@ -312,11 +315,16 @@ public class EmployeeController{
   	}
   	
   	@PostMapping("/inviteEmployee")
-  	public String sentRegistrationEmail(@ModelAttribute Employee employee) {
+  	public String sentRegistrationEmail(@ModelAttribute @Valid Employee employee, BindingResult result, Model model) {
 
+  		if(result.hasErrors()) {
+  			model.addAttribute("period", PayPeriod.values());
+  	  		model.addAttribute("permission", Permission.values());
+  	  		return "employee/registrationEmail"; 
+  		}
   		//Taking care of basic declaration for the new employee
-  		employee.setActive(false);
-  		employee.setHireDate(LocalDate.now());
+  		//employee.setActive(false);
+  		//employee.setHireDate(LocalDate.now());
   		
   		//Taking care of encrypting and setting the confirmation url
   		HashSlingingSlasher encoder = new HashSlingingSlasher();
