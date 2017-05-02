@@ -120,7 +120,7 @@
 						<tr bgcolor = "#cce6ff">
 							<td> Project </td>
 							<td th:each = "day : ${days}" th:utext = "${day.toString().substring(0,1) + day.toString().substring(1).toLowerCase()}
-																	+ '&lt;br /&gt;' + ${originalTimesheet.weekStarting = originalTimesheet.weekStarting.plusDays(1)}"> </td>
+																	+ '&lt;br /&gt;' + ${timesheet.weekStarting = timesheet.weekStarting.plusDays(1)}"> </td>
 							<td>Total</td>	
 						</tr>
 					</thead>
