@@ -11,118 +11,38 @@
 		
 		<main>
 			<h5 th:text="'Logged in as: ' + ${emp.getFirstname()} + ' ' + ${emp.getLastname()}"></h5>
+			
+			<h3 th:text="'Employees'"></h3>
 			<ul>
-				<li><a th:href="@{/inviteEmployee}">Invite A New Employee To The Site</a></li>
-				<li><a th:href="@{/project/new}">Add a Project</a></li>
-				<li><a th:href="@{/projects/all}">View Project Overview</a></li>
-				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
-				<li><a th:href="@{/vendors}">View Vendor Overview</a></li>
-				<li><a th:href="@{/}" onclick="return false;">Add New Employee Account --disabled</a></li>
+				<li><a th:href="@{/inviteEmployee}">Invite A New Employee</a></li>
 				<li><a th:href="@{/employees}">Manage Employees</a></li>
-				<li th:if="${emp.permissionLevel == 3}"><a th:href="@{/}" onclick="return false;">Change Employee Permission Level (owner only) --disabled</a></li>
+			</ul>
+				
+			<h3 th:text="'Projects'"></h3>
+			<ul>
+				<li><a th:href="@{/vendor/new}">Add a Vendor</a></li>
+				<li><a th:href="@{/vendors}">Manage Vendors</a></li>
+				<li><a th:href="@{/project/new}">Add a Project</a></li>
+				<li><a th:href="@{/projects/all}">Manage Projects</a></li>
 				<li><a th:href="@{/projects/all}">Add Employees To Project</a></li>
-				<li><a th:href="@{/timesheet/new}">Issue New Timesheet</a></li>
+			</ul>
+				
+			<h3 th:text="'Timesheets'"></h3>
+			<ul>
+				<li><a th:href="@{/timesheet/new}">Issue Timesheet</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='PENDING')}">Approve Pending Timesheets</a></li>
-				<li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>
-				<li><a th:href="@{/paystubs/all(empId=${emp.empId})}">Paystub History</a></li>
+				<!-- <li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>  -->
+			</ul>
+				
+			<h3 th:text="'Accounting'"></h3>
+			<ul>
+				<li><a th:href="@{/paystubs/all}">Paystubs</a></li>
 				<li><a th:href="@{/invoice/new}">Issue Invoice</a></li>
-				<li><a th:href="@{/invoices}">Invoice History</a></li>				
+				<li><a th:href="@{/invoices}">Invoices</a></li>
 			</ul>
 		</main>
-		<!-- <div class = "adminDashboardDiv" align = "left">
-			
-			Pending Timesheets
-		<h2> Pending Timesheets </h2>
-		Will contain a list of pending timesheets
-		<ul>
-			<li>Timesheet 1, Date Submitted, Status</li>
-			<li>Timesheet 2, Date Submitted, Status</li>
-			<li>Timesheet 3, Date Submitted, Status</li>
-			<li>Timesheet 4, Date Submitted, Status</li>
-			<li>Timesheet 5, Date Submitted, Status</li>
-			<li>Timesheet 6, Date Submitted, Status</li>
-			<li><b> <a href = "http://localhost:8080/timesheet/approve">View all pending timesheets...</a> </b></li>
-		</ul>
 		
-		Past Timesheets
-		<h2> Approved Timesheets </h2>
-			 Will contain a list of past timesheets for all employees
-			<ul>
-				<li>Timesheet 1, Date Created</li>
-				<li>Timesheet 2, Date Created</li>
-				<li>Timesheet 3, Date Created</li>
-				<li>Timesheet 4, Date Created</li>
-				<li>Timesheet 5, Date Created</li>
-				<li>Timesheet 6, Date Created</li>
-				<li><b> <a href = "http://localhost:8080/timesheets">View all timesheets...</a> </b></li>
-			</ul>
-			
-		Corrected Paystubs
-		<h2> Corrected Paystubs </h2>
-			Will contain a list of Paystubs that have returned from employee
-			<ul>
-				<li>Paystub 1, Date Received, Status</li>
-				<li>Paystub 2, Date Received, Status</li>
-				<li><b> <a href = "http://localhost:8080/paystubs">View all corrected paystubs...</a> </b></li>
-			</ul>
-			
-		Past Paystubs
-		<h2> Past Paystubs </h2>
-			Will contain a list of Paystubs that have been approved and received
-			<ul>
-				<li>Paystub 1, Date Received, Status</li>
-				<li>Paystub 2, Date Received, Status</li>
-				<li>Paystub 3, Date Received, Status</li>
-				<li>Paystub 4, Date Received, Status</li>
-				<li>Paystub 5, Date Received, Status</li>
-				<li>Paystub 6, Date Received, Status</li>
-				<li><b> <a href = "http://localhost:8080/paystubs">View all paystubs...</a> </b></li>
-			</ul>
-			
-		All Employees
-		<h2> Employees </h2>
-			Will contain a list of all employees
-			<ul>
-				<li>Employee Name, Active/Inactive, Date Hired, Current Project</li>
-				<li>Employee Name, Active/Inactive, Date Hired, Current Project</li>
-				<li>Employee Name, Active/Inactive, Date Hired, Current Project</li>
-				<li>Employee Name, Active/Inactive, Date Hired, Current Project</li>
-				<li>Employee Name, Active/Inactive, Date Hired, Current Project</li>
-				<li>Employee Name, Active/Inactive, Date Hired, Current Project</li>
-				<li><b> <a href = "http://localhost:8080/employees">View all employees...</a> </b></li>
-			</ul>
-		
-		All Vendors
-		<h2> All Vendors </h2>
-			Will contain a list of all Vendors currently engaged in contracts
-			<ul>
-				<li>Company Name, Phone, Contact Name, Primary Email</li>
-				<li>Company Name, Phone, Contact Name, Primary Email</li>
-				<li>Company Name, Phone, Contact Name, Primary Email</li>
-				<li>Company Name, Phone, Contact Name, Primary Email</li>
-				<li>Company Name, Phone, Contact Name, Primary Email</li>
-				<li>Company Name, Phone, Contact Name, Primary Email</li>
-				<li><b> <a href = "http://localhost:8080/vendors">View all vendors...</a> </b></li>
-			</ul>
-		
-		All Projects
-		<h2> All Projects </h2>
-			Will contain a list of all Projects currently being worked on by Employees
-			<ul>
-				<li>Project Name, Associated Employee(s), Associated Vendor </li>
-				<li>Project Name, Associated Employee(s), Associated Vendor </li>
-				<li>Project Name, Associated Employee(s), Associated Vendor </li>
-				<li>Project Name, Associated Employee(s), Associated Vendor </li>
-				<li>Project Name, Associated Employee(s), Associated Vendor </li>
-				<li>Project Name, Associated Employee(s), Associated Vendor </li>
-				<li><b> <a href = "http://localhost:8080/projects">View all projects...</a> </b></li>
-			</ul>
-		
-		Tax Information
-		<h2> Tax Information </h2>
-			Will contain necessary tax information
-		
-		</div> -->
+		<footer th:replace="base :: site-footer"></footer>
 	</body>
 
 </html>

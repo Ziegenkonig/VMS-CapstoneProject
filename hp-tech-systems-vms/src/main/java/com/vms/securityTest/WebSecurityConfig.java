@@ -13,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import com.vms.models.Permission;
-
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
@@ -56,9 +54,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/register/**", "/emailConfirmationNotification/**", "/emailConfirmation/**").permitAll()
-				.antMatchers("/admin", "/inviteEmployee", "/project/new", "/projects/all", "/vendor/new", "/vendors", "/employees", "/projects/all",
-						"/timesheet/new", "/timesheets/**", "/invoice/new", "/invoices/").access("hasRole('ADMIN') or hasRole('OWNER')")
-				.anyRequest().authenticated() //We allow all users to access all pages here, need to write some rules in for admin pages
+				.antMatchers("/admin", "/admin/**", "/inviteEmployee", 
+							 "/project/new", "/projects/all", "/project/view**", "/project/edit**",  "/project/addEmployee**",
+							 "/vendor/new", "/vendors", "/vendor/view**", "/vendor/edit**",
+							 "/employees", "/timesheet/new", "/timesheets/**", 
+							 "/invoice/new", "/invoices/", "invoice/view**")
+							 .access("hasRole('ADMIN') or hasRole('OWNER')")
+				.anyRequest().authenticated() //We allow all users to access all pages here
 				.and()
 			.formLogin() //here specify custom login page
 ////				.loginPage("/login")

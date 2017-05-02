@@ -62,3 +62,7 @@ b
 {
     flex-grow: 1;
 }
+
+.table-fit{
+    width: 1px;
+}

@@ -4,6 +4,8 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.vms.models.Employee;
 import com.vms.models.Paystub;
 import com.vms.models.PaystubStatus;
+import com.vms.models.Permission;
 import com.vms.models.Timesheet;
 import com.vms.services.EmployeeService;
 import com.vms.services.PaystubService;
@@ -28,6 +31,8 @@ import com.vms.utilities.MailService;
 public class PaystubController {
 
 	@Autowired
+	EmployeeService employeeService = new EmployeeService();
+	@Autowired
 	TimesheetService tSService = new TimesheetService();
 	@Autowired
 	PaystubService pSService = new PaystubService();
@@ -36,35 +41,55 @@ public class PaystubController {
 	@Autowired
 	MailService mailService;
 	
+	//user view all paystubs
+	@GetMapping("/paystubHistory")
+	public String viewOwnPaystubs(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+			
+		List<Paystub> paystubs = pSService.findIssued(e.getEmpId());
+		model.addAttribute("employee", e);
+		model.addAttribute("paystubs", paystubs);
+		
+		return "paystub/userPaystubs";
+	}
+	
 	//reads all vendors from the db and displays in table form -working
 	@GetMapping(value = "/paystubs/{mode}")
-	public String viewPaystubs(@PathVariable String mode, 
-							   //@RequestParam Integer callerId,
+	public String viewPaystubs(@PathVariable String mode,
 							   @RequestParam(required = false) Integer empId,
 							   @RequestParam(required = false) PaystubStatus status,
 							   Model model) {
+		//Checking to make sure the user isn't being naughty
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+		if (e.getPermissionLevel() == Permission.ROLE_USER.toString())
+			return "redirect:/dashboard";
+		
+		e = null;
 		List<Paystub> paystubs;
-		Employee e;
 		switch(mode) {
 			case "all":
 				paystubs = pSService.findAll();
 				break;
 			//not yet implemented
 			case "byEmployee":
-				//paystubs = pSService.findPaystubByEmployee(e);
-				paystubs = pSService.findIssued(empId);
+				e = empService.findOne(empId);
+				paystubs = pSService.findPaystubByEmployee(e);
+				//paystubs = pSService.findIssued(empId);
 				break;
 			//not yet implemented
 			case "byStatus":
 				paystubs = pSService.findByStatus(status);
 				break;
 			default:
-			//	e = null;
 				paystubs = null;
 		}
-		e = empService.findOne(empId);
-		model.addAttribute("employee", e);
-
+		
+		if(e != null) {
+			model.addAttribute("employee", e);
+		}
+		//model.addAttribute("permissions", Permission.values());
 		model.addAttribute("paystubs", paystubs);
 		return "paystub/paystubs";
 	}

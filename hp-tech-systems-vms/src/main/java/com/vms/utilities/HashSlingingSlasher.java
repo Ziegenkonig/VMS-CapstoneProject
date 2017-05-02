@@ -4,10 +4,12 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 //This class is used to encode strings using the spring security library
 //This class also has secure random number generator
 
+@Service
 public class HashSlingingSlasher {
 	//Secure random for randomly generating secure bits
 	private SecureRandom random;

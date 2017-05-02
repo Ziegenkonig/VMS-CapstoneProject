@@ -8,6 +8,8 @@
 <body>
 	<nav th:replace="base :: site-nav('dashboard')">
 	</nav>
+	
+	<main>
 	<div class = "employeeDashboardDiv" align = "left">
 		<h5 th:text="'Logged in as: ' + ${e.getFirstname()} + ' ' + ${e.getLastname()}"></h5>
 		<!-- Non-submitted Timesheets -->
@@ -32,7 +34,7 @@
 				<a th:href="@{/paystub/{path}(path = ${paystub.paystubId})}"> View </a>
 			</li> 
 		</ul>
-		<a th:href="@{/paystubs/byEmployee(empId=${e.empId})}"> View Past Paystubs </a>
+		<a th:href="@{/paystubHistory}"> View Past Paystubs </a>
 		<!-- Tax Information -->
 		<h3> Tax Information </h3>
 			<p> Coming Soon </p>
@@ -41,6 +43,8 @@
 		<a th:href="@{/editUserProfile/{path}(path=${e.empId})}"> Edit Profile </a>
 		
 	</div>
+	<footer th:replace="base :: site-footer"></footer>
+	</main>
 </body>
 
 </html>

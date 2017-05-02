@@ -15,7 +15,7 @@
   		<script>document.createElement('main');</script>    
     </head>
     <body>
-	    <nav class="navbar navbar-inverse " th:fragment="site-nav(activeTab)">
+	    <nav class="navbar navbar-custom " th:fragment="site-nav(activeTab)">
 		    <div class="container-fluid page-content-width">
 		      <!-- Brand and toggle get grouped for better mobile display -->
 		      <div class="navbar-header container-fluid">
@@ -26,7 +26,7 @@
 		          <span class="icon-bar"></span>
 		        </button>
 		        <a class="logo pull-left" id="title" th:href="@{/}"> <!-- navbar-brand -->
-		        <img src="/images/logo.png"/>VMS</a>
+		        <img src="/images/logo.png"/><span class="site-logo-title">VMS</span></a>
 		      </div>
 		
 		      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

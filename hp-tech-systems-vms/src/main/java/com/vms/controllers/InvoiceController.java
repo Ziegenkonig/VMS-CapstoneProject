@@ -29,13 +29,13 @@ import com.vms.utilities.MailService;
 public class InvoiceController {
 	//Pulling in vendor and invoice and project services
 	@Autowired
-	VendorService vendorService = new VendorService();
+	VendorService vendorService;
 	@Autowired
-	InvoiceService invoiceService = new InvoiceService();
+	InvoiceService invoiceService;
 	@Autowired
-	ProjectService projectService = new ProjectService();
+	ProjectService projectService;
 	@Autowired
-	ProjectTimesheetService projTimeService = new ProjectTimesheetService();
+	ProjectTimesheetService projTimeService;
 	@Autowired
 	MailService mailService;
 	
@@ -58,11 +58,11 @@ public class InvoiceController {
 	//Everything in here happens after the user presses the submit button, and is executes in-between pages
 	@PostMapping("/invoice/new")
 	public String invoiceSubmit(@ModelAttribute("vendorName") String vendorName,
-			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("date") LocalDate date) {
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("date") LocalDate date, Model model) {
 		
-		System.out.println(vendorName);
-		System.out.println(date.toString());
-		System.out.println(date.getClass());
+		//System.out.println(vendorName);
+		//System.out.println(date.toString());
+		//System.out.println(date.getClass());
 
 		//Grabbing vendor object associated with the name selected by user
 		Vendor v = vendorService.findByName(vendorName);
@@ -74,9 +74,21 @@ public class InvoiceController {
 		List<ProjectTimesheet> projectTimesheets = new ArrayList<ProjectTimesheet>();
 		for (Project project : projects)
 			projectTimesheets.addAll(projTimeService.timesheetsForInvoice(project.getProjectId(), date));
-
+		
+		if(projectTimesheets.isEmpty()) {
+			model.addAttribute("allDates", projTimeService.uniqueDates()); //All unique pay periods
+			model.addAttribute("vendorNames", vendorService.findAllNames()); //All Vendors
+			model.addAttribute("invoiceError", "No valid timesheets for this date");
+			return "invoice/newI";
+		}
 		//Creating new invoice
 		Invoice newInvoice = new Invoice(projectTimesheets);
+		if(newInvoice.getTotalAmt().doubleValue() == 0) {
+			model.addAttribute("allDates", projTimeService.uniqueDates()); //All unique pay periods
+			model.addAttribute("vendorNames", vendorService.findAllNames()); //All Vendors
+			model.addAttribute("invoiceError", "Total amount billed is $0.00. Please reselect.");
+			return "invoice/newI";
+		}
 		invoiceService.create(newInvoice);
 		mailService.sendEmail(newInvoice, "invoiceReady");
 		//Displaying new invoice

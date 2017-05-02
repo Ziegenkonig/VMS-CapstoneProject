@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 //Spring imports
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,13 +38,15 @@ public class EmployeeController{
 
 	//Hooking up the EmployeeService to the EmployeeController
 	@Autowired
-	EmployeeService employeeService = new EmployeeService();
+	EmployeeService employeeService;
 	@Autowired
-	TimesheetService timesheetService = new TimesheetService();
+	TimesheetService timesheetService;
 	@Autowired
-	PaystubService paystubService = new PaystubService();
+	PaystubService paystubService;
 	@Autowired
 	MailService mailService;
+	@Autowired
+	HashSlingingSlasher encryptService;
 
 	@GetMapping("/register/{registrationUrl}")
 	public String employeeForm(@PathVariable("registrationUrl") String registrationUrl, 
@@ -51,7 +55,7 @@ public class EmployeeController{
 		Employee newEmp = employeeService.findByRegistrationUrl(registrationUrl);
 		if ( newEmp ==  null )  
 			return "redirect:/";
-
+		
 		model.addAttribute("url", registrationUrl);
 		model.addAttribute("states", States.values());
 		model.addAttribute("employee", newEmp);
@@ -153,12 +157,17 @@ public class EmployeeController{
 	public String employeeEditForm(@PathVariable("id") Integer id, 
 			Model model) {
 
+		//Checking to make sure the user isn't being naughty
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+		if (e.getEmpId() != id)
+			return "redirect:/dashboard";
+		
 		model.addAttribute("states", States.values());
 		model.addAttribute("employee", employeeService.findOne(id));
 
 		return "employee/editE";
 	}
-
 
 	@PostMapping("/editUserProfile/{id}")
 	public String employeeEdit(@ModelAttribute("employee")@Valid Employee employee,
@@ -183,6 +192,12 @@ public class EmployeeController{
 	public String confirmNewPasswordGet(@PathVariable("id") Integer id,
 			Model model) {
 
+		//Checking to make sure the user isn't being naughty
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+		if (e.getEmpId() != id)
+			return "redirect:/dashboard";
+		
 		model.addAttribute("employee", employeeService.findOne(id));
 
 		return "employee/confirmNewPassword";
@@ -208,6 +223,12 @@ public class EmployeeController{
 	@GetMapping("/newPassword/{id}")
 	public String newPasswordGet(@PathVariable("id") Integer id,
 			Model model) {
+		
+		//Checking to make sure the user isn't being naughty
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee e = employeeService.findByUsername(auth.getName());
+		if (e.getEmpId() != id)
+			return "redirect:/dashboard";
 
 		model.addAttribute("employee", employeeService.findOne(id));
 
@@ -236,11 +257,13 @@ public class EmployeeController{
 		return "redirect:/dashboard";
 	}
 
-	@GetMapping("/dashboard")
+	@GetMapping({"/dashboard", "/"})
 	public String dashboard(Model model) {
 
-		Employee e = employeeService.findOne(1);
-
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Employee e = employeeService.findByUsername(auth.getName());
+		
 		List<Paystub> issuedPaystubs = paystubService.findIssued(e.getEmpId());
 		List<Timesheet> openTimesheets = timesheetService.dashboardTimesheets(e);
 
@@ -253,7 +276,9 @@ public class EmployeeController{
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminDashboard(Model model) {
-		Employee admin = employeeService.findOne(6);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Employee admin = employeeService.findByUsername(auth.getName());
 		//Employee owner =  employeeService.findOne(11);
 		//model.addAttribute("emp", owner);
 		model.addAttribute("emp", admin);
@@ -302,9 +327,35 @@ public class EmployeeController{
   		//updating new employee
     	employeeService.create(employee);
   		
-
-  		
   		return "redirect:/admin";
   	}
 
+  	@GetMapping("/admin/editEmployee/{id}")
+  	public String adminEmployeeEditForm(@PathVariable("id") Integer empId, 
+			Model model) {
+		
+		model.addAttribute("states", States.values());
+		model.addAttribute("employee", employeeService.findOne(empId));
+		model.addAttribute("period", PayPeriod.values());
+  		model.addAttribute("permission", Permission.values());
+
+		return "employee/adminEditE";
+	}
+
+  	@PostMapping("/admin/editEmployee/{id}")
+	public String adminEmployeeEdit(@ModelAttribute("employee")@Valid Employee employee,
+					BindingResult bindingResult, SessionStatus sessionStatus, Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("states", States.values());
+			model.addAttribute("period", PayPeriod.values());
+	  		model.addAttribute("permission", Permission.values());
+			return "employee/adminEditE";
+		}
+
+		employeeService.update(employee);
+		sessionStatus.setComplete();
+		
+		return "redirect:/employees";
+	}
 }

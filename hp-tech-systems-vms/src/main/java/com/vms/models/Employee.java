@@ -10,8 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -80,7 +83,6 @@ public class Employee {
 	@Column(nullable = false)
 	private String permissionLevel;
 	
-
 	//@NotNull()
 	@Size(min = 5, max = 120, message = "{address.size}")
 	@Pattern(regexp = "[0-9]*+\\s+[a-zA-Z0-9\\s.]*", message = "{address.pattern}")
@@ -98,7 +100,9 @@ public class Employee {
 	private String state;
 	
 	//Hiredate won't be included in a form
+	@NotNull
 	@Column(nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate hireDate;
 	
 	//These two attributes will be selected via dropdown box

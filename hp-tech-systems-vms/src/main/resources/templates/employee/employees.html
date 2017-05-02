@@ -5,36 +5,41 @@
   <title id="pageTitle">VMS | All Vendors</title>
 </head>
 
-	<body>
-		<nav th:replace="base :: site-nav('none')">
-		</nav>
-		<h1>Employees</h1>
-		<a th:href="@{/employee/new}">Add New Employee</a>
+<body>
+	<nav th:replace="base :: site-nav('none')">
+	</nav>
+	
+	<main>
+		<div class="content table-title">
+			<h1>Employees</h1>
+			<a th:href="@{/inviteEmployee}">Invite New Employee</a>
+		</div>
+		
 		<table id="empTable"
-		       class="table table-bordered"
+		       class="table table-bordered table-fit main-table"
 		       th:if="${employees != null}"> <!--  and not #list.isEmpty(vendors) -->
-        <thead>
-            <tr class="center middle">
-                <th>Name</th>
-                <th>Hire Date</th>
-                <th>Active</th>
-                <!-- <th></th> -->
-                <!-- <th></th>  -->
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="e : ${employees}">
-                <td><a th:href="@{/editUserProfile/{id}(id=${e.empId})}" th:text="${e.firstname} + ' ' + ${e.lastname}">View</a></td>
-                <td th:text="${e.hireDate}"></td>
-                <td th:if="${e.active} == true" th:text="Yes"></td>
-                <td th:if="${e.active} == false" th:text="No"></td>
-                <!-- <td><a th:href="@{/editUserProfile/{id}(id=${e.empId})}">View</a></td> -->
-                <!-- <td><a th:href="@{/editUserProfile/{id}(path=${vendor.name})}">Edit</a></td> -->
-            </tr>
-        </tbody>
-    </table>
-    
-    <footer th:replace="base :: site-footer"></footer>
+	        <thead>
+	            <tr bgcolor = "#FDA023" class="center middle">
+	                <th>Name</th>
+	                <th>Hire Date</th>
+	                <th>Active</th>
+	                <!-- <th></th> -->
+	                <!-- <th></th>  -->
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="e : ${employees}">
+	                <td><a th:href="@{/admin/editEmployee/{id}(id=${e.empId})}" th:text="${e.firstname} + ' ' + ${e.lastname}">View</a></td>
+	                <td th:text="${#temporals.format(e.hireDate,'MM/dd/yyyy[ HH:mm]')}"></td>
+	                <td th:text="${e.active == true}? 'Yes' : 'No'"></td>
+	                <!-- <td><a th:href="@{/editUserProfile/{id}(id=${e.empId})}">View</a></td> -->
+	                <!-- <td><a th:href="@{/editUserProfile/{id}(path=${vendor.name})}">Edit</a></td> -->
+	            </tr>
+	        </tbody>
+    	</table>
+   	</main>
+   
+   	<footer th:replace="base :: site-footer"></footer>
 
-	</body>
+</body>
 </html>
