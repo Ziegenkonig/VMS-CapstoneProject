@@ -23,13 +23,11 @@
 	    	<div th:replace = "menu :: PushingSideMenu"></div>
 		    <div class="container-fluid page-content-width">
 		      <!-- Brand and toggle get grouped for better mobile display -->
-		      <div class="navbar-header container-fluid">
-		      
-		      	<div th:replace = "menu :: HamburgerIcon"></div>
-		      
+		      <div class="navbar-header container-fluid" style = "padding: 20px 0px 0px 0px;">
+		      		<div th:replace = "menu :: HamburgerIcon"></div>
 		      </div>
 		      
-		      <div class="navbar-header container-fluid">
+		      <div class="navbar-header">
 		      	
 		        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 		          <span class="sr-only">Toggle navigation</span>
@@ -38,9 +36,13 @@
 		          <span class="icon-bar"></span>
 		        </button>
 		        
-		        <a class="logo pull-left" id="title" th:href="@{/}"> <!-- navbar-brand -->
-		        <img src="/images/HPTechLogo.png" style = "width: 75px; height: 75px;"/><span class="site-logo-title">VMS</span></a>
 		      </div>
+				
+			  <div class="navbar-header container-fluid">
+			  	<img src="/images/HPTechLogo.png" style = "width: 75px; height: 75px; padding-top: 3px;"/>
+		        <a class="logo pull-right" id="title" th:href="@{/}" style = "padding: 10px 0px 0px 0px;"> <!-- navbar-brand -->
+		        <span class="site-logo-title">VMS</span></a>
+	      	  </div>
 				
 		      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		       <ul class="nav navbar-nav navbar-right">

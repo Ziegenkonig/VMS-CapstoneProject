@@ -22,8 +22,8 @@
 			    			</option>
 						   <option th:each="e : ${emps}"
 								th:selected="${pe.employee != null AND pe.employee == e}"
-								th:value="${employee.empId}"
-								th:text="${employee.firstname + ' ' + employee.lastname}">
+								th:value="${e.empId}"
+								th:text="${e.firstname + ' ' + e.lastname}">
 						   </option>
 						</select>
 					</div>
