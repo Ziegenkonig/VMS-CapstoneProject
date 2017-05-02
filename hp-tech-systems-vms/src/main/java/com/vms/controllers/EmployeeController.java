@@ -257,7 +257,7 @@ public class EmployeeController{
 		return "redirect:/dashboard";
 	}
 
-	@GetMapping("/dashboard")
+	@GetMapping({"/dashboard", "/"})
 	public String dashboard(Model model) {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

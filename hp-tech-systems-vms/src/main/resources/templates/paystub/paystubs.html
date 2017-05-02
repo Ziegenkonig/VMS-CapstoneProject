@@ -9,12 +9,15 @@
 		<nav th:replace="base :: site-nav('none')">
 		</nav>
 		<!-- admin version -->
-		<h1 th:if="${employee == null}">Paystubs</h1>
-		<h1 th:if="${employee != null}" th:text="'Paystubs for ' + ${employee.firstname} + ' ' + ${employee.lastname}"></h1>
+		<div class="content table-title">
+			<h1 th:if="${employee == null}">Paystubs</h1>
+			<h1 th:if="${employee != null}" th:text="'Paystubs for ' + ${employee.firstname} + ' ' + ${employee.lastname}"></h1>
+			
+			<h5 th:if="${paystubs == null OR paystubs.isEmpty()}" th:text="'No paystubs found'" style = "Color: red"></h5>
+		</div>
 		
-		<p th:if="${paystubs == null OR paystubs.isEmpty()}" th:text="'No paystubs found'"></p>
 		<table id="tsTable"
-		       class="table table-bordered table-fit"
+		       class="table table-bordered table-fit main-table"
 		       th:if="${paystubs != null}"> <!--  and not #list.isEmpty(vendors) -->
         <thead>
             <tr bgcolor = "#cce6ff" class="center middle">

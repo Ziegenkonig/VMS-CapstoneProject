@@ -21,16 +21,12 @@ public class HomeController {
 	private EmployeeService employeeService = new EmployeeService();
 	
 	//Renders index
+	/*
 	@RequestMapping(value = "/")
-    public String index(Model model) {	
-		//Adding currently logged in employee to model
-  		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Employee employee = employeeService.findByUsername(auth.getName());
-  		
-		model.addAttribute("employee", employee);
-		
-		return "employee/dashboard";
-    }
+
+    public String index() {	
+        return "employee/dashboard";
+    }*/
 	
 	//This Model object in the argument list is from the spring library, and is basically a hashmap containing
 	//all of the values you can reference inside the html; the string inside the quotes is the key, 

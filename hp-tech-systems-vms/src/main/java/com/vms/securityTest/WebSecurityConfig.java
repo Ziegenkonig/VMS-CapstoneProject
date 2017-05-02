@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -65,6 +66,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin() //here specify custom login page
 ////				.loginPage("/login")
 ////				.permitAll()
+			.and()
+			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.deleteCookies("JSESSIONID")
+			.invalidateHttpSession(true)
 				.and()
 ////			.csrf() //disabled csrf token for now because it was messed up for me
 ////				.disable()
