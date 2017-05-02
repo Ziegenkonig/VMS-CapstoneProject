@@ -195,11 +195,14 @@ public class TimesheetController {
 		StringHolder weekStarting = new StringHolder();
 		weekStarting.setLocalDate(timesheet.getWeekStarting().minusDays(1));
 		//System.out.println(timesheet.getProjTimesheets().get(0).getWeekStarting());
+		Timesheet t = new Timesheet();
+		t.setProjTimesheets(timesheet.getProjTimesheets());
 		
 		model.addAttribute("weekStarting", weekStarting);
 		model.addAttribute("days", DayOfWeek.values());
 		model.addAttribute("payPeriod", timesheet.getEmployee().getPayPeriod());
 		model.addAttribute("editTimesheet", timesheet);
+		model.addAttribute("timesheet", timesheet);
 		
 		return "timesheet/editT";
 	}

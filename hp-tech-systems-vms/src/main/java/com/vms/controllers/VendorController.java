@@ -80,6 +80,11 @@ public class VendorController {
 							   BindingResult bindingResult,
 							   Model model) {
 		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		if (bindingResult.hasErrors())
 			return "vendor/newV";
 		
