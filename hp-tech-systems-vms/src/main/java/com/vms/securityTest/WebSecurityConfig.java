@@ -63,6 +63,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin() //here specify custom login page
 ////				.loginPage("/login")
 ////				.permitAll()
+			.and()
+			.logout()                                                                
+			.logoutUrl("/logout")                                                 
+			.logoutSuccessUrl("/login")
 				.and()
 ////			.csrf() //disabled csrf token for now because it was messed up for me
 ////				.disable()
