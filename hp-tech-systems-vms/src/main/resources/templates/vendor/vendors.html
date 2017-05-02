@@ -5,16 +5,20 @@
   <title id="pageTitle">VMS | All Vendors</title>
 </head>
 
-	<body>
+	<body class="wrap">
 		<nav th:replace="base :: site-nav('none')">
 		</nav>
-		<h1>Vendors</h1>
-		<a th:href="@{/vendor/new}">Create New Vendor</a>
+		<div>
+		<div class="content table-title">
+			<h1>Vendors</h1>
+			<a th:href="@{/vendor/new}">Create New Vendor</a>
+		</div>
+		
 		<table id="vendorTable"
-		       class="table table-bordered table-fit"
+		       class="table table-bordered table-fit main-table"
 		       th:if="${vendors != null}"> <!--  and not #list.isEmpty(vendors) -->
         <thead>
-            <tr class="center middle">
+            <tr bgcolor = "#cce6ff" class="center middle">
                 <th>Name</th>
                 <th>Primary Email</th>
                 <th>Contact Name</th>
@@ -44,6 +48,7 @@
             </tr>
         </tbody>
     </table>
+    </div>
     
     <footer th:replace="base :: site-footer"></footer>
 

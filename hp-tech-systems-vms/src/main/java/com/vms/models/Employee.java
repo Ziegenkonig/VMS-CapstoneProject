@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -80,6 +81,8 @@ public class Employee {
 	private String zipcode;
 	
 	//Not included in the registration/edit forms, 
+	@NotNull
+	@NotEmpty
 	@Column(nullable = false)
 	private String permissionLevel;
 	
@@ -109,6 +112,7 @@ public class Employee {
 	@Column(nullable = false)
 	private boolean active;
 	
+	@NotNull
 	@Column(nullable = false)
 	private PayPeriod payPeriod; //weekly, biweekly
 	
