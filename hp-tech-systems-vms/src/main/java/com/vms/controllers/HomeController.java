@@ -24,10 +24,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	//Renders index
+	/*
 	@RequestMapping(value = "/")
     public String index() {	
         return "employee/dashboard";
-    }
+    }*/
 	
 	//This Model object in the argument list is from the spring library, and is basically a hashmap containing
 	//all of the values you can reference inside the html; the string inside the quotes is the key, 
