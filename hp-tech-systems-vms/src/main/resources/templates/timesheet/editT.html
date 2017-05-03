@@ -5,7 +5,7 @@
 	  <title id="pageTitle">VMS | Edit Timesheet</title>
 	</head>
 
-<body>
+<body id = "main">
 
 	<nav th:replace="base :: site-nav('none')">
 	</nav>
@@ -17,7 +17,97 @@
 		<h4 th:if = "${payPeriod == 1}">Pay Period Type: Weekly</h4> <h4 th:if = "${payPeriod == 2}">Pay Period Type: Bi-Weekly</h4>
 		<h4 th:text = "'Pay Period: ' + ${weekStarting.localdate.plusDays(1)}"></h4>
 		
-		<div th:replace = "timesheet/fragments :: editTimesheet"></div>
+		<div th:fragment = "editTimesheet">
+			
+			<div th:if = "${payPeriod.toString() == 'WEEKLY'}">
+				<table class = "table table-bordered"
+					   style = "white-space:nowrap;">
+					
+					<thead>
+						<tr bgcolor = "#cce6ff">
+							<td> Project </td>
+							<td th:each = "day : ${days}" th:utext = "${day.toString().substring(0,1) + day.toString().substring(1).toLowerCase()}
+																	+ '&lt;br /&gt;' + ${weekStarting.localdate = weekStarting.localdate.plusDays(1)}"> </td>
+							<td>Total</td>	
+						</tr>
+					</thead>
+				
+					<tbody>
+						<tr th:each = "projectTimesheet, projectIter : ${editTimesheet.projTimesheets}">
+							<td th:text = "${projectTimesheet.projemp.project.name}"> </td>
+							<td th:each = "day, iter : ${days}">
+								
+								<select th:field = "${editTimesheet.projTimesheets[__${projectIter.index}__].weeks[0].hours__${iter.index + 1}__}">
+									<option th:value = "0" th:text = "'Enter Hours'"> </option>
+									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
+								</select>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<h4 th:text = "'Total Hours: ' + ${editTimesheet.calcTotalHoursOfT()}"></h4>
+			</div>
+			
+			<div th:if = "${payPeriod.toString() == 'BIWEEKLY'} and ${timesheet.projTimesheets[0].weeks.size() == 2}" th:each = "i : ${#numbers.sequence(0, 1)}">
+				<h3 th:text = "'Pay Period ' + ${i + 1}"></h3>
+				<table class = "table table-bordered"
+					   style = "white-space:nowrap;">
+					
+					<thead>
+						<tr bgcolor = "#cce6ff">
+							<td> Project </td>
+							<td th:each = "day : ${days}" th:utext = "${day.toString().substring(0,1) + day.toString().substring(1).toLowerCase()}
+																	+ '&lt;br /&gt;' + ${timesheet.weekStarting = timesheet.weekStarting.plusDays(1)}"> </td>
+							<td>Total</td>	
+						</tr>
+					</thead>
+				
+					<tbody>
+						<tr th:each = "projectTimesheet, projectIter : ${editTimesheet.projTimesheets}">
+							<td th:text = "${projectTimesheet.projemp.project.name}"> </td>
+							<td th:each = "day, iter : ${days}">
+								
+								<select th:field = "${editTimesheet.projTimesheets[__${projectIter.index}__].weeks[0].hours__${iter.index + 1}__}">
+									<option th:value = "0" th:text = "'Enter Hours'"> </option>
+									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
+								</select>
+							</td>
+						</tr>
+					
+					</tbody>
+				
+				</table>
+				<table class = "table table-bordered"
+					   style = "white-space:nowrap;">
+					
+					<thead>
+						<tr bgcolor = "#cce6ff">
+							<td> Project </td>
+							<td th:each = "day : ${days}" th:utext = "${day.toString().substring(0,1) + day.toString().substring(1).toLowerCase()}
+																	+ '&lt;br /&gt;' + ${timesheet.weekStarting = timesheet.weekStarting.plusDays(1)}"> </td>
+							<td>Total</td>	
+						</tr>
+					</thead>
+				
+					<tbody>
+						<tr th:each = "projectTimesheet, projectIter : ${editTimesheet.projTimesheets}">
+							<td th:text = "${projectTimesheet.projemp.project.name}"> </td>
+							<td th:each = "day, iter : ${days}">
+								
+								<select th:field = "${editTimesheet.projTimesheets[__${projectIter.index}__].weeks[1].hours__${iter.index + 1}__}">
+									<option th:value = "0" th:text = "'Enter Hours'"> </option>
+									<option th:each = "i : ${#numbers.sequence(1, 12)}" th:value = "${i}" th:text = "${i}"></option>
+								</select>
+							</td>
+						</tr>
+					
+					</tbody>
+				
+				</table>
+				<h4 th:text = "'Total Hours: ' + ${editTimesheet.calcTotalHoursOfT()}"></h4>
+			</div>
+		</div>
 		
 		<h4 th:text = "'Status: ' + ${editTimesheet.getStatus()}"> </h4>
 		<p><input type="submit" class = "button" name = "saveTimesheet" value="Save" /> <input type="reset" value="Reset" /> <input type="submit" class = "button" name = "submit" value="Submit Timesheet" /></p>

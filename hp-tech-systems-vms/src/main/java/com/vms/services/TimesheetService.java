@@ -22,6 +22,29 @@ public class TimesheetService {
 		return timesheetRepo.save(timesheet);
 	}
 	
+	public void delete(Timesheet t) {
+		timesheetRepo.delete(t);
+	}
+	
+	public List<Timesheet> createAll(List<Timesheet> timesheets) {
+		
+		List<Timesheet> result = new ArrayList<Timesheet>();
+
+	    if (timesheets == null) {
+	        return result;
+	    }
+
+	    for (Timesheet t : timesheets) {
+	    	try {
+	    		result.add(timesheetRepo.save(t));
+	    	} catch (Exception e) {
+	    		System.out.println(e.getMessage());
+	    	}
+	    }
+
+	    return result;
+	}
+	
 	public Timesheet edit(Timesheet timesheet) {
 		return timesheetRepo.save(timesheet);
 	}

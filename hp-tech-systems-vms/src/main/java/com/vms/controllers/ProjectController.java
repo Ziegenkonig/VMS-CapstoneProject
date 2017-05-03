@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vms.models.Employee;
 import com.vms.models.Project;
@@ -25,6 +28,7 @@ import com.vms.services.EmployeeService;
 import com.vms.services.ProjectEmployeeService;
 import com.vms.services.ProjectService;
 import com.vms.services.VendorService;
+import com.vms.validators.ProjectEmployeeValidator;
 
 @Controller
 @SessionAttributes({"project", "pe", "vendors"})
@@ -35,14 +39,28 @@ public class ProjectController {
 	@Autowired
 	private VendorService vService = new VendorService();
 	@Autowired
-	private EmployeeService eService = new EmployeeService();
-	@Autowired
 	private ProjectEmployeeService peService = new ProjectEmployeeService();
+	@Autowired
+	private ProjectEmployeeValidator pev;
+	@Autowired
+	private EmployeeService employeeService = new EmployeeService();
+	/*
+	@InitBinder
+    protected void initBinder(WebDataBinder binder) {
+           binder.addValidators(new ProjectEmployeeValidator());
+    }
+*/
 	
 	@GetMapping(value = "/projects/{mode}")
 	public String viewProjects(@PathVariable String mode, 
 							   @RequestParam(required = false) Integer vId,
 							   Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		List<Project> projects;
 		switch(mode) {
 			case "all":
@@ -64,6 +82,12 @@ public class ProjectController {
 	
 	@GetMapping(value = "/project/view")
 	public String viewProject(@RequestParam("pId") Integer pId, Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		model.addAttribute("project", pService.findById(pId));
 		return "project/viewP";
 	}
@@ -71,6 +95,12 @@ public class ProjectController {
 	@GetMapping(value = "/project/new")
 	public String newProject(@RequestParam(required = false) Integer vId, 
 							 Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		Project p = null;
 		if(vId == null) {
 			p = new Project();
@@ -105,6 +135,12 @@ public class ProjectController {
 	
 	@GetMapping(value = "/project/edit")
 	public String editProject(@RequestParam("pId") Integer pId, Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		List<Vendor> vendors = vService.findAll();
 		model.addAttribute("vendors", vendors);
 		model.addAttribute("project", pService.findById(pId));
@@ -126,22 +162,52 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/project/addEmployee")
-	public String addEmployee(@RequestParam Integer pId, Model model) {
-		Project p = pService.findById(pId);
-		model.addAttribute("project", p);
-		List<Employee> emps = eService.findAll();
-		model.addAttribute("emps", emps);
-		ProjectEmployee pe = new ProjectEmployee();
-		pe.setProject(p);
-		model.addAttribute("pe", pe);
+	public String addEmployee(@RequestParam(required=false) Integer pId, Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
+		List<Employee> emps;
+		Project p;
+		if(!model.containsAttribute("pe") && pId == null) {
+			return "redirect:/admin";
+		}
+		if(!model.containsAttribute("pe")) {
+			System.out.println("No pe attribute");
+			p = pService.findById(pId);
+			model.addAttribute("project", p);
+			ProjectEmployee newPe = new ProjectEmployee();
+			newPe.setProject(p);
+			model.addAttribute("pe", newPe);
+			emps = peService.findRemainingEmployeesForProject(p);
+			model.addAttribute("emps", emps);
+		}
+		if(!model.containsAttribute("emps")) {
+			emps = peService.findRemainingEmployeesForProject(pService.findById(pId));
+			model.addAttribute("emps", emps);
+		}
 		return "project/addEmployeeForm";
 	}
 	
 	@PostMapping("/project/addEmployee")
-	public String saveAddedEmployee(@ModelAttribute("pe") ProjectEmployee pe, SessionStatus status) {
-		peService.create(pe);
+	public String saveAddedEmployee(@ModelAttribute("pe") @Valid ProjectEmployee pe, 
+				BindingResult result, SessionStatus status, RedirectAttributes redirectAttributes) {
+		//ProjectEmployeeValidator pev = new ProjectEmployeeValidator();
+		//redirectAttributes.addFlashAttribute("pId", pe.getProject().getProjectId());
+		pev.validate(pe, result);
+		if (result.hasErrors()){
+			//return "redirect:/project/addEmployee?pId=" + pe.getProject().getProjectId();
+			//status.setComplete();
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.pe", result);
+	        redirectAttributes.addFlashAttribute("pe", pe);
+	        redirectAttributes.addFlashAttribute("emps", peService.findRemainingEmployeesForProject(pe.getProject()));
+			return "redirect:/project/addEmployee";
+        }
+        peService.create(pe);
 		status.setComplete();
-		return "redirect:/project/view/" + pe.getProject().getName();
+		return "redirect:/project/view?pId=" + pe.getProject().getProjectId();
 	}
   
 }

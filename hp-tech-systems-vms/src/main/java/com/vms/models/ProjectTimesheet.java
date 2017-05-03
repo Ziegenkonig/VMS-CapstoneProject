@@ -64,7 +64,7 @@ public class ProjectTimesheet {
 		//this.period = projEmp.getEmployee().getPayPeriod();
 		TimesheetRow week1 = new TimesheetRow(this, 1);
 		weeks.add(week1);
-		if(projEmp.getEmployee().getPayPeriod() == 2) {
+		if(projEmp.getEmployee().getPayPeriod() == PayPeriod.BIWEEKLY) {
 			TimesheetRow week2 = new TimesheetRow(this, 2);
 			weeks.add(week2);
 		}

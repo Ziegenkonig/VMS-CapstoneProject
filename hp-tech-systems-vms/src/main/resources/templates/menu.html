@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head th:fragment= "site-head">
+        
+    </head>
+    
+    <body>
+	   	
+   		<div id = "mySidenav" class = "sidenav" th:fragment = "PushingSideMenu">
+	   		
+	   		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	   		
+	   		<div class = "profileInfo">
+		   		<img src="/images/HPTechLogo.png"/>
+		   		<p th:text = "'Hello, ' + ${employee.getFirstname()}"></p>
+		   	</div>
+	   		
+	   		<a th:href="@{/dashboard}"> Dashboard </a>
+	   		
+	   		<a th:href="@{/admin}"> Admin Tools </a>
+	   		
+	   		<a th:href="@{/paystubs/byEmployee(empId=${employee.empId})}"> View Paystubs </a>
+	   		
+	   		<a th:href="@{/editUserProfile/{path}(path=${employee.empId})}"> Edit Profile </a>
+	   		
+	   		
+	   	</div>
+	   
+	   	
+	   
+	   	<div id = "hamburgerIcon" class = "hamburger" th:fragment = "HamburgerIcon" onclick="openNav()"> 
+	   		
+	   		<div></div>
+	   		<div></div>
+	   		<div></div>
+	   	
+	   	</div>
+	   
+    </body>
+    
+</html>

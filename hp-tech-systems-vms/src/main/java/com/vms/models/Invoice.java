@@ -95,7 +95,7 @@ public class Invoice {
 		// Setting period_start/period_end based on info from timesheet
 		this.periodStart = pt.getWeekStarting();
 		ProjectEmployee proj_emp = pt.getProjemp();
-		if (proj_emp.getEmployee().getPayPeriod() == 2)
+		if (proj_emp.getEmployee().getPayPeriod() == PayPeriod.BIWEEKLY)
 			this.periodEnd = this.periodStart.plusDays(14);
 		else
 			this.periodEnd = this.periodStart.plusDays(7);

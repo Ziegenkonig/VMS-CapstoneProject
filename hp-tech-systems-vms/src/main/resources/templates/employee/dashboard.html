@@ -5,42 +5,42 @@
   <title id="pageTitle">VMS | Dashboard</title>
 </head>
 
-<body>
-	<nav th:replace="base :: site-nav('dashboard')">
-	</nav>
-	<div class = "employeeDashboardDiv" align = "left">
-		<h5 th:text="'Logged in as: ' + ${e.getFirstname()} + ' ' + ${e.getLastname()}"></h5>
-		<!-- Non-submitted Timesheets -->
-		<h3> Current Timesheets </h3>
-		<!-- Will contain a list of non-submitted timesheets -->
-		<ul th:each = "timesheet : ${openTimesheets}">
-			<li>
-				<b> <span  th:text = "'Pay Period: ' + ${timesheet.weekStarting}"></span> </b>
-				<span th:text = "'(' + ${timesheet.status.toString()} + ')'"></span>
-				<b> <a th:if="${timesheet.status.toString() != 'PENDING'}" th:href="@{/timesheet/edit/{path}(path=${timesheet.timesheetId})}"> Edit </a> </b>
-				<a th:if="${timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/timesheet/view/{path}(path=${timesheet.timesheetId})}"> View </a>
-			</li> 
-		</ul>
+	<body id = "main">
+		<nav th:replace="base :: site-nav('dashboard')">
+		</nav>
 		
-		<!-- Pending Paystubs -->
-		<h3> Issued Paystubs </h3>
-		<!-- Will contain a list of Paystubs that have been issued -->
-		<ul th:each = "paystub : ${issuedPaystubs}">
-			<li>
-				<b> <span  th:text = "'Pay Period: ' + ${paystub.periodStart}"></span> </b>
-				<span th:text = "'(Issued)'"></span>
-				<a th:href="@{/paystub/{path}(path = ${paystub.paystubId})}"> View </a>
-			</li> 
-		</ul>
-		<a th:href="@{/paystubs/byEmployee(empId=${e.empId})}"> View Past Paystubs </a>
-		<!-- Tax Information -->
-		<h3> Tax Information </h3>
-			<p> Coming Soon </p>
-			<!-- Will contain necessary tax information -->
+		<div class = "employeeDashboardDiv" align = "left">
+			<h5 th:text="'Logged in as: ' + ${employee.getFirstname()} + ' ' + ${employee.getLastname()}"></h5>
+			<!-- Non-submitted Timesheets -->
+			<h3> Current Timesheets </h3>
+			<!-- Will contain a list of non-submitted timesheets -->
+			<ul th:each = "timesheet : ${openTimesheets}">
+				<li>
+					<b> <span  th:text = "'Pay Period: ' + ${timesheet.weekStarting}"></span> </b>
+					<span th:text = "'(' + ${timesheet.status.toString()} + ')'"></span>
+					<b> <a th:if="${timesheet.status.toString() != 'PENDING'}" th:href="@{/timesheet/edit/{path}(path=${timesheet.timesheetId})}"> Edit </a> </b>
+					<a th:if="${timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/timesheet/view/{path}(path=${timesheet.timesheetId})}"> View </a>
+				</li> 
+			</ul>
+			
+			<!-- Pending Paystubs -->
+			<h3> Issued Paystubs </h3>
+			<!-- Will contain a list of Paystubs that have been issued -->
+			<ul th:each = "paystub : ${issuedPaystubs}">
+				<li>
+					<b> <span  th:text = "'Pay Period: ' + ${paystub.periodStart}"></span> </b>
+					<span th:text = "'(Issued)'"></span>
+					<a th:href="@{/paystub/{path}(path = ${paystub.paystubId})}"> View </a>
+				</li> 
+			</ul>
+			<!-- Tax Information -->
+			<h3> Tax Information </h3>
+				<p> Coming Soon </p>
+				<!-- Will contain necessary tax information -->
+			
+		</div>
 		
-		<a th:href="@{/editUserProfile/{path}(path=${e.empId})}"> Edit Profile </a>
-		
-	</div>
-</body>
+		<footer th:replace="base :: site-footer"></footer>
+	</body>
 
 </html>

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.vms.models.Employee;
 import com.vms.models.States;
 import com.vms.models.Vendor;
+import com.vms.services.EmployeeService;
 import com.vms.services.VendorService;
 
 @Controller
@@ -25,10 +29,18 @@ public class VendorController {
 	
 	@Autowired
 	private VendorService vendorService = new VendorService();
+	@Autowired
+	private EmployeeService employeeService = new EmployeeService();
 
 	//reads all vendors from the db and displays in table form -working
 	@GetMapping(value = "/vendors")
 	public String viewVendors(Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		List<Vendor> vendors = vendorService.findAll();
 		model.addAttribute("vendors", vendors);
 		return "vendor/vendors";
@@ -37,6 +49,12 @@ public class VendorController {
 	//displays a single vendor -working
 	@GetMapping(value = "/vendor/view")
 	public String viewVendor(@RequestParam("vId") Integer vId, Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
+		
 		model.addAttribute("vendor", vendorService.findOne(vId));
 		return "vendor/viewV";
 	}
@@ -44,6 +62,11 @@ public class VendorController {
 	//create new vendor object and display form fields -working
 	@GetMapping(value = "/vendor/new")
 	public String newVendor(Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
 		
 		Vendor vendor = new Vendor();
 		
@@ -56,6 +79,11 @@ public class VendorController {
 	public String createVendor(@ModelAttribute@Valid Vendor vendor,
 							   BindingResult bindingResult,
 							   Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
 		
 		if (bindingResult.hasErrors())
 			return "vendor/newV";
@@ -71,6 +99,11 @@ public class VendorController {
 	@GetMapping(value = "/vendor/edit")
 	public String editVendor(@RequestParam("vId") Integer vId, 
 							 Model model) {
+		
+		//Adding currently logged in employee to model
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Employee employee = employeeService.findByUsername(auth.getName());
+		model.addAttribute("employee", employee);
 		
 		model.addAttribute("vendor", vendorService.findOne(vId));
 		model.addAttribute("states", States.values());

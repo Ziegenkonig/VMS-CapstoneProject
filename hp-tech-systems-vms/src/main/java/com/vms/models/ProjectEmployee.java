@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -34,8 +35,11 @@ public class ProjectEmployee {
 	
 	//Foreign Keys
 	//@JoinColumn is necessary for a ManyToOne relationship
+	@NotNull()
 	@ManyToOne @JoinColumn(name = "projectId")
 	private Project project;
+	
+	@NotNull(message = "{employee.null}")
     @ManyToOne @JoinColumn(name = "empId")
 	private Employee employee;
 	
@@ -43,9 +47,11 @@ public class ProjectEmployee {
     private List<ProjectTimesheet> projTimesheets;
     
 	//Regular ol Attributes
+    @NotNull(message = "{payRate.null}")
 	@Column(nullable = false)
 	private BigDecimal payRate;
 	
+    @NotNull(message = "{dateStarted.null}")
 	@Column(nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateStarted;

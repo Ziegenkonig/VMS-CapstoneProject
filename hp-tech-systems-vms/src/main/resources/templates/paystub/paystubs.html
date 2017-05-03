@@ -5,18 +5,23 @@
   <title id="pageTitle">VMS | Paystubs</title>
 </head>
 
-	<body>
+	<body id = "main">
 		<nav th:replace="base :: site-nav('none')">
 		</nav>
 		<!-- admin version -->
-		<h1>Paystub History</h1>
+		<div class="content table-title">
+			<h1 th:if="${employee == null}">Paystubs</h1>
+			<h1 th:if="${employee != null}" th:text="'Paystubs for ' + ${employee.firstname} + ' ' + ${employee.lastname}"></h1>
+			
+			<h5 th:if="${paystubs == null OR paystubs.isEmpty()}" th:text="'No paystubs found'" style = "Color: red"></h5>
+		</div>
 		
-		<p th:if="${paystubs == null OR paystubs.isEmpty()}" th:text="'No paystubs found'"></p>
 		<table id="tsTable"
-		       class="table table-bordered"
+		       class="table table-bordered table-fit main-table"
 		       th:if="${paystubs != null}"> <!--  and not #list.isEmpty(vendors) -->
         <thead>
-            <tr class="center middle">
+            <tr bgcolor = "#cce6ff" class="center middle">
+            	<th>Paystub #</th>
                 <th>Employee Name</th>
                 <th>Dates</th>
                 <th>Amount</th>
@@ -25,13 +30,14 @@
                 <th>Date Voided</th>
                 <th>Check No</th>
                 <th>Check Date</th>
-                <th th:if="${employee.permissionLevel > 1}"></th>
-                <th th:if="${employee.permissionLevel > 1}"></th>
-                <th th:if="${employee.permissionLevel > 1}"></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="ps : ${paystubs}">
+            	<td><a th:href="@{/paystub/{path}(path=${ps.paystubId})}" th:text="'#' + ${ps.paystubId}"></a></td>
                 <td th:text="${ps.firstname} + ' ' + ${ps.lastname}"></td>
                 <td th:text="${#temporals.format(ps.periodStart,'MM/dd/yyyy')} + ' - ' + ${#temporals.format(ps.periodEnd,'MM/dd/yyyy')}"></td>
                 <td th:text="${ps.netPay}"></td>
@@ -40,10 +46,9 @@
                	<td th:text="${ps.dateVoided} ? ${#temporals.format(ps.dateVoided,'MM/dd/yyyy HH:mm')}"></td>
                 <td th:text="${ps.checkNo != 0} ? ${ps.checkNo}"></td>
                 <td th:text="${ps.checkDate} ? ${#temporals.format(ps.checkDate,'MM/dd/yyyy HH:mm')}"></td>
-                <td><a th:href="@{/paystub/{path}(path=${ps.paystubId})}">View</a></td>
-                <td th:if="${employee.permissionLevel > 1}"><a th:if="${ps.status.toString() != 'VOIDED' and employee.permissionLevel > 1}" th:href="@{/paystub/addCheck(pId=${ps.paystubId})}">Issue Check</a></td>
-                <td th:if="${employee.permissionLevel > 1}"><a th:if="${ps.timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/paystub/regenerate(pId=${ps.paystubId})}">Regenerate</a></td>
-                <td th:if="${employee.permissionLevel > 1}"><a th:if="${ps.timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/paystub/returnTimesheet(psId=${ps.paystubId})}">Return Timesheet</a>
+                <td><a th:if="${ps.status.toString() != 'VOIDED'}" th:href="@{/paystub/addCheck(pId=${ps.paystubId})}">Issue Check</a></td>
+                <td><a th:if="${ps.timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/paystub/regenerate(pId=${ps.paystubId})}">Regenerate</a></td>
+                <td><a th:if="${ps.timesheet.status.toString() != 'NOT_SUBMITTED'}" th:href="@{/paystub/returnTimesheet(psId=${ps.paystubId})}">Return Timesheet</a>
                 	<a th:if="${ps.timesheet.status.toString() == 'NOT_SUBMITTED'}" th:href="@{/timesheet/{id}(id=${ps.timesheet.timesheetId})}">View Returned Timesheet</a></td>
             </tr>
         </tbody>

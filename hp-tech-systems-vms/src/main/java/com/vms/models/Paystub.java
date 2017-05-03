@@ -82,6 +82,8 @@ public class Paystub {
 	private String city;
 	@Column(length = 32, nullable = false)
 	private String state;
+	@Column(length = 32, nullable = true)
+	private String zipcode;
 	
 	//employer info saved in global variables somewhere
 	
@@ -121,7 +123,7 @@ public class Paystub {
 		this.periodStart = ts.getWeekStarting();
 		Employee emp = ts.getEmployee();
 		this.empId = emp.getEmpId();
-		if(emp.getPayPeriod() == 2) {
+		if(emp.getPayPeriod() == PayPeriod.BIWEEKLY) {
 			this.periodEnd = this.periodStart.plusDays(14);
 		} else { 
 			this.periodEnd = this.periodStart.plusDays(7); 
@@ -132,6 +134,7 @@ public class Paystub {
 		this.address = emp.getAddress();
 		this.city = emp.getCity();
 		this.state = emp.getState();
+		this.zipcode = emp.getZipcode();
 		//this.projectId = ts.getProjemp().getProject().getProjectId();
 		
 		//math
@@ -167,7 +170,7 @@ public class Paystub {
 		this.periodStart = ts.getWeekStarting();
 		Employee emp = ts.getEmployee();
 		this.empId = emp.getEmpId();
-		if(emp.getPayPeriod() == 2) {
+		if(emp.getPayPeriod() == PayPeriod.BIWEEKLY) {
 			this.periodEnd = this.periodStart.plusDays(14);
 		} else { this.periodEnd = this.periodStart.plusDays(7); }
 		this.payDate = this.periodEnd.plusDays(10);

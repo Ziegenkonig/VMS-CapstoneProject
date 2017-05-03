@@ -2,38 +2,68 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<link rel = "stylesheet" th:href = "@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 
-	<body>
-		
-		<div th:fragment = "ProjectForm">
-		
-			<label for="project.vendor">Vendor:</label>
-	    		<select name="vendor">
-				   <option th:each="v : ${vendors}"
+<body id = "main">
+
+	<div th:fragment="ProjectForm">
+		<div class="form-group">
+			<h5 th:if="${#fields.hasErrors('vendor')}" th:errors="*{vendor}" style="Color: red"></h5>
+			<label for="project.vendor" class="control-label col-xs-2 col-xs-offset-3">Vendor:</label>
+			<div class="col-xs-3">
+				<select class="form-control" name="vendor">
+					<option th:value="${null}" selected="selected"
+						th:text="'Select a Vendor'"></option>
+					<option th:each="v : ${vendors}"
 						th:selected="${project.vendor != null AND project.vendor.vendorId == v.vendorId}"
-						th:value="${v.vendorId}"
-						th:text="${v.name}">
-				   </option>
+						th:value="${v.vendorId}" th:text="${v.name}"></option>
 				</select>
-				<h4 >Project Name</h4>
-				<h5 th:if = "${#fields.hasErrors('name')}" th:errors = "*{name}" style = "Color: red"></h5>
-			    <input type = "text" name = "name" th:field = "*{name}" />
-				<h4 >Billing Rate</h4>
-				<h5 th:if = "${#fields.hasErrors('billingRate')}" th:errors = "*{billingRate}" style = "Color: red"></h5>
-				<input type = "text" name = "billingRate" th:field = "*{billingRate}" />
-		        <h4 >Client Company</h4>
-		        <h5 th:if = "${#fields.hasErrors('clientName')}" th:errors = "*{clientName}" style = "Color: red"></h5>
-		        <input type = "text" name = "clientName" th:field = "*{clientName}" />
-		        <h4 >Client Location (Address)</h4>
-		        <h5 th:if = "${#fields.hasErrors('clientLocation')}" th:errors = "*{clientLocation}" style = "Color: red"></h5>
-		        <input type = "text" name = "clientLocation" value="" th:field="*{clientLocation}" />
-		        <h4></h4>
-		        <h5><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></h5>
-		
+			</div>
 		</div>
 		
-	</body>
+		<div class="form-group">
+			<a class="" th:href="@{/vendor/new}" th:text="'Create New Vendor'"></a>
+		</div>
+		
+		<div class="form-group">
+			<h5 th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="Color: red"></h5>
+			<label for="*{name}" class="control-label col-xs-2 col-xs-offset-3">Project Name:</label>
+			<div class="col-xs-4">
+				<input class="form-control" type="text" name="name" th:field="*{name}" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<h5 th:if="${#fields.hasErrors('billingRate')}" th:errors="*{billingRate}" style="Color: red"></h5>
+			<label for="*{billingRate}" class="control-label col-xs-2 col-xs-offset-3">Billing Rate:</label>
+			<div class="col-xs-2">
+				<input class="form-control" type="text" name="billingRate" th:field="*{billingRate}" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<h5 th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}" style="Color: red"></h5>
+			<label for="*{clientName}" class="control-label col-xs-2 col-xs-offset-3">Client Company:</label>
+			<div class="col-xs-4">
+				<input class="form-control" type="text" name="clientName" th:field="*{clientName}" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<h5 th:if="${#fields.hasErrors('clientLocation')}" th:errors="*{clientLocation}" style="Color: red"></h5>
+			<label for="*{clientLocation}" class="control-label col-xs-2 col-xs-offset-3">Client Location (Address):</label>
+			<div class="col-xs-4">
+				<input class="form-control" type="text" name="clientLocation" value="" th:field="*{clientLocation}" />
+			</div>
+		</div>
+		
+		<div class="btn-group">
+			<input class="btn btn-primary" type="submit" value="Submit" /> 
+			<input class="btn btn-warning" type="reset" value="Reset" />
+		</div>
+	</div>
+
+</body>
 
 </html>

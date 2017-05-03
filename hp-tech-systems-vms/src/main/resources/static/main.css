@@ -1,16 +1,193 @@
 title {
-    
-}
-
-p {
-    text-align:justify;
-}
-
-body {
-	background-color = #353030
 	
 }
 
+p {
+	text-align: justify;
+}
+
+body {
+	padding-bottom: 20px;
+	min-height: 100%;
+	margin-bottom: 30px;
+}
+
 .content {
+	text-align: center;
+	margin: auto;
 	width: 80%;
+}
+
+.table-fit {
+	white-space: nowrap;
+	width: 1px;
+}
+
+main {
+	width: 80%;
+	margin: auto;
+	padding-bottom: 20px;
+	min-height: 100%;
+}
+
+.form-horizontal .control-label.text-left {
+	text-align: left;
+}
+
+.main-table {
+	margin: auto;
+}
+
+.table-title {
+	padding-bottom: 20px;
+}
+
+.site-logo-title {
+	padding-left: 15px;
+	font-size: 40px;
+	font-weight: bold;
+	margin-top: 50px;
+}
+
+.navbar-custom {
+	background-color: #FDA023;
+	color: #ffffff;
+	border-radius: 0;
+    float:none;
+    vertical-align: center;
+}
+
+.navbar-custom .navbar-nav>li>a {
+	font-size: 30px;
+	font-weight: bold;
+	line-height: 53px;
+}
+
+.navbar-custom .navbar-nav {
+	margin: auto;
+}
+
+.navbar-custom .navbar-nav>li>a:hover, .navbar-custom .navbar-nav>li>a:focus,
+	.navbar-custom .navbar-nav>.active>a:hover, .navbar-custom .navbar-nav>.active>a:focus,
+	.navbar-custom .navbar-nav>.open>a {
+	text-decoration: none;
+	background-color: #db881a;
+	color: #d4d2d2;
+	-webkit-text-stroke: 0.1px black;
+}
+
+.navbar-custom .navbar-nav>.active>a {
+	color: #ffffff;
+	background-color: transparent;
+	-webkit-text-stroke: 0.1px black;
+}
+
+.navbar-custom .navbar-nav>li>a {
+	color: #0091FF;
+	font-weight: bold;
+	-webkit-text-stroke: 0.2px black;
+}
+
+.btn-primary {
+	background-color: #0091FF;
+	font-weight: bold;
+}
+
+.btn-warning {
+	font-weight: bold;
+}
+
+footer {
+	position: fixed;
+	margin-top: 30px; /* negative value of footer height */
+	height: 30px;
+	background-color: #FDA023;
+	text-align: center;
+	padding: 5px 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	/*height: 100px;*/
+}
+
+/* The side navigation menu */
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: #FDA023; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .offcanvas a:focus{
+    color: #d4d2d2;
+    background-color: #db881a;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.profileInfo {
+	text-align: center;
+}
+
+.profileInfo p {
+	text-align: center;
+    font-size: 15px;
+    color: white;
+}
+
+.profileInfo img {
+	padding: 25px 25px 25px 25px;
+	height: 150px;
+	width: 150px;
+}
+
+/* Hamburger icon style */
+.hamburger div {
+    width: 35px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+}
+
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+   	padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+.wrap {
+	padding-bottom: 100px;
+	min-height: 100%;
+	margin-bottom: 30px;
 }

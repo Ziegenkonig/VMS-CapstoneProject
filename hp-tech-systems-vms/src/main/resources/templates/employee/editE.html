@@ -5,15 +5,19 @@
   <title id="pageTitle">VMS | Edit Profile</title>
 </head>
 
-	<body>
-		<nav th:replace="base :: site-nav('none')">
+	<body id = "main">
+		<nav th:replace="base :: site-nav('editInfo')">
 		</nav>
 	
 		<div class="formAlignCenter" align = "center">
 		
 		    <h1>Edit Profile</h1>
-		    <div th:replace = "employee/fragments :: EmployeeEditForm"></div>
+		    <div th:replace = "employee/fragments :: EmployeeEditForm">
+		    	
+		    </div>
 		    
 		</div>
+		
+		<footer th:replace="base :: site-footer"></footer>
 	</body>
 </html>
