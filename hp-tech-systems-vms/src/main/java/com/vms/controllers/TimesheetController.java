@@ -196,8 +196,10 @@ public class TimesheetController {
 		weekStarting.setLocalDate(timesheet.getWeekStarting().minusDays(1));
 		//System.out.println(timesheet.getProjTimesheets().get(0).getWeekStarting());
 		Timesheet t = new Timesheet();
+		LocalDate testDate = timesheet.getWeekStarting();
 		t.setProjTimesheets(timesheet.getProjTimesheets());
 		
+		model.addAttribute("testDate", testDate);
 		model.addAttribute("weekStarting", weekStarting);
 		model.addAttribute("days", DayOfWeek.values());
 		model.addAttribute("payPeriod", timesheet.getEmployee().getPayPeriod());

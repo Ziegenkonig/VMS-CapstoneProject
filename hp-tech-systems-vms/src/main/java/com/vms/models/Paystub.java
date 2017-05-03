@@ -82,7 +82,7 @@ public class Paystub {
 	private String city;
 	@Column(length = 32, nullable = false)
 	private String state;
-	@Column(length = 32, nullable = false)
+	@Column(length = 32, nullable = true)
 	private String zipcode;
 	
 	//employer info saved in global variables somewhere
