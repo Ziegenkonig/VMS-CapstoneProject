@@ -9,7 +9,7 @@ can use the website to log hours, and admins can use the website to approve hour
 send out paystubs.
 
 Commercial Video:
-TBA
+https://www.youtube.com/watch?v=qDOqH2Nwrhw
 
 Mentor:
 Purnakumar Thota
