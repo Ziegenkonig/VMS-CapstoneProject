@@ -1,5 +1,6 @@
 package com.vms.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,14 @@ public class ProjectEmployeeService {
 	
 	public List<Employee> findRemainingEmployeesForProject(Project p) {
 		List<Employee> emps = projEmpRepo.findDistinctEmployeeOnProject(p.getProjectId());
-		return empService.findEmployeesNotInList(emps);
+		List<Employee> active = empService.findActiveEmployees();
+		List<Employee> result = new ArrayList<Employee>();
+		for(Employee e : active) {
+			if(!emps.contains(e)) {
+				result.add(e);
+			}
+		}
+		return result;
 	}
 		
 }

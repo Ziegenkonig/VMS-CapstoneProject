@@ -181,7 +181,7 @@ public class MailService {
                 mimeMessage.setFrom(new InternetAddress(vmsEmail));
                 //mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 //for testing
-                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getConfirmEmail()));
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(e.getEmail()));
                 mimeMessage.setText("Dear future employee, please click on the link below to confirm your email address!\n"
 		                			+ "http://localhost:8080/emailConfirmation/" + e.getConfirmationUrl());
                 mimeMessage.setSubject("Email Confirmation with HP Tech Systems' VMS");

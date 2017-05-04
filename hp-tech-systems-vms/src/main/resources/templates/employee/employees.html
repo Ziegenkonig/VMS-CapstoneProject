@@ -28,7 +28,7 @@
 	        </thead>
 	        <tbody>
 	            <tr th:each="e : ${employees}">
-	                <td><a th:href="@{/admin/editEmployee/{id}(id=${employee.empId})}" th:text="${e.firstname} + ' ' + ${e.lastname}">View</a></td>
+	                <td><a th:href="@{/admin/editEmployee/{id}(id=${e.empId})}" th:text="${e.firstname} + ' ' + ${e.lastname}">View</a></td>
 	                <td th:text="${#temporals.format(employee.hireDate,'MM/dd/yyyy[ HH:mm]')}"></td>
 	                <td th:text="${e.active == true}? 'Yes' : 'No'"></td>
 	                <!-- <td><a th:href="@{/editUserProfile/{id}(id=${e.empId})}">View</a></td> -->

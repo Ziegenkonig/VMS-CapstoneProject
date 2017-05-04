@@ -12,8 +12,8 @@
 	<main>
 	<div class="formAlignCenter" align = "center">
 	
-	    <h1 th:text="'Edit Employee Details for ' + ${employee.firstname} + ' ' + ${employee.lastname}"></h1>
-	    <form class="form-horizontal" action="#" th:action="@{'/admin/editEmployee/' + ${employee.empId}}" th:object="${employee}" method="post">
+	    <h1 th:text="'Edit Employee Details for ' + ${emp.firstname} + ' ' + ${emp.lastname}"></h1>
+	    <form class="form-horizontal" action="#" th:action="@{'/admin/editEmployee/' + ${emp.empId}}" th:object="${emp}" method="post">
         	
         	<div class="form-group">
 				<h5 th:if = "${#fields.hasErrors('username')}" th:errors = "*{username}" style = "Color: red"></h5>

@@ -15,7 +15,7 @@
 			<ul>
 				<li><a th:href="@{/inviteEmployee}">Invite A New Employee</a></li>
 				<li><a th:href="@{/employees}">Manage Employees</a></li>
-				<li th:if="${employee.permissionLevel == permissions[2].toString()}"><a th:href="@{/}" onclick="return false;">Change Employee Permission Level (owner only) --disabled</a></li>
+				
 			</ul>
 				
 			<h3 th:text="'Projects'"></h3>
@@ -31,8 +31,8 @@
 			<ul>
 				<li><a th:href="@{/timesheet/new}">Issue Timesheet</a></li>
 				<li><a th:href="@{/timesheets/byStatus(status='PENDING')}">Approve Pending Timesheets</a></li>
-				<li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>
-				<li><a th:href="@{/paystubs/all(empId=${employee.empId})}">Paystub History</a></li>
+				<!-- <li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>  -->
+				<!-- <li><a th:href="@{/paystubs/all(empId=${employee.empId})}">Paystub History</a></li>  -->
 				<!-- <li><a th:href="@{/timesheets/byStatus(status='VERIFIED')}">Issue Paystub</a></li>  -->
 			</ul>
 				

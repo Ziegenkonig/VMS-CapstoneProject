@@ -352,6 +352,9 @@ public class EmployeeController{
   		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Employee employee = employeeService.findByUsername(auth.getName());
   		
+		Employee emptochange = employeeService.findOne(empId);
+		
+		model.addAttribute("emp", emptochange);
 		model.addAttribute("employee", employee);
 		model.addAttribute("states", States.values());
 		model.addAttribute("period", PayPeriod.values());
